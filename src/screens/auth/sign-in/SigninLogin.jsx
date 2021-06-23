@@ -6,10 +6,11 @@ import { actionsToggleIsAutoLogin } from '#store/actions';
 import { selectIsAutoLogin } from '#store/selectors';
 import { CheckBox } from '#components';
 
-const SigninLogin = ({ style = {} }) => {
+const SigninLogin = ({ style = {}, email, password }) => {
   const isAuthLogin = useStoreState(selectIsAutoLogin);
   const toggleIsAutoLogin = useStoreActions(actionsToggleIsAutoLogin);
-
+  // TODO: 로그인 로직
+  // props 으로 받은 email, password 을 navigate: param 으로 전달
   return (
     <View style={{ ...s.root, ...style }}>
       <View style={s.autoLogin}>
@@ -23,10 +24,14 @@ const SigninLogin = ({ style = {} }) => {
 
 SigninLogin.propTypes = {
   style: PropTypes.object,
+  email: PropTypes.string,
+  password: PropTypes.string,
 };
 
 SigninLogin.defaultProps = {
   style: {},
+  email: '',
+  password: '',
 };
 
 export default SigninLogin;
@@ -35,6 +40,7 @@ const s = StyleSheet.create({
   root: {
     flexDirection: 'row',
     width: '70%',
+    paddingVertical: 10,
     justifyContent: 'space-between',
   },
   autoLogin: {

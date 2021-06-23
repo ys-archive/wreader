@@ -15,12 +15,3 @@ export const [NavigatorsProvider, useStackNav, useDrawerNav] = constate(
   value => value.Stack,
   value => value.Drawer
 );
-
-// const constate_Navigator = () => {
-//   const [stackNav, setStackNav] = React.useState(null);
-//   const [drawerNav, setDrawerNav] = React.useState(null);
-//   const [tabNav, setTabNav] = React.useState(null);
-//   return { stackNav, setStackNav, drawerNav, setDrawerNav, tabNav, setTabNav };
-// };
-// // constate_Navigator,
-// value => ({ nav: value.tabNav, set: value.setTabNav })
