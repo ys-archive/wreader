@@ -7,11 +7,11 @@ import MyProfile from './user/MyProfile';
 import ContactUs from './contact-us/ContactUs';
 import ContactUsList from './contact-us/ContactUsList';
 
-import Login from './auth/signin/Login';
-import Signup from './auth/signin/Signup';
-import Signup2 from './auth/signin/Signup2';
+import Signin from './auth/sign-in/Signin';
+import Signup from './auth/sign-up/Signup';
+import Signup2 from './auth/sign-up2/Signup2';
 
-import ChangePassword from './auth/find-password/ChangePassword';
+import ChangePassword from './auth/change-password/ChangePassword';
 import FindPassword from './auth/find-password/FindPassword';
 
 export {
@@ -21,7 +21,7 @@ export {
   MyProfile,
   ContactUs,
   ContactUsList,
-  Login,
+  Signin,
   Signup,
   Signup2,
   ChangePassword,

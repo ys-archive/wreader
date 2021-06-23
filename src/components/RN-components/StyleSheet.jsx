@@ -3,6 +3,7 @@ import { StyleSheet as original_StyleSheet, Platform } from 'react-native';
 export const StyleSheet = {
   create(styles) {
     const platformStyles = {};
+    // eslint-disable-next-line no-restricted-syntax
     for (const k in styles) {
       const { ios, android, ...style } = styles[k];
       (ios || android) &&
