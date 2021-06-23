@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-const WRButton = () => {
+const HeaderLeft = () => {
   return (
     <View>
       <Text></Text>
@@ -9,6 +9,6 @@ const WRButton = () => {
   )
 }
 
-export default WRButton
+export default HeaderLeft
 
 const styles = StyleSheet.create({})

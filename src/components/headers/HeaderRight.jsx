@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-const Signin = () => {
+const HeaderRight = () => {
   return (
     <View>
       <Text></Text>
@@ -9,6 +9,6 @@ const Signin = () => {
   )
 }
 
-export default Signin
+export default HeaderRight
 
 const styles = StyleSheet.create({})

@@ -1,4 +1,4 @@
-export const MainScreen = 'Main';
+export const Main = 'Main';
 export const PolicyAndCondition = 'PolicyAndCondition';
 
 // user
@@ -11,8 +11,8 @@ export const FindPassword = 'FindPassword';
 
 // auth/signin
 export const Login = 'Login';
-export const Signin = 'Signin';
-export const Signin2 = 'SignIn2';
+export const Signup = 'Signup';
+export const Signup2 = 'Signup2';
 
 // contact-us
 export const ContactUs = 'ContactUs';

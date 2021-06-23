@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-const WRPlatformStyleSheet = () => {
+const Signup2 = () => {
   return (
     <View>
       <Text></Text>
@@ -9,6 +9,6 @@ const WRPlatformStyleSheet = () => {
   );
 };
 
-export default WRPlatformStyleSheet;
+export default Signup2;
 
 const styles = StyleSheet.create({});

@@ -1,3 +1,4 @@
+import React from 'react';
 import { createStore, StoreProvider } from 'easy-peasy';
 import logger from 'redux-logger';
 
