@@ -8,6 +8,7 @@ import { ReduxProvider } from './src/store';
 // import { NavigationProvider } from '#navigators';
 import Signin from './src/screens/auth/sign-in/Signin';
 import { loadFontsAsync } from './src/constants/fonts';
+import Signup from './src/screens/auth/sign-up/Signup';
 
 enableScreens();
 
@@ -27,7 +28,8 @@ const App = () => {
   return (
     <SafeAreaProvider>
       <ReduxProvider>
-        <Signin />
+        {/* <Signin /> */}
+        <Signup />
         {/* <NavigationProvider>
           <StatusBar style="auto" />
         </NavigationProvider> */}

@@ -6,15 +6,19 @@ import { Text, CheckBox } from '#components';
 import { actionsToggleIsAutoLogin } from '#store/actions';
 import { selectIsAutoLogin } from '#store/selectors';
 
-const SigninLogin = ({ style = {}, email, password }) => {
+const SigninLogin = ({ email, password }) => {
   const isAuthLogin = useStoreState(selectIsAutoLogin);
   const toggleIsAutoLogin = useStoreActions(actionsToggleIsAutoLogin);
   // TODO: 로그인 로직
   // props 으로 받은 email, password 을 navigate: param 으로 전달
   return (
-    <View style={{ ...s.root, ...style }}>
+    <View style={s.root}>
       <View style={s.autoLogin}>
-        <CheckBox isChecked={isAuthLogin} onChange={toggleIsAutoLogin} />
+        <CheckBox
+          isChecked={isAuthLogin}
+          onChange={toggleIsAutoLogin}
+          highlightColor="blue"
+        />
         <Text style={s.autoLoginText}>자동 로그인</Text>
       </View>
       <Button title="로그인" />
@@ -23,13 +27,11 @@ const SigninLogin = ({ style = {}, email, password }) => {
 };
 
 SigninLogin.propTypes = {
-  style: PropTypes.object,
   email: PropTypes.string,
   password: PropTypes.string,
 };
 
 SigninLogin.defaultProps = {
-  style: {},
   email: '',
   password: '',
 };

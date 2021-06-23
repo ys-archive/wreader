@@ -4,13 +4,12 @@ import { StyleSheet, View } from 'react-native';
 import { TextInput } from '#components';
 
 const SigninEmailPassword = ({
-  style = {},
   email,
   password,
   onChangeEmailText,
   onChangePasswordText,
 }) => (
-  <View style={{ ...s.root, ...style }}>
+  <View style={s.root}>
     <TextInput
       text={email}
       onChangeText={onChangeEmailText}
@@ -25,7 +24,6 @@ const SigninEmailPassword = ({
 );
 
 SigninEmailPassword.propTypes = {
-  style: PropTypes.object,
   email: PropTypes.string,
   password: PropTypes.string,
   onChangeEmailText: PropTypes.func.isRequired,
@@ -33,7 +31,6 @@ SigninEmailPassword.propTypes = {
 };
 
 SigninEmailPassword.defaultProps = {
-  style: {},
   email: '',
   password: '',
 };

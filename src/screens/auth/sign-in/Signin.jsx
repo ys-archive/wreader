@@ -15,7 +15,7 @@ const Signin = () => {
   const onChangePasswordText = text => setPassword(text);
 
   return (
-    <View style={styles.root}>
+    <View style={s.root}>
       <SigninLogoTitle />
       <SigninEmailPassword
         email={email}
@@ -23,14 +23,14 @@ const Signin = () => {
         onChangeEmailText={onChangeEmailText}
         onChangePasswordText={onChangePasswordText}
       />
-      <SigninLogin />
+      <SigninLogin email={email} password={password} />
       <SigninFindPasswordSignup />
     </View>
   );
 };
 export default Signin;
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   root: {
     flex: 1,
     width: '100%',

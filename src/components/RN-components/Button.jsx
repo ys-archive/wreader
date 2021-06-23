@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { View, TouchableOpacity } from 'react-native';
-import { Text } from '#components';
+import { Text } from './Text';
 import { StyleSheet } from './StyleSheet';
 
 export const Button = ({ style = {}, onClick, children }) => (
@@ -14,12 +14,15 @@ export const Button = ({ style = {}, onClick, children }) => (
 
 Button.propTypes = {
   style: PropTypes.object,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   children: PropTypes.any.isRequired,
 };
 
 Button.defaultProps = {
   style: {},
+  onClick: () => {
+    console.log('clicked!');
+  },
 };
 
 const s = StyleSheet.create({
@@ -29,5 +32,6 @@ const s = StyleSheet.create({
   view: {},
   text: {
     color: '#555',
+    textAlign: 'center',
   },
 });
