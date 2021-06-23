@@ -1,21 +1,39 @@
 // import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-// import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import AppLoading from 'expo-app-loading';
+import { enableScreens } from 'react-native-screens';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-// import { NavigationProvider } from '#navigators';
+
 import { ReduxProvider } from './src/store';
-
+// import { NavigationProvider } from '#navigators';
 import Signin from './src/screens/auth/sign-in/Signin';
+import { loadFontsAsync } from './src/constants/fonts';
 
-const App = () => (
-  <SafeAreaProvider>
-    <ReduxProvider>
-      <Signin />
-      {/* <NavigationProvider>
+enableScreens();
+
+const App = () => {
+  const [isLoadingDone, setLoadingDone] = useState(false);
+
+  if (!isLoadingDone) {
+    return (
+      <AppLoading
+        startAsync={loadFontsAsync}
+        onFinish={() => setLoadingDone(true)}
+        onError={err => console.error(err)}
+      />
+    );
+  }
+
+  return (
+    <SafeAreaProvider>
+      <ReduxProvider>
+        <Signin />
+        {/* <NavigationProvider>
           <StatusBar style="auto" />
         </NavigationProvider> */}
-    </ReduxProvider>
-  </SafeAreaProvider>
-);
+      </ReduxProvider>
+    </SafeAreaProvider>
+  );
+};
 
 export default App;

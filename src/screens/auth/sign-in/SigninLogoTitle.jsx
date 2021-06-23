@@ -8,7 +8,7 @@ const SigninLogoTitle = () => (
     <AppLogoIcon />
     <View style={s.texts}>
       <Text>내가 만드는 소설</Text>
-      <Text>Wreader</Text>
+      <Text isBold>Wreader</Text>
     </View>
   </View>
 );

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, View, Button } from 'react-native';
 import { useStoreActions, useStoreState } from 'easy-peasy';
+import { Text, CheckBox } from '#components';
 import { actionsToggleIsAutoLogin } from '#store/actions';
 import { selectIsAutoLogin } from '#store/selectors';
-import { CheckBox } from '#components';
 
 const SigninLogin = ({ style = {}, email, password }) => {
   const isAuthLogin = useStoreState(selectIsAutoLogin);

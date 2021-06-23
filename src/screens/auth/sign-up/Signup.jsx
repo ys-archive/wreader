@@ -1,13 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-const Signup = () => {
-  return (
-    <View>
-      <Text></Text>
-    </View>
-  );
-};
+const Signup = () => (
+  <View>
+    <Text />
+  </View>
+);
 
 export default Signup;
 
