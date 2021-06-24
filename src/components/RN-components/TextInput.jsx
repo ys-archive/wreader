@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TextInput as OrigTextInput, StyleSheet } from 'react-native';
-// import { StyleSheet } from './StyleSheet';
+import { TextInput as OrigTextInput } from 'react-native';
+import { StyleSheet } from './StyleSheet';
 
 export const TextInput = props => {
   const { style = {}, text, onChangeText } = props;

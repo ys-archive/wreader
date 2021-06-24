@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { StyleSheet, View } from 'react-native';
 import { TextInput } from '#components';
 
-const SigninEmailPassword = ({
+const SigninInput = ({
   email,
   password,
   onChangeEmailText,
@@ -23,19 +23,19 @@ const SigninEmailPassword = ({
   </View>
 );
 
-SigninEmailPassword.propTypes = {
+SigninInput.propTypes = {
   email: PropTypes.string,
   password: PropTypes.string,
   onChangeEmailText: PropTypes.func.isRequired,
   onChangePasswordText: PropTypes.func.isRequired,
 };
 
-SigninEmailPassword.defaultProps = {
+SigninInput.defaultProps = {
   email: '',
   password: '',
 };
 
-export default SigninEmailPassword;
+export default SigninInput;
 
 const s = StyleSheet.create({
   root: {

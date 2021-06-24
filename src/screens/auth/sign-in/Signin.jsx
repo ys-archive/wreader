@@ -4,10 +4,10 @@ import { useStoreActions } from 'easy-peasy';
 import { StyleSheet } from '#components';
 import { actionsLogin } from '#store/actions';
 
-import SigninLogoTitle from './SigninLogoTitle';
-import SigninEmailPassword from './SigninEmailPassword';
-import SigninLogin from './SigninLogin';
-import SigninFindPasswordSignup from './SigninFindPasswordSignup';
+import SigninLogoTitle from './components/SigninLogoTitle';
+import SigninInput from './components/SigninInput';
+import SigninLogin from './components/SigninLogin';
+import SigninFindPasswordSignup from './components/SigninFindPasswordSignup';
 
 const Signin = () => {
   const [email, setEmail] = useState('');
@@ -27,7 +27,7 @@ const Signin = () => {
   return (
     <View style={s.root}>
       <SigninLogoTitle />
-      <SigninEmailPassword
+      <SigninInput
         email={email}
         password={password}
         onChangeEmailText={onChangeEmailText}

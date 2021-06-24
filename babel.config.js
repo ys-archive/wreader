@@ -5,7 +5,13 @@ module.exports = function (api) {
     plugins: [
       [
         'babel-plugin-root-import',
-        { rootPathSuffix: './src/', rootPathPrefix: '#' },
+        {
+          paths: [
+            { rootPathSuffix: './src/', rootPathPrefix: '#' },
+            { rootPathSuffix: './assets/', rootPathPrefix: '!' },
+            { rootPathSuffix: './node_modules/', rootPathPrefix: '&' },
+          ],
+        },
       ],
     ],
   };

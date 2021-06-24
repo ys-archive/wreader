@@ -17,7 +17,7 @@ const SigninLogin = ({ onLogin }) => {
         <CheckBox
           isChecked={isAuthLogin}
           onChange={toggleIsAutoLogin}
-          highlightColor="blue"
+          highlightColor="coral"
         />
         <Text style={s.autoLoginText}>자동 로그인</Text>
       </View>

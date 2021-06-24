@@ -3,9 +3,16 @@ import PropTypes from 'prop-types';
 import { Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-export const CheckBox = ({ isChecked = false, onChange, highlightColor }) => (
+export const CheckBox = ({
+  isChecked = false,
+  onChange,
+  highlightColor = '#000',
+}) => (
   <Pressable
-    style={[styles.checkboxBase, isChecked && highlightColor]}
+    style={[
+      styles.checkboxBase,
+      isChecked && { backgroundColor: highlightColor },
+    ]}
     onPress={onChange}
   >
     {isChecked && <Ionicons name="checkmark" size={24} color="white" />}
@@ -15,7 +22,11 @@ export const CheckBox = ({ isChecked = false, onChange, highlightColor }) => (
 CheckBox.propTypes = {
   isChecked: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
-  highlightColor: PropTypes.string.isRequired,
+  highlightColor: PropTypes.string,
+};
+
+CheckBox.defaultProps = {
+  highlightColor: '#000',
 };
 
 const styles = StyleSheet.create({
