@@ -9,6 +9,7 @@ import { ReduxProvider } from './src/store';
 import Signin from './src/screens/auth/sign-in/Signin';
 import { loadFontsAsync } from './src/constants/fonts';
 import Signup from './src/screens/auth/sign-up/Signup';
+import Signup2 from './src/screens/auth/sign-up2/Signup2';
 
 enableScreens();
 
@@ -29,7 +30,8 @@ const App = () => {
     <SafeAreaProvider>
       <ReduxProvider>
         {/* <Signin /> */}
-        <Signup />
+        {/* <Signup /> */}
+        <Signup2 />
         {/* <NavigationProvider>
           <StatusBar style="auto" />
         </NavigationProvider> */}

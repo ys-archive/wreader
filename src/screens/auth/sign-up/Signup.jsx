@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import { StyleSheet } from '#components';
 
 import SignupPolicyTexts from './components/SignupPolicyTexts';
 import SignupInput from './components/SignupInput';
 import SignupPolicyAndConditions from './components/SignupPolicyAndConditions';
+
 import { AccountStateProvider } from './hooks/useAccountState';
 
 const Signup = () => {
