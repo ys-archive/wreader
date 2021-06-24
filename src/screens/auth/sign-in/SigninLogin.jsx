@@ -6,7 +6,7 @@ import { Text, CheckBox } from '#components';
 import { actionsToggleIsAutoLogin } from '#store/actions';
 import { selectIsAutoLogin } from '#store/selectors';
 
-const SigninLogin = ({ email, password }) => {
+const SigninLogin = ({ onLogin }) => {
   const isAuthLogin = useStoreState(selectIsAutoLogin);
   const toggleIsAutoLogin = useStoreActions(actionsToggleIsAutoLogin);
   // TODO: 로그인 로직
@@ -21,19 +21,17 @@ const SigninLogin = ({ email, password }) => {
         />
         <Text style={s.autoLoginText}>자동 로그인</Text>
       </View>
-      <Button title="로그인" />
+      <Button title="로그인" onPress={onLogin} />
     </View>
   );
 };
 
 SigninLogin.propTypes = {
-  email: PropTypes.string,
-  password: PropTypes.string,
+  onLogin: PropTypes.func.isRequired,
 };
 
 SigninLogin.defaultProps = {
-  email: '',
-  password: '',
+  //
 };
 
 export default SigninLogin;

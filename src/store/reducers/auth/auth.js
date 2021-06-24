@@ -1,4 +1,4 @@
-import { action } from 'easy-peasy';
+import { action, thunk } from 'easy-peasy';
 
 const model = {
   isAutoLogin: false,
@@ -19,5 +19,10 @@ export default {
     }
 
     state.model.isAutoLogin = !state.model.isAutoLogin;
+  }),
+  login: thunk(async (actions, payload) => {
+    const { email, password } = payload;
+    // TODO: send to the server
+    // await Service.POST_Login(email, password).catch(err => console.error(err));
   }),
 };

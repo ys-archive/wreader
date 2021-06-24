@@ -1,5 +1,3 @@
-/* eslint-disable indent */
-/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { View } from 'react-native';
@@ -13,7 +11,7 @@ export const Separator = ({
 }) => {
   if (typeof direction !== 'string') {
     throw new Error(
-      "Direction of Separator must be either 'vertical' or 'horizontal'"
+      "Direction of Separator must be either 'vertical' or 'horizontal'",
     );
   }
   const dir = direction.trim().toLowerCase();
@@ -35,9 +33,11 @@ export const Separator = ({
 };
 
 Separator.propTypes = {
-  direction: PropTypes.string.isRequired,
+  direction: PropTypes.oneOf(['vertical', 'horizontal']).isRequired,
   // width: PropTypes.oneOf([PropTypes.string, PropTypes.number]).isRequired,
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   // height: PropTypes.oneOf([PropTypes.string, PropTypes.number]).isRequired,
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   color: PropTypes.string,
   style: PropTypes.object,
 };

@@ -41,5 +41,7 @@ module.exports = {
     'import/prefer-default-export': 0,
     'implicit-arrow-linebreak': 0,
     'global-require': 0,
+    indent: 0,
+    'no-shadow': ['error', { builtinGlobals: false, hoist: 'fuctions' }],
   },
 };

@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View } from 'react-native';
+import { useStoreActions } from 'easy-peasy';
 import { StyleSheet } from '#components';
+import { actionsLogin } from '#store/actions';
 
 import SigninLogoTitle from './SigninLogoTitle';
 import SigninEmailPassword from './SigninEmailPassword';
@@ -14,6 +16,14 @@ const Signin = () => {
   const [password, setPassword] = useState('');
   const onChangePasswordText = text => setPassword(text);
 
+  const _login = useStoreActions(actionsLogin);
+  const onLogin = useCallback(
+    (email, password) => {
+      _login({ email, password });
+    },
+    [email, password],
+  );
+
   return (
     <View style={s.root}>
       <SigninLogoTitle />
@@ -23,7 +33,7 @@ const Signin = () => {
         onChangeEmailText={onChangeEmailText}
         onChangePasswordText={onChangePasswordText}
       />
-      <SigninLogin email={email} password={password} />
+      <SigninLogin onLogin={onLogin} />
       <SigninFindPasswordSignup />
     </View>
   );
