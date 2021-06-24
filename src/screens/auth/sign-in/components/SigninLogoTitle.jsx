@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text } from '#components';
-import AppLogoIcon from '#components/icons/AppLogoIcon';
+import { Ionicons } from '@expo/vector-icons';
 
 const SigninLogoTitle = () => (
   <View style={s.root}>
-    <AppLogoIcon />
+    <Ionicons name="book-outline" size={70} color="black" />;
     <View style={s.texts}>
       <Text>내가 만드는 소설</Text>
       <Text isBold>Wreader</Text>

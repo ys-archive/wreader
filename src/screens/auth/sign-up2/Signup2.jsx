@@ -36,9 +36,10 @@ export default Signup2;
 const s = StyleSheet.create({
   root: {
     flex: 1,
-    // width: '100%',
-    marginHorizontal: 20,
-    justifyContent: 'center',
+    marginVertical: '25%',
+    marginHorizontal: 10,
+    // justifyContent: 'center',
+    alignItems: 'center',
   },
   accountInfoInstruction: {
     alignSelf: 'flex-start',

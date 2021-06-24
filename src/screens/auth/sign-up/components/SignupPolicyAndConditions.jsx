@@ -80,6 +80,7 @@ const s = StyleSheet.create({
     marginVertical: 15,
   },
   nextButton: {
+    marginTop: '15%',
     paddingHorizontal: '40%',
     paddingVertical: '4%',
     borderWidth: 1,

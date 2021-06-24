@@ -26,9 +26,9 @@ export default Signup;
 const s = StyleSheet.create({
   root: {
     flex: 1,
-    // marginVertical: 20,
+    marginVertical: '25%',
     marginHorizontal: 10,
-    justifyContent: 'center',
+    // justifyContent: 'center',
     alignItems: 'center',
   },
 });
