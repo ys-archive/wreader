@@ -4,14 +4,14 @@ import AppLoading from 'expo-app-loading';
 import { enableScreens } from 'react-native-screens';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { ReduxProvider } from './src/store';
+import { ReduxProvider } from './store';
 // import { NavigationProvider } from '#navigators';
-import Signin from './src/screens/auth/sign-in/Signin';
-import { loadFontsAsync } from './src/constants/fonts';
-import Signup from './src/screens/auth/sign-up/Signup';
-import Signup2 from './src/screens/auth/sign-up2/Signup2';
-import FindPassword from './src/screens/auth/find-password/FindPassword';
-import ChangePassword from './src/screens/auth/change-password/ChangePassword';
+import Signin from './screens/auth/sign-in/Signin';
+import { loadFontsAsync } from './constants/fonts';
+import Signup from './screens/auth/sign-up/Signup';
+import Signup2 from './screens/auth/sign-up2/Signup2';
+import FindPassword from './screens/auth/find-password/FindPassword';
+import ChangePassword from './screens/auth/change-password/ChangePassword';
 
 enableScreens();
 
