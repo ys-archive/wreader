@@ -31,7 +31,9 @@ const SignupInput = () => {
         text={email}
         onChangeText={setEmail}
       />
-      <Button style={s.checkEmailButton}>인증하기</Button>
+      <Button style={s.checkEmailButton} onPress={() => {}}>
+        인증하기
+      </Button>
       <TextInput
         placeholder="비밀번호를 입력해 주세요"
         text={tempPassword}
@@ -42,7 +44,9 @@ const SignupInput = () => {
         text={passwordRepeat}
         onChangeText={setPasswordRepeat}
       />
-      <Button style={s.checkPasswordButton}>확인</Button>
+      <Button style={s.checkPasswordButton} onPress={() => {}}>
+        확인
+      </Button>
     </View>
   );
 };

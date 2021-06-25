@@ -33,7 +33,9 @@ const SignupPolicyAndConditions = () => {
         />
         <Text style={s.autoLoginText}>이용약관(필수)</Text>
         {/* TODO: 내용 열기 */}
-        <Button style={s.policyDetailText}>내용</Button>
+        <Button style={s.policyDetailText} onPress={() => {}}>
+          내용
+        </Button>
       </View>
 
       <View style={s.policyCheckBoxItem}>
@@ -46,7 +48,9 @@ const SignupPolicyAndConditions = () => {
         />
         <Text style={s.autoLoginText}>개인정보 취급방침(필수)</Text>
         {/* TODO: 내용 열기 */}
-        <Button style={s.policyDetailText}>내용</Button>
+        <Button style={s.policyDetailText} onPress={() => {}}>
+          내용
+        </Button>
       </View>
 
       <View style={s.policyCheckBoxItem}>
@@ -61,12 +65,16 @@ const SignupPolicyAndConditions = () => {
         />
         <Text style={s.autoLoginText}>마켓팅 이용 권한(선택)</Text>
         {/* TODO: 내용 열기 */}
-        <Button style={s.policyDetailText}>내용</Button>
+        <Button style={s.policyDetailText} onPress={() => {}}>
+          내용
+        </Button>
       </View>
 
       <View>
         {/* TODO: 다음 구현 열기 */}
-        <Button style={s.nextButton}>다음</Button>
+        <Button style={s.nextButton} onPress={() => {}}>
+          다음
+        </Button>
       </View>
     </View>
   );

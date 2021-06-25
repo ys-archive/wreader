@@ -31,11 +31,11 @@ const App = () => {
   return (
     <SafeAreaProvider>
       <ReduxProvider>
-        {/* <Signin /> */}
+        <Signin />
         {/* <Signup /> */}
         {/* <Signup2 /> */}
         {/* <FindPassword /> */}
-        <ChangePassword />
+        {/* <ChangePassword /> */}
         {/* <NavigationProvider>
           <StatusBar style="auto" />
         </NavigationProvider> */}

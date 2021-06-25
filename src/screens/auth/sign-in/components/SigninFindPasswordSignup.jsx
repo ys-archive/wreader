@@ -7,9 +7,9 @@ const SigninFindPasswordSignup = () => (
   // TODO: 비밀번호 찾기 로직
   // TODO: 회원가입 로직
   <View style={s.root}>
-    <Button>비밀번호찾기</Button>
+    <Button onPress={() => {}}>비밀번호찾기</Button>
     <Separator direction="vertical" width={2} height="60%" />
-    <Button>회원가입</Button>
+    <Button onPress={() => {}}>회원가입</Button>
   </View>
 );
 

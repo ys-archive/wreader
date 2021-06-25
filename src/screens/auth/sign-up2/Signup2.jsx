@@ -27,7 +27,9 @@ const Signup2 = () => (
         />
       </View>
     </View>
-    <Button style={s.summitButton}>완료</Button>
+    <Button style={s.summitButton} onPress={() => {}}>
+      완료
+    </Button>
   </View>
 );
 

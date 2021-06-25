@@ -4,28 +4,25 @@ import { TextInput as OrigTextInput } from 'react-native';
 import { StyleSheet } from './StyleSheet';
 
 export const TextInput = props => {
-  const { style = {}, text, onChangeText } = props;
   return (
     <OrigTextInput
       {...props}
       style={{
         ...s.root,
-        ...style,
+        ...props.style,
       }}
-      value={text}
-      onChangeText={onChangeText}
     />
   );
 };
 
 TextInput.propTypes = {
-  style: PropTypes.object,
-  text: PropTypes.string.isRequired,
-  onChangeText: PropTypes.func.isRequired,
+  // style: PropTypes.object,
+  // text: PropTypes.string.isRequired,
+  // onChangeText: PropTypes.func.isRequired,
 };
 
 TextInput.defaultProps = {
-  style: {},
+  // style: {},
 };
 
 const s = StyleSheet.create({

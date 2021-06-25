@@ -22,11 +22,11 @@ const FindPassword = () => {
         <Button
           style={s.resendAuthMail}
           textStyle={s.resendAuthMailText}
-          isBold
+          onPress={() => {}}
         >
           인증메일 재발송
         </Button>
-        <Button style={s.summitButton} isBold>
+        <Button style={s.summitButton} onPress={() => {}}>
           메일 인증완료
         </Button>
       </View>

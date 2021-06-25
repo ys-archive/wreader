@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, View, Button } from 'react-native';
+import { View } from 'react-native';
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import { Text, CheckBox } from '#components';
+import { StyleSheet, Text, CheckBox, Button } from '#components';
 import { actionsToggleIsAutoLogin } from '#store/actions';
 import { selectIsAutoLogin } from '#store/selectors';
 
-const SigninLogin = ({ onLogin }) => {
+const SigninLogin = ({ onSubmit }) => {
   const isAuthLogin = useStoreState(selectIsAutoLogin);
   const toggleIsAutoLogin = useStoreActions(actionsToggleIsAutoLogin);
   // TODO: 로그인 로직
@@ -21,13 +21,13 @@ const SigninLogin = ({ onLogin }) => {
         />
         <Text style={s.autoLoginText}>자동 로그인</Text>
       </View>
-      <Button title="로그인" onPress={onLogin} />
+      <Button onPress={onSubmit}>로그인</Button>
     </View>
   );
 };
 
 SigninLogin.propTypes = {
-  onLogin: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
 
 SigninLogin.defaultProps = {

@@ -14,7 +14,7 @@ const ChangePassword = () => {
         <TextInput placeholder="비밀번호 입력 해주세요 (4 ~ 12자)" />
         <TextInput placeholder="비밀번호를 다시 입력 해주세요 (4 ~ 12자)" />
       </View>
-      <Button style={s.summitButton} isBold>
+      <Button style={s.summitButton} isBold onPress={() => {}}>
         비밀번호 변경완료
       </Button>
     </View>
