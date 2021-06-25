@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, View } from 'react-native';
-import { TextInput, Text } from '#components';
+import { View } from 'react-native';
+import { TextInput, Text, StyleSheet } from '#components';
 
 const SigninInput = ({ values, onChange, onBlur, errors, touched }) => {
   const { email, password } = values;
@@ -37,6 +37,8 @@ SigninInput.propTypes = {
   values: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+  touched: PropTypes.object.isRequired,
 };
 
 export default SigninInput;

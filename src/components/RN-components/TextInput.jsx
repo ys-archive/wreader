@@ -11,6 +11,7 @@ export const TextInput = props => {
         ...s.root,
         ...props.style,
       }}
+      autoCapitalize={false}
     />
   );
 };

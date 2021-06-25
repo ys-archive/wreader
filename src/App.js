@@ -6,8 +6,8 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { ReduxProvider } from './store';
 // import { NavigationProvider } from '#navigators';
-import Signin from './screens/auth/sign-in/Signin';
 import { loadFontsAsync } from './constants/fonts';
+import Signin from './screens/auth/sign-in/Signin';
 import Signup from './screens/auth/sign-up/Signup';
 import Signup2 from './screens/auth/sign-up2/Signup2';
 import FindPassword from './screens/auth/find-password/FindPassword';
@@ -31,8 +31,8 @@ const App = () => {
   return (
     <SafeAreaProvider>
       <ReduxProvider>
-        <Signin />
-        {/* <Signup /> */}
+        {/* <Signin /> */}
+        <Signup />
         {/* <Signup2 /> */}
         {/* <FindPassword /> */}
         {/* <ChangePassword /> */}

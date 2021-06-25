@@ -1,9 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { CheckBox, Button } from '#components';
-import { actionNames, usePolicyReducer } from '../hooks/usePolicyReducer';
+import PropTypes from 'prop-types';
+import { View } from 'react-native';
+import { CheckBox, Button, StyleSheet, Text } from '#components';
+import { actionNames, usePolicyReducer } from '../../hooks/usePolicyReducer';
 
-const SignupPolicyAndConditions = () => {
+const SignupPolicyAndConditions = ({ onSubmit }) => {
   const [state, dispatch] = usePolicyReducer();
   const {
     isAllAllowed,
@@ -72,12 +73,20 @@ const SignupPolicyAndConditions = () => {
 
       <View>
         {/* TODO: 다음 구현 열기 */}
-        <Button style={s.nextButton} onPress={() => {}}>
+        <Button style={s.nextButton} onPress={onSubmit}>
           다음
         </Button>
       </View>
     </View>
   );
+};
+
+SignupPolicyAndConditions.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
+
+SignupPolicyAndConditions.defaultProps = {
+  //
 };
 
 export default SignupPolicyAndConditions;
@@ -97,6 +106,8 @@ const s = StyleSheet.create({
   policyDetailText: {
     position: 'absolute',
     right: '0%',
-    // top: '77%',
+  },
+  autoLoginText: {
+    marginLeft: '5%',
   },
 });
