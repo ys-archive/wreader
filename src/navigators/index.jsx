@@ -7,7 +7,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import * as ScreenNames from './ScreenNames';
 
 import EventModal from '../screens/EventModal';
-import MainDrawer from './stack/MainScreen/MainDrawer';
+import MainDrawer from './MainScreen/MainDrawer';
 
 export const NavigationProvider = ({ children }) => (
   <NavigationContainer>
@@ -33,9 +33,10 @@ const RootStackScreenOptions = {
 
 const RootNavigator = () => (
   <NavigatorsProvider mainStack={MainStack} drawer={Drawer}>
-    <RootStack.Navigator mode="modal" screenOptions={RootStackScreenOptions}>
+    <MainDrawer />
+    {/* <RootStack.Navigator mode="modal" screenOptions={RootStackScreenOptions}>
       <RootStack.Screen name={ScreenNames.MainDrawer} component={MainDrawer} />
       <RootStack.Screen name={ScreenNames.EventModal} component={EventModal} />
-    </RootStack.Navigator>
+    </RootStack.Navigator> */}
   </NavigatorsProvider>
 );

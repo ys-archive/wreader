@@ -1,8 +1,8 @@
 import React from 'react';
-import * as ScreenNames from '../../ScreenNames';
+import * as ScreenNames from '../ScreenNames';
 import { useMainStackNav } from '#hooks/useNavigators';
 
-import Main from '../../../screens/Main';
+import Main from '../../screens/Main';
 
 const MainStack = () => {
   const MainStack = useMainStackNav();
