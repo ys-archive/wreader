@@ -6,10 +6,15 @@ import { useMainDrawerScreenOptions } from '../../hooks/useNavigationScreenOptio
 import ContactUs from '../../screens/contact-us/ContactUs';
 import PolicyAndCondition from '../../screens/PolicyAndCondition';
 import MainStack from './MainStack';
+import Login from '../../screens/auth/sign-in/Signin';
+
+import { useStoreState } from 'easy-peasy';
+import { selectIsLoggedIn } from '#store/selectors';
 
 const MainDrawer = () => {
   const Drawer = useDrawerNav();
   const mainDrawerScreenOptions = useMainDrawerScreenOptions();
+  const isLoggedIn = useStoreState(selectIsLoggedIn);
 
   return (
     <Drawer.Navigator
@@ -18,6 +23,15 @@ const MainDrawer = () => {
       drawerStyle={{ width: 200 }}
       screenOptions={{ ...mainDrawerScreenOptions }}
     >
+      <Drawer.Screen
+        name={ScreenNames.MainStack}
+        component={MainStack}
+        options={() => ({
+          // drawerLabel: () => null,
+          title: '홈',
+          // drawerIcon: () => null,
+        })}
+      />
       <Drawer.Screen
         name={ScreenNames.ContactUs}
         component={ContactUs}
@@ -32,15 +46,15 @@ const MainDrawer = () => {
           title: '이용 약관',
         })}
       />
-      <Drawer.Screen
-        name={ScreenNames.MainStack}
-        component={MainStack}
-        options={() => ({
-          // drawerLabel: () => null,
-          title: '홈',
-          // drawerIcon: () => null,
-        })}
-      />
+      {!isLoggedIn && (
+        <Drawer.Screen
+          name={ScreenNames.Login}
+          component={Login}
+          options={() => ({
+            title: '로그인',
+          })}
+        />
+      )}
     </Drawer.Navigator>
   );
 };
