@@ -39,6 +39,7 @@ const SignupForms = () => {
         style: 'destructive',
       },
     ]);
+    // TODO: data 를 넘긴다!
     nav?.navigate(ScreenNames.Signup2);
   };
 
@@ -47,7 +48,6 @@ const SignupForms = () => {
     useFormik({
       initialValues,
       validationSchema,
-      // TODO: 실제 가입 처리 (SWR)
       onSubmit,
     });
 
