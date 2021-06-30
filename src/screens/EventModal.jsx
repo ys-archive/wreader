@@ -1,22 +1,23 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
-const Main = () => {
+const EventModal = () => {
   const nav = useNavigation();
+
   return (
     <View>
-      <Text>Main Page</Text>
+      <Text>Event Modal Screen!</Text>
       <Button
-        title="Open Modal"
+        title="Close Modal"
         onPress={() => {
-          nav.navigate('EventModal');
+          nav.goBack();
         }}
       />
     </View>
   );
 };
 
-export default Main;
+export default EventModal;
 
 const styles = StyleSheet.create({});

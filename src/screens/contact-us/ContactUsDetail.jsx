@@ -1,12 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-const ContactUsList = () => (
+const ContactUsDetail = () => (
   <View>
-    <Text>ContactUsList Page</Text>
+    <Text>Contact Us Detail!</Text>
   </View>
 );
 
-export default ContactUsList;
+export default ContactUsDetail;
 
 const styles = StyleSheet.create({});

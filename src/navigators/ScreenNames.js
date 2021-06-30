@@ -1,4 +1,6 @@
 export const Main = 'Main';
+export const MainStack = 'MainStack';
+export const MainDrawer = 'MainDrawer';
 export const PolicyAndCondition = 'PolicyAndCondition';
 
 // user
@@ -17,3 +19,6 @@ export const Signup2 = 'Signup2';
 // contact-us
 export const ContactUs = 'ContactUs';
 export const ContactUsList = 'ContactUsList';
+
+// modals
+export const EventModal = 'EventModal';

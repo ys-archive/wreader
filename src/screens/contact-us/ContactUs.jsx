@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 const ContactUs = () => (
   <View>
-    <Text>Contact Us Page</Text>
+    <Text>ContactUs!</Text>
   </View>
 );
 
