@@ -1,6 +1,8 @@
 // auth
 // const getAuth = actions => actions.model;
-export const actionsSetIsAutoLogin = actions => actions.auth.setIsAutoLogin;
-export const actionsToggleIsAutoLogin = actions =>
-  actions.auth.toggleIsAutoLogin;
-export const actionsLogin = actions => actions.auth.login;
+export const actionsSetAutoLogin = actions => actions.auth.setIsAutoLogin;
+export const actionsToggleAutoLogin = actions => actions.auth.toggleIsAutoLogin;
+
+// export const actionsLogin = actions => actions.auth.login;
+export const actionsSetLoggedIn = actions => actions.auth.setLoggedIn;
+export const actionsSetLoggedOut = actions => actions.auth.setLoggedOut;

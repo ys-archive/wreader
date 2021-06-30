@@ -1,6 +1,7 @@
 import React from 'react';
 import * as ScreenNames from '../ScreenNames';
 import { useDrawerNav } from '../../hooks/useNavigators';
+import { useMainDrawerScreenOptions } from '../../hooks/useNavigationScreenOptions';
 
 import ContactUs from '../../screens/contact-us/ContactUs';
 import PolicyAndCondition from '../../screens/PolicyAndCondition';
@@ -8,26 +9,27 @@ import MainStack from './MainStack';
 
 const MainDrawer = () => {
   const Drawer = useDrawerNav();
+  const mainDrawerScreenOptions = useMainDrawerScreenOptions();
 
   return (
     <Drawer.Navigator
       initialRouteName={ScreenNames.MainStack}
       drawerPosition="right"
       drawerStyle={{ width: 200 }}
-      // screenOptions={{ drawerPosition: 'right' }}
+      screenOptions={{ ...mainDrawerScreenOptions }}
     >
       <Drawer.Screen
         name={ScreenNames.ContactUs}
         component={ContactUs}
         options={() => ({
-          title: 'Contact us',
+          title: '문의하기',
         })}
       />
       <Drawer.Screen
         name={ScreenNames.PolicyAndCondition}
         component={PolicyAndCondition}
         options={() => ({
-          title: 'Policy & Condition',
+          title: '이용 약관',
         })}
       />
       <Drawer.Screen
@@ -35,7 +37,7 @@ const MainDrawer = () => {
         component={MainStack}
         options={() => ({
           // drawerLabel: () => null,
-          title: 'Main',
+          title: '홈',
           // drawerIcon: () => null,
         })}
       />

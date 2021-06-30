@@ -1,8 +1,10 @@
 import React from 'react';
-import { NavigatorsProvider } from '../hooks/useNavigators';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+
+import { NavigatorsProvider } from '../hooks/useNavigators';
+import { NavigationScreenOptionsProvider } from '../hooks/useNavigationScreenOptions';
 
 import * as ScreenNames from './ScreenNames';
 
@@ -16,7 +18,6 @@ export const NavigationProvider = ({ children }) => (
   </NavigationContainer>
 );
 
-const RootStack = createStackNavigator();
 const MainStack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -27,16 +28,21 @@ const Drawer = createDrawerNavigator();
 //
 //   - policy and condition
 
-const RootStackScreenOptions = {
+const MainDrawerScreenOptions = {
+  headerShown: false,
+};
+
+const MainStackScreenOptions = {
   headerShown: false,
 };
 
 const RootNavigator = () => (
   <NavigatorsProvider mainStack={MainStack} drawer={Drawer}>
-    <MainDrawer />
-    {/* <RootStack.Navigator mode="modal" screenOptions={RootStackScreenOptions}>
-      <RootStack.Screen name={ScreenNames.MainDrawer} component={MainDrawer} />
-      <RootStack.Screen name={ScreenNames.EventModal} component={EventModal} />
-    </RootStack.Navigator> */}
+    <NavigationScreenOptionsProvider
+      mainDrawerScreenOptions={MainDrawerScreenOptions}
+      mainStackScreenOptions={MainStackScreenOptions}
+    >
+      <MainDrawer />
+    </NavigationScreenOptionsProvider>
   </NavigatorsProvider>
 );
