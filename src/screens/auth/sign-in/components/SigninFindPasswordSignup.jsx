@@ -2,17 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import { StyleSheet, Separator, Button } from '#components';
+import { useNavigation } from '@react-navigation/native';
+import * as ScreenNames from '../../../../navigators/ScreenNames';
 
-const SigninFindPasswordSignup = () => (
-  // TODO: 비밀번호 찾기 로직
-  // TODO: 회원가입 로직
-  <View style={s.root}>
-    <Button onPress={() => {}}>비밀번호찾기</Button>
-    <Separator direction="vertical" width={2} height="60%" />
-    <Button onPress={() => {}}>회원가입</Button>
-  </View>
-);
+const SigninFindPasswordSignup = () => {
+  const nav = useNavigation();
 
+  return (
+    // TODO: 비밀번호 찾기 로직
+    // TODO: 회원가입 로직
+    <View style={s.root}>
+      <Button onPress={() => nav?.navigate(ScreenNames.FindPassword)}>
+        비밀번호찾기
+      </Button>
+      <Separator direction="vertical" width={2} height="60%" />
+      <Button onPress={() => nav?.navigate(ScreenNames.Signup)}>
+        회원가입
+      </Button>
+    </View>
+  );
+};
 SigninFindPasswordSignup.propTypes = {};
 
 SigninFindPasswordSignup.defaultProps = {};

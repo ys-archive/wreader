@@ -2,6 +2,8 @@ import React from 'react';
 import { View, Alert } from 'react-native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useNavigation } from '@react-navigation/native';
+import * as ScreenNames from '#navigators/ScreenNames';
 
 // import { AccountStateProvider } from '../../hooks/useAccountState';
 import SignupInput from './SignupInput';
@@ -28,18 +30,19 @@ const validationSchema = Yup.object({
   ),
 });
 
-const onSubmit = values => {
-  Alert.alert('onLogin!', JSON.stringify(values, null, 2), [
-    {
-      text: 'OK!',
-      onPress: () => console.log('alert closed!!'),
-      style: 'destructive',
-    },
-  ]);
-  //
-};
-
 const SignupForms = () => {
+  const onSubmit = values => {
+    Alert.alert('onLogin!', JSON.stringify(values, null, 2), [
+      {
+        text: 'OK!',
+        onPress: () => console.log('alert closed!!'),
+        style: 'destructive',
+      },
+    ]);
+    nav?.navigate(ScreenNames.Signup2);
+  };
+
+  const nav = useNavigation();
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
     useFormik({
       initialValues,

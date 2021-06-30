@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Alert } from 'react-native';
-// import { useStoreActions } from 'easy-peasy';
-// import { actionsLogin } from '#store/actions';
+import { useStoreActions } from 'easy-peasy';
+import { actionsSetLoggedIn } from '#store/actions';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -22,18 +22,20 @@ const validationSchema = Yup.object({
     .required('필수 입력 항목입니다.'),
 });
 
-const onSubmit = values => {
-  Alert.alert('onLogin!', JSON.stringify(values, null, 2), [
-    {
-      text: 'OK!',
-      onPress: () => console.log('alert closed!!'),
-      style: 'destructive',
-    },
-  ]);
-  //
-};
-
 const SigninForms = () => {
+  const setLoggedIn = useStoreActions(actionsSetLoggedIn);
+
+  const onSubmit = values => {
+    Alert.alert('onLogin!', JSON.stringify(values, null, 2), [
+      {
+        text: 'OK!',
+        onPress: () => console.log('alert closed!!'),
+        style: 'destructive',
+      },
+    ]);
+    setLoggedIn();
+  };
+
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
     useFormik({
       initialValues,

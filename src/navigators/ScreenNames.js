@@ -1,24 +1,22 @@
-export const Main = 'Main';
+export const Main = 'MainStack/Main';
 export const MainStack = 'MainStack';
 export const MainDrawer = 'MainDrawer';
-export const PolicyAndCondition = 'PolicyAndCondition';
+export const PolicyAndCondition = 'MainDrawer/PolicyAndCondition';
 
 // user
 export const MyProfile = 'MyProfile';
 export const OtherProfile = 'OtherProfile';
 
 // auth/find-password
-export const ChangePassword = 'ChangePassword';
-export const FindPassword = 'FindPassword';
+export const ChangePassword = 'LoginStack/ChangePassword';
+export const FindPassword = 'LoginStack/FindPassword';
 
 // auth/signin
-export const Login = 'Login';
-export const Signup = 'Signup';
-export const Signup2 = 'Signup2';
+export const LoginStack = 'LoginStack';
+export const Login = 'LoginStack/Login';
+export const Signup = 'LoginStack/Signup';
+export const Signup2 = 'LoginStack/Signup2';
 
 // contact-us
-export const ContactUs = 'ContactUs';
-export const ContactUsList = 'ContactUsList';
-
-// modals
-export const EventModal = 'EventModal';
+export const ContactUsDetail = 'MainDrawer/ContactUs/Detail';
+export const ContactUs = 'MainDrawer/ContactUs';

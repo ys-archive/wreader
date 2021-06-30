@@ -1,15 +1,9 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createDrawerNavigator } from '@react-navigation/drawer';
 
-import { NavigatorsProvider } from '../hooks/useNavigators';
 import { NavigationScreenOptionsProvider } from '../hooks/useNavigationScreenOptions';
 
-import * as ScreenNames from './ScreenNames';
-
-import EventModal from '../screens/EventModal';
-import MainDrawer from './MainScreen/MainDrawer';
+import MainDrawer from './main-screen/MainDrawer';
 
 export const NavigationProvider = ({ children }) => (
   <NavigationContainer>
@@ -17,9 +11,6 @@ export const NavigationProvider = ({ children }) => (
     {children}
   </NavigationContainer>
 );
-
-const MainStack = createStackNavigator();
-const Drawer = createDrawerNavigator();
 
 // main screen
 // drawer
@@ -37,12 +28,10 @@ const MainStackScreenOptions = {
 };
 
 const RootNavigator = () => (
-  <NavigatorsProvider mainStack={MainStack} drawer={Drawer}>
-    <NavigationScreenOptionsProvider
-      mainDrawerScreenOptions={MainDrawerScreenOptions}
-      mainStackScreenOptions={MainStackScreenOptions}
-    >
-      <MainDrawer />
-    </NavigationScreenOptionsProvider>
-  </NavigatorsProvider>
+  <NavigationScreenOptionsProvider
+    mainDrawerScreenOptions={MainDrawerScreenOptions}
+    mainStackScreenOptions={MainStackScreenOptions}
+  >
+    <MainDrawer />
+  </NavigationScreenOptionsProvider>
 );

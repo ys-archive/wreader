@@ -1,18 +1,19 @@
 import React from 'react';
 import * as ScreenNames from '../ScreenNames';
-import { useMainStackNav } from '../../hooks/useNavigators';
+import { createStackNavigator } from '@react-navigation/stack';
 import { useMainStackScreenOptions } from '../../hooks/useNavigationScreenOptions';
 
 import Main from '../../screens/Main';
 
+const Stack = createStackNavigator();
+
 const MainStack = () => {
-  const MainStack = useMainStackNav();
   const mainStackScreenOptions = useMainStackScreenOptions();
 
   return (
-    <MainStack.Navigator screenOptions={{ ...mainStackScreenOptions }}>
-      <MainStack.Screen name={ScreenNames.Main} component={Main} />
-    </MainStack.Navigator>
+    <Stack.Navigator screenOptions={{ ...mainStackScreenOptions }}>
+      <Stack.Screen name={ScreenNames.Main} component={Main} />
+    </Stack.Navigator>
   );
 };
 

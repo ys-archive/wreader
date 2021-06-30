@@ -1,18 +1,19 @@
 import React from 'react';
 import * as ScreenNames from '../ScreenNames';
-import { useDrawerNav } from '../../hooks/useNavigators';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { useMainDrawerScreenOptions } from '../../hooks/useNavigationScreenOptions';
 
 import ContactUs from '../../screens/contact-us/ContactUs';
 import PolicyAndCondition from '../../screens/PolicyAndCondition';
 import MainStack from './MainStack';
-import Login from '../../screens/auth/sign-in/Signin';
+import LoginStack from '../auth/LoginStack';
 
 import { useStoreState } from 'easy-peasy';
 import { selectIsLoggedIn } from '#store/selectors';
 
+const Drawer = createDrawerNavigator();
+
 const MainDrawer = () => {
-  const Drawer = useDrawerNav();
   const mainDrawerScreenOptions = useMainDrawerScreenOptions();
   const isLoggedIn = useStoreState(selectIsLoggedIn);
 
@@ -33,7 +34,7 @@ const MainDrawer = () => {
         })}
       />
       <Drawer.Screen
-        name={ScreenNames.ContactUs}
+        name={ScreenNames.ContactUsDetail}
         component={ContactUs}
         options={() => ({
           title: '문의하기',
@@ -48,8 +49,8 @@ const MainDrawer = () => {
       />
       {!isLoggedIn && (
         <Drawer.Screen
-          name={ScreenNames.Login}
-          component={Login}
+          name={ScreenNames.LoginStack}
+          component={LoginStack}
           options={() => ({
             title: '로그인',
           })}
