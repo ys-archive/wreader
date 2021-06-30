@@ -5,7 +5,6 @@ import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '#navigators/ScreenNames';
 import { StyleSheet, Text, TextInput, Button } from '#components';
-import { onChange } from 'react-native-reanimated';
 
 const initialValues = {
   nickname: '',

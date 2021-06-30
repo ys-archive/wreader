@@ -6,7 +6,7 @@ import { useMainDrawerScreenOptions } from '../../hooks/useNavigationScreenOptio
 import ContactUs from '../../screens/contact-us/ContactUs';
 import PolicyAndCondition from '../../screens/PolicyAndCondition';
 import MainStack from './MainStack';
-import LoginStack from '../auth/LoginStack';
+import SigninStack from '../auth/SigninStack';
 
 import { useStoreState } from 'easy-peasy';
 import { selectIsLoggedIn } from '#store/selectors';
@@ -49,8 +49,8 @@ const MainDrawer = () => {
       />
       {!isLoggedIn && (
         <Drawer.Screen
-          name={ScreenNames.LoginStack}
-          component={LoginStack}
+          name={ScreenNames.SigninStack}
+          component={SigninStack}
           options={() => ({
             title: '로그인',
           })}

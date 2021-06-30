@@ -1,9 +1,43 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Alert } from 'react-native';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { useNavigation } from '@react-navigation/native';
+import * as ScreenNames from '#navigators/ScreenNames';
 import { StyleSheet, Text, TextInput, Button } from '#components';
 import { Ionicons } from '@expo/vector-icons';
 
+const initialValues = {
+  email: '',
+};
+
+const validationSchema = Yup.object({
+  email: Yup.string()
+    .email('이메일 형식에 맞지 않습니다. (예시: wreader1@gmail.com ...)')
+    .required('필수 항목입니다.'),
+});
+
 const FindPassword = () => {
+  const nav = useNavigation();
+  const onSubmit = values => {
+    Alert.alert('onLogin!', JSON.stringify(values, null, 2), [
+      {
+        text: 'OK!',
+        onPress: () => console.log('alert closed!!'),
+        style: 'destructive',
+      },
+    ]);
+    nav?.navigate(ScreenNames.ChangePassword);
+  };
+
+  const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
+    useFormik({
+      initialValues,
+      validationSchema,
+      onSubmit,
+    });
+  const { email } = values;
+
   return (
     <View style={s.root}>
       <View>
@@ -14,7 +48,18 @@ const FindPassword = () => {
         <Ionicons name="ios-mail-outline" size={70} color="black" />
       </View>
       <View style={s.emailSection}>
-        <TextInput style={s.email} placeholder="example@gmail.com..." />
+        <TextInput
+          style={s.email}
+          value={email}
+          onBlur={handleBlur('email')}
+          onChangeText={handleChange('email')}
+          placeholder="example@gmail.com..."
+        />
+        {touched.email && errors.email ? (
+          <View>
+            <Text>{errors.email}</Text>
+          </View>
+        ) : null}
       </View>
       <View>
         <Text>인증메일이 도착하지 않았나요?</Text>
@@ -26,7 +71,7 @@ const FindPassword = () => {
         >
           인증메일 재발송
         </Button>
-        <Button style={s.summitButton} onPress={() => {}}>
+        <Button style={s.summitButton} onPress={handleSubmit}>
           메일 인증완료
         </Button>
       </View>
