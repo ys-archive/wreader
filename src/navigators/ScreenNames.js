@@ -18,5 +18,6 @@ export const Signup = 'SigninStack/Signup';
 export const Signup2 = 'SigninStack/Signup2';
 
 // contact-us
-export const ContactUsDetail = 'MainDrawer/ContactUs/Detail';
-export const ContactUs = 'MainDrawer/ContactUs';
+export const ContactUsStack = 'ContactUsStack';
+export const ContactUsDetail = 'ContactUsStack/ContactUs/Detail';
+export const ContactUs = 'ContactUsStack/ContactUs';

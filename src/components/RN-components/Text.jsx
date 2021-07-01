@@ -4,8 +4,7 @@ import { Text as OrigText } from 'react-native';
 import { StyleSheet } from './StyleSheet';
 import { regular, bold } from '#constants/fonts';
 
-export const Text = props => {
-  const { style = {}, isBold = false, children } = props;
+export const Text = ({ style = {}, isBold = false, children }) => {
   return (
     <OrigText
       style={{ ...s.root, ...style, fontFamily: !isBold ? regular : bold }}

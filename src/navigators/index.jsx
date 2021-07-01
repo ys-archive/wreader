@@ -12,15 +12,8 @@ export const NavigationProvider = ({ children }) => (
   </NavigationContainer>
 );
 
-// main screen
-// drawer
-//   - my profile
-//   - contact us list
-//
-//   - policy and condition
-
 const MainDrawerScreenOptions = {
-  headerShown: false,
+  // headerShown: false,
 };
 
 const MainStackScreenOptions = {

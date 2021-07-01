@@ -3,9 +3,9 @@ import * as ScreenNames from '../ScreenNames';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { useMainDrawerScreenOptions } from '../../hooks/useNavigationScreenOptions';
 
-import ContactUs from '../../screens/contact-us/ContactUs';
-import PolicyAndCondition from '../../screens/PolicyAndCondition';
 import MainStack from './MainStack';
+import ContactUsStack from '../contact-us/ContactUsStack';
+import PolicyAndCondition from '../../screens/PolicyAndCondition';
 import SigninStack from '../auth/SigninStack';
 
 import { useStoreState } from 'easy-peasy';
@@ -34,8 +34,8 @@ const MainDrawer = () => {
         })}
       />
       <Drawer.Screen
-        name={ScreenNames.ContactUsDetail}
-        component={ContactUs}
+        name={ScreenNames.ContactUsStack}
+        component={ContactUsStack}
         options={() => ({
           title: '문의하기',
         })}
