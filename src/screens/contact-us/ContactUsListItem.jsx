@@ -1,10 +1,10 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, SafeAreaView } from 'react-native';
 import { StyleSheet, Text } from '#components';
 
-const ContactUsListItem = ({ status, date, contents }) => {
+const ContactUsListItem = ({ item: { status, date, contents } }) => {
   return (
-    <View style={s.root}>
+    <SafeAreaView style={s.root}>
       <View style={s.row1}>
         <Text
           style={
@@ -16,9 +16,9 @@ const ContactUsListItem = ({ status, date, contents }) => {
         <Text style={s.dateText}>{date}</Text>
       </View>
       <View style={s.row2}>
-        <Text>{contents}</Text>
+        <Text style={s.contentsText}>{contents}</Text>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -27,26 +27,39 @@ export default ContactUsListItem;
 const s = StyleSheet.create({
   root: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    marginVertical: 5,
+    paddingVertical: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: '#000',
   },
   row1: {
     flexDirection: 'row',
+    width: '90%',
+    alignItems: 'center',
   },
   statusTextPending: {
     color: 'white',
     backgroundColor: 'navy',
-    width: 70,
-    height: 30,
+    // width: 70,
+    // height: 30,
+    paddingHorizontal: 10,
+    paddingVertical: 7,
   },
   statusTextComplete: {
     color: 'white',
     backgroundColor: 'grey',
-    width: 70,
-    height: 30,
+    // width: 70,
+    // height: 30,
+    paddingHorizontal: 10,
+    paddingVertical: 7,
   },
-  dateText: {},
+  dateText: {
+    marginLeft: 10,
+  },
   row2: {
     flexDirection: 'row',
+  },
+  contentsText: {
+    fontSize: 18,
   },
 });

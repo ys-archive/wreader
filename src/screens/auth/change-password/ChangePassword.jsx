@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Alert } from 'react-native';
+import { View, Alert, ScrollView } from 'react-native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
@@ -46,41 +46,46 @@ const ChangePassword = () => {
   const { password, passwordRepeat } = values;
 
   return (
-    <View style={s.root}>
-      <View style={s.row1}>
-        <Ionicons name="checkmark" size={70} color="black" />
-        <Text>새로운 비밀번호를 입력 해주세요.</Text>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      showsHorizontalScrollIndicator={false}
+    >
+      <View style={s.root}>
+        <View style={s.row1}>
+          <Ionicons name="checkmark" size={70} color="black" />
+          <Text>새로운 비밀번호를 입력 해주세요.</Text>
+        </View>
+        <View>
+          <TextInput
+            value={password}
+            onBlue={handleBlur('password')}
+            onChangeText={handleChange('password')}
+            placeholder="비밀번호 입력 해주세요 (4 ~ 12자)"
+            secureTextEntry
+          />
+          {touched.password && errors.password ? (
+            <View>
+              <Text>{errors.password}</Text>
+            </View>
+          ) : null}
+          <TextInput
+            value={passwordRepeat}
+            onBlue={handleBlur('passwordRepeat')}
+            onChangeText={handleChange('passwordRepeat')}
+            placeholder="비밀번호를 다시 입력 해주세요 (4 ~ 12자)"
+            secureTextEntry
+          />
+          {touched.passwordRepeat && errors.passwordRepeat ? (
+            <View>
+              <Text>{errors.passwordRepeat}</Text>
+            </View>
+          ) : null}
+        </View>
+        <Button style={s.summitButton} onPress={handleSubmit} isBold>
+          비밀번호 변경완료
+        </Button>
       </View>
-      <View>
-        <TextInput
-          value={password}
-          onBlue={handleBlur('password')}
-          onChangeText={handleChange('password')}
-          placeholder="비밀번호 입력 해주세요 (4 ~ 12자)"
-          secureTextEntry
-        />
-        {touched.password && errors.password ? (
-          <View>
-            <Text>{errors.password}</Text>
-          </View>
-        ) : null}
-        <TextInput
-          value={passwordRepeat}
-          onBlue={handleBlur('passwordRepeat')}
-          onChangeText={handleChange('passwordRepeat')}
-          placeholder="비밀번호를 다시 입력 해주세요 (4 ~ 12자)"
-          secureTextEntry
-        />
-        {touched.passwordRepeat && errors.passwordRepeat ? (
-          <View>
-            <Text>{errors.passwordRepeat}</Text>
-          </View>
-        ) : null}
-      </View>
-      <Button style={s.summitButton} onPress={handleSubmit} isBold>
-        비밀번호 변경완료
-      </Button>
-    </View>
+    </ScrollView>
   );
 };
 

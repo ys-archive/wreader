@@ -27,12 +27,14 @@ const SignupInput = ({ values, onChange, onBlur, errors, touched }) => {
         onChangeText={onChange('password')}
         onBlur={onBlur('password')}
         placeholder="비밀번호를 입력해 주세요"
+        secureTextEntry
       />
       <TextInput
         value={passwordRepeat}
         onChangeText={onChange('passwordRepeat')}
         onBlur={onBlur('passwordRepeat')}
         placeholder="비밀번호를 다시 입력해 주세요"
+        secureTextEntry
       />
       {touched.passwordRepeat && errors.passwordRepeat ? (
         <View>

@@ -1,7 +1,9 @@
 export const Main = 'MainStack/Main';
 export const MainStack = 'MainStack';
 export const MainDrawer = 'MainDrawer';
-export const PolicyAndCondition = 'MainDrawer/PolicyAndCondition';
+
+export const PolicyAndConditionStack = 'PolicyAndConditionStack';
+export const PolicyAndCondition = 'PolicyAndConditionStack/PolicyAndCondition';
 
 // user
 export const MyProfile = 'MyProfile';

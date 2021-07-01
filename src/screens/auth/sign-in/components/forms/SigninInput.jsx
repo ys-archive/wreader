@@ -23,6 +23,7 @@ const SigninInput = ({ values, onChange, onBlur, errors, touched }) => {
         onChangeText={onChange('password')}
         onBlur={onBlur('password')}
         placeholder="비밀번호를 입력해 주세요"
+        secureTextEntry
       />
       {touched.password && errors.password ? (
         <View>

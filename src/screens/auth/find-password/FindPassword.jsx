@@ -1,5 +1,11 @@
 import React from 'react';
-import { View, Alert } from 'react-native';
+import {
+  View,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+} from 'react-native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
@@ -39,43 +45,53 @@ const FindPassword = () => {
   const { email } = values;
 
   return (
-    <View style={s.root}>
-      <View>
-        <Text>인증메일이 발송되었습니다.</Text>
-        <Text>인증메일을 확인 후 [메일 인증환료]</Text>
-        <Text>버튼을 터치해 주세요.</Text>
-
-        <Ionicons name="ios-mail-outline" size={70} color="black" />
-      </View>
-      <View style={s.emailSection}>
-        <TextInput
-          style={s.email}
-          value={email}
-          onBlur={handleBlur('email')}
-          onChangeText={handleChange('email')}
-          placeholder="example@gmail.com..."
-        />
-        {touched.email && errors.email ? (
-          <View>
-            <Text>{errors.email}</Text>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      showsHorizontalScrollIndicator={false}
+    >
+      <KeyboardAvoidingView
+        enabled
+        style={s.root}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+        <View>
+          <Text>인증메일이 발송되었습니다.</Text>
+          <Text>인증메일을 확인 후 [메일 인증완료]</Text>
+          <Text>버튼을 터치해 주세요.</Text>
+          <View style={{ alignSelf: 'center' }}>
+            <Ionicons name="ios-mail-outline" size={120} color="black" />
           </View>
-        ) : null}
-      </View>
-      <View>
-        <Text>인증메일이 도착하지 않았나요?</Text>
-        <Text>[인증메일 재발송] 버튼을 터치해 주세요.</Text>
-        <Button
-          style={s.resendAuthMail}
-          textStyle={s.resendAuthMailText}
-          onPress={() => {}}
-        >
-          인증메일 재발송
-        </Button>
-        <Button style={s.summitButton} onPress={handleSubmit}>
-          메일 인증완료
-        </Button>
-      </View>
-    </View>
+        </View>
+        <View style={s.emailSection}>
+          <TextInput
+            style={s.email}
+            value={email}
+            onBlur={handleBlur('email')}
+            onChangeText={handleChange('email')}
+            placeholder="example@gmail.com..."
+          />
+          {/* {touched.email && errors.email ? (
+            <View>
+              <Text>{errors.email}</Text>
+            </View>
+          ) : null} */}
+        </View>
+        <View>
+          <Text>인증메일이 도착하지 않았나요?</Text>
+          <Text>[인증메일 재발송] 버튼을 터치해 주세요.</Text>
+          <Button
+            style={s.resendAuthMail}
+            textStyle={s.resendAuthMailText}
+            onPress={() => {}}
+          >
+            인증메일 재발송
+          </Button>
+          <Button style={s.summitButton} onPress={handleSubmit}>
+            메일 인증완료
+          </Button>
+        </View>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 
@@ -83,7 +99,7 @@ export default FindPassword;
 
 const s = StyleSheet.create({
   root: {
-    flex: 1,
+    // flex: 1,
     paddingHorizontal: 15,
     paddingVertical: '25%',
     width: '100%',
@@ -100,7 +116,7 @@ const s = StyleSheet.create({
   },
   summitButton: {
     marginTop: '10%',
-    paddingHorizontal: '40%',
+    paddingHorizontal: '20%',
     paddingVertical: '4%',
     borderWidth: 1,
     borderRadius: 15,

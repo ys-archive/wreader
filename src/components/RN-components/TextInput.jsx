@@ -33,7 +33,5 @@ const s = StyleSheet.create({
     padding: 10,
     borderBottomWidth: 1,
     // height: 40,
-    // margin: 12,
-    // borderWidth: 1,
   },
 });

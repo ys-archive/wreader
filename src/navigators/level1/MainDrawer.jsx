@@ -1,20 +1,21 @@
 import React from 'react';
-import * as ScreenNames from '../ScreenNames';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { useMainDrawerScreenOptions } from '../../hooks/useNavigationScreenOptions';
-
-import MainStack from './MainStack';
-import ContactUsStack from '../contact-us/ContactUsStack';
-import PolicyAndCondition from '../../screens/PolicyAndCondition';
-import SigninStack from '../auth/SigninStack';
-
 import { useStoreState } from 'easy-peasy';
 import { selectIsLoggedIn } from '#store/selectors';
+
+import * as ScreenNames from '../ScreenNames';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+
+import HeaderLeftGoBackHome from '../header/HeaderLeftGoBackHome';
+
+import MainStack from '../level2/MainStack';
+import ContactUsStack from '../level2/ContactUsStack';
+import SigninStack from '../level2/SigninStack';
+import PolicyAndConditionStack from '../level2/PolicyAndConditionStack';
 
 const Drawer = createDrawerNavigator();
 
 const MainDrawer = () => {
-  const mainDrawerScreenOptions = useMainDrawerScreenOptions();
+  // const mainDrawerScreenOptions = useMainDrawerScreenOptions();
   const isLoggedIn = useStoreState(selectIsLoggedIn);
 
   return (
@@ -22,14 +23,14 @@ const MainDrawer = () => {
       initialRouteName={ScreenNames.MainStack}
       drawerPosition="right"
       drawerStyle={{ width: 200 }}
-      screenOptions={{ ...mainDrawerScreenOptions }}
+      // screenOptions={{ ...mainDrawerScreenOptions }}
     >
       <Drawer.Screen
         name={ScreenNames.MainStack}
         component={MainStack}
         options={() => ({
-          // drawerLabel: () => null,
           title: '홈',
+          // drawerLabel: () => null,
           // drawerIcon: () => null,
         })}
       />
@@ -41,8 +42,8 @@ const MainDrawer = () => {
         })}
       />
       <Drawer.Screen
-        name={ScreenNames.PolicyAndCondition}
-        component={PolicyAndCondition}
+        name={ScreenNames.PolicyAndConditionStack}
+        component={PolicyAndConditionStack}
         options={() => ({
           title: '이용 약관',
         })}

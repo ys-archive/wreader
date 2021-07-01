@@ -40,13 +40,13 @@ export default SigninLogin;
 const s = StyleSheet.create({
   root: {
     flexDirection: 'row',
-    width: '70%',
-    paddingVertical: 10,
+    // width: '90%',
+    marginBottom: 30,
+    marginHorizontal: 15,
     justifyContent: 'space-between',
   },
   autoLogin: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
   },
   autoLoginText: {

@@ -1,5 +1,11 @@
 import React from 'react';
-import { View, Alert } from 'react-native';
+import {
+  View,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+} from 'react-native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
@@ -28,6 +34,8 @@ const validationSchema = Yup.object({
 const Signup2Form = () => {
   // TODO: Signup actions
 
+  const nav = useNavigation();
+
   const onSubmit = values => {
     Alert.alert('onLogin!', JSON.stringify(values, null, 2), [
       {
@@ -37,11 +45,11 @@ const Signup2Form = () => {
       },
     ]);
     // TODO: alert 회원가입이 완료되었습니다
+    // TODO: or alert 회원가입이 실패했습니다.
     // TODO: 실제 가입 처리
-    nav?.navigate(ScreenNames.Login);
+    nav?.navigate(ScreenNames.Signin);
   };
 
-  const nav = useNavigation();
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
     useFormik({
       initialValues,
@@ -72,11 +80,11 @@ const Signup2Form = () => {
           <Button style={s.checkNickNameButton} onPress={() => {}}>
             중복 확인
           </Button>
-          {touched.nickname && errors.nickname ? (
-            <View>
-              <Text>{errors.nickname}</Text>
-            </View>
-          ) : null}
+          {/* {touched.nickname && errors.nickname ? (
+              <View>
+                <Text>{errors.nickname}</Text>
+              </View>
+            ) : null} */}
           <TextInput
             style={s.input}
             value={instagramUrl}
@@ -84,11 +92,11 @@ const Signup2Form = () => {
             onChangeText={handleChange('instagramUrl')}
             placeholder="(선택)"
           />
-          {touched.instagramUrl && errors.instagramUrl ? (
-            <View>
-              <Text>{errors.instagramUrl}</Text>
-            </View>
-          ) : null}
+          {/* {touched.instagramUrl && errors.instagramUrl ? (
+              <View>
+                <Text>{errors.instagramUrl}</Text>
+              </View>
+            ) : null} */}
           <TextInput
             style={s.input}
             value={facebookUrl}
@@ -96,11 +104,11 @@ const Signup2Form = () => {
             onChangeText={handleChange('facebookUrl')}
             placeholder="(선택)"
           />
-          {touched.facebookUrl && errors.facebookUrl ? (
+          {/* {touched.facebookUrl && errors.facebookUrl ? (
             <View>
               <Text>{errors.facebookUrl}</Text>
             </View>
-          ) : null}
+          ) : null} */}
           <TextInput
             style={s.input}
             value={introduction}
@@ -108,11 +116,11 @@ const Signup2Form = () => {
             onChangeText={handleChange('introduction')}
             placeholder="나를 소개할 문구를 적어주세요 (50자)"
           />
-          {touched.introduction && errors.introduction ? (
-            <View>
-              <Text>{errors.introduction}</Text>
-            </View>
-          ) : null}
+          {/* {touched.introduction && errors.introduction ? (
+              <View>
+                <Text>{errors.introduction}</Text>
+              </View>
+            ) : null} */}
         </View>
       </View>
       <Button style={s.summitButton} onPress={handleSubmit}>

@@ -17,6 +17,7 @@ export default Main;
 const s = StyleSheet.create({
   root: {
     flex: 1,
+    backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
   },

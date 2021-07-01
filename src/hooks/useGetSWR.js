@@ -3,10 +3,6 @@ import axios from 'axios';
 import { BASE_URL } from '@env';
 
 export const useGetSWR = path => {
-  if (typeof fetcher !== 'function') {
-    throw new Error('fetcher must be function');
-  }
-
   if (typeof path !== 'string') {
     throw new Error('path must be string');
   }
