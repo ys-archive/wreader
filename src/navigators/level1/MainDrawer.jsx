@@ -26,53 +26,24 @@ const MainDrawer = () => {
     <Drawer.Navigator
       initialRouteName={ScreenNames.MainStack}
       drawerPosition="right"
-      drawerStyle={{ width: 200 }}
-      drawerContent={props => {
-        console.log(props.navigation, props.state);
-        return <DrawerTop {...props} />;
-      }}
-      // screenOptions={{ ...mainDrawerScreenOptions }}
+      drawerStyle={{ width: 180 }}
+      drawerContent={props => <DrawerTop {...props} />}
     >
       <Drawer.Screen
         name={ScreenNames.UserInfoStack}
         component={UserInfoStack}
-        option={() => ({
-          title: null,
-          drawerLabel: () => null,
-          drawerIcon: () => null,
-        })}
       />
-      <Drawer.Screen
-        name={ScreenNames.MainStack}
-        component={MainStack}
-        options={() => ({
-          title: '홈',
-          // drawerLabel: () => null,
-          // drawerIcon: () => null,
-        })}
-      />
+      <Drawer.Screen name={ScreenNames.MainStack} component={MainStack} />
       <Drawer.Screen
         name={ScreenNames.ContactUsStack}
         component={ContactUsStack}
-        options={() => ({
-          title: '문의하기',
-        })}
       />
       <Drawer.Screen
         name={ScreenNames.PolicyAndConditionStack}
         component={PolicyAndConditionStack}
-        options={() => ({
-          title: '이용 약관',
-        })}
       />
       {!isLoggedIn && (
-        <Drawer.Screen
-          name={ScreenNames.SigninStack}
-          component={SigninStack}
-          options={() => ({
-            title: '로그인',
-          })}
-        />
+        <Drawer.Screen name={ScreenNames.SigninStack} component={SigninStack} />
       )}
     </Drawer.Navigator>
   );

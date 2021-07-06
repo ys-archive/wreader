@@ -5,7 +5,7 @@ import { Button } from '#components';
 
 import HeaderLeftGoBackHome from '../header/HeaderLeftGoBackHome';
 
-import MyProfile from '../../screens/user/MyProfile';
+import MyProfile from '../../screens/user/MyProfile/MyProfile';
 
 const Stack = createStackNavigator();
 

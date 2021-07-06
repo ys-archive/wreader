@@ -13,11 +13,11 @@ const SignupInput = ({ values, onChange, onBlur, errors, touched }) => {
         onBlur={onBlur('email')}
         placeholder="이메일을 입력해 주세요"
       />
-      {touched.email && errors.email ? (
+      {/* {touched.email && errors.email ? (
         <View>
           <Text>{errors.email}</Text>
         </View>
-      ) : null}
+      ) : null} */}
       {/* TODO: 이메일 인증 로직 */}
       <Button style={s.checkEmailButton} onPress={() => {}}>
         인증하기
@@ -36,11 +36,11 @@ const SignupInput = ({ values, onChange, onBlur, errors, touched }) => {
         placeholder="비밀번호를 다시 입력해 주세요"
         secureTextEntry
       />
-      {touched.passwordRepeat && errors.passwordRepeat ? (
+      {/* {touched.passwordRepeat && errors.passwordRepeat ? (
         <View>
           <Text>{errors.passwordRepeat}</Text>
         </View>
-      ) : null}
+      ) : null} */}
       {/* TODO: 비밀번호 체크 */}
       <Button style={s.checkPasswordButton} onPress={() => {}}>
         확인

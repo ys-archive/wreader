@@ -99,7 +99,7 @@ const ContactUs = () => {
   // TOOD: 문의하기 -> header Right
 
   return (
-    <SafeAreaView style={s.root}>
+    <View style={s.root}>
       <Text isBold style={s.contactUsCount}>
         문의 {contactUsItems.length}&nbsp;건
       </Text>
@@ -110,7 +110,7 @@ const ContactUs = () => {
           renderItem={item => <ContactUsListItem item={item.item} />}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

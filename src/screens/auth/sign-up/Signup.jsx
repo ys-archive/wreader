@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react';
+import React from 'react';
 import { View, ScrollView, Platform, KeyboardAvoidingView } from 'react-native';
 import { StyleSheet } from '#components';
 import { useNavigation } from '@react-navigation/native';
@@ -8,10 +8,6 @@ import SignupForms from './components/forms/SignupForms';
 
 const Signup = () => {
   const nav = useNavigation();
-
-  useLayoutEffect(() => {
-    nav?.setOptions(() => ({}));
-  }, [nav]);
 
   // TODO: headerRight -> signin 으로 돌아가기
   return (
