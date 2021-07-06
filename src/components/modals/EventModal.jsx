@@ -24,7 +24,10 @@ const EventModal = ({ eventImageUrl }) => {
               resizeMode="contain"
             />
             <View style={s.buttonView}>
-              <Button style={s.button}>하루동안 보지않기</Button>
+              {/* TODO: 하루동안 보지않기 기능 추가 */}
+              <Button style={s.button} onPress={() => {}}>
+                하루동안 보지않기
+              </Button>
               <Button style={s.button} onPress={() => setModalVisible(false)}>
                 닫기
               </Button>

@@ -1,16 +1,20 @@
 import React from 'react';
+import { View } from 'react-native';
+import { Text } from '#components';
 import { useStoreState } from 'easy-peasy';
 import { selectIsLoggedIn } from '#store/selectors';
 
 import * as ScreenNames from '../ScreenNames';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
-import HeaderLeftGoBackHome from '../header/HeaderLeftGoBackHome';
+// import HeaderLeftGoBackHome from '../header/HeaderLeftGoBackHome';
+import DrawerTop from './DrawerTop';
 
 import MainStack from '../level2/MainStack';
 import ContactUsStack from '../level2/ContactUsStack';
 import SigninStack from '../level2/SigninStack';
 import PolicyAndConditionStack from '../level2/PolicyAndConditionStack';
+import UserInfoStack from '../level2/UserInfoStack';
 
 const Drawer = createDrawerNavigator();
 
@@ -23,8 +27,21 @@ const MainDrawer = () => {
       initialRouteName={ScreenNames.MainStack}
       drawerPosition="right"
       drawerStyle={{ width: 200 }}
+      drawerContent={props => {
+        console.log(props.navigation, props.state);
+        return <DrawerTop {...props} />;
+      }}
       // screenOptions={{ ...mainDrawerScreenOptions }}
     >
+      <Drawer.Screen
+        name={ScreenNames.UserInfoStack}
+        component={UserInfoStack}
+        option={() => ({
+          title: null,
+          drawerLabel: () => null,
+          drawerIcon: () => null,
+        })}
+      />
       <Drawer.Screen
         name={ScreenNames.MainStack}
         component={MainStack}

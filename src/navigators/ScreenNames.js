@@ -1,25 +1,26 @@
-export const Main = 'MainStack/Main';
-export const MainStack = 'MainStack';
+export const MainStack = 'Main';
 export const MainDrawer = 'MainDrawer';
+export const Main = 'Main/Main';
 
-export const PolicyAndConditionStack = 'PolicyAndConditionStack';
-export const PolicyAndCondition = 'PolicyAndConditionStack/PolicyAndCondition';
+export const PolicyAndConditionStack = 'PolicyAndCondition';
+export const PolicyAndCondition = 'PolicyAndCondition/PolicyAndCondition';
 
 // user
-export const MyProfile = 'MyProfile';
-export const OtherProfile = 'OtherProfile';
+export const UserInfoStack = 'UserInfo';
+export const MyProfile = 'UserInfo/MyProfile';
+export const OtherProfile = 'UserInfo/OtherProfile';
 
 // auth/find-password
-export const ChangePassword = 'SigninStack/ChangePassword';
-export const FindPassword = 'SigninStack/FindPassword';
+export const ChangePassword = 'Signin/ChangePassword';
+export const FindPassword = 'Signin/FindPassword';
 
 // auth/signin
-export const SigninStack = 'SigninStack';
-export const Signin = 'SigninStack/Signin';
-export const Signup = 'SigninStack/Signup';
-export const Signup2 = 'SigninStack/Signup2';
+export const SigninStack = 'Signin';
+export const Signin = 'Signin/Signin';
+export const Signup = 'Signin/Signup';
+export const Signup2 = 'Signin/Signup2';
 
 // contact-us
-export const ContactUsStack = 'ContactUsStack';
-export const ContactUsDetail = 'ContactUsStack/ContactUs/Detail';
-export const ContactUs = 'ContactUsStack/ContactUs';
+export const ContactUsStack = 'ContactUs';
+export const ContactUsDetail = 'ContactUs/ContactUs/Detail';
+export const ContactUs = 'ContactUs/ContactUs';
