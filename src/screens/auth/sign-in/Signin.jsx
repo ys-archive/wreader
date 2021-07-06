@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import { StyleSheet } from '#components';
 

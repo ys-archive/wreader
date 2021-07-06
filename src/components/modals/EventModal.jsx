@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Modal, Pressable } from 'react-native';
+import { View, Modal, Image } from 'react-native';
+import { Button, StyleSheet, Text } from '../';
 
 const EventModal = ({ eventImageUrl }) => {
   const [modalVisible, setModalVisible] = useState(true);
@@ -17,10 +18,17 @@ const EventModal = ({ eventImageUrl }) => {
       >
         <View style={s.root}>
           <View style={s.modalView}>
-            <Text style={s.modalText}>Event Modal!</Text>
-            <Pressable style={s.button} onPress={() => setModalVisible(false)}>
-              <Text style={s.textStyle}>Close</Text>
-            </Pressable>
+            <Image
+              style={{ maxWidth: '100%', maxHeight: '70%' }}
+              source={require('!images/dummy-image.jpg')}
+              resizeMode="contain"
+            />
+            <View style={s.buttonView}>
+              <Button style={s.button}>하루동안 보지않기</Button>
+              <Button style={s.button} onPress={() => setModalVisible(false)}>
+                닫기
+              </Button>
+            </View>
           </View>
         </View>
       </Modal>
@@ -41,33 +49,30 @@ const s = StyleSheet.create({
   modalView: {
     width: 300,
     height: 500,
-    justifyContent: 'center',
-    alignItems: 'center',
+    // justifyContent: 'center',
+    // alignItems: 'center',
     backgroundColor: 'white',
     borderRadius: 20,
-    padding: 35,
+    padding: 15,
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+    // shadowColor: '#000',
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 2,
+    // },
+    // shadowOpacity: 0.25,
+    // shadowRadius: 4,
+    // elevation: 5,
+  },
+  buttonView: {
+    position: 'relative',
+    top: '40%',
+    flexDirection: 'row',
+    alignSelf: 'center',
   },
   button: {
     borderRadius: 20,
     padding: 10,
     elevation: 2,
-  },
-  textStyle: {
-    color: '#000',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
   },
 });
