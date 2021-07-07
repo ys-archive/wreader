@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Modal, Image } from 'react-native';
 import { Button, StyleSheet, Text } from '../';
 
+// TODO: 실제 url 받아서 webview 로 교체
 const EventModal = ({ eventImageUrl }) => {
   const [modalVisible, setModalVisible] = useState(true);
 
