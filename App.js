@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
+import { UIManager } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { enableScreens } from 'react-native-screens';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -14,6 +15,13 @@ import FindPassword from './src/screens/auth/find-password/FindPassword';
 import ChangePassword from './src/screens/auth/change-password/ChangePassword';
 
 enableScreens();
+
+if (
+  Platform.OS === 'android' &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
 const App = () => {
   const [isLoadingDone, setLoadingDone] = useState(false);

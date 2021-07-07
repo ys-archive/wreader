@@ -1,23 +1,45 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
+// expo 에서 불가능! -> rn-cli
 // import FastImage from 'react-native-fast-image';
 // import Image from 'expo-image';
-import { View, Image } from 'react-native';
-import { Button, Text, StyleSheet } from '#components';
-import { useImagePicker } from '../hooks';
+
+import {
+  Animated,
+  PanResponder,
+  Dimensions,
+  LayoutAnimation,
+  Platform,
+  View,
+} from 'react-native';
+import { Text, StyleSheet } from '#components';
+
 import EventModal from '#components/modals/EventModal';
+import { PanGestureHandler } from 'react-native-gesture-handler';
+
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
+const SWIPE_THRESHOLD = 0.4 * SCREEN_WIDTH;
+const SWIPE_OUT_DURATION = 250;
 
 const Main = () => {
-  const { imageUri: uri, pickImage } = useImagePicker();
+  const position = useRef(new Animated.ValueXY()).current;
+  const panResponder = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder() {
+        return true;
+      },
+
+      onPanResponderMove(e, state) {},
+
+      onPanResponderRelease(e, state) {},
+    }),
+  ).current;
 
   return (
     <View style={s.root}>
-      <EventModal />
-      <Text>Main Screen!</Text>
-
-      <Button onPress={pickImage}>Pick an image from camera roll</Button>
-      {uri !== 'undefined' && (
-        <Image style={s.image} source={{ uri }} resizeMode="contain" />
-      )}
+      <Animated.View {...panResponder.panHandlers}>
+        <EventModal />
+        <Text>Main Screen!</Text>
+      </Animated.View>
     </View>
   );
 };
@@ -30,9 +52,5 @@ const s = StyleSheet.create({
     backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  image: {
-    width: 200,
-    height: 200,
   },
 });
