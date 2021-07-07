@@ -3,7 +3,7 @@ import * as ScreenNames from '../ScreenNames';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Button } from '#components';
 
-import HeaderLeftGoBackHome from '../header/HeaderLeftGoBackHome';
+import GoBack from '../header/GoBack';
 
 import ContactUs from '../../screens/contact-us/ContactUs';
 import ContactUsDetail from '../../screens/contact-us/ContactUsDetail';
@@ -18,7 +18,7 @@ const ContactUsStack = () => {
         component={ContactUs}
         options={({ navigation, route }) => ({
           title: '문의내역',
-          headerLeft: () => <HeaderLeftGoBackHome navigation={navigation} />,
+          headerLeft: () => <GoBack navigation={navigation} />,
           headerRight: () => (
             <Button
               onPress={() => navigation?.navigate(ScreenNames.ContactUsDetail)}
@@ -33,7 +33,7 @@ const ContactUsStack = () => {
         component={ContactUsDetail}
         options={({ navigation, route }) => ({
           title: '문의하기',
-          headerLeft: () => <HeaderLeftGoBackHome navigation={navigation} />,
+          headerLeft: () => <GoBack navigation={navigation} />,
         })}
       />
     </Stack.Navigator>

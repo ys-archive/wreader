@@ -3,7 +3,7 @@ import * as ScreenNames from '../ScreenNames';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import PolicyAndCondition from '../../screens/PolicyAndCondition';
-import HeaderLeftGoBackHome from '../header/HeaderLeftGoBackHome';
+import GoBack from '../header/GoBack';
 
 const Stack = createStackNavigator();
 
@@ -15,7 +15,7 @@ const PolicyAndConditionStack = () => {
         component={PolicyAndCondition}
         options={({ navigation, route }) => ({
           title: '이용약관',
-          headerLeft: () => <HeaderLeftGoBackHome navigation={navigation} />,
+          headerLeft: () => <GoBack navigation={navigation} direction="left" />,
         })}
       />
     </Stack.Navigator>

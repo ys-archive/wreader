@@ -3,7 +3,9 @@ import { View, Alert } from 'react-native';
 import { useStoreActions } from 'easy-peasy';
 import { actionsSetLoggedIn } from '#store/actions';
 import { useFormik } from 'formik';
+import { useNavigation } from '@react-navigation/native';
 import * as Yup from 'yup';
+import * as ScreenNames from '#navigators/ScreenNames';
 
 import SigninInput from './SigninInput';
 import SigninLogin from './SigninLogin';
@@ -24,6 +26,7 @@ const validationSchema = Yup.object({
 
 const SigninForms = () => {
   const setLoggedIn = useStoreActions(actionsSetLoggedIn);
+  const nav = useNavigation();
 
   const onSubmit = values => {
     Alert.alert('onLogin!', JSON.stringify(values, null, 2), [
@@ -34,6 +37,7 @@ const SigninForms = () => {
       },
     ]);
     setLoggedIn();
+    nav.navigate(ScreenNames.Main);
   };
 
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =

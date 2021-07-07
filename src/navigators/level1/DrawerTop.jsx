@@ -8,10 +8,13 @@ import {
 import { StyleSheet, Text } from '#components';
 import { Ionicons } from '@expo/vector-icons';
 import * as ScreenNames from '../ScreenNames';
+import { useStoreState } from 'easy-peasy';
+import { selectIsLoggedIn } from '#store/selectors';
 
 const DrawerTop = props => {
   // TODO: Get user name from store
   const { navigation: nav } = props;
+  const isLoggedIn = useStoreState(selectIsLoggedIn);
 
   return (
     <DrawerContentScrollView {...props} contentContainerStyle={s.root}>
@@ -29,15 +32,13 @@ const DrawerTop = props => {
             size={60}
             color="white"
             style={s.profile}
-            onPress={() => nav.navigate(ScreenNames.UserInfoStack)}
+            onPress={() => nav.navigate(ScreenNames.MyProfileStack)}
           />
           <Text style={s.userName}>응애</Text>
         </View>
-        {/* <DrawerItemList {...props} /> */}
-        {/* <DrawerItemList state={exceptUserInfo} {...rest} /> */}
         <TouchableOpacity
           style={s.drawerItem}
-          onPress={() => nav.navigate(ScreenNames.Main)}
+          onPress={() => nav.navigate(ScreenNames.MainStack)}
         >
           <Text>홈</Text>
         </TouchableOpacity>
@@ -56,13 +57,15 @@ const DrawerTop = props => {
           <Text>이용약관</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={s.drawerItem}
-          onPress={() => nav.navigate(ScreenNames.SigninStack)}
-        >
-          <Text>로그인</Text>
-        </TouchableOpacity>
-
+        {!isLoggedIn && (
+          <TouchableOpacity
+            style={s.drawerItem}
+            onPress={() => nav.navigate(ScreenNames.SigninStack)}
+          >
+            <Text>로그인</Text>
+          </TouchableOpacity>
+        )}
+        {/* <DrawerItemList {...props} /> */}
         {/* <DrawerItem label="help" onPress={() => console.log('help clicked')} /> */}
       </SafeAreaView>
     </DrawerContentScrollView>
@@ -73,7 +76,6 @@ export default DrawerTop;
 
 const s = StyleSheet.create({
   root: {
-    // height: '100%',
     backgroundColor: '#fff',
     flex: 1,
   },

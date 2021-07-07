@@ -27,9 +27,8 @@ export default MyProfile;
 
 const s = StyleSheet.create({
   root: {
-    flex: 1,
     justifyContent: 'center',
     paddingVertical: 25,
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
   },
 });

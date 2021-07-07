@@ -14,7 +14,7 @@ import MainStack from '../level2/MainStack';
 import ContactUsStack from '../level2/ContactUsStack';
 import SigninStack from '../level2/SigninStack';
 import PolicyAndConditionStack from '../level2/PolicyAndConditionStack';
-import UserInfoStack from '../level2/UserInfoStack';
+import MyProfileStack from '../level2/MyProfileStack';
 
 const Drawer = createDrawerNavigator();
 
@@ -30,8 +30,8 @@ const MainDrawer = () => {
       drawerContent={props => <DrawerTop {...props} />}
     >
       <Drawer.Screen
-        name={ScreenNames.UserInfoStack}
-        component={UserInfoStack}
+        name={ScreenNames.MyProfileStack}
+        component={MyProfileStack}
       />
       <Drawer.Screen name={ScreenNames.MainStack} component={MainStack} />
       <Drawer.Screen

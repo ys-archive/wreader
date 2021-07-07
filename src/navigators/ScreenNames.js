@@ -6,9 +6,9 @@ export const PolicyAndConditionStack = 'PolicyAndCondition';
 export const PolicyAndCondition = 'PolicyAndCondition/PolicyAndCondition';
 
 // user
-export const UserInfoStack = 'UserInfo';
-export const MyProfile = 'UserInfo/MyProfile';
-export const OtherProfile = 'UserInfo/OtherProfile';
+export const MyProfileStack = 'MyProfile';
+export const MyProfile = 'MyProfile/MyProfile';
+export const OtherProfile = 'MyProfile/OtherProfile';
 
 // auth/find-password
 export const ChangePassword = 'Signin/ChangePassword';

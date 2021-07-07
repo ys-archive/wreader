@@ -1,10 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import * as ScreenNames from '../ScreenNames';
 
-const HeaderRightGoBackSignin = ({ navigation }) => (
-  <TouchableOpacity onPress={() => navigation?.navigate(ScreenNames.Signin)}>
+const GoBackSignin = ({ navigation }) => (
+  <TouchableOpacity
+    onPress={() => navigation?.navigate(ScreenNames.SigninStack)}
+  >
     <AntDesign
       name="close"
       size={25}
@@ -14,4 +17,8 @@ const HeaderRightGoBackSignin = ({ navigation }) => (
   </TouchableOpacity>
 );
 
-export default HeaderRightGoBackSignin;
+GoBackSignin.propTypes = {
+  navigation: PropTypes.object.isRequired,
+};
+
+export default GoBackSignin;

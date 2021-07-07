@@ -2,7 +2,7 @@ import React from 'react';
 import * as ScreenNames from '../ScreenNames';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import HeaderRightGoBackSignin from '../header/HeaderRightGoBackSignin';
+import GoToSignin from '../header/GoToSignin';
 
 import Signin from '../../screens/auth/sign-in/Signin';
 import Signup from '../../screens/auth/sign-up/Signup';
@@ -26,9 +26,7 @@ const SigninStack = () => {
         options={({ navigation }) => ({
           title: () => null,
           headerLeft: () => null,
-          headerRight: () => (
-            <HeaderRightGoBackSignin navigation={navigation} />
-          ),
+          headerRight: () => <GoToSignin navigation={navigation} />,
         })}
       />
       <Stack.Screen
@@ -37,9 +35,7 @@ const SigninStack = () => {
         options={({ navigation }) => ({
           title: () => null,
           headerLeft: () => null,
-          headerRight: () => (
-            <HeaderRightGoBackSignin navigation={navigation} />
-          ),
+          headerRight: () => <GoToSignin navigation={navigation} />,
         })}
       />
       <Stack.Screen
@@ -48,9 +44,7 @@ const SigninStack = () => {
         options={({ navigation }) => ({
           title: () => null,
           headerLeft: () => null,
-          headerRight: () => (
-            <HeaderRightGoBackSignin navigation={navigation} />
-          ),
+          headerRight: () => <GoToSignin navigation={navigation} />,
         })}
       />
       <Stack.Screen
@@ -59,9 +53,7 @@ const SigninStack = () => {
         options={({ navigation }) => ({
           title: () => null,
           headerLeft: () => null,
-          headerRight: () => (
-            <HeaderRightGoBackSignin navigation={navigation} />
-          ),
+          headerRight: () => <GoToSignin navigation={navigation} />,
         })}
       />
     </Stack.Navigator>
