@@ -44,6 +44,7 @@ const Signup2Form = () => {
         style: 'destructive',
       },
     ]);
+    
     // TODO: alert 회원가입이 완료되었습니다
     // TODO: or alert 회원가입이 실패했습니다.
     // TODO: 실제 가입 처리

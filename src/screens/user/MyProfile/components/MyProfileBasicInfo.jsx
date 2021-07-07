@@ -59,66 +59,77 @@ const MyProfileBasicInfo = () => {
   return (
     <View style={s.root}>
       <View style={s.inputSection}>
-        <View style={s.left}>
+        <View style={s.inputNamePlacer}>
           <Text>닉네임</Text>
-          <Text>인스타그램</Text>
-          <Text>페이스북</Text>
-          <Text>소개</Text>
         </View>
-        <View style={s.right}>
-          <TextInput
-            style={s.input}
-            value={nickname}
-            onBlur={handleBlur('nickname')}
-            onChangeText={handleChange('nickname')}
-            placeholder="닉네임을 입력하세요(20자 이내)"
-          />
-          <Button style={s.checkNickNameButton} onPress={() => {}}>
-            중복 확인
-          </Button>
-          {/* {touched.nickname && errors.nickname ? (
+        <TextInput
+          style={s.input}
+          value={nickname}
+          onBlur={handleBlur('nickname')}
+          onChangeText={handleChange('nickname')}
+          placeholder="닉네임을 입력하세요(20자 이내)"
+        />
+        {/* {touched.nickname && errors.nickname ? (
                   <View>
                     <Text>{errors.nickname}</Text>
                   </View>
                 ) : null} */}
-          <TextInput
-            style={s.input}
-            value={instagramUrl}
-            onBlur={handleBlur('instagramUrl')}
-            onChangeText={handleChange('instagramUrl')}
-            placeholder="(선택)"
-          />
-          {/* {touched.instagramUrl && errors.instagramUrl ? (
+      </View>
+
+      <View style={s.inputSection}>
+        <View style={s.inputNamePlacer}>
+          <Text>인스타그램</Text>
+        </View>
+        <TextInput
+          style={s.input}
+          value={instagramUrl}
+          onBlur={handleBlur('instagramUrl')}
+          onChangeText={handleChange('instagramUrl')}
+          placeholder="(선택)"
+        />
+        {/* {touched.instagramUrl && errors.instagramUrl ? (
                   <View>
                     <Text>{errors.instagramUrl}</Text>
                   </View>
                 ) : null} */}
-          <TextInput
-            style={s.input}
-            value={facebookUrl}
-            onBlur={handleBlur('facebookUrl')}
-            onChangeText={handleChange('facebookUrl')}
-            placeholder="(선택)"
-          />
-          {/* {touched.facebookUrl && errors.facebookUrl ? (
+      </View>
+
+      <View style={s.inputSection}>
+        <View style={s.inputNamePlacer}>
+          <Text>페이스북</Text>
+        </View>
+        <TextInput
+          style={s.input}
+          value={facebookUrl}
+          onBlur={handleBlur('facebookUrl')}
+          onChangeText={handleChange('facebookUrl')}
+          placeholder="(선택)"
+        />
+        {/* {touched.facebookUrl && errors.facebookUrl ? (
                 <View>
                   <Text>{errors.facebookUrl}</Text>
                 </View>
               ) : null} */}
-          <TextInput
-            style={s.input}
-            value={introduction}
-            onBlur={handleBlur('introduction')}
-            onChangeText={handleChange('introduction')}
-            placeholder="나를 소개할 문구를 적어주세요 (50자)"
-          />
-          {/* {touched.introduction && errors.introduction ? (
+      </View>
+
+      <View style={s.inputSection}>
+        <View style={s.inputNamePlacer}>
+          <Text>소개</Text>
+        </View>
+        <TextInput
+          style={s.input}
+          value={introduction}
+          onBlur={handleBlur('introduction')}
+          onChangeText={handleChange('introduction')}
+          placeholder="나를 소개할 문구를 적어주세요 (50자)"
+        />
+        {/* {touched.introduction && errors.introduction ? (
                   <View>
                     <Text>{errors.introduction}</Text>
                   </View>
                 ) : null} */}
-        </View>
       </View>
+
       <Button style={s.summitButton} onPress={handleSubmit}>
         완료
       </Button>
@@ -130,26 +141,19 @@ export default MyProfileBasicInfo;
 
 const s = StyleSheet.create({
   root: {
-    marginTop: '10%',
-    // flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
   },
   inputSection: {
-    flexDirection: 'row',
     maxWidth: '90%',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  left: {
-    justifyContent: 'space-around',
+  inputNamePlacer: {
+    width: '25%',
   },
-  right: {},
   input: {
-    maxWidth: '80%',
-  },
-  checkNickNameButton: {
-    position: 'relative',
-    left: '35%',
-    bottom: '17%',
+    maxWidth: '70%',
+    padding: 0,
   },
   summitButton: {
     marginTop: '10%',

@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, Alert } from 'react-native';
-import { TextInput, Button } from '#components';
+import { StyleSheet, View, Alert } from 'react-native';
+import { TextInput, Text, Button } from '#components';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -37,21 +37,28 @@ const MyProfilePassword = () => {
 
   return (
     <View style={s.root}>
-      <TextInput
-        style={s.textInput}
-        value={password}
-        onChangeText={handleChange('password')}
-        onBlur={handleBlur('password')}
-        placeholder="새 비밀번호를 입력하세요"
-      />
-      <Button style={s.button} textStyle={s.buttonText} onPress={handleSubmit}>
-        수정
-      </Button>
-      {/* {touched.password && errors.password ? (
-        <View>
-          <Text>{errors.password}</Text>
-        </View>
-      ) : null} */}
+      <Text>비밀번호:&nbsp;</Text>
+      <View style={s.inputSection}>
+        <TextInput
+          style={s.textInput}
+          value={password}
+          onChangeText={handleChange('password')}
+          onBlur={handleBlur('password')}
+          placeholder="새 비밀번호를 입력하세요"
+        />
+        <Button
+          style={s.button}
+          textStyle={s.buttonText}
+          onPress={handleSubmit}
+        >
+          수정
+        </Button>
+        {/* {touched.password && errors.password ? (
+          <View>
+            <Text>{errors.password}</Text>
+          </View>
+        ) : null} */}
+      </View>
     </View>
   );
 };
@@ -61,20 +68,24 @@ export default MyProfilePassword;
 const s = StyleSheet.create({
   root: {
     flexDirection: 'row',
-    maxWidth: '100%',
-
-    // flex: 1,
+    width: '75%',
+    alignItems: 'center',
+  },
+  inputSection: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: 18,
   },
   textInput: {
+    // marginLeft: 10,
     width: '60%',
-    borderWidth: 1,
-    borderColor: 'black',
+    padding: 0,
+    textAlign: 'center',
   },
   button: {
-    paddingVertical: 5,
-    paddingHorizontal: 15,
-    borderWidth: 1,
-    borderColor: 'black',
+    // paddingVertical: 5,
+    // paddingHorizontal: 15,
   },
   buttonText: {
     textAlign: 'center',

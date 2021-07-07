@@ -9,8 +9,8 @@ import {
 import { Text } from '#components';
 import { Ionicons } from '@expo/vector-icons';
 
-import MyProfilePassword from './MyProfilePassword';
-import MyProfileBasicInfo from './MyProfileBasicInfo';
+import MyProfilePassword from './components/MyProfilePassword';
+import MyProfileBasicInfo from './components/MyProfileBasicInfo';
 
 const MyProfile = () => {
   // TODO: get user email from store
@@ -32,11 +32,16 @@ const MyProfile = () => {
         </View>
 
         <View style={s.accountView}>
-          <Text>계정정보</Text>
-          <Text isBold>이메일 : test1234@gmail.com</Text>
-          <View style={s.passwordView}>
-            <Text isBold>비밀번호 :</Text>
-            <MyProfilePassword />
+          <Text isBold>계정정보</Text>
+
+          <View style={s.accountInfoView}>
+            <View style={s.emailView}>
+              <Text>이메일:&nbsp;</Text>
+              <Text style={{ marginLeft: 50 }}>test1234@gmail.com</Text>
+            </View>
+            <View style={s.passwordView}>
+              <MyProfilePassword />
+            </View>
           </View>
         </View>
 
@@ -72,9 +77,18 @@ const s = StyleSheet.create({
     bottom: 0,
     zIndex: -1,
   },
+  accountInfoView: {
+    marginLeft: 20,
+  },
+  emailView: {
+    flexDirection: 'row',
+  },
   passwordView: {
     flexDirection: 'row',
-    alignItems: 'center',
+  },
+  infoNamePlaceText: {
+    // textAlign: 'right',
+    letterSpacing: 1.5,
   },
   accountView: {
     paddingBottom: 15,
@@ -83,5 +97,10 @@ const s = StyleSheet.create({
   },
   basicView: {
     marginTop: 25,
+  },
+  infoEmailText: {
+    paddingVertical: 20,
+    paddingHorizontal: 15,
+    width: '90%',
   },
 });
