@@ -1,16 +1,10 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  KeyboardAvoidingView,
-  ScrollView,
-  Image,
-} from 'react-native';
-import { Text } from '#components';
-import { Ionicons } from '@expo/vector-icons';
+import { View, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { StyleSheet, Text } from '#components';
 
-import MyProfilePassword from './components/MyProfilePassword';
 import MyProfileBasicInfo from './components/MyProfileBasicInfo';
+import MyProfileImage from './components/MyProfileImage';
+import MyProfileAccountInfo from './components/MyProfileAccountInfo';
 
 const MyProfile = () => {
   // TODO: get user email from store
@@ -21,34 +15,9 @@ const MyProfile = () => {
   return (
     <ScrollView>
       <KeyboardAvoidingView style={s.root}>
-        <View style={s.profileImageView}>
-          <Image style={s.profileImage} source={require('!images/dog.jpg')} />
-          <Ionicons
-            style={s.cameraIcon}
-            name="camera"
-            size={48}
-            color="black"
-          />
-        </View>
-
-        <View style={s.accountView}>
-          <Text isBold>계정정보</Text>
-
-          <View style={s.accountInfoView}>
-            <View style={s.emailView}>
-              <Text>이메일:&nbsp;</Text>
-              <Text style={{ marginLeft: 50 }}>test1234@gmail.com</Text>
-            </View>
-            <View style={s.passwordView}>
-              <MyProfilePassword />
-            </View>
-          </View>
-        </View>
-
-        <View style={s.basicView}>
-          <Text isBold>⁕ 기본정보</Text>
-          <MyProfileBasicInfo />
-        </View>
+        <MyProfileImage />
+        <MyProfileAccountInfo />
+        <MyProfileBasicInfo />
       </KeyboardAvoidingView>
     </ScrollView>
   );
@@ -62,45 +31,5 @@ const s = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 25,
     paddingHorizontal: 10,
-  },
-  profileImageView: {
-    alignSelf: 'center',
-  },
-  profileImage: {
-    maxWidth: 200,
-    maxHeight: 200,
-    borderRadius: 100,
-  },
-  cameraIcon: {
-    position: 'absolute',
-    right: 0,
-    bottom: 0,
-    zIndex: -1,
-  },
-  accountInfoView: {
-    marginLeft: 20,
-  },
-  emailView: {
-    flexDirection: 'row',
-  },
-  passwordView: {
-    flexDirection: 'row',
-  },
-  infoNamePlaceText: {
-    // textAlign: 'right',
-    letterSpacing: 1.5,
-  },
-  accountView: {
-    paddingBottom: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: 'black',
-  },
-  basicView: {
-    marginTop: 25,
-  },
-  infoEmailText: {
-    paddingVertical: 20,
-    paddingHorizontal: 15,
-    width: '90%',
   },
 });
