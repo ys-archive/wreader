@@ -14,8 +14,9 @@
 import Pages from './pages';
 
 export class Novel {
-  constructor(genre, title, author) {
-    this.state = {
+  constructor(id, genre, title, author) {
+    this._state = {
+      id,
       genre,
       title,
       author,
@@ -24,7 +25,7 @@ export class Novel {
     };
   }
 
-  get getPages() {
-    return this.state.pages;
+  get state() {
+    return this._state;
   }
 }

@@ -1,3 +1,5 @@
+import { isTypeOfExcept, isArrayTypeOfExcept } from '#utils';
+
 class Pages {
   onPageMoved;
   onFirstPageReached;
@@ -8,10 +10,7 @@ class Pages {
   }
 
   set contents(newContents) {
-    if (typeof newContents[0] !== 'string') {
-      throw new Error('newContent must be string!');
-    }
-
+    isArrayTypeOfExcept(newContents, 'string');
     this._contents = newContents;
   }
 
@@ -25,9 +24,7 @@ class Pages {
   }
 
   static _checkPageIsNumber(page) {
-    if (typeof page !== 'number') {
-      throw new Error('page must be number');
-    }
+    isTypeOfExcept(page, 'number');
 
     if (page < 0) {
       throw new Error('page cannot be under 0');
