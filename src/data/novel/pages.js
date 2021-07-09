@@ -1,4 +1,4 @@
-class Page {
+class Pages {
   onPageMoved;
   onFirstPageReached;
   onLastPageReached;
@@ -39,12 +39,12 @@ class Page {
   }
 
   setContent(page, newContent) {
-    Page._checkPageIsNumber(page);
+    Pages._checkPageIsNumber(page);
     this._contents[page] = newContent;
   }
 
   moveTo(page) {
-    Page._checkPageIsNumber(page);
+    Pages._checkPageIsNumber(page);
     this._currentPage = page;
   }
 
@@ -79,4 +79,4 @@ class Page {
   }
 }
 
-export default Page;
+export default Pages;
