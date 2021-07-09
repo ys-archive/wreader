@@ -15,10 +15,13 @@ import { Text, StyleSheet } from '#components';
 
 import EventModal from '#components/modals/EventModal';
 import { PanGestureHandler } from 'react-native-gesture-handler';
+import { Card, Button } from 'react-native-elements';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const SWIPE_THRESHOLD = 0.4 * SCREEN_WIDTH;
 const SWIPE_OUT_DURATION = 250;
+
+
 
 const Main = () => {
   const position = useRef(new Animated.ValueXY()).current;
