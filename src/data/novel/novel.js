@@ -11,21 +11,30 @@
 //   },
 // ];
 
-import Pages from './pages';
+import Pages from './page/pages';
 
-export class Novel {
+class Novel {
   constructor(id, genre, title, author) {
     this._state = {
       id,
       genre,
       title,
-      author,
-      comments: new Comments(),
-      pages: new Pages(),
+      // pages: new Pages(),
+      chapter: new Chapter(),
     };
+    // this._state = {
+    //   id,
+    //   genre,
+    //   title,
+    //   author,
+    //   comments: new Comments(),
+    //   pages: new Pages(),
+    // };
   }
 
   get state() {
     return this._state;
   }
 }
+
+export default Novel;

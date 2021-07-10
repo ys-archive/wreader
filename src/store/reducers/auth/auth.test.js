@@ -1,0 +1,2 @@
+describe('auth test suite', () => {
+});
