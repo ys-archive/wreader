@@ -1,39 +1,29 @@
-// export const NOVEL = [
-//   {
-//     genre: GENRE.romance,
-//     title: 'love is..',
-//     pages: new Pages(),
-//   },
-//   {
-//     genre: GENRE.comedy,
-//     title: '웃지못하는 24시!',
-//     pages: new Pages(),
-//   },
-// ];
-
-import Pages from './page/pages';
+import Genre from './genre/genre';
+import Chapter from './chapter/chapter';
 
 class Novel {
-  constructor(id, genre, title, author) {
-    this._state = {
-      id,
-      genre,
-      title,
-      // pages: new Pages(),
-      chapter: new Chapter(),
-    };
-    // this._state = {
-    //   id,
-    //   genre,
-    //   title,
-    //   author,
-    //   comments: new Comments(),
-    //   pages: new Pages(),
-    // };
+  constructor(id, genreName, title) {
+    this._id = id;
+    this._genre = new Genre(genreName);
+    this._title = title;
+    // last chapter (i === 9) -> last chapter marked!
+    this._chapters = new Array(10).fill(0).map((_, i) => new Chapter(i === 9));
   }
 
-  get state() {
-    return this._state;
+  get id() {
+    return this._id;
+  }
+
+  get genre() {
+    return this._genre;
+  }
+
+  get title() {
+    return this._title;
+  }
+
+  get chapters() {
+    return this._chapters;
   }
 }
 
