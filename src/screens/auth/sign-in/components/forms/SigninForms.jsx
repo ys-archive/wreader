@@ -19,6 +19,7 @@ const validationSchema = Yup.object({
   email: Yup.string()
     .email('이메일 형식에 맞지 않습니다. (예시: wreader1@gmail.com ...)')
     .required('필수 항목입니다.'),
+
   password: Yup.string()
     .max(28, '28 자 이내여야 합니다.')
     .required('필수 입력 항목입니다.'),
@@ -36,6 +37,8 @@ const SigninForms = () => {
         style: 'destructive',
       },
     ]);
+    // TODO: password -> md5
+    // TODO: POST signin (id, password)
     setLoggedIn();
     nav.navigate(ScreenNames.Main);
   };
