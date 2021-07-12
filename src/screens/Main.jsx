@@ -20,7 +20,7 @@ import { PanGestureHandler } from 'react-native-gesture-handler';
 
 import NovelCard from './NovelCard';
 
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const SWIPE_THRESHOLD = 0.4 * SCREEN_WIDTH;
 const SWIPE_OUT_DURATION = 250;
 
@@ -77,15 +77,90 @@ const Main = () => {
         const { dx, dy } = state;
         position.setValue({ x: dx, y: dy });
       },
-      onPanResponderRelease(e, state) {},
+
+      onPanResponderRelease(e, state) {
+        const { dx, dy } = state;
+
+        if (dx > SWIPE_THRESHOLD) {
+          forceSwipeHorizontally('right');
+        } else if (dx < -SWIPE_THRESHOLD) {
+          forceSwipeHorizontally('left');
+        } else if (dy > SWIPE_THRESHOLD) {
+          forceSwipeVertically('up');
+        } else if (dy < -SWIPE_THRESHOLD) {
+          forceSwipeVertically('down');
+        } else {
+          resetPosition();
+        }
+      },
     }),
   ).current;
 
+  const forceSwipeVertically = dir => {
+    const isUp = dir === 'up';
+    const swipeAmount = SCREEN_HEIGHT * 1.5 * (isUp ? -1 : 1);
+    Animated.timing(position, {
+      toValue: { x: 0, y: swipeAmount },
+      duration: SWIPE_OUT_DURATION,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const forceSwipeHorizontally = dir => {
+    const isLeft = dir === 'left';
+    const swipeAmount = SCREEN_HEIGHT * 1.5 * (isLeft ? -1 : 1);
+    Animated.timing(position, {
+      toValue: { x: swipeAmount, y: 0 },
+      duration: SWIPE_OUT_DURATION,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const resetPosition = () => {
+    Animated.spring(position, {
+      toValue: { x: 0, y: 0 },
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const getCardStyle = () => {
+    // const rotate = position.x.interpolate({
+    //   inputRange: [-SCREEN_WIDTH * 1.5, 0, SCREEN_WIDTH * 1.5],
+    //   outputRange: ['-120deg', '0deg', '120deg'],
+    // });
+
+    // const translate = position.x.interpolate({
+    //   inputRange: [-SCREEN_WIDTH * 1.5, 0, SCREEN_WIDTH * 1.5],
+    //   outputRange: [],
+    // });
+
+    return {
+      ...position.getLayout(),
+      // transform: [{ rotate }],
+    };
+  };
+
+  const [Novels, setNovels] = useState([
+    { id: 0, title: 'genre1' },
+    { id: 1, title: 'genre2' },
+    { id: 2, title: 'genre3' },
+    { id: 3, title: 'genre4' },
+  ]);
+
+  if (!Novels) return null;
+  if (Novels.length <= 0) return null;
+
   return (
     <View style={s.root}>
-      <Animated.View {...panResponder.panHandlers}>
+      <Animated.View
+        style={[getCardStyle(), { position: 'absolute', width: SCREEN_WIDTH }]}
+        {...panResponder.panHandlers}
+      >
         <EventModal />
-        <NovelCard id={1} title="dog" />
+        {Novels.map(novel => {
+          const { id, title } = novel;
+          return <NovelCard key={id} title={title} />;
+        })}
       </Animated.View>
     </View>
   );
