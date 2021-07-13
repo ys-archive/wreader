@@ -1,0 +1,31 @@
+// Create User
+
+POST {{baseUrl}}user HTTP/1.1
+
+{
+    "email": "test@gmail.com",
+    "pass": "1234",
+    "nick": "test",
+    "instagram": "https://instagram.com/test",
+    "facebook": "https://facebook.com/test",
+    "marketingAgree": 1
+}
+
+###
+
+// Login
+POST {{baseUrl}}login
+
+{
+    "email": "test@gmail.com",
+    "pass": "1234"
+}
+
+###
+
+// Check Existing User (이미 가입된 이메일인지 체크)
+GET {{baseUrl}}user/check/email
+
+{
+    "email": "test@gmail.com",
+}

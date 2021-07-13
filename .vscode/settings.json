@@ -1,0 +1,14 @@
+{
+    "rest-client.environmentVariables": {
+        "$shared": {
+            "apiKey": ""
+        },
+        "Local Env": {
+            "baseUrl": "http://ec2-18-219-42-64.us-east-2.compute.amazonaws.com/",
+            "userId": 1
+        },
+        "Dev Env": {
+            "baseUrl": ""
+        }
+    }
+}

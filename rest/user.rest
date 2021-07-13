@@ -1,0 +1,45 @@
+// register user profile (유저 프로필 사진 등록 or 변경)
+// /user/img/{userId}
+POST {{baseUrl}}user/img/1
+
+{
+    "path": ""
+}
+
+###
+
+// get user info (유저 정보 가져오기)
+// /user/{userId}
+
+GET {{baseUrl}}user/3
+
+
+###
+
+// drop user (유저 탈퇴 신청)
+// /user/drop/{userId}
+// 탈퇴 후 7일간 data 살아있음
+
+POST {{baseUrl}}user/drop/3
+
+###
+
+// update user (유저 정보 업데이트)
+// /user/drop/{userId}
+
+PUT {{baseUrl}}user/3
+
+{
+    "intro": "변경된 소개",
+    "facebook": "변경된 페이스북",
+    "instagram": "변경된 인스타그램",
+    "nick": "변경된 닉네임", // 변경 되지 않으면 기존 닉네임
+    "pass": "변경된 비밀번호" // 변경 되지 않으면 기존 비밀번호
+}
+
+###
+
+// drop cancel (탈퇴 신청 철회)
+// /user/drop/{userId}
+
+DELETE {{baseUrl}}user/drop/3
