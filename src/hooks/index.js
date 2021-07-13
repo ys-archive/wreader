@@ -5,6 +5,7 @@ import {
   useMainDrawerScreenOptions,
   useMainStackScreenOptions,
 } from './useNavigationScreenOptions';
+import { useReaderAnimated } from './useReaderAnimated';
 
 export {
   useImagePicker,
@@ -12,4 +13,5 @@ export {
   useNavigationScreenOptionsProvider,
   useMainDrawerScreenOptions,
   useMainStackScreenOptions,
+  useReaderAnimated,
 };

@@ -9,7 +9,7 @@ const image = require('../../assets/images/dummy-image.jpg');
 const NovelCard = ({ path: uri, title }) => {
   // console.log(uri);
   return (
-    <Card>
+    <Card style={s.root}>
       <Image
         source={image}
         // resizeMode="contain"
@@ -23,4 +23,9 @@ const NovelCard = ({ path: uri, title }) => {
 
 export default NovelCard;
 
-const styles = StyleSheet.create({});
+const s = StyleSheet.create({
+  root: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});

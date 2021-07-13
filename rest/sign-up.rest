@@ -3,9 +3,9 @@
 POST {{baseUrl}}user HTTP/1.1
 
 {
-    "email": "test@gmail.com",
-    "pass": "1234",
-    "nick": "test",
+    "email": "dbc12176@gmail.com22",
+    "pass": "1234888",
+    "nick": "asdasaaaa",
     "instagram": "https://instagram.com/test",
     "facebook": "https://facebook.com/test",
     "marketingAgree": 1
