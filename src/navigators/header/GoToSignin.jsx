@@ -5,9 +5,7 @@ import { AntDesign } from '@expo/vector-icons';
 import * as ScreenNames from '../ScreenNames';
 
 const GoBackSignin = ({ navigation }) => (
-  <TouchableOpacity
-    onPress={() => navigation?.navigate(ScreenNames.SigninStack)}
-  >
+  <TouchableOpacity onPress={() => navigation?.navigate(ScreenNames.Signin)}>
     <AntDesign
       name="close"
       size={25}

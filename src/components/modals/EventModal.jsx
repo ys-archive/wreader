@@ -40,6 +40,12 @@ const EventModal = ({ eventImageUrl }) => {
   );
 };
 
+EventModal.options = props => ({
+  overlay: {
+    interceptTouchOutside: true,
+  },
+});
+
 export default EventModal;
 
 const s = StyleSheet.create({
