@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Image, Dimensions } from 'react-native';
 import { Text, StyleSheet } from '#components';
 
+// TODO: change image uri -> fetched (received from the api)
 const image = require('../../assets/images/dummy-image.jpg');
 
 const { width, height } = Dimensions.get('window');
@@ -30,6 +31,7 @@ const s = StyleSheet.create({
     height,
     // justifyContent: 'center',
     alignItems: 'center',
+    // justifyContent: 'center',
   },
   cardImageView: {
     borderWidth: 1,

@@ -1,4 +1,4 @@
-import { UIManager } from 'react-native';
+import { UIManager, Platform } from 'react-native';
 
 if (
   Platform.OS === 'android' &&

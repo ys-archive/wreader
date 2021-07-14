@@ -5,6 +5,9 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const SWIPE_OUT_DURATION = 250;
 
 export const useSwipeGesture = (position, swipeXAmount, swipeYAmount) => {
+
+  
+
   const forceSwipeVertically = dir => {
     const isUp = dir === 'up';
     const delta = SCREEN_HEIGHT * (isUp ? -1 : 1);
