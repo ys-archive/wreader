@@ -2,10 +2,14 @@
 export const selectIsAutoLogin = state => state.auth.model.isAutoLogin;
 export const selectIsLoggedIn = state => state.auth.model.isLoggedIn;
 
-// swiper
-export const selectIsLastCategory = state => state.swiper.model.isLastCategory;
-export const selectIsLastChapter = state => state.swiper.model.isLastChapter;
-export const selectSwiperThresholdHorizontal = state =>
-  state.swiper.model.swiperThresholdHorizontal;
-export const selectSwiperThresholdVertical = state =>
-  state.swiper.model.selectSwiperThresholdVertical;
+// reader
+export const selectIsFirstCategory = state => state.reader.isFirstCategory;
+export const selectIsLastCategory = state => state.reader.isLastCategory;
+
+export const selectIsFirstChapter = state => state.reader.isFirstChapter;
+export const selectIsLastChapter = state => state.reader.isLastChapter;
+
+export const selectSwipeThresholdHorizontal = state =>
+  state.reader.model.swipeThresholdHorizontal;
+export const selectSwipeThresholdVertical = state =>
+  state.reader.model.swipeThresholdVertical;

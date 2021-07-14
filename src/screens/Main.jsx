@@ -9,7 +9,7 @@ import { StyleSheet } from '#components';
 import EventModal from '#components/modals/EventModal';
 import Reader from './reader/Reader';
 
-import NovelCard from './NovelCard';
+import ReaderCard from '#components/ReaderCard';
 
 // class Novel {
 //   state = {
@@ -53,6 +53,7 @@ import NovelCard from './NovelCard';
 // }
 
 const Main = () => {
+  // TODO: Novel data 가져와 렌더
   const [Novels, _] = useState([
     { id: 0, title: '0' },
     { id: 1, title: '1' },
@@ -61,8 +62,8 @@ const Main = () => {
     { id: 4, title: '4' },
   ]);
 
-  const novelCardsJSX = Novels.map(novel => (
-    <NovelCard key={novel.id} title={novel.title} />
+  const cards = Novels.map(novel => (
+    <ReaderCard key={novel.id} title={novel.title} />
   ));
 
   return (
@@ -70,10 +71,10 @@ const Main = () => {
       <EventModal />
       <Reader>
         <View>
-          <View style={s.cardView}>{novelCardsJSX}</View>
-          <View style={s.cardView}>{novelCardsJSX}</View>
-          <View style={s.cardView}>{novelCardsJSX}</View>
-          <View style={s.cardView}>{novelCardsJSX}</View>
+          <View style={s.cardView}>{cards}</View>
+          <View style={s.cardView}>{cards}</View>
+          <View style={s.cardView}>{cards}</View>
+          <View style={s.cardView}>{cards}</View>
         </View>
       </Reader>
     </View>

@@ -7,7 +7,7 @@ const image = require('../../assets/images/dummy-image.jpg');
 
 const { width, height } = Dimensions.get('window');
 
-const NovelCard = ({ path: uri, title }) => {
+const ReaderCard = ({ path: uri, title }) => {
   // console.log(uri);
   return (
     <View style={s.root}>
@@ -23,7 +23,7 @@ const NovelCard = ({ path: uri, title }) => {
   );
 };
 
-export default NovelCard;
+export default ReaderCard;
 
 const s = StyleSheet.create({
   root: {

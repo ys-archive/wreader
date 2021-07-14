@@ -13,7 +13,7 @@ export const useSwipeGesture = (position, swipeXAmount, swipeYAmount) => {
       toValue: { x: swipeXAmount, y: swipeYAmount },
       duration: SWIPE_OUT_DURATION,
       useNativeDriver: true,
-    }).start(() => onSwipeComplete(dir));
+    }).start(); // () => onSwipeComplete(dir)
   };
 
   const forceSwipeHorizontally = dir => {
@@ -24,16 +24,29 @@ export const useSwipeGesture = (position, swipeXAmount, swipeYAmount) => {
       toValue: { x: swipeXAmount, y: swipeYAmount },
       duration: SWIPE_OUT_DURATION,
       useNativeDriver: true,
-    }).start(() => onSwipeComplete(dir));
+    }).start(); // () => onSwipeComplete(dir)
   };
 
-  const onSwipeComplete = dir => {
-    // position.setValue({ x: 0, y: 0 });
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-  };
+  // const onSwipeComplete = dir => {
+  //   // position.setValue({ x: 0, y: 0 });
+  //   LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+  // };
 
-  const getCardStyle = () => {
+  const getStyle = () => {
     const { x: translateX, y: translateY } = position;
+    // let finalX = translateX;
+    // let finalY = translateY;
+
+    // if (isNaN(finalX)) {
+    //   console.log('x is nan');
+    //   finalX = 0;
+    // }
+
+    // if (isNaN(finalY)) {
+    //   console.log('y is nan');
+    //   finalY = 0;
+    // }
+
     return {
       transform: [{ translateX }, { translateY }],
     };
@@ -42,6 +55,6 @@ export const useSwipeGesture = (position, swipeXAmount, swipeYAmount) => {
   return {
     forceSwipeVertically,
     forceSwipeHorizontally,
-    getCardStyle,
+    getStyle,
   };
 };
