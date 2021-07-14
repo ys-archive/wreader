@@ -7,10 +7,9 @@ import { View } from 'react-native';
 import { StyleSheet } from '#components';
 
 import EventModal from '#components/modals/EventModal';
+import Reader from './reader/Reader';
 
 import NovelCard from './NovelCard';
-
-// import GestureWrapper from './gesture/GestureWrapper';
 
 // class Novel {
 //   state = {
@@ -54,8 +53,7 @@ import NovelCard from './NovelCard';
 // }
 
 const Main = () => {
-  // const [isHorizontal, setHorizontal] = useState(false);
-  const [Novels, setNovels] = useState([
+  const [Novels, _] = useState([
     { id: 0, title: '0' },
     { id: 1, title: '1' },
     { id: 2, title: '2' },
@@ -69,7 +67,7 @@ const Main = () => {
 
   return (
     <View style={s.root}>
-      {/* <EventModal /> */}
+      <EventModal />
       <Reader>
         <View>
           <View style={s.cardView}>{novelCardsJSX}</View>
