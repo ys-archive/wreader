@@ -1,0 +1,4 @@
+// create category (카테고리 생성)
+// /v1/cakes/:id
+
+POST {{baseUrl}}v1/cakes/1

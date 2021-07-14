@@ -1,28 +1,15 @@
-import React, { useRef, useState } from 'react';
+import React, { useState, useRef } from 'react';
 // expo 에서 불가능! -> rn-cli
 // import FastImage from 'react-native-fast-image';
 // import Image from 'expo-image';
 
-import {
-  Animated,
-  PanResponder,
-  LayoutAnimation,
-  Platform,
-  View,
-  Image,
-} from 'react-native';
-import { Text, StyleSheet } from '#components';
+import { View } from 'react-native';
+import { StyleSheet } from '#components';
 
 import EventModal from '#components/modals/EventModal';
-import Novel from '../data/novel/novel';
-import { PanGestureHandler } from 'react-native-gesture-handler';
-
-import Swiper from './swiper/Swiper';
 
 import NovelCard from './NovelCard';
-
-// const SWIPE_THRESHOLD = 0.4 * SCREEN_WIDTH;
-// const SWIPE_OUT_DURATION = 250;
+import Reader from './reader/Reader';
 
 // class Novel {
 //   state = {
@@ -66,113 +53,33 @@ import NovelCard from './NovelCard';
 // }
 
 const Main = () => {
-  // const position = useRef(new Animated.ValueXY()).current;
-  // const panResponder = useRef(
-  //   PanResponder.create({
-  //     onStartShouldSetPanResponder() {
-  //       return true;
-  //     },
-
-  //     onPanResponderMove(e, state) {
-  //       const { dx, dy } = state;
-  //       position.setValue({ x: dx, y: dy });
-  //     },
-
-  //     onPanResponderRelease(e, state) {
-  //       const { dx, dy } = state;
-
-  //       if (dx > SWIPE_THRESHOLD) {
-  //         forceSwipeHorizontally('right');
-  //       } else if (dx < -SWIPE_THRESHOLD) {
-  //         forceSwipeHorizontally('left');
-  //       } else if (dy > SWIPE_THRESHOLD) {
-  //         forceSwipeVertically('up');
-  //       } else if (dy < -SWIPE_THRESHOLD) {
-  //         forceSwipeVertically('down');
-  //       } else {
-  //         resetPosition();
-  //       }
-  //     },
-  //   }),
-  // ).current;
-
-  // const forceSwipeVertically = dir => {
-  //   const isUp = dir === 'up';
-  //   const swipeAmount = SCREEN_HEIGHT * 1.5 * (isUp ? -1 : 1);
-  //   Animated.timing(position, {
-  //     toValue: { x: 0, y: swipeAmount },
-  //     duration: SWIPE_OUT_DURATION,
-  //     useNativeDriver: false,
-  //   }).start();
-  // };
-
-  // const forceSwipeHorizontally = dir => {
-  //   const isLeft = dir === 'left';
-  //   const swipeAmount = SCREEN_HEIGHT * 1.5 * (isLeft ? -1 : 1);
-  //   Animated.timing(position, {
-  //     toValue: { x: swipeAmount, y: 0 },
-  //     duration: SWIPE_OUT_DURATION,
-  //     useNativeDriver: false,
-  //   }).start();
-  // };
-
-  // const resetPosition = () => {
-  //   Animated.spring(position, {
-  //     toValue: { x: 0, y: 0 },
-  //     useNativeDriver: false,
-  //   }).start();
-  // };
-
-  // const getCardStyle = () => {
-  //   // const rotate = position.x.interpolate({
-  //   //   inputRange: [-SCREEN_WIDTH * 1.5, 0, SCREEN_WIDTH * 1.5],
-  //   //   outputRange: ['-120deg', '0deg', '120deg'],
-  //   // });
-
-  //   // const translate = position.x.interpolate({
-  //   //   inputRange: [-SCREEN_WIDTH * 1.5, 0, SCREEN_WIDTH * 1.5],
-  //   //   outputRange: [],
-  //   // });
-
-  //   return {
-  //     ...position.getLayout(),
-  //     // transform: [{ rotate }],
-  //   };
-  // };
-
-  const [Novels, setNovels] = useState([
+  const [Novels, _] = useState([
     { id: 0, title: 'genre1' },
     { id: 1, title: 'genre2' },
     { id: 2, title: 'genre3' },
     { id: 3, title: 'genre4' },
+    { id: 4, title: 'genre5' },
+    { id: 5, title: 'genre6' },
+    { id: 6, title: 'genre7' },
+    { id: 7, title: 'genre8' },
   ]);
 
   if (!Novels) return null;
   if (Novels.length <= 0) return null;
 
+  const novelCardsJSX = Novels.map(novel => (
+    <NovelCard key={novel.id} title={novel.title} />
+  ));
+
   return (
-    // <View style={s.root}>
-    //   <Animated.View
-    //     style={[getCardStyle(), { position: 'absolute', width: SCREEN_WIDTH }]}
-    //     {...panResponder.panHandlers}
-    //   >
-    //     <EventModal />
-    //     {Novels.map(novel => {
-    //       const { id, title } = novel;
-    //       return <NovelCard key={id} title={title} />;
-    //     })}
-    //   </Animated.View>
-    // </View>
     <View style={s.root}>
-      <EventModal />
-      <Swiper direction="left" />
-      {/* <Swiper direction="right"/>
-      <Swiper direction="up"/>
-      <Swiper direction="left"/> */}
-      {Novels.map(novel => {
-        const { id, title } = novel;
-        return <NovelCard key={id} title={title} />;
-      })}
+      {/* <EventModal /> */}
+      <Reader>
+        <View style={s.cardView}>{novelCardsJSX}</View>
+        <View style={s.cardView}>{novelCardsJSX}</View>
+        <View style={s.cardView}>{novelCardsJSX}</View>
+        <View style={s.cardView}>{novelCardsJSX}</View>
+      </Reader>
     </View>
   );
 };
@@ -180,10 +87,9 @@ const Main = () => {
 export default Main;
 
 const s = StyleSheet.create({
-  root: {
-    flex: 1,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
+  root: {},
+  cardView: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
   },
 });
