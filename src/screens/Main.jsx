@@ -7,9 +7,9 @@ import { View } from 'react-native';
 import { StyleSheet } from '#components';
 
 import EventModal from '#components/modals/EventModal';
-
-import NovelCard from './NovelCard';
 import Reader from './reader/Reader';
+
+import ReaderCard from '#components/ReaderCard';
 
 // class Novel {
 //   state = {
@@ -53,32 +53,29 @@ import Reader from './reader/Reader';
 // }
 
 const Main = () => {
+  // TODO: Novel data 가져와 렌더
   const [Novels, _] = useState([
-    { id: 0, title: 'genre1' },
-    { id: 1, title: 'genre2' },
-    { id: 2, title: 'genre3' },
-    { id: 3, title: 'genre4' },
-    { id: 4, title: 'genre5' },
-    { id: 5, title: 'genre6' },
-    { id: 6, title: 'genre7' },
-    { id: 7, title: 'genre8' },
+    { id: 0, title: '0' },
+    { id: 1, title: '1' },
+    { id: 2, title: '2' },
+    { id: 3, title: '3' },
+    { id: 4, title: '4' },
   ]);
 
-  if (!Novels) return null;
-  if (Novels.length <= 0) return null;
-
-  const novelCardsJSX = Novels.map(novel => (
-    <NovelCard key={novel.id} title={novel.title} />
+  const cards = Novels.map(novel => (
+    <ReaderCard key={novel.id} title={novel.title} />
   ));
 
   return (
     <View style={s.root}>
-      {/* <EventModal /> */}
+      <EventModal />
       <Reader>
-        <View style={s.cardView}>{novelCardsJSX}</View>
-        <View style={s.cardView}>{novelCardsJSX}</View>
-        <View style={s.cardView}>{novelCardsJSX}</View>
-        <View style={s.cardView}>{novelCardsJSX}</View>
+        <View>
+          <View style={s.cardView}>{cards}</View>
+          <View style={s.cardView}>{cards}</View>
+          <View style={s.cardView}>{cards}</View>
+          <View style={s.cardView}>{cards}</View>
+        </View>
       </Reader>
     </View>
   );
@@ -87,9 +84,11 @@ const Main = () => {
 export default Main;
 
 const s = StyleSheet.create({
-  root: {},
+  root: {
+    flex: 1,
+    alignItems: 'flex-start',
+  },
   cardView: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
   },
 });
