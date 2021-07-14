@@ -7,11 +7,6 @@ const SWIPE_OUT_DURATION = 250;
 export const useSwipeGesture = (position, swipeXAmount, swipeYAmount) => {
   const forceSwipeVertically = dir => {
     const isUp = dir === 'up';
-    // if (isUp && swipeYAmount <= 0) {
-    // }
-
-    // if (!isUp && swipeYAmount > 10000) {
-    // }
     const delta = SCREEN_HEIGHT * (isUp ? -1 : 1);
     // console.log(delta);
     swipeYAmount += delta;
@@ -36,13 +31,6 @@ export const useSwipeGesture = (position, swipeXAmount, swipeYAmount) => {
     }).start(() => onSwipeComplete(dir));
   };
 
-  // const resetPosition = () => {
-  //   Animated.spring(position, {
-  //     toValue: { x: 0, y: 0 },
-  //     useNativeDriver: true,
-  //   }).start();
-  // };
-
   const onSwipeComplete = dir => {
     // const item = data[cardIdx];
     // dir === 'left' ? onSwipeLeft(item) : onSwipeRight(item);
@@ -52,20 +40,6 @@ export const useSwipeGesture = (position, swipeXAmount, swipeYAmount) => {
   };
 
   const getCardStyle = () => {
-    // const rotate = position.x.interpolate({
-    //   inputRange: [-SCREEN_WIDTH * 1.5, 0, SCREEN_WIDTH * 1.5],
-    //   outputRange: ['-120deg', '0deg', '120deg'],
-    // });
-
-    // const translateX = position.x.interpolate({
-    //   inputRange: [0, 1],
-    //   outputRange: [0, 100],
-    // });
-
-    // const translateY = position.y.interpolate({
-    //   inputRange: [0, 1],
-    //   outputRange: [0, 100],
-    // });
     const { x: translateX, y: translateY } = position;
     return {
       // ...position.getLayout(),
@@ -76,8 +50,6 @@ export const useSwipeGesture = (position, swipeXAmount, swipeYAmount) => {
   return {
     forceSwipeVertically,
     forceSwipeHorizontally,
-    // resetPosition,
     getCardStyle,
-    onSwipeComplete,
   };
 };

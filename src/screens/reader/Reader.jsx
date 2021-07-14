@@ -1,8 +1,6 @@
 import React, { useRef } from 'react';
 import { StyleSheet, Animated } from 'react-native';
-import GestureRecognizer, {
-  swipeDirections,
-} from 'react-native-swipe-gestures';
+import GestureRecognizer from 'react-native-swipe-gestures';
 import { useSwipeGesture } from '#hooks';
 
 const Reader = ({ children }) => {

@@ -11,7 +11,8 @@ import Reader from './reader/Reader';
 // import Novel from '../data/novel/novel';
 
 import NovelCard from './NovelCard';
-import GestureWrapper from './gesture/GestureWrapper';
+
+// import GestureWrapper from './gesture/GestureWrapper';
 
 // class Novel {
 //   state = {
@@ -57,37 +58,28 @@ import GestureWrapper from './gesture/GestureWrapper';
 const Main = () => {
   // const [isHorizontal, setHorizontal] = useState(false);
   const [Novels, setNovels] = useState([
-    { id: 0, title: 'genre1' },
-    { id: 1, title: 'genre2' },
-    { id: 2, title: 'genre3' },
-    { id: 3, title: 'genre4' },
+    { id: 0, title: '0' },
+    { id: 1, title: '1' },
+    { id: 2, title: '2' },
+    { id: 3, title: '3' },
+    { id: 4, title: '4' },
   ]);
 
-  if (!Novels) return null;
-  if (Novels.length <= 0) return null;
-
-  const novelCardsJSX = Novels.map(novel => {
-    const { id, title } = novel;
-    return (
-      <View key={id}>
-        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-          <NovelCard title={title} />
-        </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-          <NovelCard title={title} />
-        </View>
-      </View>
-    );
-  });
-
-  console.log(isHorizontal);
+  const novelCardsJSX = Novels.map(novel => (
+    <NovelCard key={novel.id} title={novel.title} />
+  ));
 
   return (
     <View style={s.root}>
       {/* <EventModal /> */}
-      <GestureWrapper>
-        <Reader>{novelCardsJSX}</Reader>
-      </GestureWrapper>
+      <Reader>
+        <View>
+          <View style={s.cardView}>{novelCardsJSX}</View>
+          <View style={s.cardView}>{novelCardsJSX}</View>
+          <View style={s.cardView}>{novelCardsJSX}</View>
+          <View style={s.cardView}>{novelCardsJSX}</View>
+        </View>
+      </Reader>
     </View>
   );
 };
@@ -97,8 +89,9 @@ export default Main;
 const s = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-start',
+  },
+  cardView: {
+    flexDirection: 'row',
   },
 });
