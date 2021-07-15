@@ -1,0 +1,52 @@
+❯ expo upgrade
+Warning! Your git working tree is dirty.
+It's recommended to commit all your changes before proceeding, so you can revert the changes made by this command if necessary.
+
+✔ Would you like to proceed? … yes
+
+✔ You are currently using SDK 41.0.0. Would you like to update to the latest version, 42.0.0? … no
+
+✖ Choose a SDK version to upgrade to: › 42.0.0
+❯ expo upgrade
+Your git working tree is clean
+To revert the changes after this command completes, you can run the following:
+  git clean --force && git reset --hard
+✔ You are currently using SDK 41.0.0. Would you like to update to the latest version, 42.0.0? … yes
+
+✔ Would you like to upgrade the Expo app in the iOS simulator? … yes
+
+Uninstalling Expo Go from iOS simulator.
+Installing the Expo Go app on iPhone 11 Pro [================================================================] 100% 0.0s
+Installing Expo Go 2.21.3 on iPhone 11 Pro
+-
+✔ Would you like to upgrade the Expo app in the Android emulator? … yes
+
+no devices connected
+The upgrade of your Android client didn't go as planned. You might have to reinstall it manually with expo client:install:android.
+
+✔ Installed expo@^42.0.0
+✔ Validated configuration.
+✔ No additional changes necessary to app.json config.
+✔ Updated known packages to compatible versions.
+✔ Cleared packager cache.
+✖ Found project files with deprecated features
+Project is using deprecated .expo.* file extensions.
+Please refactor the following files and upgrade modules accordingly:
+
+- /Users/ys-mac/workplace/freelance/wreader-front/node_modules/react-navigation-header-buttons/src/overflowMenu/statusBarUtils.expo.js
+
+Dangerously disable this check with EXPO_LEGACY_IMPORTS=1
+Learn more: http://expo.fyi/expo-extension-migration
+
+
+👏 Automated upgrade steps complete.
+...but this doesn't mean everything is done yet!
+
+✅ The following packages were updated:
+@expo/vector-icons, react-native-safe-area-context, @react-native-community/masked-view, expo-font, react-native-reanimated, expo-status-bar, expo-image-picker, react-native-screens, react-native-gesture-handler, react-native, react, react-dom, @babel/core, react-native-web, expo
+
+🚨 The following packages were not updated. You should check the READMEs for those repositories to determine what version is compatible with your new set of packages:
+@react-native-community/checkbox, @react-navigation/drawer, @react-navigation/native, @react-navigation/stack, @react-navigation/tabs, app-loading, axios, constate, easy-peasy, expo-app-loading, formik, lodash, prop-types, react-native-dotenv, react-native-elements, react-native-mmkv, react-native-swipe-gestures, react-navigation-header-buttons, redux-logger, swr, yup, @babel/preset-env, @babel/preset-react, babel-jest, babel-plugin-root-import, eslint, eslint-config-airbnb, eslint-plugin-import, eslint-plugin-jsx-a11y, eslint-plugin-react, eslint-plugin-react-hooks, jest
+
+Please refer to the release notes for information on any further required steps to update and information about breaking changes:
+https://blog.expo.io/expo-sdk-42-579aee2348b6
