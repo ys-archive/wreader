@@ -6,6 +6,7 @@ import { useFormik } from 'formik';
 import { useNavigation } from '@react-navigation/native';
 import * as Yup from 'yup';
 import * as ScreenNames from '#navigators/ScreenNames';
+import { login } from '#service/auth/login';
 
 import SigninInput from './SigninInput';
 import SigninLogin from './SigninLogin';
@@ -29,7 +30,7 @@ const SigninForms = () => {
   const setLoggedIn = useStoreActions(actionsSetLoggedIn);
   const nav = useNavigation();
 
-  const onSubmit = values => {
+  const onSubmit = async values => {
     Alert.alert('onLogin!', JSON.stringify(values, null, 2), [
       {
         text: 'OK!',
@@ -37,10 +38,15 @@ const SigninForms = () => {
         style: 'destructive',
       },
     ]);
-    // TODO: password -> md5
-    // TODO: POST signin (id, password)
-    setLoggedIn();
-    nav.navigate(ScreenNames.Main);
+    const { email, password } = values;
+    // console.log(email, password);
+
+    const isSuccess = await login(email, password);
+
+    if (isSuccess) {
+      setLoggedIn();
+      nav.navigate(ScreenNames.Main);
+    }
   };
 
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
