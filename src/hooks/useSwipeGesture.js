@@ -4,27 +4,38 @@ import { Animated, Dimensions, LayoutAnimation } from 'react-native';
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const SWIPE_OUT_DURATION = 250;
 
-export const useSwipeGesture = (position, swipeXAmount, swipeYAmount) => {
-  const forceSwipeVertically = dir => {
+const swipeAmount = {
+  x: 0,
+  y: 0,
+};
+
+export const useSwipeGesture = () => {
+  const position = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current;
+
+  const forceSwipeVertically = (dir, callback = () => {}) => {
     const isUp = dir === 'up';
     const delta = SCREEN_HEIGHT * (isUp ? -1 : 1);
-    swipeYAmount += delta;
+    swipeAmount.y += delta;
+    // swipeYAmount = Math.min(0, swipeYAmount);
+    // Animated.add(swipeYAmount, new Animated.Value(delta));
     Animated.timing(position, {
-      toValue: { x: swipeXAmount, y: swipeYAmount },
+      toValue: { x: swipeAmount.x, y: swipeAmount.y },
       duration: SWIPE_OUT_DURATION,
       useNativeDriver: true,
-    }).start(); // () => onSwipeComplete(dir)
+    }).start(() => callback()); // () => onSwipeComplete(dir)
   };
 
-  const forceSwipeHorizontally = dir => {
+  const forceSwipeHorizontally = (dir, callback = () => {}) => {
     const isLeft = dir === 'left';
     const delta = SCREEN_WIDTH * (isLeft ? -1 : 1);
-    swipeXAmount += delta;
+    swipeAmount.x += delta;
+    // swipeXAmount = Math.min(0, swipeXAmount);
+    // Animated.add(swipeXAmount, new Animated.Value(delta));
     Animated.timing(position, {
-      toValue: { x: swipeXAmount, y: swipeYAmount },
+      toValue: { x: swipeAmount.x, y: swipeAmount.y },
       duration: SWIPE_OUT_DURATION,
       useNativeDriver: true,
-    }).start(); // () => onSwipeComplete(dir)
+    }).start(() => callback()); // () => onSwipeComplete(dir)
   };
 
   // const onSwipeComplete = dir => {
@@ -34,6 +45,7 @@ export const useSwipeGesture = (position, swipeXAmount, swipeYAmount) => {
 
   const getStyle = () => {
     const { x: translateX, y: translateY } = position;
+
     // let finalX = translateX;
     // let finalY = translateY;
 
