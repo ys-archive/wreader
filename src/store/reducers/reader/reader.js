@@ -36,36 +36,39 @@ export default {
     state.model.lastChapterIdx = lastChapterIdx;
   }),
   swipeToLeft: action((state, payload) => {
-    state.model.currentChapterIdx = Math.max(
-      state.model.currentChapterIdx + 1,
-      state.model.lastChapterIdx,
-    );
+    state.model.currentChapterIdx += 1;
+    console.log('category: ', state.model.currentCategoryIdx);
+    console.log('chapter: ', state.model.currentChapterIdx);
+    console.log('-------------------------------');
   }),
   swipeToRight: action((state, payload) => {
     // TODO: 마지막 뷰어에서 뒤로 이동할때는 같은 장르내에서 전 챕터로 이동이 되도록 해주세요~
-    if (!state.isLastChapter) {
-      --state.model.currentChapterIdx;
-    }
+    state.model.currentChapterIdx -= 1;
+    console.log('category: ', state.model.currentCategoryIdx);
+    console.log('chapter: ', state.model.currentChapterIdx);
+    console.log('-------------------------------');
+    // if (!state.isLastChapter) {
+    // }
     // if (state.model.currentCategoryIdx === 0) {
     //   state.model.isCategorySelected = false;
     // }
   }),
   swipeToUp: action((state, payload) => {
-    if (state.currentChapterIdx === 0) {
-      state.model.currentCategoryIdx = Math.max(
-        state.model.currentCategoryIdx + 1,
-        state.model.lastCategoryIdx,
-      );
-    }
+    state.model.currentCategoryIdx += 1;
+    console.log('category: ', state.model.currentCategoryIdx);
+    console.log('chapter: ', state.model.currentChapterIdx);
+    console.log('-------------------------------');
+    // if (state.currentChapterIdx === 0) {
+    // }
   }),
   swipeToDown: action((state, payload) => {
-    if (state.currentChapterIdx === 0) {
-      if (!state.model.isCategorySelected) {
-        state.model.currentChapterIdx = Math.min(
-          0,
-          state.model.currentCategoryIdx - 1,
-        );
-      }
-    }
+    state.model.currentCategoryIdx -= 1;
+    console.log('category: ', state.model.currentCategoryIdx);
+    console.log('chapter: ', state.model.currentChapterIdx);
+    console.log('-------------------------------');
+    // if (!state.model.isCategorySelected) {
+    // }
+    // if (state.currentChapterIdx === 0) {
+    // }
   }),
 };
