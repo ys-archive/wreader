@@ -12,7 +12,7 @@ const swipeAmount = {
 export const useSwipeGesture = () => {
   const position = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current;
 
-  const forceSwipeVertically = (dir, callback = () => {}) => {
+  const forceSwipeVertically = dir => {
     const isUp = dir === 'up';
     const delta = SCREEN_HEIGHT * (isUp ? -1 : 1);
     swipeAmount.y += delta;
@@ -22,10 +22,10 @@ export const useSwipeGesture = () => {
       toValue: { x: swipeAmount.x, y: swipeAmount.y },
       duration: SWIPE_OUT_DURATION,
       useNativeDriver: true,
-    }).start(() => callback()); // () => onSwipeComplete(dir)
+    }).start(); // () => onSwipeComplete(dir)
   };
 
-  const forceSwipeHorizontally = (dir, callback = () => {}) => {
+  const forceSwipeHorizontally = dir => {
     const isLeft = dir === 'left';
     const delta = SCREEN_WIDTH * (isLeft ? -1 : 1);
     swipeAmount.x += delta;
@@ -35,7 +35,7 @@ export const useSwipeGesture = () => {
       toValue: { x: swipeAmount.x, y: swipeAmount.y },
       duration: SWIPE_OUT_DURATION,
       useNativeDriver: true,
-    }).start(() => callback()); // () => onSwipeComplete(dir)
+    }).start(); // () => onSwipeComplete(dir)
   };
 
   // const onSwipeComplete = dir => {

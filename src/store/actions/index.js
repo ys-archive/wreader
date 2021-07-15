@@ -6,6 +6,8 @@ export const actionsSetLoggedIn = actions => actions.auth.setLoggedIn;
 export const actionsSetLoggedOut = actions => actions.auth.setLoggedOut;
 
 // reader
+export const actionsSetCategorySelected = actions =>
+  actions.reader.setCategorySelected;
 export const actionsReset = actions => actions.reader.reset;
 export const actionsSwipeToLeft = actions => actions.reader.swipeToLeft;
 export const actionsSwipeToRight = actions => actions.reader.swipeToRight;

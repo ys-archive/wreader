@@ -8,6 +8,7 @@ import {
   selectIsFirstCategory,
   selectIsLastChapter,
   selectIsFirstChapter,
+  selectIsCategorySelected,
 } from '#store/selectors';
 import {
   actionsReset,
@@ -22,14 +23,9 @@ const Reader = ({ children }) => {
   const isLastCategory = useStoreState(selectIsLastCategory);
   const isFirstChapter = useStoreState(selectIsFirstChapter);
   const isLastChapter = useStoreState(selectIsLastChapter);
-  const currentCategoryIdx = useStoreState(
-    state => state.reader.model.currentCategoryIdx,
-  );
-  const currentChapterIdx = useStoreState(
-    state => state.reader.model.currentChapterIdx,
-  );
+  const isCategorySelected = useStoreState(selectIsCategorySelected);
 
-  const reset = useStoreActions(actionsReset);
+  // const reset = useStoreActions(actionsReset);
   const swipeToLeft = useStoreActions(actionsSwipeToLeft);
   const swipeToRight = useStoreActions(actionsSwipeToRight);
   const swipeToUp = useStoreActions(actionsSwipeToUp);
@@ -40,47 +36,61 @@ const Reader = ({ children }) => {
 
   const onSwipeLeft = state => {
     // console.log('swipe to left');
-    if (!isLastChapter) {
-      forceSwipeHorizontally('left', () => swipeToLeft());
-    } else {
-      console.log('last chapter!');
+
+    if (isLastChapter) {
+      console.log("you can't swipe left on the last chapter");
     }
 
-    //  else {
-    //   forceSwipeHorizontally('right');
-    //   // swipeToRight();
-    // }
+    forceSwipeHorizontally('left');
+    swipeToLeft();
+
     // TODO: 마지막 뷰어에서 뒤로 이동할때는 같은 장르내에서 전 챕터로 이동이 되도록 해주세요~
   };
 
   const onSwipeRight = state => {
     // console.log('swipe to right');
 
-    if (!isFirstChapter) {
-      forceSwipeHorizontally('right', () => swipeToRight());
-    } else {
-      console.log('first chapter');
+    if (isFirstChapter) {
+      console.log("you can't swipe right on the first chapter");
+      return;
     }
+
+    forceSwipeHorizontally('right');
+    swipeToRight();
   };
 
   const onSwipeUp = state => {
     // console.log('swipe to up');
 
-    if (!isLastCategory) {
-      forceSwipeVertically('up', () => swipeToUp());
-    } else {
-      console.log('last category');
+    if (isCategorySelected) {
+      console.log("you can't swipe up on a category selected!");
+      return;
     }
+
+    if (isLastCategory) {
+      console.log('last category');
+      return;
+    }
+
+    forceSwipeVertically('up');
+    swipeToUp();
   };
 
   const onSwipeDown = state => {
     // console.log('swipe to down');
 
-    if (!isFirstCategory) {
-      forceSwipeVertically('down', () => swipeToDown());
-    } else {
-      console.log('first category');
+    if (isCategorySelected) {
+      console.log("you can't swipe down on a category selected!");
+      return;
     }
+
+    if (isFirstCategory) {
+      console.log('first category');
+      return;
+    }
+
+    forceSwipeVertically('down');
+    swipeToDown();
   };
 
   return (
