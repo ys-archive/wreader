@@ -75,6 +75,7 @@ const Main = () => {
           <View style={s.cardView}>{cards}</View>
           <View style={s.cardView}>{cards}</View>
           <View style={s.cardView}>{cards}</View>
+          <View style={s.cardView}>{cards}</View>
         </View>
       </Reader>
     </View>
