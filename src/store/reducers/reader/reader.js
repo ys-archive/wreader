@@ -18,11 +18,11 @@ export default {
   // computed
   isFirstCategory: computed(state => state.model.currentCategoryIdx === 0),
   isLastCategory: computed(
-    state => state.model.currentCategoryIdx === state.model.lastCategoryIdx,
+    state => state.model.currentCategoryIdx === state.model.lastCategoryIdx - 1,
   ),
   isFirstChapter: computed(state => state.model.currentChapterIdx === 0),
   isLastChapter: computed(
-    state => state.model.currentChapterIdx === state.model.lastChapterIdx,
+    state => state.model.currentChapterIdx === state.model.lastChapterIdx - 1,
   ),
   swiperThresholdHorizontal: computed(state => state.model.screenWidth * 0.4),
   swiperThresholdVertical: computed(state => state.model.screenHeight * 0.4),
