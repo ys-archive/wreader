@@ -58,37 +58,27 @@ const Main = () => {
     {
       id: 0,
       title: '0',
-      content: `Ipsum veniam excepteur ex duis quis qui.
-                Dolor fugiat officia exercitation enim est quis magna nulla dolor id.
-                Cillum et anim qui sint sunt anim do est adipisicing sint enim ex.`,
+      content: `그녀는 눈을 떴다. 처음 보는 방에서 깨어났다.`,
     },
     {
       id: 1,
       title: '1',
-      content: `Voluptate laborum incididunt reprehenderit laborum. 
-                Culpa laborum incididunt ad laboris proident culpa proident consectetur. 
-                Cillum et anim qui sint sunt anim do est adipisicing sint enim ex.`,
+      content: `그녀는 오랜 회상에 잠긴다. 갑자기 소리를 지른다.`,
     },
     {
       id: 2,
       title: '2',
-      content: `Enim aliquip aliqua fugiat est dolore elit. 
-                Elit enim veniam in aliquip culpa voluptate proident fugiat nostrud magna enim elit. 
-                Exercitation nostrud excepteur ut occaecat cillum amet. Enim proident proident non ullamco qui nulla quis est Lorem ea.`,
+      content: `그녀는 그를 죽이고 사다리를 올라갔다.`,
     },
     {
       id: 3,
       title: '3',
-      content: `Laborum elit ullamco pariatur exercitation incididunt occaecat deserunt ea ut.
-                Velit ex velit laboris dolor reprehenderit aliquip ut mollit do labore quis ex pariatur.
-                Excepteur do deserunt sit enim est pariatur dolore labore ullamco est ullamco laboris exercitation dolore.`,
+      content: `불타오르는 석양과 땅에서 치솟는 바람이 모든 것에 생명을 채운다.`,
     },
     {
       id: 4,
       title: '4',
-      content: `Irure cillum et do officia proident sint ullamco ad sunt excepteur consectetur irure commodo deserunt. 
-                Qui qui ea quis ea aute nulla aute aliquip minim aliqua duis culpa. Ex id ut anim excepteur. 
-                Consequat aute sint do laborum aliquip minim magna incididunt nostrud sint id veniam.`,
+      content: `그녀도 생명의 시작을 향해 떨어지기 시작한다.`,
     },
   ]);
 
