@@ -2,7 +2,7 @@ import React from 'react';
 import * as ScreenNames from '../ScreenNames';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import PolicyAndCondition from '../../screens/PolicyAndCondition';
+import PolicyAndCondition from '../../screens/policy-and-condition/PolicyAndCondition';
 import GoBack from '../header/GoBack';
 
 const Stack = createStackNavigator();

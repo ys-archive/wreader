@@ -5,6 +5,7 @@ import md5 from 'md5';
 export const login = async (email, password) => {
   // const encrpyted = md5(password);
   // console.log(email, encrpyted);
+  console.log(email, password);
   // console.log(BASE_URL);
 
   const { data } = await axios
@@ -12,7 +13,12 @@ export const login = async (email, password) => {
       email: email,
       pass: password,
     })
-    .catch(err => console.error(e));
+    .catch(err => console.error(err));
+
+  if (!data) {
+    return false;
+  }
+
   console.log(data);
   const { code, message } = data;
   if (code !== 1) {
