@@ -33,17 +33,15 @@ const validationSchema = Yup.object({
 const ReaderWriteCard = ({ children }) => {
   const nav = useNavigation();
   const onSubmit = values => {
-    Alert.alert('title!', JSON.stringify(values, null, 2), [
+    Alert.alert('유저가 쓴 챕터', JSON.stringify(values, null, 2), [
       {
         text: 'OK!',
         onPress: () => console.log('alert closed!!'),
         style: 'destructive',
       },
     ]);
-    // TODO: alert 회원가입이 완료되었습니다
-    // TODO: or alert 회원가입이 실패했습니다.
-    // TODO: 실제 가입 처리
-    nav?.goBack();
+
+    // TODO: 처리한 카드 기다렸다가 렌더
   };
 
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
