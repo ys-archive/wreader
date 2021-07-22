@@ -99,10 +99,10 @@ const Reader = ({ children }) => {
       onSwipeDown={onSwipeDown}
       onSwipeLeft={onSwipeLeft}
       onSwipeRight={onSwipeRight}
-      // config={{
-      //   velocityThreshold: 0.1,
-      //   directionalOffsetThreshold: 80,
-      // }}
+      config={{
+        velocityThreshold: 0.4,
+        directionalOffsetThreshold: 80,
+      }}
       style={[getStyle()]}
     >
       {children}

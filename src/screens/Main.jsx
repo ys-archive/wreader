@@ -9,7 +9,7 @@ import { StyleSheet } from '#components';
 import EventModal from '#components/modals/EventModal';
 import Reader from './reader/Reader';
 
-import ReaderCard from '#components/ReaderCard';
+import ReaderCard from '#components/reader-card/ReaderCard';
 
 // class Novel {
 //   state = {
@@ -55,15 +55,35 @@ import ReaderCard from '#components/ReaderCard';
 const Main = () => {
   // TODO: Novel data 가져와 렌더
   const [Novels, _] = useState([
-    { id: 0, title: '0' },
-    { id: 1, title: '1' },
-    { id: 2, title: '2' },
-    { id: 3, title: '3' },
-    { id: 4, title: '4' },
+    {
+      id: 0,
+      title: '0',
+      content: `그녀는 눈을 떴다. 처음 보는 방에서 깨어났다.`,
+    },
+    {
+      id: 1,
+      title: '1',
+      content: `그녀는 오랜 회상에 잠긴다. 갑자기 소리를 지른다.`,
+    },
+    {
+      id: 2,
+      title: '2',
+      content: `그녀는 그를 죽이고 사다리를 올라갔다.`,
+    },
+    {
+      id: 3,
+      title: '3',
+      content: `불타오르는 석양과 땅에서 치솟는 바람이 모든 것에 생명을 채운다.`,
+    },
+    {
+      id: 4,
+      title: '4',
+      content: `그녀도 생명의 시작을 향해 떨어지기 시작한다.`,
+    },
   ]);
 
   const cards = Novels.map(novel => (
-    <ReaderCard key={novel.id} title={novel.title} />
+    <ReaderCard key={novel.id} title={novel.title} content={novel.content} />
   ));
 
   return (
