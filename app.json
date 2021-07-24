@@ -23,13 +23,15 @@
       "assets/images/xxxhdpi/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.wreader.ios"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.wreader.build1"
     },
     "web": {
       "favicon": "./assets/favicon.png"

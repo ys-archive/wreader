@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import AppLoading from 'expo-app-loading';
 // import * as Font from 'expo-font';
-// import * as SplashScreen from 'expo-splash-screen';
+import * as SplashScreen from 'expo-splash-screen';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { loadFontsAsync } from './constants/fonts';
@@ -53,8 +53,14 @@ export default () => {
   if (!isLoadingDone) {
     return (
       <AppLoading
-        startAsync={loadFontsAsync}
-        onFinish={() => setLoadingDone(true)}
+        startAsync={() => {
+          loadFontsAsync();
+          SplashScreen.preventAutoHideAsync();
+          setTimeout(SplashScreen.hideAsync, 5000);
+        }}
+        onFinish={() => {
+          setTimeout(() => setLoadingDone(true), 5000);
+        }}
         onError={err => console.error(err)}
       />
     );
