@@ -5,6 +5,8 @@ import { StyleSheet } from './RN-components/StyleSheet';
 import { TextInput } from './RN-components/TextInput';
 import { Text } from './RN-components/Text';
 import { FormikError } from './FormikError';
+import { RemoteImage } from './RN-components/RemoteImage';
+import { LocalImage } from './RN-components/LocalImage';
 
 export {
   Button,
@@ -14,4 +16,6 @@ export {
   TextInput,
   Text,
   FormikError,
+  RemoteImage,
+  LocalImage,
 };

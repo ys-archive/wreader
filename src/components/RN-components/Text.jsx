@@ -25,8 +25,6 @@ Text.defaultProps = {
   isBold: false,
 };
 
-export default Text;
-
 const s = StyleSheet.create({
   root: {
     fontSize: 16,

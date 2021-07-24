@@ -5,6 +5,12 @@ import {
   isArrayTypeof,
   isArrayTypeofExcept,
 } from './type';
+import {
+  getImagePathByScreenResolution,
+  getImageExtension,
+  findImageInCache,
+  cacheImage,
+} from './image';
 
 export {
   delay,
@@ -14,4 +20,8 @@ export {
   isTypeOfExcept,
   isArrayTypeof,
   isArrayTypeofExcept,
+  getImagePathByScreenResolution,
+  getImageExtension,
+  findImageInCache,
+  cacheImage,
 };
