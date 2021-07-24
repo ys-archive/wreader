@@ -2,7 +2,6 @@ import React from 'react';
 import {
   View,
   Alert,
-  Image,
   KeyboardAvoidingView,
   Platform,
   ScrollView,

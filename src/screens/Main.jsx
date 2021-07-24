@@ -1,7 +1,4 @@
 import React, { useState, useRef } from 'react';
-// expo 에서 불가능! -> rn-cli
-// import FastImage from 'react-native-fast-image';
-// import Image from 'expo-image';
 
 import { View } from 'react-native';
 import { StyleSheet } from '#components';
