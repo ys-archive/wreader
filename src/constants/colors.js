@@ -1,12 +1,13 @@
 export default {
   light: {
     text: '#000',
-    bg: '#fff',
+    background: '#d1cab6',
     tint: '#b00',
+    primary: '#d3c4a9',
   },
-  dark: {
-    text: '#fff',
-    bg: '#000',
-    tint: '#b00',
-  },
+  // dark: {
+  //   text: '#fff',
+  //   background: '#000',
+  //   tint: '#b00',
+  // },
 };
