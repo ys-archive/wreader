@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Modal, Image } from 'react-native';
-import { Button, StyleSheet, Text } from '../';
+import { View, Modal } from 'react-native';
+import { Button, StyleSheet, Text, LocalImage } from '../';
 
 // TODO: 실제 url 받아서 webview 로 교체
 const EventModal = ({ eventImageUrl }) => {
@@ -19,7 +19,7 @@ const EventModal = ({ eventImageUrl }) => {
       >
         <View style={s.root}>
           <View style={s.modalView}>
-            <Image
+            <LocalImage
               style={{ maxWidth: '100%', maxHeight: '70%' }}
               source={require('!images/dummy-image.jpg')}
               resizeMode="contain"
