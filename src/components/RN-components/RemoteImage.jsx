@@ -14,6 +14,7 @@ export const RemoteImage = ({ uri, cacheKey, style = {}, ...rest }) => {
     (async function loadImage() {
       // 1. 파일 확장자 뽑기
       const imageExt = getImageExtension(uri);
+
       if (!imageExt || !imageExt.length) {
         Alert.alert(`이미지 로드 실패 ! @ ${uri}`);
         return;
