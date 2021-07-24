@@ -8,7 +8,7 @@ const image = require('../../../assets/images/dummy-image.jpg');
 
 const { width, height } = Dimensions.get('window');
 
-const ReaderCard = ({ path: uri, title, content }) => {
+const ReaderCard = ({ imageName, title, content }) => {
   // console.log(uri);
   return (
     <View style={s.root}>

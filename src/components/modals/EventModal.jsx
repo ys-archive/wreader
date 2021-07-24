@@ -26,6 +26,8 @@ const EventModal = ({ eventImageUrl }) => {
             />
             <View style={s.buttonView}>
               {/* TODO: 하루동안 보지않기 기능 추가 */}
+              {/* TODO: persistence -> storage 에 duration 저장 후 
+                앱 시작할 떄마다 currentTime 과 체크*/}
               <Button style={s.button} onPress={() => {}}>
                 하루동안 보지않기
               </Button>

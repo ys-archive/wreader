@@ -16,3 +16,5 @@ export const selectSwipeThresholdHorizontal = state =>
   state.reader.model.swipeThresholdHorizontal;
 export const selectSwipeThresholdVertical = state =>
   state.reader.model.swipeThresholdVertical;
+
+// TODO: App preference 추가

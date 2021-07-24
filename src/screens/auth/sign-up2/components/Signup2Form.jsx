@@ -32,11 +32,9 @@ const validationSchema = Yup.object({
 });
 
 const Signup2Form = () => {
-  // TODO: Signup actions
-
   const nav = useNavigation();
 
-  const onSubmit = values => {
+  const onSubmit = async values => {
     Alert.alert('onLogin!', JSON.stringify(values, null, 2), [
       {
         text: 'OK!',
@@ -44,10 +42,10 @@ const Signup2Form = () => {
         style: 'destructive',
       },
     ]);
-    
-    // TODO: alert 회원가입이 완료되었습니다
-    // TODO: or alert 회원가입이 실패했습니다.
-    // TODO: 실제 가입 처리
+    // TODO: 실제 가입 처리 ( alert 회원가입이 완료 or 실패 되었습니다 )
+    // TODO: POST Create User service
+
+    // 다시 로그인 화면으로 되돌아감
     nav?.navigate(ScreenNames.Signin);
   };
 
@@ -55,7 +53,6 @@ const Signup2Form = () => {
     useFormik({
       initialValues,
       validationSchema,
-      // TODO: 실제 가입 처리
       onSubmit,
     });
 

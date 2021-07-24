@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 const SigninLogoTitle = () => (
   <View style={s.root}>
+    {/* TODO: 다른 아이콘 넣기 ? */}
     <Ionicons name="book-outline" size={70} color="black" />
     <View style={s.texts}>
       <Text>내가 만드는 소설</Text>

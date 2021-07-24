@@ -32,17 +32,22 @@ const validationSchema = Yup.object({
 });
 
 const MyProfileBasicInfo = () => {
-  const onSubmit = values => {
-    Alert.alert('onLogin!', JSON.stringify(values, null, 2), [
-      {
-        text: 'OK!',
-        onPress: () => console.log('alert closed!!'),
-        style: 'destructive',
-      },
-    ]);
-    // TODO: alert 회원가입이 완료되었습니다
-    // TODO: or alert 회원가입이 실패했습니다.
-    // TODO: 실제 가입 처리
+  const onSubmit = async values => {
+    // TODO: PUT - Update User
+
+    // TODO: PUT 성공 ->
+    if (isRequestSuccess) {
+      Alert.alert('프로필 업데이트됨!', JSON.stringify(values, null, 2), [
+        {
+          text: 'OK!',
+          onPress: () => console.log('alert closed!!'),
+          style: 'destructive',
+        },
+      ]);
+    } else {
+      // TODO: 실패 처리
+    }
+
     nav?.navigate(ScreenNames.Signin);
   };
 

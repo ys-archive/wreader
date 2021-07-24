@@ -39,7 +39,8 @@ const SignupForms = () => {
         style: 'destructive',
       },
     ]);
-    // TODO: data 를 넘긴다!
+    // TODO: 입력한 데이터 (email, password, passwordRepeat)를
+    // TODO: 함꼐 넘겨 Signup2 의 정보 와 함께 최종 회원가입시에 POST 처리 (CreateUser)
     nav?.navigate(ScreenNames.Signup2);
   };
 

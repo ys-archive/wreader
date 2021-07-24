@@ -15,15 +15,21 @@ const validationSchema = Yup.object({
 });
 
 const MyProfilePassword = () => {
-  const onSubmit = values => {
-    Alert.alert('onChangePassword!', JSON.stringify(values, null, 2), [
-      {
-        text: 'OK!',
-        onPress: () => console.log('alert closed!!'),
-        style: 'destructive',
-      },
-    ]);
-    // TODO: password 변경
+  const onSubmit = async values => {
+    // TODO: PUT - Update User
+
+    if (isPasswordChangeSuccess) {
+      Alert.alert('비밀번호 변경됨!', JSON.stringify(values, null, 2), [
+        {
+          text: 'OK!',
+          onPress: () => console.log('alert closed!!'),
+          style: 'destructive',
+        },
+      ]);
+    } else {
+      // TODO: 실패처리
+    }
+    // TODO: 이전 or 메인으로 navigate
   };
 
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =

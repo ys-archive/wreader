@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { StyleSheet, Animated } from 'react-native';
+// import { StyleSheet, Animated } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { useSwipeGesture } from '#hooks';
 import { useStoreState, useStoreActions } from 'easy-peasy';
@@ -11,7 +11,7 @@ import {
   selectIsCategorySelected,
 } from '#store/selectors';
 import {
-  actionsReset,
+  // actionsReset,
   actionsSwipeToLeft,
   actionsSwipeToRight,
   actionsSwipeToUp,
@@ -35,23 +35,20 @@ const Reader = ({ children }) => {
     useSwipeGesture();
 
   const onSwipeLeft = state => {
-    // console.log('swipe to left');
-
     if (isLastChapter) {
-      console.log("you can't swipe left on the last chapter");
+      console.log('마지막 챕터, 1챕터 이전으로 강제 이동');
+      // TODO: 마지막 챕터에 도달하면, 1챕터 이전으로 돌아간다
+      onSwipeRight(state);
+      // console.log("you can't swipe left on the last chapter");
     }
 
     forceSwipeHorizontally('left');
     swipeToLeft();
-
-    // TODO: 마지막 뷰어에서 뒤로 이동할때는 같은 장르내에서 전 챕터로 이동이 되도록 해주세요~
   };
 
   const onSwipeRight = state => {
-    // console.log('swipe to right');
-
     if (isFirstChapter) {
-      console.log("you can't swipe right on the first chapter");
+      console.log('첫 챕터 도달');
       return;
     }
 
@@ -60,15 +57,13 @@ const Reader = ({ children }) => {
   };
 
   const onSwipeUp = state => {
-    // console.log('swipe to up');
-
     if (isCategorySelected) {
-      console.log("you can't swipe up on a category selected!");
+      console.log('현재 카테고리가 선택되어, 챕터 간 이동만 가능');
       return;
     }
 
     if (isLastCategory) {
-      console.log('last category');
+      console.log('마지막 카테고리 도달');
       return;
     }
 
@@ -77,15 +72,13 @@ const Reader = ({ children }) => {
   };
 
   const onSwipeDown = state => {
-    // console.log('swipe to down');
-
     if (isCategorySelected) {
-      console.log("you can't swipe down on a category selected!");
+      console.log('현재 카테고리가 선택되어, 챕터 간 이동만 가능');
       return;
     }
 
     if (isFirstCategory) {
-      console.log('first category');
+      console.log('첫 카테고리 도달');
       return;
     }
 
@@ -112,8 +105,8 @@ const Reader = ({ children }) => {
 
 export default Reader;
 
-const s = StyleSheet.create({
-  root: {
-    flex: 1,
-  },
-});
+// const s = StyleSheet.create({
+//   root: {
+//     flex: 1,
+//   },
+// });

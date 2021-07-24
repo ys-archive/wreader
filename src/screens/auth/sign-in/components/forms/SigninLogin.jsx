@@ -11,7 +11,7 @@ const SigninLogin = ({ onSubmit }) => {
   const toggleAutoLogin = useStoreActions(actionsToggleAutoLogin);
 
   // TODO: 로그인 로직
-  // props 으로 받은 email, password 을 navigate: param 으로 전달
+  // TODO: props 으로 받은 email, password 을 navigate: param 으로 전달
   return (
     <View style={s.root}>
       <View style={s.autoLogin}>

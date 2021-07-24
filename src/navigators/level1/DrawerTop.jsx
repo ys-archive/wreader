@@ -12,7 +12,7 @@ import { useStoreState } from 'easy-peasy';
 import { selectIsLoggedIn } from '#store/selectors';
 
 const DrawerTop = props => {
-  // TODO: Get user name from store
+  // TODO: Get user name from store and display
   const { navigation: nav } = props;
   const isLoggedIn = useStoreState(selectIsLoggedIn);
 

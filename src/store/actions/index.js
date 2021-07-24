@@ -13,3 +13,5 @@ export const actionsSwipeToLeft = actions => actions.reader.swipeToLeft;
 export const actionsSwipeToRight = actions => actions.reader.swipeToRight;
 export const actionsSwipeToUp = actions => actions.reader.swipeToUp;
 export const actionsSwipeToDown = actions => actions.reader.swipeToDown;
+
+// TODO: App preference 추가

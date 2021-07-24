@@ -50,7 +50,7 @@ import ReaderCard from '#components/reader-card/ReaderCard';
 // }
 
 const Main = () => {
-  // TODO: Novel data 가져와 렌더
+  // TODO: Novel data 가져와 렌더 - 일단 없으니깐 암거나 렌더
   const [Novels, _] = useState([
     {
       id: 0,

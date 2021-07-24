@@ -25,7 +25,7 @@ const validationSchema = Yup.object({
 
 const ContactUsDetail = () => {
   const nav = useNavigation();
-  const onSubmit = values => {
+  const onSubmit = async values => {
     Alert.alert('title!', JSON.stringify(values, null, 2), [
       {
         text: 'OK!',
@@ -33,9 +33,7 @@ const ContactUsDetail = () => {
         style: 'destructive',
       },
     ]);
-    // TODO: alert 회원가입이 완료되었습니다
-    // TODO: or alert 회원가입이 실패했습니다.
-    // TODO: 실제 가입 처리
+    // TODO: POST - 새로운 Contact Us 생성
     nav?.goBack();
   };
 
@@ -43,7 +41,6 @@ const ContactUsDetail = () => {
     useFormik({
       initialValues,
       validationSchema,
-      // TODO: 실제 가입 처리
       onSubmit,
     });
 

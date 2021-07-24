@@ -7,11 +7,8 @@ import MyProfileImage from './components/MyProfileImage';
 import MyProfileAccountInfo from './components/MyProfileAccountInfo';
 
 const MyProfile = () => {
-  // TODO: get user email from store
-  // TODO: get user nickname from store
-  // TODO: get user instagram from store
-  // TODO: get user facebook from store
-  // TODO: get user introduction from store
+  // TODO: SWR + GET - Get user Info 로 조지기
+
   return (
     <ScrollView>
       <KeyboardAvoidingView style={s.root}>

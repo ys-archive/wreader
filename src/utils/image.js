@@ -1,9 +1,5 @@
 import { PixelRatio, Platform } from 'react-native';
 import * as FileSystem from 'expo-file-system';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as dp,
-} from 'react-native-responsive-screen';
 
 export const getImagePathByScreenResolution = imageFileName => {
   if (imageFileName === '') {
@@ -43,7 +39,14 @@ export const getImagePathByScreenResolution = imageFileName => {
     imageRoot = '!images/xxxhdpi';
   }
 
+  console.log(
+    `current pixel ratio of this device is ${ratio}:${imageRoot
+      .split()[1]
+      .trim()}`,
+  );
+
   const actualPath = `${imageRoot}${imageFileName}`;
+  console.log(`actual path is @${actualPath}`);
   return actualPath;
 };
 

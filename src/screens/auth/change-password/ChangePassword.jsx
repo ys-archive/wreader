@@ -33,7 +33,7 @@ const ChangePassword = () => {
         style: 'destructive',
       },
     ]);
-    // TODO: data 를 넘긴다!
+    // TODO: data 도 넘긴다!
     nav?.navigate(ScreenNames.Signin);
   };
 

@@ -9,6 +9,7 @@ import ContactUsListItem from './ContactUsListItem';
 const ContactUs = () => {
   const nav = useNavigation();
   // TODO: 실제 url 로 교체
+  // TODO: GET - Get All Contact Us List 
   // const { data, isLoading, error, mutate } = fetchAllContactUs('DUMMY');
 
   // return <Loading style={s.loading} size="large" />;
