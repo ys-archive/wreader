@@ -1,31 +1,19 @@
 import { action, thunk } from 'easy-peasy';
 
 const model = {
-  // TODO: Persisted
-  isAutoLogin: false,
+  // isAutoLogin: false,
   isLoggedIn: false,
   userId: 0,
 };
 
 export default {
   model,
-  setAutoLogin: action((state, payload) => {
-    if (typeof payload === 'boolean') {
-      throw new Error("setIsAutoLogin():: payload must be 'boolean'");
-    }
-
-    state.model.isAutoLogin = payload;
-  }),
-
-  toggleAutoLogin: action(state => {
-    state.model.isAutoLogin = !state.model.isAutoLogin;
-  }),
-
-  setLoggedIn: action(state => {
+  
+  login: action(state => {
     state.model.isLoggedIn = true;
   }),
 
-  setLoggedOut: action(state => {
+  Logout: action(state => {
     state.model.isLoggedIn = false;
   }),
 

@@ -56,7 +56,7 @@ export default {
   swipeToLeft: action((state, payload) => {
     if (!state.model.isCategorySelected) {
       state.model.isCategorySelected = true;
-      console.log('select!');
+      // console.log('select!');
     }
 
     state.model.currentChapterIdx += 1;
@@ -66,8 +66,9 @@ export default {
   swipeToRight: action((state, payload) => {
     if (state.model.currentChapterIdx === 1) {
       state.model.isCategorySelected = false;
-      console.log('deselect!');
+      // console.log('deselect!');
     }
+
     // TODO: 마지막 뷰어에서 뒤로 이동할때는 같은 장르내에서 전 챕터로 이동이 되도록 해주세요~
     state.model.currentChapterIdx -= 1;
 

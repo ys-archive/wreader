@@ -1,6 +1,4 @@
 // auth
-export const selectIsAutoLogin = state => state.auth.model.isAutoLogin;
-export const selectIsLoggedIn = state => state.auth.model.isLoggedIn;
 export const selectUserId = state => state.auth.model.userId;
 
 // reader
@@ -19,3 +17,7 @@ export const selectSwipeThresholdVertical = state =>
   state.reader.model.swipeThresholdVertical;
 
 // TODO: App preference 추가
+
+// persistence
+export const selectIsAutoLogin = state => state.persistence.model.isAutoLogin;
+export const selectIsLoggedIn = state => state.persistence.model.isLoggedIn;

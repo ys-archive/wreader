@@ -1,9 +1,6 @@
 // auth
-export const actionsSetAutoLogin = actions => actions.auth.setAutoLogin;
-export const actionsToggleAutoLogin = actions => actions.auth.toggleAutoLogin;
-
-export const actionsSetLoggedIn = actions => actions.auth.setLoggedIn;
-export const actionsSetLoggedOut = actions => actions.auth.setLoggedOut;
+export const actionsLogin = actions => actions.auth.setLoggedIn;
+export const actionsLogout = actions => actions.auth.setLoggedOut;
 
 export const actionsSetUserId = actions => actions.auth.userId;
 
@@ -17,3 +14,8 @@ export const actionsSwipeToUp = actions => actions.reader.swipeToUp;
 export const actionsSwipeToDown = actions => actions.reader.swipeToDown;
 
 // TODO: App preference 추가
+
+// persistence
+export const actionsSetAutoLogin = actions => actions.persistence.setAutoLogin;
+export const actionsToggleAutoLogin = actions =>
+  actions.persistence.toggleAutoLogin;
