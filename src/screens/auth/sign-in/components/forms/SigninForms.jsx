@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Alert } from 'react-native';
 import { useStoreActions } from 'easy-peasy';
-import { actionsLogIn } from '#store/actions';
+import { actionsLogin } from '#store/actions';
 import { useFormik } from 'formik';
 import { useNavigation } from '@react-navigation/native';
 import * as Yup from 'yup';
@@ -27,25 +27,57 @@ const validationSchema = Yup.object({
 });
 
 const SigninForms = () => {
-  const login = useStoreActions(actionsLogIn);
+  const login = useStoreActions(actionsLogin);
   const nav = useNavigation();
 
   const onSubmit = async values => {
-    Alert.alert('onLogin!', JSON.stringify(values, null, 2), [
-      {
-        text: 'OK!',
-        onPress: () => console.log('alert closed!!'),
-        style: 'destructive',
-      },
-    ]);
     const { email, password } = values;
     // console.log(email, password);
 
-    const isSuccess = await AuthService.POST_login(email, password);
+    const code = await AuthService.POST_login(email, password);
 
-    if (isSuccess) {
+    // code === 1: 로그인 성공
+    if (code === 1) {
       login();
+      Alert.alert('로그인 성공', JSON.stringify(values, null, 2), [
+        {
+          text: 'OK!',
+          onPress: () => console.log('alert closed!!'),
+          style: 'destructive',
+        },
+      ]);
       nav.navigate(ScreenNames.Main);
+    }
+
+    // code === 100 : 탈퇴 신청 중 회원
+    if (code === 100) {
+      Alert.alert(
+        '로그인 실패 (탈퇴 신청 중인 회원입니다)',
+        JSON.stringify(values, null, 2),
+        [
+          {
+            text: 'OK!',
+            onPress: () => console.log('alert closed!!'),
+            style: 'destructive',
+          },
+        ],
+      );
+    }
+
+    // code === 102 : 잘못된 이메일
+    // code === 103 : 잘못된 비밀번호
+    if (code === 102 || code === 103) {
+      Alert.alert(
+        '로그인 실패! (이메일이나 비밀번호가 잘못되었습니다)',
+        JSON.stringify(values, null, 2),
+        [
+          {
+            text: 'OK!',
+            onPress: () => console.log('alert closed!!'),
+            style: 'destructive',
+          },
+        ],
+      );
     }
   };
 

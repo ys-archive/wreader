@@ -1,6 +1,6 @@
 // auth
-export const actionsLogin = actions => actions.auth.setLoggedIn;
-export const actionsLogout = actions => actions.auth.setLoggedOut;
+export const actionsLogin = actions => actions.auth.login;
+export const actionsLogout = actions => actions.auth.logout;
 
 export const actionsSetUserId = actions => actions.auth.userId;
 

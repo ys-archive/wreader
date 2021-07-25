@@ -64,35 +64,13 @@ class AuthService {
     }
 
     console.log(data);
-    const { code, item } = data;
-    return {
-      code,
-      item,
-    };
+    const { code } = data;
+    return code;
 
-    // // 로그인 성공
-    // if (code === 1) {
-    //   return {
-    //     code,
-    //     item,
-    //   };
-    // }
-
-    // // 탈퇴 신청중인 유저
-    // if (code === 100) {
-    //   return code;
-    // }
-
-    // // 잘못된 이메일
-    // if (code === 102) {
-    //   return code;
-    // }
-
-    // // 잘못된 비밀번호
-    // if (code === 103) {
-    //   return code;
-    // }
-    // TODO: 102, 103 은 "이메일 혹은 비밀번호가 잘못 되었습니다" 로 묶어 처리
+    // code === 1: 로그인 성공
+    // code === 100: 탈퇴 신청중인 유저
+    // code === 102: 잘못된 이메일
+    // code === 103: 잘못된 비밀번호
   }
 
   static async GET_CheckUserExists(email) {
