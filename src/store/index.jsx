@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStore, StoreProvider, persist } from 'easy-peasy';
-import logger from 'redux-logger';
+// import logger from 'redux-logger';
 
 import auth from './reducers/auth/auth';
 import reader from './reducers/reader/reader';

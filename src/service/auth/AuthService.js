@@ -8,7 +8,7 @@ const DISAGREE_MARKETING = 2;
 
 // https://app.gitbook.com/@wreader/s/wreader/
 
-class Auth {
+class AuthService {
   static async POST_login({ email, password: pass }) {
     // const encrpyted = md5(password);
     // console.log(email, encrpyted);
@@ -96,9 +96,9 @@ class Auth {
   }
 
   static async GET_CheckUserExists(email) {
-    const { data } = await axios
-      .get(`${BASE_URL}user/check/email`, { email })
-      .catch(console.error);
+    const { data, isLoading, mutate, error } = await useGetSWR(
+      'user/check/email',
+    );
 
     if (!data) {
       // 유저 확인 실패, 서버 문제
@@ -120,4 +120,4 @@ class Auth {
   }
 }
 
-export default Auth;
+export default AuthService;

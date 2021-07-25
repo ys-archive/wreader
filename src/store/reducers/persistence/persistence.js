@@ -28,9 +28,9 @@ export default {
   }),
 
   ignoreEventModalFor7days: actions(state => {
-    const currentTimeAsMs = new Date().getTime();
-    // TODO: 1. Retrieve the current time to determine the due date
-    // TODO: 2.
+    // const currentTimeAsMs = new Date().getTime();
+    // TODO: 1. 기한 정하기 위해 현재 시간 결정
+    // TODO: 2. -> 1 + 7일 정확히 === dueDate
   }),
 
   isDueDateOver: computed(state => {
