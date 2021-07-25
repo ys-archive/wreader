@@ -4,20 +4,31 @@ import { Image } from 'react-native';
 import { StyleSheet } from './StyleSheet';
 import { getImagePathByScreenResolution } from '#utils';
 
-export const LocalImage = ({ uri, style = {}, ...rest }) => {
+export const LocalImage = ({
+  source,
+  isResolutionImage = false,
+  style = {},
+  ...rest
+}) => {
   // TODO: mdpi, hdpi, xdpi, xxdpi, xxxdpi 키워드 별로 정해줌 (5가지)
-  const actualUri = getImagePathByScreenResolution(uri);
-  return (
-    <Image {...rest} source={{ uri: actualUri }} style={[style, s.root]} />
-  );
+  if (isResolutionImage) {
+    const actualUri = getImagePathByScreenResolution(source);
+    return (
+      <Image {...rest} source={{ uri: actualUri }} style={[style, s.root]} />
+    );
+  } else {
+    return <Image {...rest} source={source} style={[style, s.root]} />;
+  }
 };
 
-LocalImage.PropTypes = {
-  uri: PropTypes.string.isRequired,
+LocalImage.propTypes = {
+  source: PropTypes.any.isRequired,
+  isResolutionImage: PropTypes.bool,
   style: PropTypes.object,
 };
 
 LocalImage.defaultProps = {
+  isResolutionImage: false,
   style: {},
 };
 

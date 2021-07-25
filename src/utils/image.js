@@ -13,30 +13,35 @@ export const getImagePathByScreenResolution = imageFileName => {
   // ios - x
   if (ratio < 1) {
     imageRoot = '!images/mdpi';
+    console.log('this is mdpi device');
   }
 
   // android - hdpi
   // ios - x
   if (ratio <= 1 && ratio < 2) {
     imageRoot = '!images/hdpi';
+    console.log('this is hdpi device');
   }
 
   // android - xhdpi
   // ios - iPhone se, 6s, 7, 8, xr, 11
   if (ratio <= 2 && ratio < 3) {
     imageRoot = '!images/xhdpi';
+    console.log('this is xhdpi device');
   }
 
   // android - xxhdpi, pixel, pixel2
   // ios - 6s+, 7+, 8+, x, xs, xs max, 11 pro, 11 pro max
   if (ratio <= 3 && ratio < 3.5) {
     imageRoot = '!images/xxhdpi';
+    console.log('this is xxhdpi device');
   }
 
   // anroid - xxxhdpi, pixel xl, pixel 2 xl, nexus 6
   // ios - x
   if (ratio >= 3.5) {
     imageRoot = '!images/xxxhdpi';
+    console.log('this is xxxhdpi device');
   }
 
   console.log(

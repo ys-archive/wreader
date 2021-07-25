@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, Alert } from 'react-native';
 import { useStoreActions } from 'easy-peasy';
-import { actionsSetLoggedIn } from '#store/actions';
+import { actionsLogIn } from '#store/actions';
 import { useFormik } from 'formik';
 import { useNavigation } from '@react-navigation/native';
 import * as Yup from 'yup';
 import * as ScreenNames from '#navigators/ScreenNames';
-import { login } from '#service/auth/login';
+import AuthService from '#service/AuthService';
 
 import SigninInput from './SigninInput';
 import SigninLogin from './SigninLogin';
@@ -27,7 +27,7 @@ const validationSchema = Yup.object({
 });
 
 const SigninForms = () => {
-  const setLoggedIn = useStoreActions(actionsSetLoggedIn);
+  const login = useStoreActions(actionsLogIn);
   const nav = useNavigation();
 
   const onSubmit = async values => {
@@ -41,10 +41,10 @@ const SigninForms = () => {
     const { email, password } = values;
     // console.log(email, password);
 
-    const isSuccess = await login(email, password);
+    const isSuccess = await AuthService.POST_login(email, password);
 
     if (isSuccess) {
-      setLoggedIn();
+      login();
       nav.navigate(ScreenNames.Main);
     }
   };

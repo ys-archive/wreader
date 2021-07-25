@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { BASE_URL } from '@env';
+import * as axios from './AxiosInstance';
 import md5 from 'md5';
 import { useGetSWR } from '#hooks';
 
@@ -9,14 +8,55 @@ const DISAGREE_MARKETING = 2;
 // https://app.gitbook.com/@wreader/s/wreader/
 
 class AuthService {
-  static async POST_login({ email, password: pass }) {
+  static async POST_createUser(
+    email,
+    password,
+    nickname,
+    instagram = '',
+    facebook = '',
+    introduction = '',
+    marketingAgree = DISAGREE_MARKETING,
+  ) {
+    const { data } = await axios.instance
+      .post('user', {
+        email,
+        pass: password,
+        nick: nickname,
+        instagram,
+        facebook,
+        intro: introduction,
+        marketingAgree,
+      })
+      .catch(console.error);
+
+    if (!data) {
+      // 회원가입 실패! 서버 에러
+    }
+
+    console.log(data);
+    const { code } = data;
+    return { code };
+
+    // 회원가입 성공
+    // if (code === 1) {
+    //   return {};
+    // }
+
+    // // 입력한 이메일이 이미 존재
+    // if (code === 101) {
+    // }
+
+    // 다른 에러
+  }
+
+  static async POST_login(email, password) {
     // const encrpyted = md5(password);
     // console.log(email, encrpyted);
     console.log(email, password);
     // console.log(BASE_URL);
 
-    const { data } = await axios
-      .post(`${BASE_URL}login`, { email, pass })
+    const { data } = await axios.instance
+      .post('login', { email, pass: password })
       .catch(console.error);
 
     if (!data) {
@@ -55,46 +95,6 @@ class AuthService {
     // TODO: 102, 103 은 "이메일 혹은 비밀번호가 잘못 되었습니다" 로 묶어 처리
   }
 
-  static async POST_createUser({
-    email,
-    password: pass,
-    nickname: nick,
-    instagram = '',
-    facebook = '',
-    introoduction: intro = '',
-    marketingAgree = DISAGREE_MARKETING,
-  }) {
-    const { data } = await axios
-      .post(`${BASE_URL}user`, {
-        email,
-        pass,
-        nick,
-        instagram,
-        facebook,
-        intro,
-        marketingAgree,
-      })
-      .catch(console.error);
-
-    if (!data) {
-      // 회원가입 실패! 서버 에러
-    }
-
-    console.log(data);
-    const { code } = data;
-    return { code };
-    // 회원가입 성공
-    // if (code === 1) {
-    //   return {};
-    // }
-
-    // // 입력한 이메일이 이미 존재
-    // if (code === 101) {
-    // }
-
-    // 다른 에러
-  }
-
   static async GET_CheckUserExists(email) {
     const { data, isLoading, mutate, error } = await useGetSWR(
       'user/check/email',
@@ -103,10 +103,9 @@ class AuthService {
     if (!data) {
       // 유저 확인 실패, 서버 문제
     }
-    console.log(data);
 
-    const { code } = data;
-    return { code };
+    console.log(data);
+    return { code: data.code, isLoading, error, mutate };
 
     // if (code === 1) {
     //   // 사용 가능한 이메일
