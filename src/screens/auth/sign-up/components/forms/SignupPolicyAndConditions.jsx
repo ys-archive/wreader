@@ -2,23 +2,36 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import { CheckBox, Button, StyleSheet, Text } from '#components';
-import { actionNames, usePolicyReducer } from '../../hooks/usePolicyReducer';
+import { actionNames } from '../../hooks/usePolicyReducer';
 
-const SignupPolicyAndConditions = ({ onSubmit }) => {
-  const [state, dispatch] = usePolicyReducer();
+const SignupPolicyAndConditions = ({
+  onSubmit,
+  values,
+  setFieldValue,
+  // onBlur,
+  // errors,
+  // touched,
+}) => {
   const {
     isAllAllowed,
     isAgreementAllowed,
     isPrivacyPolicyAllowed,
     isMarketingAllowedOptional,
-  } = state;
+  } = values;
 
   return (
     <View>
       <View style={s.policyCheckBoxItem}>
         <CheckBox
           isChecked={isAllAllowed}
-          onChange={() => dispatch({ type: actionNames.toggleAllAllowed })}
+          // onChange={() => dispatch({ type: actionNames.toggleAllAllowed })}
+          onChange={() => {
+            const res = !isAllAllowed;
+            setFieldValue('isAllAllowed', res);
+            setFieldValue('isAgreementAllowed', res);
+            setFieldValue('isPrivacyPolicyAllowed', res);
+            setFieldValue('isMarketingAllowedOptional', res);
+          }}
           highlightColor="coral"
         />
         <Text style={s.autoLoginText}>전체 동의</Text>
@@ -27,8 +40,11 @@ const SignupPolicyAndConditions = ({ onSubmit }) => {
       <View style={s.policyCheckBoxItem}>
         <CheckBox
           isChecked={isAgreementAllowed}
+          // onChange={() =>
+          //   dispatch({ type: actionNames.toggleAgreementAllowed })
+          // }
           onChange={() =>
-            dispatch({ type: actionNames.toggleAgreementAllowed })
+            setFieldValue('isAgreementAllowed', !isAgreementAllowed)
           }
           highlightColor="coral"
         />
@@ -42,8 +58,11 @@ const SignupPolicyAndConditions = ({ onSubmit }) => {
       <View style={s.policyCheckBoxItem}>
         <CheckBox
           isChecked={isPrivacyPolicyAllowed}
+          // onChange={() =>
+          //   dispatch({ type: actionNames.togglePrivacyPolicyAllowed })
+          // }
           onChange={() =>
-            dispatch({ type: actionNames.togglePrivacyPolicyAllowed })
+            setFieldValue('isPrivacyPolicyAllowed', !isPrivacyPolicyAllowed)
           }
           highlightColor="coral"
         />
@@ -57,10 +76,16 @@ const SignupPolicyAndConditions = ({ onSubmit }) => {
       <View style={s.policyCheckBoxItem}>
         <CheckBox
           isChecked={isMarketingAllowedOptional}
+          // onChange={() =>
+          //   dispatch({
+          //     type: actionNames.toggleMarketingAllowedOptional,
+          //   })
+          // }
           onChange={() =>
-            dispatch({
-              type: actionNames.toggleMarketingAllowedOptional,
-            })
+            setFieldValue(
+              'isMarketingAllowedOptional',
+              !isMarketingAllowedOptional,
+            )
           }
           highlightColor="coral"
         />

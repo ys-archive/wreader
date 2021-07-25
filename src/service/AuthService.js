@@ -17,7 +17,7 @@ class AuthService {
     introduction = '',
     marketingAgree = DISAGREE_MARKETING,
   ) {
-    const { data } = await axios.instance
+    const { data, status } = await axios.instance
       .post('user', {
         email,
         pass: password,
@@ -34,8 +34,7 @@ class AuthService {
     }
 
     console.log(data);
-    const { code } = data;
-    return { code };
+    return { code: data.code, status };
 
     // 회원가입 성공
     // if (code === 1) {

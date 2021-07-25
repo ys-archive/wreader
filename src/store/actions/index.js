@@ -16,6 +16,9 @@ export const actionsSwipeToDown = actions => actions.reader.swipeToDown;
 // TODO: App preference 추가
 
 // persistence
-export const actionsSetAutoLogin = actions => actions.persistence.setAutoLogin;
+export const actionsEnableAutoLogin = actions =>
+  actions.persistence.enableAutoLogin;
+export const actionsDisableAutoLogin = actions =>
+  actions.persistence.disableAutoLogin;
 export const actionsToggleAutoLogin = actions =>
   actions.persistence.toggleAutoLogin;

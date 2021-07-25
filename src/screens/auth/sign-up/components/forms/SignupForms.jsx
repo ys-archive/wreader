@@ -4,6 +4,11 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '#navigators/ScreenNames';
+import { usePolicyReducer } from '../../hooks/usePolicyReducer';
+
+// TODO: 회원가입에 store 필요?
+// import { useStoreActions } from 'easy-peasy';
+// import { actionsSignup } from '#store/actions';
 
 // import { AccountStateProvider } from '../../hooks/useAccountState';
 import SignupInput from './SignupInput';
@@ -13,6 +18,10 @@ const initialValues = {
   email: '',
   password: '',
   passwordRepeat: '',
+  isAllAllowed: false,
+  isAgreementAllowed: false,
+  isPrivacyPolicyAllowed: false,
+  isMarketingAllowedOptional: false,
 };
 
 const validationSchema = Yup.object({
@@ -28,29 +37,55 @@ const validationSchema = Yup.object({
     [Yup.ref('password'), null],
     '재입력한 비밀번호가 일치하지 않습니다!',
   ),
+
+  isAllAllowed: Yup.bool(),
+
+  isAgreementAllowed: Yup.bool().required('이용약관 동의는 필수입니다.'),
+
+  isPrivacyPolicyAllowed: Yup.bool().required(
+    '개인정보 취급바침 동의는 필수입니다.',
+  ),
+
+  isMarketingAllowedOptional: Yup.bool(),
 });
 
 const SignupForms = () => {
+  // const signup = useStoreActions(actionsSignup);
+  const nav = useNavigation();
+
   const onSubmit = values => {
-    Alert.alert('onLogin!', JSON.stringify(values, null, 2), [
+    console.log(values);
+
+    Alert.alert('signup2 로 전송~', JSON.stringify(values, null, 2), [
       {
         text: 'OK!',
         onPress: () => console.log('alert closed!!'),
         style: 'destructive',
       },
     ]);
-    // TODO: 입력한 데이터 (email, password, passwordRepeat)를
+    // TODO: 입력한 데이터 (email, password)를
     // TODO: 함꼐 넘겨 Signup2 의 정보 와 함께 최종 회원가입시에 POST 처리 (CreateUser)
-    nav?.navigate(ScreenNames.Signup2);
+    const { email, password, isMarketingAllowedOptional } = values;
+    nav?.navigate(ScreenNames.Signup2, {
+      email,
+      password,
+      isMarketingAllowedOptional,
+    });
   };
 
-  const nav = useNavigation();
-  const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
-    useFormik({
-      initialValues,
-      validationSchema,
-      onSubmit,
-    });
+  const {
+    handleChange,
+    handleBlur,
+    setFieldValue,
+    handleSubmit,
+    values,
+    errors,
+    touched,
+  } = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit,
+  });
 
   return (
     <View>
@@ -61,7 +96,14 @@ const SignupForms = () => {
         errors={errors}
         touched={touched}
       />
-      <SignupPolicyAndConditions onSubmit={handleSubmit} />
+      <SignupPolicyAndConditions
+        onSubmit={handleSubmit}
+        values={values}
+        setFieldValue={setFieldValue}
+        // onBlur={handleBlur}
+        // errors={errors}
+        // touched={touched}
+      />
     </View>
   );
 };

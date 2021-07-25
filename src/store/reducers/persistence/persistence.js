@@ -11,12 +11,13 @@ const model = {
 
 export default {
   model,
-  setAutoLogin: action((state, payload) => {
-    if (typeof payload === 'boolean') {
-      throw new Error("setIsAutoLogin():: payload must be 'boolean'");
-    }
 
-    state.model.isAutoLogin = payload;
+  enableAutoLogin: action(state => {
+    state.model.isAutoLogin = true;
+  }),
+
+  disableAutoLogin: action(state => {
+    state.model.isAutoLogin = false;
   }),
 
   toggleAutoLogin: action(state => {
