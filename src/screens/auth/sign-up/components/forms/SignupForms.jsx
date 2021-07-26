@@ -43,7 +43,7 @@ const validationSchema = Yup.object({
   isAgreementAllowed: Yup.bool().required('이용약관 동의는 필수입니다.'),
 
   isPrivacyPolicyAllowed: Yup.bool().required(
-    '개인정보 취급바침 동의는 필수입니다.',
+    '개인정보 취급방침 동의는 필수입니다.',
   ),
 
   isMarketingAllowedOptional: Yup.bool(),
@@ -54,8 +54,6 @@ const SignupForms = () => {
   const nav = useNavigation();
 
   const onSubmit = values => {
-    console.log(values);
-
     Alert.alert('signup2 로 전송~', JSON.stringify(values, null, 2), [
       {
         text: 'OK!',
@@ -63,14 +61,9 @@ const SignupForms = () => {
         style: 'destructive',
       },
     ]);
-    // TODO: 입력한 데이터 (email, password)를
-    // TODO: 함꼐 넘겨 Signup2 의 정보 와 함께 최종 회원가입시에 POST 처리 (CreateUser)
-    const { email, password, isMarketingAllowedOptional } = values;
-    nav?.navigate(ScreenNames.Signup2, {
-      email,
-      password,
-      isMarketingAllowedOptional,
-    });
+
+    // const { email, password, isMarketingAllowedOptional } = values;
+    nav?.navigate(ScreenNames.Signup2, values);
   };
 
   const {

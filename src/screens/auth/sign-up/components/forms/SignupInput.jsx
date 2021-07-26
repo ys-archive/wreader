@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import { StyleSheet, TextInput, Button, Text } from '#components';
+import AuthService from '#services/AuthService';
 
 const SignupInput = ({ values, onChange, onBlur, errors, touched }) => {
   const { email, password, passwordRepeat } = values;
+  const [isValidToUseEmail, setValidToUseEmail] = useState(false);
+
+  const checkEmailValidToUse = useCallback(async () => {
+    const { code, error } = await AuthService.GET_CheckUserExists(email);
+  }, [email]);
+
   return (
     <View>
       <TextInput
@@ -19,7 +26,8 @@ const SignupInput = ({ values, onChange, onBlur, errors, touched }) => {
         </View>
       ) : null} */}
       {/* TODO: 이메일 인증 로직 */}
-      <Button style={s.checkEmailButton} onPress={() => {}}>
+      {/* TODO: Formik 연동 후 이메일을 다시 입력하게함! */}
+      <Button style={s.checkEmailButton} onPress={checkEmailValidToUse}>
         인증하기
       </Button>
       <TextInput

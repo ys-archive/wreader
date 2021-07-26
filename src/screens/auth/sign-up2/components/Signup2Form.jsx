@@ -34,12 +34,9 @@ const validationSchema = Yup.object({
 
 const Signup2Form = ({ route }) => {
   const nav = useNavigation();
-  const { email, password, isMarketingAllowedOptional } = route.params;
 
   const onSubmit = async values => {
-    // TODO: 실제 가입 처리 ( alert 회원가입이 완료 or 실패 되었습니다 )
-    // TODO: POST Create User service
-
+    const { email, password, isMarketingAllowedOptional } = route.params;
     const { nickname, instagramUrl, facebookUrl, introduction } = values;
     const { code, status } = await AuthService.POST_createUser(
       email,
@@ -51,6 +48,7 @@ const Signup2Form = ({ route }) => {
       isMarketingAllowedOptional,
     );
 
+    // 회원가입 완료
     if (code === 1) {
       Alert.alert('회원가입 완료', JSON.stringify(values, null, 2), [
         {
@@ -59,10 +57,9 @@ const Signup2Form = ({ route }) => {
           style: 'destructive',
         },
       ]);
-      // 다시 로그인 화면으로 되돌아감
-      nav?.navigate(ScreenNames.Signin);
     }
 
+    // 이메일이 이미 존재
     if (code === 101) {
       Alert.alert(
         '회원가입 실패 (입력한 이메일이 이미 존재합니다)',
@@ -76,7 +73,11 @@ const Signup2Form = ({ route }) => {
         ],
       );
     }
+
+    // 다시 로그인 화면으로 되돌아감
+    nav?.navigate(ScreenNames.Signin);
   };
+
 
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
     useFormik({
