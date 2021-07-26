@@ -12,7 +12,7 @@ export default {
     state.model.isLoggedIn = true;
   }),
 
-  Logout: action(state => {
+  logout: action(state => {
     state.model.isLoggedIn = false;
   }),
 

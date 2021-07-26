@@ -1,16 +1,69 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { View } from 'react-native';
+import { View, Alert } from 'react-native';
 import { StyleSheet, TextInput, Button, Text } from '#components';
-import AuthService from '#services/AuthService';
+import AuthService from '#service/AuthService';
 
-const SignupInput = ({ values, onChange, onBlur, errors, touched }) => {
+const SignupInput = ({
+  values,
+  onChange,
+  setFieldValue,
+  onBlur,
+  errors,
+  touched,
+}) => {
   const { email, password, passwordRepeat } = values;
-  const [isValidToUseEmail, setValidToUseEmail] = useState(false);
 
-  const checkEmailValidToUse = useCallback(async () => {
-    const { code, error } = await AuthService.GET_CheckUserExists(email);
-  }, [email]);
+  const checkEmailValidToUse = async () => {
+    const code = await AuthService.GET_CheckUserExists(email);
+    console.log(code);
+
+    if (code === 1) {
+      Alert.alert('사용가능한 메일입니다.', undefined, [
+        {
+          text: 'OK!',
+          onPress: () => console.log('alert closed!!'),
+          style: 'destructive',
+        },
+      ]);
+    }
+
+    if (code === 101) {
+      Alert.alert(
+        '이미 사용중인 메일입니다. 다른 이메일을 입력해주세요',
+        undefined,
+        [
+          {
+            text: 'OK!',
+            onPress: () => console.log('alert closed!!'),
+            style: 'destructive',
+          },
+        ],
+      );
+      // setFieldValue('email', '');
+    }
+  };
+
+  const checkValidPassword = () => {
+    const isValid = password === passwordRepeat;
+    if (isValid) {
+      Alert.alert('입력하신 비밀번호가 서로 같습니다.', undefined, [
+        {
+          text: 'OK!',
+          onPress: () => console.log('alert closed!!'),
+          style: 'destructive',
+        },
+      ]);
+    } else {
+      Alert.alert('입력하신 비밀번호가 서로 다릅니다.', undefined, [
+        {
+          text: 'OK!',
+          onPress: () => console.log('alert closed!!'),
+          style: 'destructive',
+        },
+      ]);
+    }
+  };
 
   return (
     <View>
@@ -28,7 +81,7 @@ const SignupInput = ({ values, onChange, onBlur, errors, touched }) => {
       {/* TODO: 이메일 인증 로직 */}
       {/* TODO: Formik 연동 후 이메일을 다시 입력하게함! */}
       <Button style={s.checkEmailButton} onPress={checkEmailValidToUse}>
-        인증하기
+        중복 확인
       </Button>
       <TextInput
         value={password}
@@ -50,7 +103,7 @@ const SignupInput = ({ values, onChange, onBlur, errors, touched }) => {
         </View>
       ) : null} */}
       {/* TODO: 비밀번호 체크 */}
-      <Button style={s.checkPasswordButton} onPress={() => {}}>
+      <Button style={s.checkPasswordButton} onPress={checkValidPassword}>
         확인
       </Button>
     </View>

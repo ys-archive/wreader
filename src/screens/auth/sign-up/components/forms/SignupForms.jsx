@@ -85,6 +85,7 @@ const SignupForms = () => {
       <SignupInput
         values={values}
         onChange={handleChange}
+        setFieldValue={setFieldValue}
         onBlur={handleBlur}
         errors={errors}
         touched={touched}

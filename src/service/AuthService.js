@@ -73,16 +73,13 @@ class AuthService {
   }
 
   static async GET_CheckUserExists(email) {
-    const { data, isLoading, mutate, error } = await useGetSWR(
-      'user/check/email',
-    );
-
-    if (!data) {
-      // 유저 확인 실패, 서버 문제
-    }
-
-    console.log(data);
-    return { code: data.code, isLoading, error, mutate };
+    const { data, status } = await axios.instance.get('user/check/email', {
+      params: { email: email.trim() },
+    });
+    const { code } = data;
+    console.log(code, status);
+    return code;
+    // return data?.code;
 
     // if (code === 1) {
     //   // 사용 가능한 이메일
