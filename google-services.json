@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "859014956998",
+    "firebase_url": "https://wreader-1f87a-default-rtdb.firebaseio.com",
+    "project_id": "wreader-1f87a",
+    "storage_bucket": "wreader-1f87a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:859014956998:android:23db6ffc786633727654c7",
+        "android_client_info": {
+          "package_name": "com.wreader.wreader_resource"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "859014956998-qtvlfnb6s14bp81t5vmkk21l1ta7pjdo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2XMgtqeZ-4-VJvG25lh3E8T6qDjNMvs8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "859014956998-qtvlfnb6s14bp81t5vmkk21l1ta7pjdo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "859014956998-9h78k7vt1t6uv475p8m1ab2a7hhkgrhf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.wreader.wreader-resource"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

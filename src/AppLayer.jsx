@@ -8,6 +8,7 @@ import { ReduxProvider } from '#store';
 import { NavigationProvider } from '#navigators';
 
 import './Setup';
+import './firebase/firebase';
 
 const SplashDelay = 5000;
 

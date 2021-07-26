@@ -78,7 +78,6 @@ const Signup2Form = ({ route }) => {
     nav?.navigate(ScreenNames.Signin);
   };
 
-
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
     useFormik({
       initialValues,
@@ -111,7 +110,7 @@ const Signup2Form = ({ route }) => {
           {/* {touched.nickname && errors.nickname ? (
               <View>
                 <Text>{errors.nickname}</Text>
-              </View>
+              </View>  
             ) : null} */}
           <TextInput
             style={s.input}
@@ -180,8 +179,8 @@ const s = StyleSheet.create({
   },
   checkNickNameButton: {
     position: 'relative',
-    left: '35%',
-    bottom: '17%',
+    left: '40%',
+    bottom: '14%',
   },
   summitButton: {
     marginTop: '10%',

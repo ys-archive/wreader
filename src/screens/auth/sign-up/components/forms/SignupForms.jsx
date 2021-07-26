@@ -4,7 +4,6 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '#navigators/ScreenNames';
-import { usePolicyReducer } from '../../hooks/usePolicyReducer';
 
 // TODO: 회원가입에 store 필요?
 // import { useStoreActions } from 'easy-peasy';
@@ -61,8 +60,6 @@ const SignupForms = () => {
         style: 'destructive',
       },
     ]);
-
-    // const { email, password, isMarketingAllowedOptional } = values;
     nav?.navigate(ScreenNames.Signup2, values);
   };
 
