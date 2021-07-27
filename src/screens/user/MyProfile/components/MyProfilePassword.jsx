@@ -22,7 +22,6 @@ const MyProfilePassword = () => {
       Alert.alert('비밀번호 변경됨!', JSON.stringify(values, null, 2), [
         {
           text: 'OK!',
-          onPress: () => console.log('alert closed!!'),
           style: 'destructive',
         },
       ]);

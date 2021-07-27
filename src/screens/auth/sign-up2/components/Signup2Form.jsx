@@ -78,6 +78,29 @@ const Signup2Form = ({ route }) => {
     nav?.navigate(ScreenNames.Signin);
   };
 
+  const checkNickNameValid = async () => {
+    const { code } = await AuthService.GET_CheckUserExists(nickname);
+
+    if (code == 1) {
+      Alert.alert('사용 가능한 닉네임입니다.', JSON.stringify(nickname), [
+        {
+          text: 'OK!',
+          style: 'destructive',
+        },
+      ]);
+    }
+
+    // 중복!
+    if (code == 105) {
+      Alert.alert('이미 사용된 닉네임입니다.', JSON.stringify(nickname), [
+        {
+          text: 'OK!',
+          style: 'destructive',
+        },
+      ]);
+    }
+  };
+
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
     useFormik({
       initialValues,
@@ -104,7 +127,7 @@ const Signup2Form = ({ route }) => {
             onChangeText={handleChange('nickname')}
             placeholder="닉네임을 입력하세요(20자 이내)"
           />
-          <Button style={s.checkNickNameButton} onPress={() => {}}>
+          <Button style={s.checkNickNameButton} onPress={checkNickNameValid}>
             중복 확인
           </Button>
           {/* {touched.nickname && errors.nickname ? (

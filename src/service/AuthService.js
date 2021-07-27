@@ -75,7 +75,7 @@ class AuthService {
   static async GET_CheckUserExists(email) {
     const { data, status } = await axios.instance.get('user/check/email', {
       params: { email: email.trim() },
-    });
+    }).catch(console.error);
     const { code } = data;
     console.log(code, status);
     return code;
@@ -90,6 +90,17 @@ class AuthService {
     // }
 
     // 다른 에러
+  }
+
+  static async GET_CheckUserNickExists(nickname) {
+    const { data, status } = await axios.instance.get('user/check/nick'. {
+      params: { nick: nickname.trim() }
+    }).catch(console.error);
+    const { code } = data;
+    // code === 1 -> 닉네임 중복 없음
+    // code === 105 -> 닉네임 중복
+    console.log(code, status);
+    return code;
   }
 }
 

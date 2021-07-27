@@ -12,7 +12,9 @@ class UserService {
   static async POST_registerUserProfilePhoto(path) {
     console.log(`register User Profile Photo::Path:${path}`);
     // TODO: Persist the userId throughout the app
-    const { data } = await axios.post(`${BASE_URL}user/img/{userId}`);
+    const { data } = await axios
+      .post(`${BASE_URL}user/img/{userId}`)
+      .catch(console.error);
   }
 
   static async GET_getUserInfo(userId) {
@@ -22,33 +24,37 @@ class UserService {
   }
 
   static async POST_dropUser(userId) {
-    const { data } = await axios.post(`${BASE_URL}user/drop/${userId}`);
+    const { data } = await axios
+      .post(`${BASE_URL}user/drop/${userId}`)
+      .catch(console.error);
     const { code, message } = data;
   }
 
   static async PUT_updateUser(
     userId,
-    {
-      introduction: intro,
-      facebook,
-      instagram,
-      nickname: nick,
-      password: pass,
-    },
+    introduction,
+    facebook,
+    instagram,
+    nickname,
+    password,
   ) {
     // TODO: pass -> md5 -> post
-    const covertedPass = pass;
-    const { data } = await axios.post(`${BASE_URL}user/${userId}`, {
-      intro,
-      facebook,
-      instagram,
-      nick,
-      pass: covertedPass,
-    });
+    const covertedPass = password;
+    const { data, status } = await axios
+      .post(`${BASE_URL}user/${userId}`, {
+        intro: introduction,
+        facebook,
+        instagram,
+        nick: nickname,
+        pass: covertedPass,
+      })
+      .catch(console.error);
   }
 
   static async DELETE_DropCancel(userId) {
-    const { data } = await post.delete(`${BASE_URL}user/drop/${userId}`);
+    const { data } = await post
+      .delete(`${BASE_URL}user/drop/${userId}`)
+      .catch(console.error);
     const { code, message } = data;
   }
 }
