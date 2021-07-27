@@ -6,6 +6,9 @@ import { useGetSWR } from '#hooks';
 // https://app.gitbook.com/@wreader/s/wreader/untitled
 
 class UserService {
+
+  
+
   static async POST_registerUserProfilePhoto(path) {
     console.log(`register User Profile Photo::Path:${path}`);
     // TODO: Persist the userId throughout the app

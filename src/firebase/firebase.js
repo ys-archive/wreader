@@ -50,13 +50,6 @@ const {
 } = FirebaseCore.DEFAULT_APP_OPTIONS;
 
 // Initialize Firebase
-firebase.initializeApp({
-  apiKey,
-  authDomain,
-  databaseURL,
-  projectId,
-  storageBucket,
-  messagingSenderId,
-  appId,
-  measurementId,
-});
+firebase.initializeApp(FirebaseCore.DEFAULT_APP_OPTIONS);
+
+LogBox.ignoreLogs([`Setting a timer for a long period`]);
