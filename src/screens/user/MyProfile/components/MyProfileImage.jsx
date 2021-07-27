@@ -12,7 +12,7 @@ import {
 const MyProfileImage = () => {
   const [defaultUri, setDefaultUri] = useState('');
   const [isUploaded, completeUpload] = useState(false);
-  const { pickImage, imageUri: uploadedImageUri } = useImagePicker();
+  const { pickImage, imageUri: uploadedImageUri, base64 } = useImagePicker();
 
   const pickNewProfileImage = async () => {
     // Image Picker 를 통해서 이미지 선택
@@ -30,18 +30,18 @@ const MyProfileImage = () => {
           console.log('no data found!');
           return;
         }
-        setDefaultUri(val.uri);
+        // console.log(val);
+        const base64Img = `data:image/png;base64,${val.base64}`;
+        setDefaultUri(base64Img);
       });
   }, []);
 
   return (
     <View style={s.profileImageView}>
-      {/* {image} */}
       <Image
         style={{ width: wp('80%'), height: hp('35%'), borderRadius: 200 }}
         source={{ uri: !isUploaded ? defaultUri : uploadedImageUri }}
       />
-
       <Ionicons
         style={s.cameraIcon}
         name="camera"

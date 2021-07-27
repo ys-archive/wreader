@@ -5,6 +5,7 @@ import firebase from 'firebase';
 
 export const useImagePicker = (widthRatio = 4, heightRatio = 3) => {
   const [imageUri, setImageUri] = useState(null);
+  const [base64, setBase64] = useState('');
 
   useEffect(() => {
     (async function requestMediaLibraryPermission() {
@@ -27,6 +28,7 @@ export const useImagePicker = (widthRatio = 4, heightRatio = 3) => {
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
+      base64: true,
       allowsEditing: true,
       aspect: [widthRatio, heightRatio],
       quality: 1,
@@ -35,10 +37,12 @@ export const useImagePicker = (widthRatio = 4, heightRatio = 3) => {
     // console.log(result);
 
     if (!result.cancelled) {
-      const { uri } = result;
+      // console.log('result-->', result);
+      const { uri, base64 } = result;
       setImageUri(uri);
+      setBase64(base64);
 
-      await firebase.database().ref(`profileImage`).set({ uri: uri });
+      await firebase.database().ref(`profileImage`).set({ base64: base64 });
 
       console.log('데이터 저장 성공!');
     }
@@ -47,5 +51,6 @@ export const useImagePicker = (widthRatio = 4, heightRatio = 3) => {
   return {
     pickImage,
     imageUri,
+    base64,
   };
 };
