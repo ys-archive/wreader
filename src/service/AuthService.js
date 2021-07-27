@@ -97,6 +97,8 @@ class AuthService {
       params: { nick: nickname.trim() }
     }).catch(console.error);
     const { code } = data;
+    // code === 1 -> 닉네임 중복 없음
+    // code === 105 -> 닉네임 중복
     console.log(code, status);
     return code;
   }
