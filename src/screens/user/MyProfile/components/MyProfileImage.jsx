@@ -10,9 +10,9 @@ import {
 } from 'react-native-responsive-screen';
 
 const MyProfileImage = () => {
-  const [defaultUri, setDefaultUri] = useState('');
   const [isUploaded, completeUpload] = useState(false);
-  const { pickImage, imageUri: uploadedImageUri, base64 } = useImagePicker();
+  const [defaultBase64Image, setDefaultBase64Image] = useState('');
+  const { pickImage, imageUri: uploadedImageUri } = useImagePicker();
 
   const pickNewProfileImage = async () => {
     // Image Picker 를 통해서 이미지 선택
@@ -21,6 +21,9 @@ const MyProfileImage = () => {
   };
 
   useEffect(() => {
+    // 첫 렌더 후에, firebase 로 부터 profileImage (base64) 를 받아와 렌더
+    // TODO: 똑같은 이미지 이면 캐싱 하여 사용 (mmkv)
+
     firebase
       .database()
       .ref('profileImage')
@@ -30,9 +33,9 @@ const MyProfileImage = () => {
           console.log('no data found!');
           return;
         }
-        // console.log(val);
+
         const base64Img = `data:image/png;base64,${val.base64}`;
-        setDefaultUri(base64Img);
+        setDefaultBase64Image(base64Img);
       });
   }, []);
 
@@ -40,7 +43,7 @@ const MyProfileImage = () => {
     <View style={s.profileImageView}>
       <Image
         style={{ width: wp('80%'), height: hp('35%'), borderRadius: 200 }}
-        source={{ uri: !isUploaded ? defaultUri : uploadedImageUri }}
+        source={{ uri: !isUploaded ? defaultBase64Image : uploadedImageUri }}
       />
       <Ionicons
         style={s.cameraIcon}

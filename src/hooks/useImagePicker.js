@@ -5,7 +5,6 @@ import firebase from 'firebase';
 
 export const useImagePicker = (widthRatio = 4, heightRatio = 3) => {
   const [imageUri, setImageUri] = useState(null);
-  const [base64, setBase64] = useState('');
 
   useEffect(() => {
     (async function requestMediaLibraryPermission() {
@@ -34,13 +33,9 @@ export const useImagePicker = (widthRatio = 4, heightRatio = 3) => {
       quality: 1,
     });
 
-    // console.log(result);
-
     if (!result.cancelled) {
-      // console.log('result-->', result);
       const { uri, base64 } = result;
       setImageUri(uri);
-      setBase64(base64);
 
       await firebase.database().ref(`profileImage`).set({ base64: base64 });
 
@@ -51,6 +46,5 @@ export const useImagePicker = (widthRatio = 4, heightRatio = 3) => {
   return {
     pickImage,
     imageUri,
-    base64,
   };
 };
