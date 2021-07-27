@@ -10,10 +10,9 @@ import {
 } from 'react-native-responsive-screen';
 
 const MyProfileImage = () => {
-  // TODO: -> 를 hook 으로 빼기
-  const [defaultUri, setDefaultUri] = useState();
+  const [defaultUri, setDefaultUri] = useState('');
   const [isUploaded, completeUpload] = useState(false);
-  const { pickImage, imageUri } = useImagePicker();
+  const { pickImage, imageUri: uploadedImageUri } = useImagePicker();
 
   const pickNewProfileImage = async () => {
     // Image Picker 를 통해서 이미지 선택
@@ -31,32 +30,17 @@ const MyProfileImage = () => {
           console.log('no data found!');
           return;
         }
-
-        const { uri } = val;
-        setDefaultUri(uri);
-        console.log(uri);
+        setDefaultUri(val.uri);
       });
   }, []);
 
   return (
     <View style={s.profileImageView}>
-      {!isUploaded ? (
-        <Image
-          style={{ width: wp('80%'), height: hp('35%'), borderRadius: 200 }}
-          source={{ uri: defaultUri }}
-          // resizeMode="contain"
-          pointerEvents="none"
-        />
-      ) : (
-        imageUri !== 'null' && (
-          <Image
-            style={{ width: wp('80%'), height: hp('35%'), borderRadius: 200 }}
-            source={{ uri: imageUri }}
-            // resizeMode="contain"
-            pointerEvents="none"
-          />
-        )
-      )}
+      {/* {image} */}
+      <Image
+        style={{ width: wp('80%'), height: hp('35%'), borderRadius: 200 }}
+        source={{ uri: !isUploaded ? defaultUri : uploadedImageUri }}
+      />
 
       <Ionicons
         style={s.cameraIcon}
