@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { View, Modal } from 'react-native';
 import { Button, StyleSheet, Text, LocalImage } from '../';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 // TODO: 실제 url 받아서 webview 로 교체
 const EventModal = ({ eventImageUrl }) => {
@@ -59,8 +63,8 @@ const s = StyleSheet.create({
     backgroundColor: 'rgba(0.2, 0.2, 0.2, 0.7)',
   },
   modalView: {
-    width: 300,
-    height: 500,
+    width: wp('80%'),
+    height: hp('100%'),
     // justifyContent: 'center',
     // alignItems: 'center',
     backgroundColor: 'white',
@@ -78,7 +82,7 @@ const s = StyleSheet.create({
   },
   buttonView: {
     position: 'relative',
-    top: '40%',
+    top: '25%',
     flexDirection: 'row',
     alignSelf: 'center',
   },

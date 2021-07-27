@@ -10,7 +10,7 @@ import { NavigationProvider } from '#navigators';
 import './Setup';
 import './firebase/firebase';
 
-const SplashDelay = 5000;
+const SplashDelay = 2000;
 
 export default () => {
   const [isLoadingDone, setLoadingDone] = useState(false);

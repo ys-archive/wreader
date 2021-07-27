@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { View, Image } from 'react-native';
-import { StyleSheet, Button } from '../components';
+import { StyleSheet } from './StyleSheet';
+import { Button } from './Button';
 import { useImagePicker } from '../../hooks';
 
-const ImagePicker = ({
-  buttonStyle = {},
-  imageStyle = {},
-  resizeMode = 'contain',
-}) => {
+export const ImagePicker = ({ buttonStyle = {}, imageStyle = {}, ...rest }) => {
   const { imageUri: uri, pickImage } = useImagePicker();
 
   return (
@@ -17,11 +14,7 @@ const ImagePicker = ({
         Pick an image from camera roll
       </Button>
       {uri !== 'undefined' && (
-        <Image
-          style={[s.image, imageStyle]}
-          source={{ uri }}
-          resizeMode={resizeMode}
-        />
+        <Image {...rest} style={[s.image, imageStyle]} source={{ uri }} />
       )}
     </View>
   );
@@ -30,22 +23,12 @@ const ImagePicker = ({
 ImagePicker.propTypes = {
   buttonStyle: PropTypes.object,
   imageStyle: PropTypes.object,
-  resizeMode: PropTypes.oneOf([
-    'contain',
-    'cover',
-    'stretch',
-    'repeat',
-    'center',
-  ]),
 };
 
 ImagePicker.defaultProps = {
   buttonStyle: {},
   imageStyle: {},
-  resizeMode: 'contain',
 };
-
-export default ImagePicker;
 
 const s = StyleSheet.create({
   root: {},

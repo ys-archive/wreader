@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Platform, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import firebase from 'firebase';
 
-export const useImagePicker = () => {
+export const useImagePicker = (widthRatio = 4, heightRatio = 3) => {
   const [imageUri, setImageUri] = useState(null);
 
   useEffect(() => {
@@ -27,14 +28,19 @@ export const useImagePicker = () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [widthRatio, heightRatio],
       quality: 1,
     });
 
-    console.log(result);
+    // console.log(result);
 
     if (!result.cancelled) {
-      setImageUri(result.uri);
+      const { uri } = result;
+      setImageUri(uri);
+
+      await firebase.database().ref(`profileImage`).set({ uri: uri });
+
+      console.log('데이터 저장 성공!');
     }
   };
 

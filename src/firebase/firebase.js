@@ -1,5 +1,6 @@
 import firebase from 'firebase/app';
 import * as FirebaseCore from 'expo-firebase-core';
+import { LogBox } from 'react-native';
 
 // Optionally import the services that you want to use
 //import "firebase/auth";

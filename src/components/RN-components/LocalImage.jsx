@@ -22,7 +22,6 @@ export const LocalImage = ({
 };
 
 LocalImage.propTypes = {
-  source: PropTypes.any.isRequired,
   isResolutionImage: PropTypes.bool,
   style: PropTypes.object,
 };
