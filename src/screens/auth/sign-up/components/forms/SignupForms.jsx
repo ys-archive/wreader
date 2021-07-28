@@ -10,7 +10,6 @@ import * as ScreenNames from '#navigators/ScreenNames';
 // import { useStoreActions } from 'easy-peasy';
 // import { actionsSignup } from '#store/actions';
 
-// import { AccountStateProvider } from '../../hooks/useAccountState';
 import SignupInput from './SignupInput';
 import SignupPolicyAndConditions from './SignupPolicyAndConditions';
 
@@ -22,6 +21,7 @@ const initialValues = {
   isAgreementAllowed: false,
   isPrivacyPolicyAllowed: false,
   isMarketingAllowedOptional: false,
+  isGoodToProceed: false,
 };
 
 const validationSchema = Yup.object({
@@ -40,13 +40,16 @@ const validationSchema = Yup.object({
 
   isAllAllowed: Yup.bool(),
 
-  isAgreementAllowed: Yup.bool().required('이용약관 동의는 필수입니다.'),
+  isAgreementAllowed: Yup.bool().oneOf([true], '이용약관 동의는 필수입니다.'),
 
-  isPrivacyPolicyAllowed: Yup.bool().required(
+  isPrivacyPolicyAllowed: Yup.bool().oneOf(
+    [true],
     '개인정보 취급방침 동의는 필수입니다.',
   ),
 
   isMarketingAllowedOptional: Yup.bool(),
+
+  isGoodToProceed: Yup.bool().oneOf([true]),
 });
 
 const SignupForms = () => {

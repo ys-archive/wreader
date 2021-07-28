@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import { CheckBox, Button, StyleSheet, Text } from '#components';
-import { actionNames } from '../../hooks/usePolicyReducer';
 
 const SignupPolicyAndConditions = ({
   onSubmit,
@@ -40,15 +39,13 @@ const SignupPolicyAndConditions = ({
       <View style={s.policyCheckBoxItem}>
         <CheckBox
           isChecked={isAgreementAllowed}
-          // onChange={() =>
-          //   dispatch({ type: actionNames.toggleAgreementAllowed })
-          // }
           onChange={() =>
             setFieldValue('isAgreementAllowed', !isAgreementAllowed)
           }
           highlightColor="coral"
         />
         <Text style={s.autoLoginText}>이용약관(필수)</Text>
+
         {/* TODO: 내용 열기 */}
         <Button style={s.policyDetailText} onPress={() => {}}>
           내용
@@ -58,9 +55,6 @@ const SignupPolicyAndConditions = ({
       <View style={s.policyCheckBoxItem}>
         <CheckBox
           isChecked={isPrivacyPolicyAllowed}
-          // onChange={() =>
-          //   dispatch({ type: actionNames.togglePrivacyPolicyAllowed })
-          // }
           onChange={() =>
             setFieldValue('isPrivacyPolicyAllowed', !isPrivacyPolicyAllowed)
           }
@@ -76,11 +70,6 @@ const SignupPolicyAndConditions = ({
       <View style={s.policyCheckBoxItem}>
         <CheckBox
           isChecked={isMarketingAllowedOptional}
-          // onChange={() =>
-          //   dispatch({
-          //     type: actionNames.toggleMarketingAllowedOptional,
-          //   })
-          // }
           onChange={() =>
             setFieldValue(
               'isMarketingAllowedOptional',

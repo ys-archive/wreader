@@ -21,10 +21,12 @@ const SignupInput = ({
 
     if (code === 1) {
       Alert('사용가능한 메일입니다.');
+      setFieldValue('isGoodToProceed', true);
     }
 
     if (code === 101) {
       Alert('이미 사용중인 메일입니다. 다른 이메일을 입력해주세요');
+      setFieldValue('isGoodToProceed', false);
       // setFieldValue('email', '');
     }
   };
@@ -36,6 +38,7 @@ const SignupInput = ({
     } else {
       Alert('입력하신 비밀번호가 서로 다릅니다.');
     }
+    setFieldValue('isGoodToProceed', isValid);
   };
 
   return (
