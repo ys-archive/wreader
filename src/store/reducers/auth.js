@@ -1,4 +1,4 @@
-import { action } from 'easy-peasy';
+import { action, computed } from 'easy-peasy';
 
 const model = {
   isLoggedIn: false,
@@ -28,5 +28,13 @@ export default {
     }
 
     state.model.userId = payload;
+  }),
+
+  getUserInfo: computed(state => {
+    
+  }),
+
+  getUserName: computed(state => {
+    
   }),
 };

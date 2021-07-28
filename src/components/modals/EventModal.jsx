@@ -5,10 +5,24 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import { useStoreActions } from 'easy-peasy';
+import { actionsIgnoreEventModalFor1day } from '#store/actions';
 
 // TODO: 실제 url 받아서 webview 로 교체
 const EventModal = ({ eventImageUrl }) => {
   const [modalVisible, setModalVisible] = useState(true);
+
+  const ignoreEventModalFor1day = useStoreActions(actionsIgnoreEventModalFor1day);
+
+  const onCloseModalFor1day = () => {
+    // TODO: 하루간 보지 않기 세부 구현
+    ignoreEventModalFor1day();
+    setModalVisible(false);
+  };
+
+  const onCloseModal = () => {
+    setModalVisible(false);
+  };
 
   return (
     <View style={{ ...s.root, flex: !modalVisible ? 0 : 1 }}>
@@ -32,10 +46,10 @@ const EventModal = ({ eventImageUrl }) => {
               {/* TODO: 하루동안 보지않기 기능 추가 */}
               {/* TODO: persistence -> storage 에 duration 저장 후 
                 앱 시작할 떄마다 currentTime 과 체크*/}
-              <Button style={s.button} onPress={() => {}}>
+              <Button style={s.button} onPress={onCloseModalFor1day}>
                 하루동안 보지않기
               </Button>
-              <Button style={s.button} onPress={() => setModalVisible(false)}>
+              <Button style={s.button} onPress={onCloseModal}>
                 닫기
               </Button>
             </View>

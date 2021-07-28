@@ -2,7 +2,7 @@
 export const actionsLogin = actions => actions.auth.login;
 export const actionsLogout = actions => actions.auth.logout;
 
-export const actionsSetUserId = actions => actions.auth.userId;
+export const actionsSetUserId = actions => actions.auth.setUserId;
 
 // reader
 export const actionsSetCategorySelected = actions =>
@@ -22,3 +22,9 @@ export const actionsDisableAutoLogin = actions =>
   actions.persistence.disableAutoLogin;
 export const actionsToggleAutoLogin = actions =>
   actions.persistence.toggleAutoLogin;
+export const actionsExecuteAppFirstTime = actions =>
+  actions.persistence.executeAppFirstTime;
+export const actionsIgnoreEventModalFor1day = actions => 
+  actions.persistence.ignoreEventModalFor1day;
+export const actionsIgnoreEventModalFor7days = actions =>
+  actions.persistence.ignoreEventModalFor7days;

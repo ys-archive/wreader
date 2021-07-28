@@ -3,7 +3,7 @@ import * as ScreenNames from '../ScreenNames';
 import { createStackNavigator } from '@react-navigation/stack';
 import Main from '../../screens/Main';
 import { AntDesign } from '@expo/vector-icons';
-import { useStoreActions, useStoreState } from 'easy-peasy';
+import { useStoreState } from 'easy-peasy';
 import { selectIsLoggedIn } from '#store/selectors';
 import { RequireLoginAlert } from '#components/alert';
 

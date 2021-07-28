@@ -28,6 +28,12 @@ export default {
     state.model.isFirstExecute = false;
   }),
 
+  ignoreEventModalFor1day: action(state => {
+    // const currentTimeAsMs = new Date().getTime();
+    // TODO: 1. 기한 정하기 위해 현재 시간 결정
+    // TODO: 2. -> 1 + 7일 정확히 === dueDate
+  }),
+
   ignoreEventModalFor7days: action(state => {
     // const currentTimeAsMs = new Date().getTime();
     // TODO: 1. 기한 정하기 위해 현재 시간 결정
@@ -37,5 +43,8 @@ export default {
   isDueDateOver: computed(state => {
     // TODO: 1. Get the current time of at which the user finished loading app
     // TODO:
+    return (dueDate) => {
+
+    };
   }),
 };

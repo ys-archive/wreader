@@ -3,10 +3,10 @@ import GestureRecognizer from 'react-native-swipe-gestures';
 import { useSwipeGesture } from '#hooks';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import {
-  selectIsLastCategory,
-  selectIsFirstCategory,
-  selectIsLastChapter,
-  selectIsFirstChapter,
+  persistIsLastCategory,
+  persistIsFirstCategory,
+  persistIsLastChapter,
+  persistIsFirstChapter,
   selectIsCategorySelected,
 } from '#store/selectors';
 import {
@@ -18,10 +18,10 @@ import {
 } from '#store/actions';
 
 const Reader = ({ children }) => {
-  const isFirstCategory = useStoreState(selectIsFirstCategory);
-  const isLastCategory = useStoreState(selectIsLastCategory);
-  const isFirstChapter = useStoreState(selectIsFirstChapter);
-  const isLastChapter = useStoreState(selectIsLastChapter);
+  const isFirstCategory = useStoreState(persistIsFirstCategory);
+  const isLastCategory = useStoreState(persistIsLastCategory);
+  const isFirstChapter = useStoreState(persistIsFirstChapter);
+  const isLastChapter = useStoreState(persistIsLastChapter);
   const isCategorySelected = useStoreState(selectIsCategorySelected);
 
   // const reset = useStoreActions(actionsReset);

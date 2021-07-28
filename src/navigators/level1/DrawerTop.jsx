@@ -14,9 +14,9 @@ import { actionsLogout } from '#store/actions';
 import { Alert, RequireLoginAlert } from '#components/alert';
 
 const DrawerTop = props => {
-  // TODO: Get user name from store and display
   const { navigation: nav } = props;
   const isLoggedIn = useStoreState(selectIsLoggedIn);
+  // TODO: Get user name from store and display
   // TODO: 유저 이름 GET
   const profileName = isLoggedIn ? 'Test 유저' : '로그인 해주세요';
   const logout = useStoreActions(actionsLogout);

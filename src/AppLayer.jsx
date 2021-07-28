@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import AppLoading from 'expo-app-loading';
 import * as SplashScreen from 'expo-splash-screen';
@@ -6,6 +6,8 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { loadFontsAsync } from './constants/fonts';
 import { ReduxProvider } from '#store';
 import { NavigationProvider } from '#navigators';
+import { useStoreActions } from 'easy-peasy';
+import { actionsExecuteAppFirstTime } from '#store/actions';
 
 import './Setup';
 import './firebase/firebase';
@@ -14,6 +16,11 @@ const SplashDelay = 2000;
 
 export default () => {
   const [isLoadingDone, setLoadingDone] = useState(false);
+  // const executeAppFirstTime = useStoreActions(actionsExecuteAppFirstTime);
+
+  // useEffect(() => {
+  //   executeAppFirstTime();
+  // }, []);
 
   if (!isLoadingDone) {
     return (

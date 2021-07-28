@@ -1,13 +1,15 @@
 // auth
 export const selectIsLoggedIn = state => state.auth.model.isLoggedIn;
 export const selectUserId = state => state.auth.model.userId;
+export const persistGetUserInfo = state => state.auth.getUserInfo;
+export const persistGetUserName = state => state.auth.getUserName;
 
 // reader
-export const selectIsFirstCategory = state => state.reader.isFirstCategory;
-export const selectIsLastCategory = state => state.reader.isLastCategory;
+export const persistIsFirstCategory = state => state.reader.isFirstCategory;
+export const persistIsLastCategory = state => state.reader.isLastCategory;
 
-export const selectIsFirstChapter = state => state.reader.isFirstChapter;
-export const selectIsLastChapter = state => state.reader.isLastChapter;
+export const persistIsFirstChapter = state => state.reader.isFirstChapter;
+export const persistIsLastChapter = state => state.reader.isLastChapter;
 
 export const selectIsCategorySelected = state =>
   state.reader.model.isCategorySelected;
@@ -19,3 +21,4 @@ export const selectSwipeThresholdVertical = state =>
 
 // persistence
 export const selectIsAutoLogin = state => state.persistence.model.isAutoLogin;
+export const persistIsDueDateOver = state => stat.persistence.isDueDateOver;
