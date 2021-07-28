@@ -36,8 +36,10 @@ export const useImagePicker = (widthRatio = 4, heightRatio = 3) => {
     if (!result.cancelled) {
       const { uri, base64 } = result;
       setImageUri(uri);
+      const blob = await base64.blob();
+      console.log(blob);
 
-      await firebase.database().ref(`profileImage`).set({ base64: base64 });
+      await firebase.database().ref(`profileImage`).set({ image: blob });
 
       console.log('데이터 저장 성공!');
     }
