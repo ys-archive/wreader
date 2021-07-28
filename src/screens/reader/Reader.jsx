@@ -1,5 +1,4 @@
-import React, { useRef } from 'react';
-// import { StyleSheet, Animated } from 'react-native';
+import React from 'react';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { useSwipeGesture } from '#hooks';
 import { useStoreState, useStoreActions } from 'easy-peasy';

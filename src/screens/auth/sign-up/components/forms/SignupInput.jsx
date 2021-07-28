@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, Alert } from 'react-native';
+import { View } from 'react-native';
+import { Alert } from '#components/alert';
 import { StyleSheet, TextInput, Button, Text } from '#components';
 import AuthService from '#service/AuthService';
 
@@ -19,27 +20,11 @@ const SignupInput = ({
     console.log(code);
 
     if (code === 1) {
-      Alert.alert('사용가능한 메일입니다.', undefined, [
-        {
-          text: 'OK!',
-          onPress: () => console.log('alert closed!!'),
-          style: 'destructive',
-        },
-      ]);
+      Alert('사용가능한 메일입니다.');
     }
 
     if (code === 101) {
-      Alert.alert(
-        '이미 사용중인 메일입니다. 다른 이메일을 입력해주세요',
-        undefined,
-        [
-          {
-            text: 'OK!',
-            onPress: () => console.log('alert closed!!'),
-            style: 'destructive',
-          },
-        ],
-      );
+      Alert('이미 사용중인 메일입니다. 다른 이메일을 입력해주세요');
       // setFieldValue('email', '');
     }
   };
@@ -47,21 +32,9 @@ const SignupInput = ({
   const checkValidPassword = () => {
     const isValid = password === passwordRepeat;
     if (isValid) {
-      Alert.alert('입력하신 비밀번호가 서로 같습니다.', undefined, [
-        {
-          text: 'OK!',
-          onPress: () => console.log('alert closed!!'),
-          style: 'destructive',
-        },
-      ]);
+      Alert('입력하신 비밀번호가 서로 같습니다.');
     } else {
-      Alert.alert('입력하신 비밀번호가 서로 다릅니다.', undefined, [
-        {
-          text: 'OK!',
-          onPress: () => console.log('alert closed!!'),
-          style: 'destructive',
-        },
-      ]);
+      Alert('입력하신 비밀번호가 서로 다릅니다.');
     }
   };
 

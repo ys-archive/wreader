@@ -12,19 +12,4 @@ export const NavigationProvider = ({ children }) => (
   </NavigationContainer>
 );
 
-// const MainDrawerScreenOptions = {
-//   // headerShown: false,
-// };
-
-// const MainStackScreenOptions = {
-//   // headerShown: false,
-// };
-
-const RootNavigator = () => (
-  <MainDrawer />
-  // <NavigationScreenOptionsProvider
-  //   mainDrawerScreenOptions={MainDrawerScreenOptions}
-  //   mainStackScreenOptions={MainStackScreenOptions}
-  // >
-  // </NavigationScreenOptionsProvider>
-);
+const RootNavigator = () => <MainDrawer />;

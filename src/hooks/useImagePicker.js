@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Platform, Alert } from 'react-native';
+import { Platform } from 'react-native';
+import { Alert } from '#components/alert';
 import * as ImagePicker from 'expo-image-picker';
 
 export const useImagePicker = (
@@ -23,7 +24,7 @@ export const useImagePicker = (
         await ImagePicker.requestMediaLibraryPermissionsAsync();
 
       if (status !== 'granted') {
-        Alert.alert('Sorry, we need camera roll permissions to make this work');
+        Alert('카메라 권한이 필요한 작업입니다.', '닫기');
       }
     })();
   }, []);

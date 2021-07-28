@@ -1,16 +1,11 @@
 import React from 'react';
-import {
-  View,
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-} from 'react-native';
+import { View, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '#navigators/ScreenNames';
 import { StyleSheet, Text, TextInput, Button } from '#components';
+import { AlertWithValue } from '#components/alert';
 import { Ionicons } from '@expo/vector-icons';
 
 const initialValues = {
@@ -26,13 +21,11 @@ const validationSchema = Yup.object({
 const FindPassword = () => {
   const nav = useNavigation();
   const onSubmit = values => {
-    Alert.alert('onLogin!', JSON.stringify(values, null, 2), [
-      {
-        text: 'OK!',
-        onPress: () => console.log('alert closed!!'),
-        style: 'destructive',
-      },
-    ]);
+    AlertWithValue(
+      '존재하는 메일입니다!',
+      '닫기',
+      JSON.stringify(values, null, 2),
+    );
     nav?.navigate(ScreenNames.ChangePassword);
   };
 

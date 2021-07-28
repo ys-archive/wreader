@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Alert } from 'react-native';
+import { View } from 'react-native';
+import { AlertWithValue } from '#components/alert';
 import { useStoreActions } from 'easy-peasy';
 import { actionsLogin } from '#store/actions';
 import { useFormik } from 'formik';
@@ -39,44 +40,26 @@ const SigninForms = () => {
     // code === 1: 로그인 성공
     if (code === 1) {
       login();
-      Alert.alert('로그인 성공', JSON.stringify(values, null, 2), [
-        {
-          text: 'OK!',
-          onPress: () => console.log('alert closed!!'),
-          style: 'destructive',
-        },
-      ]);
+      AlertWithValue('로그인 성공', '닫기', JSON.stringify(values, null, 2));
       nav.navigate(ScreenNames.Main);
     }
 
     // code === 100 : 탈퇴 신청 중 회원
     if (code === 100) {
-      Alert.alert(
+      AlertWithValue(
         '로그인 실패 (탈퇴 신청 중인 회원입니다)',
+        '닫기',
         JSON.stringify(values, null, 2),
-        [
-          {
-            text: 'OK!',
-            onPress: () => console.log('alert closed!!'),
-            style: 'destructive',
-          },
-        ],
       );
     }
 
     // code === 102 : 잘못된 이메일
     // code === 103 : 잘못된 비밀번호
     if (code === 102 || code === 103) {
-      Alert.alert(
+      AlertWithValue(
         '로그인 실패! (이메일이나 비밀번호가 잘못되었습니다)',
+        '닫기',
         JSON.stringify(values, null, 2),
-        [
-          {
-            text: 'OK!',
-            onPress: () => console.log('alert closed!!'),
-            style: 'destructive',
-          },
-        ],
       );
     }
   };

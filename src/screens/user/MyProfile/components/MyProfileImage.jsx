@@ -43,29 +43,6 @@ const MyProfileImage = () => {
   };
 
   useEffect(() => {
-    // 첫 렌더 후에, firebase 로 부터 profileImage (base64) 를 받아와 렌더
-    // TODO: 똑같은 이미지 이면 캐싱 하여 사용 (mmkv)
-    // firebase
-    //   .database()
-    //   .ref('profileImage')
-    //   .on('value', async snapshot => {
-    //     console.log(snapshot);
-    //     const val = snapshot.val();
-    //     if (!val) {
-    //       console.log('no data found!');
-    //       return;
-    //     }
-    //     const fileReaderInstance = new FileReader();
-    //     let base64data;
-    //     fileReaderInstance.readAsDataURL(new Blob([val], { type: val.type }));
-    //     fileReaderInstance.onload = () => {
-    //       base64data = fileReaderInstance.result;
-    //       console.log(base64data);
-    //     };
-    //     // console.log(val);
-    //     const base64Img = `data:image/png;base64,${base64data}`;
-    //     setDef
-
     async function loadProfileImage() {
       const ref = firebase.storage().ref().child('profileImage');
       setDefaultUri(await ref.getDownloadURL());

@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, View, Alert } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Alert } from '#components/alert';
 import { TextInput, Text, Button } from '#components';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -19,14 +20,10 @@ const MyProfilePassword = () => {
     // TODO: PUT - Update User
 
     if (isPasswordChangeSuccess) {
-      Alert.alert('비밀번호 변경됨!', JSON.stringify(values, null, 2), [
-        {
-          text: 'OK!',
-          style: 'destructive',
-        },
-      ]);
+      Alert('비밀번호 변경');
     } else {
       // TODO: 실패처리
+      Alert('비밀번호 변경 실패');
     }
     // TODO: 이전 or 메인으로 navigate
   };

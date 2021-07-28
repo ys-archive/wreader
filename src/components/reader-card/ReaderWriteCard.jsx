@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   View,
-  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -12,6 +11,7 @@ import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '#navigators/ScreenNames';
 import { StyleSheet, TextInput, Button } from '#components';
+import { AlertWithValue } from '#components/alert';
 import { Feather } from 'react-native-vector-icons';
 
 const initialValues = {
@@ -32,14 +32,7 @@ const validationSchema = Yup.object({
 const ReaderWriteCard = ({ children }) => {
   const nav = useNavigation();
   const onSubmit = values => {
-    Alert.alert('유저가 쓴 챕터', JSON.stringify(values, null, 2), [
-      {
-        text: 'OK!',
-        onPress: () => console.log('alert closed!!'),
-        style: 'destructive',
-      },
-    ]);
-
+    AlertWithValue('유저가 쓴 챕터', '닫기', JSON.stringify(values, null, 2));
     // TODO: 처리한 카드 기다렸다가 렌더
   };
 

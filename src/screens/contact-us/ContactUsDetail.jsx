@@ -1,11 +1,6 @@
 import React from 'react';
-import {
-  View,
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-} from 'react-native';
+import { View, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { AlertWithValue } from '#components/alert';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
@@ -26,13 +21,7 @@ const validationSchema = Yup.object({
 const ContactUsDetail = () => {
   const nav = useNavigation();
   const onSubmit = async values => {
-    Alert.alert('title!', JSON.stringify(values, null, 2), [
-      {
-        text: 'OK!',
-        onPress: () => console.log('alert closed!!'),
-        style: 'destructive',
-      },
-    ]);
+    AlertWithValue('문의 등록', '닫기', JSON.stringify(values, null, 2));
     // TODO: POST - 새로운 Contact Us 생성
     nav?.goBack();
   };

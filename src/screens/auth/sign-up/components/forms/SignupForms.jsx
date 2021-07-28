@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Alert } from 'react-native';
+import { View } from 'react-native';
+// import { AlertWithValue } from '#components/alert';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
@@ -53,13 +54,7 @@ const SignupForms = () => {
   const nav = useNavigation();
 
   const onSubmit = values => {
-    Alert.alert('signup2 로 전송~', JSON.stringify(values, null, 2), [
-      {
-        text: 'OK!',
-        onPress: () => console.log('alert closed!!'),
-        style: 'destructive',
-      },
-    ]);
+    // AlertWithValue('signup2', '닫기', JSON.stringify(values, null, 2));
     nav?.navigate(ScreenNames.Signup2, values);
   };
 

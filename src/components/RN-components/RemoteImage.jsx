@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import * as FileSystem from 'expo-file-system';
 import PropTypes from 'prop-types';
-import { Image, Alert, ActivityIndicator, View } from 'react-native';
+import { Image, ActivityIndicator, View } from 'react-native';
+import { Alert } from '#components/alert';
 import { StyleSheet } from './StyleSheet';
 import {
   getImagePathByScreenResolution,
@@ -24,7 +25,7 @@ export const RemoteImage = ({ uri, cacheKey, style = {}, ...rest }) => {
       const imageExt = getImageExtension(actualUri);
 
       if (!imageExt || !imageExt.length) {
-        Alert.alert(`이미지 로드 실패 ! @ ${uri}`);
+        Alert(`이미지 로드 실패 ! @ ${uri}`, '닫기');
         return;
       }
 
@@ -38,7 +39,7 @@ export const RemoteImage = ({ uri, cacheKey, style = {}, ...rest }) => {
         const cached = await cacheImage(uri, cacheFileUri, () => {});
 
         if (!cached.cached) {
-          Alert.alert(`이미지 @ ${uri} 로드 실패`);
+          Alert(`이미지 @ ${uri} 로드 실패`, '닫기');
         }
 
         console.log(`이미지 @ ${uri} 이 새로 캐싱됨!`);

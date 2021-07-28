@@ -1,11 +1,6 @@
 import React from 'react';
-import {
-  View,
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-} from 'react-native';
+import { View, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { Alert } from '#components/alert';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
@@ -50,28 +45,12 @@ const Signup2Form = ({ route }) => {
 
     // 회원가입 완료
     if (code === 1) {
-      Alert.alert('회원가입 완료', JSON.stringify(values, null, 2), [
-        {
-          text: 'OK!',
-          onPress: () => console.log('alert closed!!'),
-          style: 'destructive',
-        },
-      ]);
+      Alert('회원가입 완료');
     }
 
     // 이메일이 이미 존재
     if (code === 101) {
-      Alert.alert(
-        '회원가입 실패 (입력한 이메일이 이미 존재합니다)',
-        JSON.stringify(values, null, 2),
-        [
-          {
-            text: 'OK!',
-            onPress: () => console.log('alert closed!!'),
-            style: 'destructive',
-          },
-        ],
-      );
+      Alert('회원가입 실패 (입력한 이메일이 이미 존재합니다)');
     }
 
     // 다시 로그인 화면으로 되돌아감
@@ -82,22 +61,12 @@ const Signup2Form = ({ route }) => {
     const { code } = await AuthService.GET_CheckUserExists(nickname);
 
     if (code == 1) {
-      Alert.alert('사용 가능한 닉네임입니다.', JSON.stringify(nickname), [
-        {
-          text: 'OK!',
-          style: 'destructive',
-        },
-      ]);
+      Alert('사용 가능한 닉네임입니다.');
     }
 
     // 중복!
     if (code == 105) {
-      Alert.alert('이미 사용된 닉네임입니다.', JSON.stringify(nickname), [
-        {
-          text: 'OK!',
-          style: 'destructive',
-        },
-      ]);
+      Alert('이미 사용된 닉네임입니다.');
     }
   };
 

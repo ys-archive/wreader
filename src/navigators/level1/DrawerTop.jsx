@@ -8,18 +8,24 @@ import {
 import { StyleSheet, Text } from '#components';
 import { Ionicons } from '@expo/vector-icons';
 import * as ScreenNames from '../ScreenNames';
-import { useStoreState } from 'easy-peasy';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 import { selectIsLoggedIn } from '#store/selectors';
+import { actionsLogout } from '#store/actions';
+import { Alert, RequireLoginAlert } from '#components/alert';
 
 const DrawerTop = props => {
   // TODO: Get user name from store and display
   const { navigation: nav } = props;
   const isLoggedIn = useStoreState(selectIsLoggedIn);
+  // TODO: 유저 이름 GET
+  const profileName = isLoggedIn ? 'Test 유저' : '로그인 해주세요';
+  const logout = useStoreActions(actionsLogout);
 
   return (
     <DrawerContentScrollView {...props} contentContainerStyle={s.root}>
       <SafeAreaView>
         <View style={s.elementPlacer}>
+          {/* 드로어 닫기 */}
           <Ionicons
             name="close"
             size={35}
@@ -27,15 +33,26 @@ const DrawerTop = props => {
             style={s.closeDrawer}
             onPress={() => nav.closeDrawer()}
           />
+
+          {/* 프로필 아이콘 */}
           <Ionicons
             name="person-circle-outline"
             size={60}
             color="white"
             style={s.profile}
-            onPress={() => nav.navigate(ScreenNames.MyProfileStack)}
+            onPress={
+              () =>
+                isLoggedIn
+                  ? nav.navigate(ScreenNames.MyProfileStack) // true -> 프로필 스크린으로 이동
+                  : RequireLoginAlert() // false -> 로그인 확인 메시지
+            }
           />
-          <Text style={s.userName}>응애</Text>
+
+          {/* 유저 이름 */}
+          <Text style={s.userName}>{profileName}</Text>
         </View>
+
+        {/* 홈 (스크린 이동) */}
         <TouchableOpacity
           style={s.drawerItem}
           onPress={() => nav.navigate(ScreenNames.MainStack)}
@@ -43,13 +60,17 @@ const DrawerTop = props => {
           <Text>홈</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={s.drawerItem}
-          onPress={() => nav.navigate(ScreenNames.ContactUsStack)}
-        >
-          <Text>문의하기</Text>
-        </TouchableOpacity>
+        {/* 문의하기 (스크린 이동) */}
+        {isLoggedIn && (
+          <TouchableOpacity
+            style={s.drawerItem}
+            onPress={() => nav.navigate(ScreenNames.ContactUsStack)}
+          >
+            <Text>문의하기</Text>
+          </TouchableOpacity>
+        )}
 
+        {/* 이용약관 (스크린 이동) */}
         <TouchableOpacity
           style={s.drawerItem}
           onPress={() => nav.navigate(ScreenNames.PolicyAndConditionStack)}
@@ -57,12 +78,24 @@ const DrawerTop = props => {
           <Text>이용약관</Text>
         </TouchableOpacity>
 
-        {!isLoggedIn && (
+        {/* 로그인 안되어 있으면 -> 로그인 (스크린 이동) */}
+        {!isLoggedIn ? (
           <TouchableOpacity
             style={s.drawerItem}
             onPress={() => nav.navigate(ScreenNames.SigninStack)}
           >
             <Text>로그인</Text>
+          </TouchableOpacity>
+        ) : (
+          // 로그인 되어있으면 -> 로그아웃 실행
+          <TouchableOpacity
+            style={s.drawerItem}
+            onPress={() => {
+              Alert('로그아웃 되었습니다');
+              logout();
+            }}
+          >
+            <Text>로그아웃</Text>
           </TouchableOpacity>
         )}
         {/* <DrawerItemList {...props} /> */}

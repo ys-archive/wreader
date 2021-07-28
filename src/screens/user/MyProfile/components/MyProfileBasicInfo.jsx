@@ -1,11 +1,6 @@
 import React from 'react';
-import {
-  View,
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-} from 'react-native';
+import { View, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { AlertWithValue } from '#components/alert';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
@@ -37,15 +32,18 @@ const MyProfileBasicInfo = () => {
 
     // TODO: PUT 성공 ->
     if (isRequestSuccess) {
-      Alert.alert('프로필 업데이트됨!', JSON.stringify(values, null, 2), [
-        {
-          text: 'OK!',
-          onPress: () => console.log('alert closed!!'),
-          style: 'destructive',
-        },
-      ]);
+      AlertWithValue(
+        '프로필 업데이트됨!',
+        '닫기',
+        JSON.stringify(values, null, 2),
+      );
     } else {
       // TODO: 실패 처리
+      AlertWithValue(
+        '프로필 업데이트실패!',
+        '닫기',
+        JSON.stringify(values, null, 2),
+      );
     }
 
     nav?.navigate(ScreenNames.Signin);
