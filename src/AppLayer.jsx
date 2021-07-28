@@ -6,8 +6,6 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { loadFontsAsync } from './constants/fonts';
 import { ReduxProvider } from '#store';
 import { NavigationProvider } from '#navigators';
-import { useStoreActions } from 'easy-peasy';
-import { actionsExecuteAppFirstTime } from '#store/actions';
 
 import './Setup';
 import './firebase/firebase';
@@ -16,11 +14,8 @@ const SplashDelay = 2000;
 
 export default () => {
   const [isLoadingDone, setLoadingDone] = useState(false);
-  // const executeAppFirstTime = useStoreActions(actionsExecuteAppFirstTime);
-
-  // useEffect(() => {
-  //   executeAppFirstTime();
-  // }, []);
+  // TODO: 앱 처음 실행 로직은 다른 곳에서 ~
+  
 
   if (!isLoadingDone) {
     return (
