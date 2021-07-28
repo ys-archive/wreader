@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Platform, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import axios from 'axios';
-import * as firebase from 'firebase';
 
-// import storage from '@react-native-firebase/storage';
-
-export const useImagePicker = (onComplete, widthRatio = 4, heightRatio = 3) => {
+export const useImagePicker = (
+  uploadLocalImagePath,
+  uploadImageFile,
+  widthRatio = 4,
+  heightRatio = 3,
+) => {
   const [imageUri, setImageUri] = useState(null);
 
   useEffect(() => {
@@ -40,11 +41,16 @@ export const useImagePicker = (onComplete, widthRatio = 4, heightRatio = 3) => {
       console.log(result);
       const { uri } = result;
 
-      const response = await fetch(uri);
-      const blob = await response.blob();
+      if (uploadLocalImagePath && typeof uploadLocalImagePath === 'function') {
+        await uploadLocalImagePath(uri);
+        setImageUri(uri);
+      }
 
-      onComplete(blob);
-      setImageUri(uri);
+      if (uploadImageFile && typeof uploadImageFile === 'function') {
+        const response = await fetch(uri);
+        const blob = await response.blob();
+        await uploadImageFile(blob);
+      }
     }
   };
 
