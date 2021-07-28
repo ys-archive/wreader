@@ -4,10 +4,10 @@ import { LogBox } from 'react-native';
 
 // Optionally import the services that you want to use
 //import "firebase/auth";
-//import "firebase/database";
+// import 'firebase/database';
 //import "firebase/firestore";
 //import "firebase/functions";
-//import "firebase/storage";
+import 'firebase/storage';
 
 // TODO: 테스트 후 삭제
 // android

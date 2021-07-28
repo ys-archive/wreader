@@ -9,10 +9,23 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
+const onCompletePickingImage = async blob => {
+  const ref = firebase.storage().ref().child('profileImage');
+  await ref.put(blob);
+
+  console.log(
+    `데이터 저장 성공!~~~ 다운로드 링크 (업로드 테스트 용): ${await ref.getDownloadURL()}`,
+  );
+};
+
 const MyProfileImage = () => {
   const [isUploaded, completeUpload] = useState(false);
-  const [defaultBase64Image, setDefaultBase64Image] = useState('');
-  const { pickImage, imageUri: uploadedImageUri } = useImagePicker();
+  const [downloadedImageUri, setDownloadedIamgeUri] = useState('');
+  const { pickImage, imageUri: uploadedImageUri } = useImagePicker(
+    onCompletePickingImage,
+    16,
+    9,
+  );
 
   const pickNewProfileImage = async () => {
     // Image Picker 를 통해서 이미지 선택
@@ -23,27 +36,38 @@ const MyProfileImage = () => {
   useEffect(() => {
     // 첫 렌더 후에, firebase 로 부터 profileImage (base64) 를 받아와 렌더
     // TODO: 똑같은 이미지 이면 캐싱 하여 사용 (mmkv)
+    // firebase
+    //   .database()
+    //   .ref('profileImage')
+    //   .on('value', async snapshot => {
+    //     console.log(snapshot);
+    //     const val = snapshot.val();
+    //     if (!val) {
+    //       console.log('no data found!');
+    //       return;
+    //     }
+    //     const fileReaderInstance = new FileReader();
+    //     let base64data;
+    //     fileReaderInstance.readAsDataURL(new Blob([val], { type: val.type }));
+    //     fileReaderInstance.onload = () => {
+    //       base64data = fileReaderInstance.result;
+    //       console.log(base64data);
+    //     };
+    //     // console.log(val);
+    //     const base64Img = `data:image/png;base64,${base64data}`;
+    //     setDef
 
-    firebase
-      .database()
-      .ref('profileImage')
-      .on('value', snapshot => {
-        const val = snapshot.val();
-        if (!val) {
-          console.log('no data found!');
-          return;
-        }
-
-        const base64Img = `data:image/png;base64,${val.base64}`;
-        setDefaultBase64Image(base64Img);
-      });
+    (async function loadProfileImage() {
+      const ref = firebase.storage().ref().child('profileImage');
+      setDownloadedIamgeUri(await ref.getDownloadURL());
+    })();
   }, []);
 
   return (
     <View style={s.profileImageView}>
       <Image
         style={{ width: wp('80%'), height: hp('35%'), borderRadius: 200 }}
-        source={{ uri: !isUploaded ? defaultBase64Image : uploadedImageUri }}
+        source={{ uri: !isUploaded ? downloadedImageUri : uploadedImageUri }}
       />
       <Ionicons
         style={s.cameraIcon}

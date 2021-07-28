@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Platform, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import firebase from 'firebase';
+import axios from 'axios';
+import * as firebase from 'firebase';
 
-export const useImagePicker = (widthRatio = 4, heightRatio = 3) => {
+// import storage from '@react-native-firebase/storage';
+
+export const useImagePicker = (onComplete, widthRatio = 4, heightRatio = 3) => {
   const [imageUri, setImageUri] = useState(null);
 
   useEffect(() => {
@@ -27,21 +30,21 @@ export const useImagePicker = (widthRatio = 4, heightRatio = 3) => {
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      base64: true,
+      base64: false,
       allowsEditing: true,
       aspect: [widthRatio, heightRatio],
       quality: 1,
     });
 
     if (!result.cancelled) {
-      const { uri, base64 } = result;
+      console.log(result);
+      const { uri } = result;
+
+      const response = await fetch(uri);
+      const blob = await response.blob();
+
+      onComplete(blob);
       setImageUri(uri);
-      const blob = await base64.blob();
-      console.log(blob);
-
-      await firebase.database().ref(`profileImage`).set({ image: blob });
-
-      console.log('데이터 저장 성공!');
     }
   };
 
