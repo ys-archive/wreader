@@ -29,9 +29,9 @@ const MyProfilePassword = () => {
     const code = await UserService.PUT_updateUser(userId);
 
     if (code === 1) {
-      Alert('비밀번호 변경');
+      Alert('비밀번호 변경!');
+      // TODO: 변경한 비밀번호로 재 로그인 해야됨?
     } else {
-      // TODO: 실패처리
       Alert('비밀번호 변경 실패');
     }
     // TODO: 이전 or 메인으로 navigate
