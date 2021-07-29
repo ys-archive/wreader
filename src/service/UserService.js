@@ -40,7 +40,7 @@ class UserService {
     //   throw new Error('password 은 string 여야 합니다.');
     // }
 
-    console.log('PUT_updateUserPassword');
+    // console.log('PUT_updateUserPassword');
     const asMD5 = md5(password);
     const { data, status } = await instance
       .put(`user/${userId}`, {

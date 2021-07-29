@@ -23,6 +23,9 @@ export default {
 
   logout: action(state => {
     state.model.isLoggedIn = false;
+    state.model.userId = 0;
+    state.model.email = '';
+    state.model.info = null;
   }),
 
   setUserId: action((state, payload) => {
