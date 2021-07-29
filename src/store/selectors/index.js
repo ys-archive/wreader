@@ -1,6 +1,7 @@
 // auth
 export const selectIsLoggedIn = state => state.auth.model.isLoggedIn;
 export const selectUserId = state => state.auth.model.userId;
+export const selectEmail = state => state.auth.model.email;
 export const persistGetUserInfo = state => state.auth.getUserInfo;
 export const persistGetUserName = state => state.auth.getUserName;
 

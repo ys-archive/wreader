@@ -3,6 +3,7 @@ import { action, computed } from 'easy-peasy';
 const model = {
   isLoggedIn: false,
   userId: 0,
+  email: '',
 };
 
 export default {
@@ -30,11 +31,15 @@ export default {
     state.model.userId = payload;
   }),
 
-  getUserInfo: computed(state => {
-    
+  setEmail: action((state, payload) => {
+    if (typeof payload !== 'string') {
+      throw new Error('setEmail() 의 payload 는 string 이어야 합니다.');
+    }
+
+    state.model.email = payload;
   }),
 
-  getUserName: computed(state => {
-    
-  }),
+  getUserInfo: computed(state => {}),
+
+  getUserName: computed(state => {}),
 };

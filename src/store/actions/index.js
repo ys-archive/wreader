@@ -3,6 +3,7 @@ export const actionsLogin = actions => actions.auth.login;
 export const actionsLogout = actions => actions.auth.logout;
 
 export const actionsSetUserId = actions => actions.auth.setUserId;
+export const actionsSetEmail = actions => actions.auth.setEmail;
 
 // reader
 export const actionsSetCategorySelected = actions =>
