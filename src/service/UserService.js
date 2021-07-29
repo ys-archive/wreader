@@ -16,9 +16,10 @@ class UserService {
   }
 
   static async GET_getUserInfo(userId) {
-    const { data, status } = await instance.get(`user/img/${userId}`);
-    const { code } = data;
-    return code;
+    const { data, status } = await instance.get(`user/${userId}`);
+    const { code, item } = data;
+    console.log(data);
+    return { code, item };
   }
 
   static async POST_dropUser(userId) {
@@ -29,11 +30,32 @@ class UserService {
     return code;
   }
 
+  static async PUT_updateUserPassword(userId, password) {
+    // if (typeof userId !== 'number') {
+    //   throw new Error('userId 는 number 여야합니다');
+    // }
+
+    // if (typeof password !== 'string') {
+    //   throw new Error('password 은 string 여야 합니다.');
+    // }
+
+    console.log('PUT_updateUserPassword');
+    const asMD5 = md5(password);
+    const { data, status } = await instance
+      .put(`user/${userId}`, {
+        pass: asMD5,
+      })
+      .catch(console.error);
+    console.log(data, status);
+
+    const { code } = data;
+    return code;
+  }
+
   // code === 1 -> 업데이트 성공
   // code === 102 -> 해당 유저 정보가 없음 (정보가 없는 회원이 업데이트 시도 했을 시)
-  static async PUT_updateUser(
+  static async PUT_updateUserInfo(
     userId,
-    password, // required
     nickname = '',
     introduction = '',
     facebook = '',
@@ -45,10 +67,6 @@ class UserService {
 
     if (typeof nickname !== 'string') {
       throw new Error('nickname 은 string 여야 합니다.');
-    }
-
-    if (typeof password !== 'string') {
-      throw new Error('password 은 string 여야 합니다.');
     }
 
     if (typeof introduction !== 'string') {
@@ -63,14 +81,12 @@ class UserService {
       throw new Error('instagram 은 string 여야 합니다.');
     }
 
-    const asMD5 = md5(password);
     const { data, status } = await instance
-      .post(`user/${userId}`, {
+      .put(`user/${userId}`, {
         intro: introduction,
         facebook,
         instagram,
         nick: nickname,
-        pass: asMD5,
       })
       .catch(console.error);
 
