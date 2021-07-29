@@ -93,6 +93,7 @@ const DrawerTop = props => {
             onPress={() => {
               Alert('로그아웃 되었습니다');
               logout();
+              nav.closeDrawer();
             }}
           >
             <Text>로그아웃</Text>

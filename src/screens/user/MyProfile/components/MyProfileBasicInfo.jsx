@@ -1,7 +1,6 @@
-import React from 'react';
-import { View, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { AlertWithValue } from '#components/alert';
+import React, { useEffect } from 'react';
+import { View } from 'react-native';
+import { Alert } from '#components/alert';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
@@ -9,7 +8,7 @@ import * as ScreenNames from '#navigators/ScreenNames';
 import { StyleSheet, Text, TextInput, Button } from '#components';
 import UserService from '#service/UserService';
 import { useStoreState } from 'easy-peasy';
-import { selectUserId } from '#store/selectors';
+import { selectUserId, selectIsLoggedIn } from '#store/selectors';
 
 const initialValues = {
   nickname: '',
@@ -31,8 +30,11 @@ const validationSchema = Yup.object({
 });
 
 const MyProfileBasicInfo = () => {
+  // TODO: 기본 Profile 정보 불러와 로드하기
+
   const nav = useNavigation();
   const userId = useStoreState(selectUserId);
+  const isLoggedIn = useStoreState(selectIsLoggedIn);
 
   const onSubmit = async values => {
     const { nickname, instagramUrl, facebookUrl, introduction } = values;
@@ -45,34 +47,57 @@ const MyProfileBasicInfo = () => {
     );
 
     if (code === 1) {
-      AlertWithValue(
-        '프로필 업데이트됨!',
-        '닫기',
-        JSON.stringify(values, null, 2),
-      );
+      Alert('프로필 업데이트됨!');
     } else {
-      AlertWithValue(
-        '프로필 업데이트실패!',
-        '닫기',
-        JSON.stringify(values, null, 2),
-      );
+      Alert('프로필 업데이트실패!');
     }
 
-    nav?.navigate(ScreenNames.Main);
+    nav.navigate(ScreenNames.Main);
   };
 
-  const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
-    useFormik({
-      initialValues,
-      validationSchema,
-      // TODO: 실제 가입 처리
-      onSubmit,
-    });
+  const {
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    setFieldValue,
+    values,
+    errors,
+    touched,
+  } = useFormik({
+    initialValues,
+    validationSchema,
+    // TODO: 실제 가입 처리
+    onSubmit,
+  });
 
   const { nickname, instagramUrl, facebookUrl, introduction } = values;
 
+  useEffect(() => {
+    if (!selectIsLoggedIn) return;
+    console.log(`Load Basic Info @ ${userId}`);
+
+    async function loadDefaultProfileBasicInfo() {
+      const { code, item } = await UserService.GET_getUserInfo(userId);
+
+      if (code === 1) {
+        const { nick, instagram, facebook, intro } = item;
+
+        setFieldValue('nickname', nick);
+        setFieldValue('instagramUrl', instagram);
+        setFieldValue('facebookUrl', facebook);
+        setFieldValue('introduction', intro);
+      } else {
+        setFieldValue('nickname', '');
+        setFieldValue('instagramUrl', '');
+        setFieldValue('facebookUrl', '');
+        setFieldValue('introduction', '');
+      }
+    }
+    loadDefaultProfileBasicInfo();
+  }, [userId, selectIsLoggedIn === true]);
+
   return (
-    <KeyboardAwareScrollView contentContainerStyle={s.root}>
+    <View style={s.root}>
       <Text isBold>⁕&nbsp;기본정보</Text>
       <View style={s.inputSection}>
         <View style={s.inputView}>
@@ -151,7 +176,7 @@ const MyProfileBasicInfo = () => {
           완료
         </Button>
       </View>
-    </KeyboardAwareScrollView>
+    </View>
   );
 };
 

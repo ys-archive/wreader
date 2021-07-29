@@ -36,15 +36,24 @@ const MyProfilePassword = () => {
     } else {
       Alert('비밀번호 변경 실패');
     }
+
+    setFieldValue('password', '');
     nav.navigate(ScreenNames.Main);
   };
 
-  const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
-    useFormik({
-      initialValues,
-      validationSchema,
-      onSubmit,
-    });
+  const {
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    setFieldValue,
+    values,
+    errors,
+    touched,
+  } = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit,
+  });
 
   const { password } = values;
 

@@ -16,9 +16,10 @@ class UserService {
   }
 
   static async GET_getUserInfo(userId) {
-    const { data, status } = await instance.get(`user/${userId}`);
+    const { data, status } = await instance
+      .get(`user/${userId}`)
+      .catch(console.error);
     const { code, item } = data;
-    console.log(data);
     return { code, item };
   }
 
