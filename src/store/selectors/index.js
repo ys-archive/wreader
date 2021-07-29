@@ -2,8 +2,7 @@
 export const selectIsLoggedIn = state => state.auth.model.isLoggedIn;
 export const selectUserId = state => state.auth.model.userId;
 export const selectEmail = state => state.auth.model.email;
-export const selectGetUserInfo = state => state.auth.getUserInfo;
-export const selectGetUserName = state => state.auth.getUserName;
+export const selectUserInfo = state => state.auth.model.info;
 
 // reader
 export const selectIsFirstCategory = state => state.reader.isFirstCategory;

@@ -4,6 +4,14 @@ const model = {
   isLoggedIn: false,
   userId: 0,
   email: '',
+  info: {
+    img: '',
+    instagram: '',
+    facebook: '',
+    intro: '',
+    marketingAgree: 0,
+    nick: '',
+  },
 };
 
 export default {
@@ -39,7 +47,7 @@ export default {
     state.model.email = payload;
   }),
 
-  getUserInfo: computed(state => {}),
-
-  getUserName: computed(state => {}),
+  setUserInfo: action((state, payload) => {
+    state.model.info = payload;
+  }),
 };

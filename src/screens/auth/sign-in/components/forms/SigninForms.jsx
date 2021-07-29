@@ -6,6 +6,7 @@ import {
   actionsLogin,
   actionsSetEmail,
   actionsSetUserId,
+  actionsSetUserInfo,
 } from '#store/actions';
 import { useFormik } from 'formik';
 import { useNavigation } from '@react-navigation/native';
@@ -35,6 +36,7 @@ const SigninForms = () => {
   const login = useStoreActions(actionsLogin);
   const setEmail = useStoreActions(actionsSetEmail);
   const setUserId = useStoreActions(actionsSetUserId);
+  const setUserInfo = useStoreActions(actionsSetUserInfo);
   const nav = useNavigation();
 
   const onSubmit = async values => {
@@ -48,6 +50,7 @@ const SigninForms = () => {
       login();
       setEmail(email);
       setUserId(item.id);
+      setUserInfo(item);
       Alert('로그인 성공');
       nav.navigate(ScreenNames.Main);
     }

@@ -8,7 +8,11 @@ import * as ScreenNames from '#navigators/ScreenNames';
 import { StyleSheet, Text, TextInput, Button } from '#components';
 import UserService from '#service/UserService';
 import { useStoreState } from 'easy-peasy';
-import { selectUserId, selectIsLoggedIn } from '#store/selectors';
+import {
+  selectUserId,
+  selectIsLoggedIn,
+  selectUserInfo,
+} from '#store/selectors';
 
 const initialValues = {
   nickname: '',
@@ -34,7 +38,8 @@ const MyProfileBasicInfo = () => {
 
   const nav = useNavigation();
   const userId = useStoreState(selectUserId);
-  const isLoggedIn = useStoreState(selectIsLoggedIn);
+  // const isLoggedIn = useStoreState(selectIsLoggedIn);
+  const userInfo = useStoreState(selectUserInfo);
 
   const onSubmit = async values => {
     const { nickname, instagramUrl, facebookUrl, introduction } = values;
@@ -73,28 +78,13 @@ const MyProfileBasicInfo = () => {
   const { nickname, instagramUrl, facebookUrl, introduction } = values;
 
   useEffect(() => {
-    if (!selectIsLoggedIn) return;
-    console.log(`Load Basic Info @ ${userId}`);
+    const { nick, instagram, facebook, intro } = userInfo;
 
-    async function loadDefaultProfileBasicInfo() {
-      const { code, item } = await UserService.GET_getUserInfo(userId);
-
-      if (code === 1) {
-        const { nick, instagram, facebook, intro } = item;
-
-        setFieldValue('nickname', nick);
-        setFieldValue('instagramUrl', instagram);
-        setFieldValue('facebookUrl', facebook);
-        setFieldValue('introduction', intro);
-      } else {
-        setFieldValue('nickname', '');
-        setFieldValue('instagramUrl', '');
-        setFieldValue('facebookUrl', '');
-        setFieldValue('introduction', '');
-      }
-    }
-    loadDefaultProfileBasicInfo();
-  }, [userId, selectIsLoggedIn === true]);
+    setFieldValue('nickname', nick || '');
+    setFieldValue('instagramUrl', instagram || '');
+    setFieldValue('facebookUrl', facebook || '');
+    setFieldValue('introduction', intro || '');
+  }, [userInfo]);
 
   return (
     <View style={s.root}>
