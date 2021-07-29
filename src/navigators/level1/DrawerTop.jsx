@@ -2,8 +2,8 @@ import React from 'react';
 import { SafeAreaView, View, TouchableOpacity } from 'react-native';
 import {
   DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
+  // DrawerItemList,
+  // DrawerItem,
 } from '@react-navigation/drawer';
 import { StyleSheet, Text } from '#components';
 import { Ionicons } from '@expo/vector-icons';

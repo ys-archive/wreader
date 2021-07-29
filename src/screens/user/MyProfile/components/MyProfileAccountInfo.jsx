@@ -4,11 +4,9 @@ import { StyleSheet, Text } from '#components';
 import MyProfilePassword from './MyProfilePassword';
 import { useStoreState } from 'easy-peasy';
 import { selectEmail } from '#store/selectors';
-// import { useGetSWR } from '#hooks/useGetSWR';
 
 const MyProfileAccountInfo = () => {
   const email = useStoreState(selectEmail);
-  // const { data, error } = useGetSWR(`user/${userId}`);
 
   return (
     <View style={s.root}>

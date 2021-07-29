@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { View, Platform, ScrollView } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
@@ -38,15 +39,8 @@ const FindPassword = () => {
   const { email } = values;
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      showsHorizontalScrollIndicator={false}
-    >
-      <KeyboardAvoidingView
-        enabled
-        style={s.root}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
+    <KeyboardAwareScrollView contentContainerStyle={s.root}>
+      <View style={s.root}>
         <View>
           <Text>인증메일이 발송되었습니다.</Text>
           <Text>인증메일을 확인 후 [메일 인증완료]</Text>
@@ -64,10 +58,10 @@ const FindPassword = () => {
             placeholder="example@gmail.com..."
           />
           {/* {touched.email && errors.email ? (
-            <View>
-              <Text>{errors.email}</Text>
-            </View>
-          ) : null} */}
+                <View>
+                  <Text>{errors.email}</Text>
+                </View>
+              ) : null} */}
         </View>
         <View>
           <Text>인증메일이 도착하지 않았나요?</Text>
@@ -83,8 +77,8 @@ const FindPassword = () => {
             메일 인증완료
           </Button>
         </View>
-      </KeyboardAvoidingView>
-    </ScrollView>
+      </View>
+    </KeyboardAwareScrollView>
   );
 };
 
@@ -92,7 +86,7 @@ export default FindPassword;
 
 const s = StyleSheet.create({
   root: {
-    // flex: 1,
+    flex: 1,
     paddingHorizontal: 15,
     paddingVertical: '25%',
     width: '100%',

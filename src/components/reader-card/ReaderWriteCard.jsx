@@ -1,11 +1,6 @@
 import React from 'react';
-import {
-  View,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  Dimensions,
-} from 'react-native';
+import { View, Platform, ScrollView } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
@@ -47,46 +42,42 @@ const ReaderWriteCard = ({ children }) => {
   const { sentence1, sentence2 } = values;
 
   return (
-    <ScrollView>
-      <KeyboardAvoidingView
-        style={s.root}
-        enabled
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
-        <View style={s.inputView}>
-          <TextInput
-            // style={s.input}
-            value={sentence1}
-            onBlur={handleBlur('sentence1')}
-            onChangeText={handleChange('sentence1')}
-            placeholder="챕터 내용을 입력해주세요 (20자이내)"
-          />
-          {/* {touched.sentence1 && errors.sentence1 ? (
+    // <ScrollView>
+    <KeyboardAwareScrollView contentContainerStyle={s.root}>
+      <View style={s.inputView}>
+        <TextInput
+          // style={s.input}
+          value={sentence1}
+          onBlur={handleBlur('sentence1')}
+          onChangeText={handleChange('sentence1')}
+          placeholder="챕터 내용을 입력해주세요 (20자이내)"
+        />
+        {/* {touched.sentence1 && errors.sentence1 ? (
               <View>
                 <Text>{errors.sentence1}</Text>
               </View>
             ) : null} */}
-        </View>
-        <View style={s.inputView}>
-          <TextInput
-            // style={s.input}
-            value={sentence2}
-            onBlur={handleBlur('sentence2')}
-            onChangeText={handleChange('sentence2')}
-            placeholder="챕터 내용을 입력해주세요 (20자이내)"
-          />
-          {/* {touched.sentence2 && errors.sentence2 ? (
+      </View>
+      <View style={s.inputView}>
+        <TextInput
+          // style={s.input}
+          value={sentence2}
+          onBlur={handleBlur('sentence2')}
+          onChangeText={handleChange('sentence2')}
+          placeholder="챕터 내용을 입력해주세요 (20자이내)"
+        />
+        {/* {touched.sentence2 && errors.sentence2 ? (
               <View>
                 <Text>{errors.sentence2}</Text>
               </View>
             ) : null} */}
-        </View>
-        <Feather name="camera" size={24} color="black" />
-        <Button style={s.summitButton} onPress={handleSubmit}>
-          저장하기
-        </Button>
-      </KeyboardAvoidingView>
-    </ScrollView>
+      </View>
+      <Feather name="camera" size={24} color="black" />
+      <Button style={s.summitButton} onPress={handleSubmit}>
+        저장하기
+      </Button>
+      {/* </ScrollView> */}
+    </KeyboardAwareScrollView>
   );
 };
 
@@ -94,6 +85,9 @@ export default ReaderWriteCard;
 
 const s = StyleSheet.create({
   root: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     // width,
     // height,
     // alignItems: 'center',

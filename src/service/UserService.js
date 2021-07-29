@@ -56,30 +56,30 @@ class UserService {
   // code === 102 -> 해당 유저 정보가 없음 (정보가 없는 회원이 업데이트 시도 했을 시)
   static async PUT_updateUserInfo(
     userId,
-    nickname = '',
-    introduction = '',
-    facebook = '',
-    instagram = '',
+    nickname,
+    introduction,
+    facebook,
+    instagram,
   ) {
-    if (typeof userId !== 'number') {
-      throw new Error('userId 는 number 여야합니다');
-    }
+    // if (typeof userId !== 'number') {
+    //   throw new Error('userId 는 number 여야합니다');
+    // }
 
-    if (typeof nickname !== 'string') {
-      throw new Error('nickname 은 string 여야 합니다.');
-    }
+    // if (typeof nickname !== 'string') {
+    //   throw new Error('nickname 은 string 여야 합니다.');
+    // }
 
-    if (typeof introduction !== 'string') {
-      throw new Error('introduction 은 string 여야 합니다.');
-    }
+    // if (typeof introduction !== 'string') {
+    //   throw new Error('introduction 은 string 여야 합니다.');
+    // }
 
-    if (typeof facebook !== 'string') {
-      throw new Error('facebook 은 string 여야 합니다.');
-    }
+    // if (typeof facebook !== 'string') {
+    //   throw new Error('facebook 은 string 여야 합니다.');
+    // }
 
-    if (typeof instagram !== 'string') {
-      throw new Error('instagram 은 string 여야 합니다.');
-    }
+    // if (typeof instagram !== 'string') {
+    //   throw new Error('instagram 은 string 여야 합니다.');
+    // }
 
     const { data, status } = await instance
       .put(`user/${userId}`, {

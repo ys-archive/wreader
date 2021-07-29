@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, ScrollView } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { AlertWithValue } from '#components/alert';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -45,10 +46,7 @@ const ChangePassword = () => {
   const { password, passwordRepeat } = values;
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      showsHorizontalScrollIndicator={false}
-    >
+    <KeyboardAwareScrollView contentContainerStyle={s.root}>
       <View style={s.root}>
         <View style={s.row1}>
           <Ionicons name="checkmark" size={70} color="black" />
@@ -84,7 +82,7 @@ const ChangePassword = () => {
           비밀번호 변경완료
         </Button>
       </View>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 

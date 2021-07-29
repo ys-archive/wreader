@@ -1,11 +1,15 @@
 import React from 'react';
 import { View, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { AlertWithValue } from '#components/alert';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '#navigators/ScreenNames';
 import { StyleSheet, Text, TextInput, Button } from '#components';
+import UserService from '#service/UserService';
+import { useStoreState } from 'easy-peasy';
+import { selectUserId } from '#store/selectors';
 
 const initialValues = {
   nickname: '',
@@ -27,18 +31,26 @@ const validationSchema = Yup.object({
 });
 
 const MyProfileBasicInfo = () => {
-  const onSubmit = async values => {
-    // TODO: PUT - Update User
+  const nav = useNavigation();
+  const userId = useStoreState(selectUserId);
 
-    // TODO: PUT 성공 ->
-    if (isRequestSuccess) {
+  const onSubmit = async values => {
+    const { nickname, instagramUrl, facebookUrl, introduction } = values;
+    const code = await UserService.PUT_updateUserInfo(
+      userId,
+      nickname,
+      instagramUrl,
+      facebookUrl,
+      introduction,
+    );
+
+    if (code === 1) {
       AlertWithValue(
         '프로필 업데이트됨!',
         '닫기',
         JSON.stringify(values, null, 2),
       );
     } else {
-      // TODO: 실패 처리
       AlertWithValue(
         '프로필 업데이트실패!',
         '닫기',
@@ -46,7 +58,7 @@ const MyProfileBasicInfo = () => {
       );
     }
 
-    nav?.navigate(ScreenNames.Signin);
+    nav?.navigate(ScreenNames.Main);
   };
 
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
@@ -60,7 +72,7 @@ const MyProfileBasicInfo = () => {
   const { nickname, instagramUrl, facebookUrl, introduction } = values;
 
   return (
-    <View style={s.root}>
+    <KeyboardAwareScrollView contentContainerStyle={s.root}>
       <Text isBold>⁕&nbsp;기본정보</Text>
       <View style={s.inputSection}>
         <View style={s.inputView}>
@@ -139,7 +151,7 @@ const MyProfileBasicInfo = () => {
           완료
         </Button>
       </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 
@@ -147,7 +159,10 @@ export default MyProfileBasicInfo;
 
 const s = StyleSheet.create({
   root: {
-    marginTop: 25,
+    // marginTop: 25,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   inputSection: {
     alignItems: 'center',

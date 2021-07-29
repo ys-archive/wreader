@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { View } from 'react-native';
 import { Alert } from '#components/alert';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';

@@ -1,13 +1,13 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, KeyboardAvoidingView, Platform } from 'react-native';
 import { Alert } from '#components/alert';
 import { TextInput, Text, Button } from '#components';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import UserService from '#service/UserService';
 import { useStoreState, useStoreActions } from 'easy-peasy';
-import { actionsLogout } from '#store/actions';
 import { selectUserId } from '#store/selectors';
+import { actionsLogout } from '#store/actions';
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '#navigators/ScreenNames';
 
