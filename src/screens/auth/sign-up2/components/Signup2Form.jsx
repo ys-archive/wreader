@@ -58,14 +58,14 @@ const Signup2Form = ({ route }) => {
   };
 
   const checkNickNameValid = async () => {
-    const { code } = await AuthService.GET_CheckUserExists(nickname);
-
-    if (code == 1) {
+    const code = await AuthService.GET_CheckUserNickExists(nickname);
+    console.log(code);
+    if (code === 1) {
       Alert('사용 가능한 닉네임입니다.');
     }
 
     // 중복!
-    if (code == 105) {
+    else {
       Alert('이미 사용된 닉네임입니다.');
     }
   };

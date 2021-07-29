@@ -2,7 +2,11 @@ import React from 'react';
 import { View } from 'react-native';
 import { AlertWithValue } from '#components/alert';
 import { useStoreActions } from 'easy-peasy';
-import { actionsLogin, actionsSetEmail } from '#store/actions';
+import {
+  actionsLogin,
+  actionsSetEmail,
+  actionsSetUserId,
+} from '#store/actions';
 import { useFormik } from 'formik';
 import { useNavigation } from '@react-navigation/native';
 import * as Yup from 'yup';
@@ -30,18 +34,20 @@ const validationSchema = Yup.object({
 const SigninForms = () => {
   const login = useStoreActions(actionsLogin);
   const setEmail = useStoreActions(actionsSetEmail);
+  const setUserId = useStoreActions(actionsSetUserId);
   const nav = useNavigation();
 
   const onSubmit = async values => {
     const { email, password } = values;
     // console.log(email, password);
 
-    const code = await AuthService.POST_login(email, password);
-
+    const { code, item } = await AuthService.POST_login(email, password);
     // code === 1: 로그인 성공
     if (code === 1) {
+      console.log(item);
       login();
       setEmail(email);
+      setUserId(item.id);
       AlertWithValue('로그인 성공', '닫기', JSON.stringify(values, null, 2));
       nav.navigate(ScreenNames.Main);
     }
