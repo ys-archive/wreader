@@ -4,6 +4,11 @@ import { Alert } from '#components/alert';
 import { TextInput, Text, Button } from '#components';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import UserService from '#service/UserService';
+import { useStoreState } from 'easy-peasy';
+import { selectUserId } from '#store/selectors';
+import { useNavigation } from '@react-navigation/native';
+import * as ScreenNames from '#navigators/ScreenNames';
 
 const initialValues = {
   password: '',
@@ -16,16 +21,21 @@ const validationSchema = Yup.object({
 });
 
 const MyProfilePassword = () => {
-  const onSubmit = async values => {
-    // TODO: PUT - Update User
+  const nav = useNavigation();
+  const userId = useStoreState(selectUserId);
 
-    if (isPasswordChangeSuccess) {
+  // TODO: PUT 결과 보고 (nick 이 required 맞는지, default -> 기존 nick 사용), lift-up 할지 그냥 쓸지 결정
+  const onSubmit = async values => {
+    const code = await UserService.PUT_updateUser(userId);
+
+    if (code === 1) {
       Alert('비밀번호 변경');
     } else {
       // TODO: 실패처리
       Alert('비밀번호 변경 실패');
     }
     // TODO: 이전 or 메인으로 navigate
+    nav.navigate(ScreenNames.Main);
   };
 
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
