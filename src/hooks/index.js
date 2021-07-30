@@ -6,6 +6,7 @@ import { useGetSWR } from './useGetSWR';
 //   useMainStackScreenOptions,
 // } from './useNavigationScreenOptions';
 import { useSwipeGesture } from './useSwipeGesture';
+import { useProfileImageLoader } from './useProfileImageLoader';
 
 export {
   useImagePicker,
@@ -14,4 +15,5 @@ export {
   // useMainDrawerScreenOptions,
   // useMainStackScreenOptions,
   useSwipeGesture,
+  useProfileImageLoader,
 };

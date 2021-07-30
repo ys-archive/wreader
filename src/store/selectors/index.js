@@ -21,4 +21,12 @@ export const selectSwipeThresholdVertical = state =>
 
 // persistence
 export const selectIsAutoLogin = state => state.persistence.model.isAutoLogin;
-export const persistIsDueDateOver = state => stat.persistence.isDueDateOver;
+export const selectIsDueDateOver = state => stat.persistence.isDueDateOver;
+
+// preference
+
+// image
+
+export const selectProfileLocalImagePath = state =>
+  state.image.model.profileLocalImagePath;
+export const selectProfileImageUrl = state => state.image.model.profileImageUrl;

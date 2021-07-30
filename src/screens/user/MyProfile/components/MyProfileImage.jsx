@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Image } from 'react-native';
 import { StyleSheet } from '#components';
 import { Ionicons } from '@expo/vector-icons';
 import { useImagePicker } from '#hooks';
-import firebase from 'firebase';
+import { useStoreActions } from 'easy-peasy';
+import {
+  actionsSetProfileImageUrl,
+  actionsSetProfileLocalImagePath,
+} from '#store/actions';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import * as FileSystem from 'expo-file-system';
 import { useStoreState } from 'easy-peasy';
 import { selectUserId } from '#store/selectors';
 import UserService from '#service/UserService';
@@ -16,7 +19,7 @@ import {
   uploadLocalImagePath,
   uploadImageFile,
 } from './ProfileImageFunctionalities';
-import { useProfileImageLoader } from '../hooks/useProfileImageLoader';
+import { useProfileImageLoader } from '#hooks';
 
 const uploadDirName = 'profileImage';
 
@@ -25,25 +28,33 @@ const MyProfileImage = () => {
 
   const [isUploaded, completeUpload] = useState(false);
   const [defaultUri, setDefaultUri] = useState('');
+  const setProfileImageUrl = useStoreActions(actionsSetProfileImageUrl);
+  const setProfileLocalImagePath = useStoreActions(
+    actionsSetProfileLocalImagePath,
+  );
 
+  // 프로필 이미지 로드
   useProfileImageLoader(setDefaultUri);
 
-  const onUploadImageFile = async blob => {
-    // 이미지 원본 먼저 업로드
-    const downloadUrl = await uploadImageFile(uploadDirName, blob);
-
-    // 이미지 원본을 스토리지 저장 후 post 로 유저 정보로 전송
-    await UserService.POST_registerUserProfilePhoto(userId, downloadUrl);
-  };
-
   const { pickImage, imageUri: uploadedImageUri } = useImagePicker(
-    uploadLocalImagePath,
-    onUploadImageFile,
+    // 로컬 이미지 uri 저장 콜백
+    async uri => {
+      const uri = await uploadLocalImagePath(uploadDirName, uri);
+      setProfileLocalImagePath(uri);
+    },
+    // 이미지 download url 저장 콜백
+    async blob => {
+      // 이미지 원본 먼저 업로드
+      const downloadUrl = await uploadImageFile(uploadDirName, blob);
+
+      // 이미지 원본을 스토리지 저장 후 post 로 유저 정보로 전송
+      await UserService.POST_registerUserProfilePhoto(userId, downloadUrl);
+      setProfileImageUrl(downloadUrl);
+    },
     16,
     9,
   );
 
-  
   const pickNewProfileImage = async () => {
     // Image Picker 를 통해서 이미지 선택
     await pickImage();

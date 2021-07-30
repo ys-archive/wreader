@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, View, TouchableOpacity } from 'react-native';
+import { SafeAreaView, View, TouchableOpacity, Image } from 'react-native';
 import {
   DrawerContentScrollView,
   // DrawerItemList,
@@ -8,19 +8,30 @@ import {
 import { StyleSheet, Text } from '#components';
 import { Ionicons } from '@expo/vector-icons';
 import * as ScreenNames from '../ScreenNames';
+
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import { selectIsLoggedIn, selectUserInfo } from '#store/selectors';
+import {
+  selectIsLoggedIn,
+  selectUserInfo,
+  selectProfileImageUrl,
+  selectProfileLocalImagePath,
+} from '#store/selectors';
 import { actionsLogout } from '#store/actions';
+import { useProfileImageLoader } from '#hooks';
 import { Alert, RequireLoginAlert } from '#components/alert';
 
 const DrawerTop = props => {
   const { navigation: nav } = props;
   const isLoggedIn = useStoreState(selectIsLoggedIn);
-  // TODO: Get user name from store and display
-  // TODO: 유저 이름 GET
   const userInfo = useStoreState(selectUserInfo);
   const { nick } = userInfo;
   const logout = useStoreActions(actionsLogout);
+  const profileImageUrl = useStoreState(selectProfileImageUrl);
+  const profileLocalImagePath = useStoreState(selectProfileLocalImagePath);
+
+  // const [defaultUri, setDefaultUri] = useState('');
+  // 프로필 이미지 로드
+  // useProfileImageLoader(setDefaultUri);
 
   return (
     <DrawerContentScrollView {...props} contentContainerStyle={s.root}>
@@ -35,19 +46,29 @@ const DrawerTop = props => {
             onPress={() => nav.closeDrawer()}
           />
 
-          {/* 프로필 아이콘 */}
-          <Ionicons
-            name="person-circle-outline"
-            size={60}
-            color="white"
-            style={s.profile}
-            onPress={
-              () =>
-                isLoggedIn
-                  ? nav.navigate(ScreenNames.MyProfileStack) // true -> 프로필 스크린으로 이동
-                  : RequireLoginAlert() // false -> 로그인 확인 메시지
-            }
-          />
+          {/* 프로필 아이콘 or 프로필 이미지 */}
+          {profileImageUrl || profileLocalImagePath ? (
+            <Image
+              style={[
+                s.profile,
+                { width: wp('80%'), height: hp('35%'), borderRadius: 50 },
+              ]}
+              source={{ uri: profileImageUrl || profileLocalImagePath }}
+            />
+          ) : (
+            <Ionicons
+              name="person-circle-outline"
+              size={60}
+              color="white"
+              style={s.profile}
+              onPress={
+                () =>
+                  isLoggedIn
+                    ? nav.navigate(ScreenNames.MyProfileStack) // true -> 프로필 스크린으로 이동
+                    : RequireLoginAlert() // false -> 로그인 확인 메시지
+              }
+            />
+          )}
 
           {/* 유저 이름 */}
           <Text style={s.userName}>{nick}</Text>

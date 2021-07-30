@@ -5,6 +5,7 @@ export const uploadLocalImagePath = async (dirName, uri) => {
   await ref.set(uri);
 
   console.log('이미지 로컬경로 저장 성공!');
+  return uri;
 };
 
 export const uploadImageFile = async (dirName, blob) => {

@@ -1,31 +1,33 @@
 import { action } from 'easy-peasy';
 
 const model = {
-  profileUrl: '',
+  profileLocalImagePath: '',
+  profileImageUrl: '',
 };
 
 export default {
   model,
 
-  //   login: action(state => {
-  //     state.model.isLoggedIn = true;
-  //   }),
+  reset: action(state => {
+    state.image.model.profileLocalImagePath = '';
+    state.image.mosdel.profileImageUrl = '';
+  }),
 
-  //   logout: action(state => {
-  //     state.model.isLoggedIn = false;
-  //   }),
+  setProfileLocalIamgePath: action((state, payload) => {
+    if (typeof payload !== 'string') {
+      throw new Error(
+        'setProfileLocalImagePath 는 반드시 string 이어야 합니다.',
+      );
+    }
 
-  //   setUserId: action((state, payload) => {
-  //     if (typeof payload !== 'number') {
-  //       throw new Error(
-  //         `userId as payload are supopsed to be the type of number!`,
-  //       );
-  //     }
+    state.image.model.profileLocalImagePath = payload;
+  }),
 
-  //     if (payload <= 0) {
-  //       throw new Error(`userId can't be 0 below`);
-  //     }
+  setProfileImageUrl: action((state, payload) => {
+    if (typeof payload !== 'string') {
+      throw new Error('setProfileImageUrl 는 반드시 string 이어야 합니다.');
+    }
 
-  //     state.model.userId = payload;
-  //   }),
+    state.image.model.profileImageUrl = payload;
+  }),
 };

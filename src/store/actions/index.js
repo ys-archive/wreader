@@ -26,7 +26,16 @@ export const actionsToggleAutoLogin = actions =>
   actions.persistence.toggleAutoLogin;
 export const actionsExecuteAppFirstTime = actions =>
   actions.persistence.executeAppFirstTime;
-export const actionsIgnoreEventModalFor1day = actions => 
+export const actionsIgnoreEventModalFor1day = actions =>
   actions.persistence.ignoreEventModalFor1day;
 export const actionsIgnoreEventModalFor7days = actions =>
   actions.persistence.ignoreEventModalFor7days;
+
+// preference
+
+// image
+export const actionsResetImage = actions => actions.image.reset;
+export const actionsSetProfileLocalImagePath = actions =>
+  actions.image.setProfileLocalImagePath;
+export const actionsSetProfileImageUrl = actions =>
+  actions.image.setProfileImageUrl;
