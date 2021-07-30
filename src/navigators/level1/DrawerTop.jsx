@@ -2,14 +2,14 @@ import React from 'react';
 import { SafeAreaView, View, TouchableOpacity } from 'react-native';
 import {
   DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
+  // DrawerItemList,
+  // DrawerItem,
 } from '@react-navigation/drawer';
 import { StyleSheet, Text } from '#components';
 import { Ionicons } from '@expo/vector-icons';
 import * as ScreenNames from '../ScreenNames';
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import { selectIsLoggedIn } from '#store/selectors';
+import { selectIsLoggedIn, selectUserInfo } from '#store/selectors';
 import { actionsLogout } from '#store/actions';
 import { Alert, RequireLoginAlert } from '#components/alert';
 
@@ -18,7 +18,8 @@ const DrawerTop = props => {
   const isLoggedIn = useStoreState(selectIsLoggedIn);
   // TODO: Get user name from store and display
   // TODO: 유저 이름 GET
-  const profileName = isLoggedIn ? 'Test 유저' : '로그인 해주세요';
+  const userInfo = useStoreState(selectUserInfo);
+  const { nick } = userInfo;
   const logout = useStoreActions(actionsLogout);
 
   return (
@@ -49,7 +50,7 @@ const DrawerTop = props => {
           />
 
           {/* 유저 이름 */}
-          <Text style={s.userName}>{profileName}</Text>
+          <Text style={s.userName}>{nick}</Text>
         </View>
 
         {/* 홈 (스크린 이동) */}
@@ -93,6 +94,7 @@ const DrawerTop = props => {
             onPress={() => {
               Alert('로그아웃 되었습니다');
               logout();
+              nav.closeDrawer();
             }}
           >
             <Text>로그아웃</Text>

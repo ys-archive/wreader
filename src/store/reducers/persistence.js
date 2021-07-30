@@ -1,5 +1,4 @@
 import { action, computed } from 'easy-peasy';
-import * as mmkv from 'react-native-mmkv'; // TODO: Official Doc 가보기
 
 const model = {
   isAutoLogin: false,
@@ -31,7 +30,7 @@ export default {
   ignoreEventModalFor1day: action(state => {
     // const currentTimeAsMs = new Date().getTime();
     // TODO: 1. 기한 정하기 위해 현재 시간 결정
-    // TODO: 2. -> 1 + 7일 정확히 === dueDate
+    // TODO: 2. -> 1일 정확히 === dueDate
   }),
 
   ignoreEventModalFor7days: action(state => {

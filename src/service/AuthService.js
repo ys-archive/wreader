@@ -51,13 +51,8 @@ class AuthService {
       .post('login', { email, pass: asMD5 })
       .catch(console.error);
 
-    if (!data) {
-      // 로그인 실패! 서버 문제
-    }
-
-    console.log(data);
-    const { code } = data;
-    return code;
+    const { code, item } = data;
+    return { code, item };
   }
 
   // code === 1 -> 사용 가능한 이메일
@@ -75,13 +70,15 @@ class AuthService {
 
   // code === 1 -> 닉네임 중복 없음
   // code === 105 -> 닉네임 중복
-  static async GET_CheckUserNickExists(nickname) {
+  static async GET_CheckUserNickExists(nick) {
     const { data, status } = await axios.instance
       .get('user/check/nick', {
-        params: { nick: nickname },
+        params: { nick },
       })
       .catch(console.error);
+    // console.log(data.code);
     const { code } = data;
+    // console.log(code);
     return code;
   }
 }

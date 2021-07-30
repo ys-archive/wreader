@@ -9,6 +9,9 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import * as FileSystem from 'expo-file-system';
+import { useStoreState } from 'easy-peasy';
+import { selectUserId } from '#store/selectors';
+import UserService from '#service/UserService';
 
 const uploadLocalImagePath = async uri => {
   const ref = firebase.database().ref().child('profileImage');
@@ -20,10 +23,11 @@ const uploadLocalImagePath = async uri => {
 const uploadImageFile = async blob => {
   const ref = firebase.storage().ref().child('profileImage');
   await ref.put(blob);
-
+  const downloadUrl = await ref.getDownloadURL();
   console.log(
-    `이미지 데이터 저장 성공!~~~ 다운로드 링크 (업로드 테스트 용): ${await ref.getDownloadURL()}`,
+    `이미지 데이터 저장 성공!~~~ 다운로드 링크 (업로드 테스트 용): ${downloadUrl}`,
   );
+  return downloadUrl;
 };
 
 const MyProfileImage = () => {
@@ -31,10 +35,16 @@ const MyProfileImage = () => {
   const [defaultUri, setDefaultUri] = useState('');
   const { pickImage, imageUri: uploadedImageUri } = useImagePicker(
     uploadLocalImagePath,
-    uploadImageFile,
+    async blob => {
+      const downloadUrl = await uploadImageFile(blob);
+      // 이미지 원본을 스토리지 저장 후 post 로 유저 정보로 전송
+      console.log('userID before sending image url: ', userId);
+      await UserService.POST_registerUserProfilePhoto(userId, downloadUrl);
+    },
     16,
     9,
   );
+  const userId = useStoreState(selectUserId);
 
   const pickNewProfileImage = async () => {
     // Image Picker 를 통해서 이미지 선택

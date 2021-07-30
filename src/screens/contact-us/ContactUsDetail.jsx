@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { AlertWithValue } from '#components/alert';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -36,56 +37,50 @@ const ContactUsDetail = () => {
   const { title, contents } = values;
 
   return (
-    <ScrollView>
-      <KeyboardAvoidingView
-        style={s.root}
-        enabled
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
-        <View style={s.instructionText}>
-          <Text>Wreader와 관련된 문의사항을 입력하여</Text>
-          <Text>보내주시면 운영팀에서 확인 후 신속하게</Text>
-          <Text>답변드리도록 하겠습니다.</Text>
-        </View>
-        <View style={s.titleView}>
-          <Text isBold>※ 문의제목</Text>
-          <TextInput
-            style={s.input}
-            value={title}
-            onBlur={handleBlur('title')}
-            onChangeText={handleChange('title')}
-            placeholder="문의제목을 입력해주세요"
-          />
-          {/* {touched.title && errors.title ? (
+    <KeyboardAwareScrollView contentContainerStyle={s.root}>
+      <View style={s.instructionText}>
+        <Text>Wreader와 관련된 문의사항을 입력하여</Text>
+        <Text>보내주시면 운영팀에서 확인 후 신속하게</Text>
+        <Text>답변드리도록 하겠습니다.</Text>
+      </View>
+      <View style={s.titleView}>
+        <Text isBold>※ 문의제목</Text>
+        <TextInput
+          style={s.input}
+          value={title}
+          onBlur={handleBlur('title')}
+          onChangeText={handleChange('title')}
+          placeholder="문의제목을 입력해주세요"
+        />
+        {/* {touched.title && errors.title ? (
               <View>
                 <Text>{errors.title}</Text>
               </View>
             ) : null} */}
-        </View>
-        <View style={s.contentsView}>
-          <Text isBold>※ 문의내용</Text>
-          <TextInput
-            style={{ ...s.input, ...s.inputContent }}
-            multiline
-            // numberOfLines={5}
-            value={contents}
-            onBlur={handleBlur('contents')}
-            onChangeText={handleChange('contents')}
-            placeholder="문의내용을 입력해주세요"
-          />
-          {/* {touched.contents && errors.contents ? (
+      </View>
+      <View style={s.contentsView}>
+        <Text isBold>※ 문의내용</Text>
+        <TextInput
+          style={{ ...s.input, ...s.inputContent }}
+          multiline
+          // numberOfLines={5}
+          value={contents}
+          onBlur={handleBlur('contents')}
+          onChangeText={handleChange('contents')}
+          placeholder="문의내용을 입력해주세요"
+        />
+        {/* {touched.contents && errors.contents ? (
               <View>
                 <Text>{errors.contents}</Text>
               </View>
             ) : null} */}
-        </View>
-        <View>
-          <Button style={s.summitButton} onPress={handleSubmit}>
-            보내기
-          </Button>
-        </View>
-      </KeyboardAvoidingView>
-    </ScrollView>
+      </View>
+      <View>
+        <Button style={s.summitButton} onPress={handleSubmit}>
+          보내기
+        </Button>
+      </View>
+    </KeyboardAwareScrollView>
   );
 };
 

@@ -1,5 +1,6 @@
 import React from 'react';
-import { KeyboardAvoidingView, ScrollView } from 'react-native';
+// import { KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { StyleSheet } from '#components';
 
 import MyProfileBasicInfo from './components/MyProfileBasicInfo';
@@ -8,13 +9,11 @@ import MyProfileAccountInfo from './components/MyProfileAccountInfo';
 
 const MyProfile = () => {
   return (
-    <ScrollView>
-      <KeyboardAvoidingView style={s.root}>
-        <MyProfileImage />
-        <MyProfileAccountInfo />
-        <MyProfileBasicInfo />
-      </KeyboardAvoidingView>
-    </ScrollView>
+    <KeyboardAwareScrollView contentContainerStyle={s.root}>
+      <MyProfileImage />
+      <MyProfileAccountInfo />
+      <MyProfileBasicInfo />
+    </KeyboardAwareScrollView>
   );
 };
 
@@ -22,6 +21,7 @@ export default MyProfile;
 
 const s = StyleSheet.create({
   root: {
+    flex: 1,
     justifyContent: 'center',
     paddingVertical: 25,
     paddingHorizontal: 15,

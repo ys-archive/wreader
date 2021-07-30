@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, ScrollView } from 'react-native';
-import { AlertWithValue } from '#components/alert';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { Alert } from '#components/alert';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
@@ -27,11 +28,7 @@ const validationSchema = Yup.object({
 const ChangePassword = () => {
   const nav = useNavigation();
   const onSubmit = values => {
-    AlertWithValue(
-      '비밀번호 변경 성공',
-      '닫기',
-      JSON.stringify(values, null, 2),
-    );
+    Alert('비밀번호 변경 성공');
     // TODO: data 도 넘긴다!
     nav?.navigate(ScreenNames.Signin);
   };
@@ -45,10 +42,7 @@ const ChangePassword = () => {
   const { password, passwordRepeat } = values;
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      showsHorizontalScrollIndicator={false}
-    >
+    <KeyboardAwareScrollView contentContainerStyle={s.root}>
       <View style={s.root}>
         <View style={s.row1}>
           <Ionicons name="checkmark" size={70} color="black" />
@@ -84,7 +78,7 @@ const ChangePassword = () => {
           비밀번호 변경완료
         </Button>
       </View>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 

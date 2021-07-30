@@ -1,8 +1,13 @@
 import React from 'react';
 import { View } from 'react-native';
-import { AlertWithValue } from '#components/alert';
+import { Alert } from '#components/alert';
 import { useStoreActions } from 'easy-peasy';
-import { actionsLogin, actionsSetEmail } from '#store/actions';
+import {
+  actionsLogin,
+  actionsSetEmail,
+  actionsSetUserId,
+  actionsSetUserInfo,
+} from '#store/actions';
 import { useFormik } from 'formik';
 import { useNavigation } from '@react-navigation/native';
 import * as Yup from 'yup';
@@ -30,39 +35,35 @@ const validationSchema = Yup.object({
 const SigninForms = () => {
   const login = useStoreActions(actionsLogin);
   const setEmail = useStoreActions(actionsSetEmail);
+  const setUserId = useStoreActions(actionsSetUserId);
+  const setUserInfo = useStoreActions(actionsSetUserInfo);
   const nav = useNavigation();
 
   const onSubmit = async values => {
     const { email, password } = values;
     // console.log(email, password);
 
-    const code = await AuthService.POST_login(email, password);
-
+    const { code, item } = await AuthService.POST_login(email, password);
     // code === 1: 로그인 성공
     if (code === 1) {
+      console.log('로그인 완료!', item);
       login();
       setEmail(email);
-      AlertWithValue('로그인 성공', '닫기', JSON.stringify(values, null, 2));
+      setUserId(item.id);
+      setUserInfo(item);
+      Alert('로그인 성공');
       nav.navigate(ScreenNames.Main);
     }
 
     // code === 100 : 탈퇴 신청 중 회원
     if (code === 100) {
-      AlertWithValue(
-        '로그인 실패 (탈퇴 신청 중인 회원입니다)',
-        '닫기',
-        JSON.stringify(values, null, 2),
-      );
+      Alert('로그인 실패 (탈퇴 신청 중인 회원입니다)');
     }
 
     // code === 102 : 잘못된 이메일
     // code === 103 : 잘못된 비밀번호
     if (code === 102 || code === 103) {
-      AlertWithValue(
-        '로그인 실패! (이메일이나 비밀번호가 잘못되었습니다)',
-        '닫기',
-        JSON.stringify(values, null, 2),
-      );
+      Alert('로그인 실패! (이메일이나 비밀번호가 잘못되었습니다)');
     }
   };
 
