@@ -1,5 +1,8 @@
 // auth
+export const selectIsLoggedIn = state => state.auth.model.isLoggedIn;
 export const selectUserId = state => state.auth.model.userId;
+export const selectEmail = state => state.auth.model.email;
+export const selectUserInfo = state => state.auth.model.info;
 
 // reader
 export const selectIsFirstCategory = state => state.reader.isFirstCategory;
@@ -16,8 +19,14 @@ export const selectSwipeThresholdHorizontal = state =>
 export const selectSwipeThresholdVertical = state =>
   state.reader.model.swipeThresholdVertical;
 
-// TODO: App preference 추가
-
 // persistence
 export const selectIsAutoLogin = state => state.persistence.model.isAutoLogin;
-export const selectIsLoggedIn = state => state.persistence.model.isLoggedIn;
+export const selectIsDueDateOver = state => stat.persistence.isDueDateOver;
+
+// preference
+
+// image
+
+export const selectProfileLocalImagePath = state =>
+  state.image.model.profileLocalImagePath;
+export const selectProfileImageUrl = state => state.image.model.profileImageUrl;

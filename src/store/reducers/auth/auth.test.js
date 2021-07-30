@@ -1,2 +1,0 @@
-describe('auth test suite', () => {
-});

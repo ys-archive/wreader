@@ -1,5 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { StyleSheet } from '#components';
 
 import SigninLogoTitle from './components/SigninLogoTitle';
@@ -8,11 +9,15 @@ import SigninFindPasswordSignup from './components/SigninFindPasswordSignup';
 
 const Signin = () => {
   return (
-    <View style={s.root}>
-      <SigninLogoTitle />
-      <SigninForms />
-      <SigninFindPasswordSignup />
-    </View>
+    <KeyboardAwareScrollView
+      contentContainerStyle={s.root}
+    >
+      <View style={s.root}>
+        <SigninLogoTitle />
+        <SigninForms />
+        <SigninFindPasswordSignup />
+      </View>
+    </KeyboardAwareScrollView>
   );
 };
 

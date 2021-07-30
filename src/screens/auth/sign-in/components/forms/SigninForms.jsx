@@ -1,12 +1,18 @@
 import React from 'react';
-import { View, Alert } from 'react-native';
+import { View } from 'react-native';
+import { Alert } from '#components/alert';
 import { useStoreActions } from 'easy-peasy';
-import { actionsSetLoggedIn } from '#store/actions';
+import {
+  actionsLogin,
+  actionsSetEmail,
+  actionsSetUserId,
+  actionsSetUserInfo,
+} from '#store/actions';
 import { useFormik } from 'formik';
 import { useNavigation } from '@react-navigation/native';
 import * as Yup from 'yup';
 import * as ScreenNames from '#navigators/ScreenNames';
-import { login } from '#service/auth/login';
+import AuthService from '#service/AuthService';
 
 import SigninInput from './SigninInput';
 import SigninLogin from './SigninLogin';
@@ -27,25 +33,37 @@ const validationSchema = Yup.object({
 });
 
 const SigninForms = () => {
-  const setLoggedIn = useStoreActions(actionsSetLoggedIn);
+  const login = useStoreActions(actionsLogin);
+  const setEmail = useStoreActions(actionsSetEmail);
+  const setUserId = useStoreActions(actionsSetUserId);
+  const setUserInfo = useStoreActions(actionsSetUserInfo);
   const nav = useNavigation();
 
   const onSubmit = async values => {
-    Alert.alert('onLogin!', JSON.stringify(values, null, 2), [
-      {
-        text: 'OK!',
-        onPress: () => console.log('alert closed!!'),
-        style: 'destructive',
-      },
-    ]);
     const { email, password } = values;
     // console.log(email, password);
 
-    const isSuccess = await login(email, password);
-
-    if (isSuccess) {
-      setLoggedIn();
+    const { code, item } = await AuthService.POST_login(email, password);
+    // code === 1: 로그인 성공
+    if (code === 1) {
+      console.log('로그인 완료!', item);
+      login();
+      setEmail(email);
+      setUserId(item.id);
+      setUserInfo(item);
+      Alert('로그인 성공');
       nav.navigate(ScreenNames.Main);
+    }
+
+    // code === 100 : 탈퇴 신청 중 회원
+    if (code === 100) {
+      Alert('로그인 실패 (탈퇴 신청 중인 회원입니다)');
+    }
+
+    // code === 102 : 잘못된 이메일
+    // code === 103 : 잘못된 비밀번호
+    if (code === 102 || code === 103) {
+      Alert('로그인 실패! (이메일이나 비밀번호가 잘못되었습니다)');
     }
   };
 

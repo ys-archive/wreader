@@ -1,30 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 
+import { useStoreActions } from 'easy-peasy';
+import { actionsExecuteAppFirstTime } from '#store/actions';
 // import { NavigationScreenOptionsProvider } from '../hooks/useNavigationScreenOptions';
 
 import MainDrawer from './level1/MainDrawer';
 
-export const NavigationProvider = ({ children }) => (
-  <NavigationContainer>
-    <RootNavigator />
-    {children}
-  </NavigationContainer>
-);
+export const NavigationProvider = ({ children }) => {
+  const executeAppFirstTime = useStoreActions(actionsExecuteAppFirstTime);
 
-// const MainDrawerScreenOptions = {
-//   // headerShown: false,
-// };
+  useEffect(() => {
+    executeAppFirstTime();
+  }, []);
 
-// const MainStackScreenOptions = {
-//   // headerShown: false,
-// };
+  return (
+    <NavigationContainer>
+      <RootNavigator />
+      {children}
+    </NavigationContainer>
+  );
+};
 
-const RootNavigator = () => (
-  <MainDrawer />
-  // <NavigationScreenOptionsProvider
-  //   mainDrawerScreenOptions={MainDrawerScreenOptions}
-  //   mainStackScreenOptions={MainStackScreenOptions}
-  // >
-  // </NavigationScreenOptionsProvider>
-);
+const RootNavigator = () => <MainDrawer />;

@@ -1,25 +1,43 @@
 import React from 'react';
-import { SafeAreaView, View, TouchableOpacity } from 'react-native';
+import { SafeAreaView, View, TouchableOpacity, Image } from 'react-native';
 import {
   DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
+  // DrawerItemList,
+  // DrawerItem,
 } from '@react-navigation/drawer';
 import { StyleSheet, Text } from '#components';
 import { Ionicons } from '@expo/vector-icons';
 import * as ScreenNames from '../ScreenNames';
-import { useStoreState } from 'easy-peasy';
-import { selectIsLoggedIn } from '#store/selectors';
+
+import { useStoreActions, useStoreState } from 'easy-peasy';
+import {
+  selectIsLoggedIn,
+  selectUserInfo,
+  selectProfileImageUrl,
+  selectProfileLocalImagePath,
+} from '#store/selectors';
+import { actionsLogout } from '#store/actions';
+import { useProfileImageLoader } from '#hooks';
+import { Alert, RequireLoginAlert } from '#components/alert';
 
 const DrawerTop = props => {
-  // TODO: Get user name from store and display
   const { navigation: nav } = props;
   const isLoggedIn = useStoreState(selectIsLoggedIn);
+  const userInfo = useStoreState(selectUserInfo);
+  const { nick } = userInfo;
+  const logout = useStoreActions(actionsLogout);
+  const profileImageUrl = useStoreState(selectProfileImageUrl);
+  const profileLocalImagePath = useStoreState(selectProfileLocalImagePath);
+
+  // const [defaultUri, setDefaultUri] = useState('');
+  // 프로필 이미지 로드
+  // useProfileImageLoader(setDefaultUri);
 
   return (
     <DrawerContentScrollView {...props} contentContainerStyle={s.root}>
       <SafeAreaView>
         <View style={s.elementPlacer}>
+          {/* 드로어 닫기 */}
           <Ionicons
             name="close"
             size={35}
@@ -27,15 +45,36 @@ const DrawerTop = props => {
             style={s.closeDrawer}
             onPress={() => nav.closeDrawer()}
           />
-          <Ionicons
-            name="person-circle-outline"
-            size={60}
-            color="white"
-            style={s.profile}
-            onPress={() => nav.navigate(ScreenNames.MyProfileStack)}
-          />
-          <Text style={s.userName}>응애</Text>
+
+          {/* 프로필 아이콘 or 프로필 이미지 */}
+          {profileImageUrl || profileLocalImagePath ? (
+            <Image
+              style={[
+                s.profile,
+                { width: wp('80%'), height: hp('35%'), borderRadius: 50 },
+              ]}
+              source={{ uri: profileImageUrl || profileLocalImagePath }}
+            />
+          ) : (
+            <Ionicons
+              name="person-circle-outline"
+              size={60}
+              color="white"
+              style={s.profile}
+              onPress={
+                () =>
+                  isLoggedIn
+                    ? nav.navigate(ScreenNames.MyProfileStack) // true -> 프로필 스크린으로 이동
+                    : RequireLoginAlert() // false -> 로그인 확인 메시지
+              }
+            />
+          )}
+
+          {/* 유저 이름 */}
+          <Text style={s.userName}>{nick}</Text>
         </View>
+
+        {/* 홈 (스크린 이동) */}
         <TouchableOpacity
           style={s.drawerItem}
           onPress={() => nav.navigate(ScreenNames.MainStack)}
@@ -43,13 +82,17 @@ const DrawerTop = props => {
           <Text>홈</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={s.drawerItem}
-          onPress={() => nav.navigate(ScreenNames.ContactUsStack)}
-        >
-          <Text>문의하기</Text>
-        </TouchableOpacity>
+        {/* 문의하기 (스크린 이동) */}
+        {isLoggedIn && (
+          <TouchableOpacity
+            style={s.drawerItem}
+            onPress={() => nav.navigate(ScreenNames.ContactUsStack)}
+          >
+            <Text>문의하기</Text>
+          </TouchableOpacity>
+        )}
 
+        {/* 이용약관 (스크린 이동) */}
         <TouchableOpacity
           style={s.drawerItem}
           onPress={() => nav.navigate(ScreenNames.PolicyAndConditionStack)}
@@ -57,12 +100,25 @@ const DrawerTop = props => {
           <Text>이용약관</Text>
         </TouchableOpacity>
 
-        {!isLoggedIn && (
+        {/* 로그인 안되어 있으면 -> 로그인 (스크린 이동) */}
+        {!isLoggedIn ? (
           <TouchableOpacity
             style={s.drawerItem}
             onPress={() => nav.navigate(ScreenNames.SigninStack)}
           >
             <Text>로그인</Text>
+          </TouchableOpacity>
+        ) : (
+          // 로그인 되어있으면 -> 로그아웃 실행
+          <TouchableOpacity
+            style={s.drawerItem}
+            onPress={() => {
+              Alert('로그아웃 되었습니다');
+              logout();
+              nav.closeDrawer();
+            }}
+          >
+            <Text>로그아웃</Text>
           </TouchableOpacity>
         )}
         {/* <DrawerItemList {...props} /> */}

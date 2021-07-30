@@ -1,8 +1,10 @@
 // auth
-export const actionsLogin = actions => actions.auth.setLoggedIn;
-export const actionsLogout = actions => actions.auth.setLoggedOut;
+export const actionsLogin = actions => actions.auth.login;
+export const actionsLogout = actions => actions.auth.logout;
 
-export const actionsSetUserId = actions => actions.auth.userId;
+export const actionsSetUserId = actions => actions.auth.setUserId;
+export const actionsSetEmail = actions => actions.auth.setEmail;
+export const actionsSetUserInfo = actions => actions.auth.setUserInfo;
 
 // reader
 export const actionsSetCategorySelected = actions =>
@@ -16,6 +18,24 @@ export const actionsSwipeToDown = actions => actions.reader.swipeToDown;
 // TODO: App preference 추가
 
 // persistence
-export const actionsSetAutoLogin = actions => actions.persistence.setAutoLogin;
+export const actionsEnableAutoLogin = actions =>
+  actions.persistence.enableAutoLogin;
+export const actionsDisableAutoLogin = actions =>
+  actions.persistence.disableAutoLogin;
 export const actionsToggleAutoLogin = actions =>
   actions.persistence.toggleAutoLogin;
+export const actionsExecuteAppFirstTime = actions =>
+  actions.persistence.executeAppFirstTime;
+export const actionsIgnoreEventModalFor1day = actions =>
+  actions.persistence.ignoreEventModalFor1day;
+export const actionsIgnoreEventModalFor7days = actions =>
+  actions.persistence.ignoreEventModalFor7days;
+
+// preference
+
+// image
+export const actionsResetImage = actions => actions.image.reset;
+export const actionsSetProfileLocalImagePath = actions =>
+  actions.image.setProfileLocalImagePath;
+export const actionsSetProfileImageUrl = actions =>
+  actions.image.setProfileImageUrl;

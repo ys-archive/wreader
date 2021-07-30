@@ -1,16 +1,12 @@
 import React from 'react';
-import {
-  View,
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-} from 'react-native';
+import { View, Platform, ScrollView } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '#navigators/ScreenNames';
 import { StyleSheet, Text, TextInput, Button } from '#components';
+import { Alert } from '#components/alert';
 import { Ionicons } from '@expo/vector-icons';
 
 const initialValues = {
@@ -26,13 +22,7 @@ const validationSchema = Yup.object({
 const FindPassword = () => {
   const nav = useNavigation();
   const onSubmit = values => {
-    Alert.alert('onLogin!', JSON.stringify(values, null, 2), [
-      {
-        text: 'OK!',
-        onPress: () => console.log('alert closed!!'),
-        style: 'destructive',
-      },
-    ]);
+    Alert('존재하는 메일입니다!');
     nav?.navigate(ScreenNames.ChangePassword);
   };
 
@@ -45,15 +35,8 @@ const FindPassword = () => {
   const { email } = values;
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      showsHorizontalScrollIndicator={false}
-    >
-      <KeyboardAvoidingView
-        enabled
-        style={s.root}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
+    <KeyboardAwareScrollView contentContainerStyle={s.root}>
+      <View style={s.root}>
         <View>
           <Text>인증메일이 발송되었습니다.</Text>
           <Text>인증메일을 확인 후 [메일 인증완료]</Text>
@@ -71,10 +54,10 @@ const FindPassword = () => {
             placeholder="example@gmail.com..."
           />
           {/* {touched.email && errors.email ? (
-            <View>
-              <Text>{errors.email}</Text>
-            </View>
-          ) : null} */}
+                <View>
+                  <Text>{errors.email}</Text>
+                </View>
+              ) : null} */}
         </View>
         <View>
           <Text>인증메일이 도착하지 않았나요?</Text>
@@ -90,8 +73,8 @@ const FindPassword = () => {
             메일 인증완료
           </Button>
         </View>
-      </KeyboardAvoidingView>
-    </ScrollView>
+      </View>
+    </KeyboardAwareScrollView>
   );
 };
 
@@ -99,7 +82,7 @@ export default FindPassword;
 
 const s = StyleSheet.create({
   root: {
-    // flex: 1,
+    flex: 1,
     paddingHorizontal: 15,
     paddingVertical: '25%',
     width: '100%',

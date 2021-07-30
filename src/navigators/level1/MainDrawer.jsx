@@ -26,7 +26,7 @@ const MainDrawer = () => {
     <Drawer.Navigator
       initialRouteName={ScreenNames.MainStack}
       drawerPosition="right"
-      drawerStyle={{ width: 180 }}
+      drawerStyle={{ width: 230 }}
       drawerContent={props => <DrawerTop {...props} />}
     >
       <Drawer.Screen

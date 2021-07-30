@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, ScrollView, Platform, KeyboardAvoidingView } from 'react-native';
+import { View, ScrollView, Platform } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { StyleSheet } from '#components';
 import { useNavigation } from '@react-navigation/native';
 
@@ -7,24 +8,16 @@ import SignupPolicyTexts from './components/SignupPolicyTexts';
 import SignupForms from './components/forms/SignupForms';
 
 const Signup = () => {
-  const nav = useNavigation();
+  // const nav = useNavigation();
 
   // TODO: headerRight -> signin 으로 돌아가기
   return (
-    <ScrollView
-      // contentContainerStyle={s.root}
-      showsVerticalScrollIndicator={false}
-      showsHorizontalScrollIndicator={false}
-    >
-      <KeyboardAvoidingView
-        style={s.root}
-        enabled
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
+    <KeyboardAwareScrollView contentContainerStyle={s.root}>
+      <View style={s.root}>
         <SignupPolicyTexts />
         <SignupForms />
-      </KeyboardAvoidingView>
-    </ScrollView>
+      </View>
+    </KeyboardAwareScrollView>
   );
 };
 

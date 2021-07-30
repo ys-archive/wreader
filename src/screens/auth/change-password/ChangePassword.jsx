@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, Alert, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { Alert } from '#components/alert';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
@@ -26,13 +28,7 @@ const validationSchema = Yup.object({
 const ChangePassword = () => {
   const nav = useNavigation();
   const onSubmit = values => {
-    Alert.alert('onLogin!', JSON.stringify(values, null, 2), [
-      {
-        text: 'OK!',
-        onPress: () => console.log('alert closed!!'),
-        style: 'destructive',
-      },
-    ]);
+    Alert('비밀번호 변경 성공');
     // TODO: data 도 넘긴다!
     nav?.navigate(ScreenNames.Signin);
   };
@@ -46,10 +42,7 @@ const ChangePassword = () => {
   const { password, passwordRepeat } = values;
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      showsHorizontalScrollIndicator={false}
-    >
+    <KeyboardAwareScrollView contentContainerStyle={s.root}>
       <View style={s.root}>
         <View style={s.row1}>
           <Ionicons name="checkmark" size={70} color="black" />
@@ -63,11 +56,11 @@ const ChangePassword = () => {
             placeholder="비밀번호 입력 해주세요 (4 ~ 12자)"
             secureTextEntry
           />
-          {touched.password && errors.password ? (
+          {/* {touched.password && errors.password ? (
             <View>
               <Text>{errors.password}</Text>
             </View>
-          ) : null}
+          ) : null} */}
           <TextInput
             value={passwordRepeat}
             onBlue={handleBlur('passwordRepeat')}
@@ -75,17 +68,17 @@ const ChangePassword = () => {
             placeholder="비밀번호를 다시 입력 해주세요 (4 ~ 12자)"
             secureTextEntry
           />
-          {touched.passwordRepeat && errors.passwordRepeat ? (
+          {/* {touched.passwordRepeat && errors.passwordRepeat ? (
             <View>
               <Text>{errors.passwordRepeat}</Text>
             </View>
-          ) : null}
+          ) : null} */}
         </View>
         <Button style={s.summitButton} onPress={handleSubmit} isBold>
           비밀번호 변경완료
         </Button>
       </View>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 

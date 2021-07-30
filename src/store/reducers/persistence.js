@@ -1,5 +1,4 @@
-import { action } from 'easy-peasy';
-import * as mmkv from 'react-native-mmkv'; // TODO: Official Doc 가보기
+import { action, computed } from 'easy-peasy';
 
 const model = {
   isAutoLogin: false,
@@ -11,12 +10,13 @@ const model = {
 
 export default {
   model,
-  setAutoLogin: action((state, payload) => {
-    if (typeof payload === 'boolean') {
-      throw new Error("setIsAutoLogin():: payload must be 'boolean'");
-    }
 
-    state.model.isAutoLogin = payload;
+  enableAutoLogin: action(state => {
+    state.model.isAutoLogin = true;
+  }),
+
+  disableAutoLogin: action(state => {
+    state.model.isAutoLogin = false;
   }),
 
   toggleAutoLogin: action(state => {
@@ -27,7 +27,13 @@ export default {
     state.model.isFirstExecute = false;
   }),
 
-  ignoreEventModalFor7days: actions(state => {
+  ignoreEventModalFor1day: action(state => {
+    // const currentTimeAsMs = new Date().getTime();
+    // TODO: 1. 기한 정하기 위해 현재 시간 결정
+    // TODO: 2. -> 1일 정확히 === dueDate
+  }),
+
+  ignoreEventModalFor7days: action(state => {
     // const currentTimeAsMs = new Date().getTime();
     // TODO: 1. 기한 정하기 위해 현재 시간 결정
     // TODO: 2. -> 1 + 7일 정확히 === dueDate
@@ -36,5 +42,8 @@ export default {
   isDueDateOver: computed(state => {
     // TODO: 1. Get the current time of at which the user finished loading app
     // TODO:
+    return (dueDate) => {
+
+    };
   }),
 };

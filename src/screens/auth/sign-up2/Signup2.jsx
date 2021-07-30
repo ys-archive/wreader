@@ -1,26 +1,20 @@
 import React from 'react';
-import { ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import { View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { StyleSheet, Text } from '#components';
 
 import Signup2Form from './components/Signup2Form';
 
-const Signup2 = () => {
+const Signup2 = ({ route }) => {
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      showsHorizontalScrollIndicator={false}
-    >
-      <KeyboardAvoidingView
-        style={s.root}
-        enabled
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
+    <KeyboardAwareScrollView contentContainerStyle={s.root}>
+      <View style={s.root}>
         <Text style={s.accountInfoInstruction} isBold>
           ※ 기본정보
         </Text>
-        <Signup2Form />
-      </KeyboardAvoidingView>
-    </ScrollView>
+        <Signup2Form route={route} />
+      </View>
+    </KeyboardAwareScrollView>
   );
 };
 

@@ -1,16 +1,17 @@
 import React from 'react';
 import { createStore, StoreProvider, persist } from 'easy-peasy';
 // import logger from 'redux-logger';
+import storage from './config/persistStorageConfig';
 
-import auth from './reducers/auth/auth';
-import reader from './reducers/reader/reader';
-import persistence from './reducers/persistence/persistence';
+import auth from './reducers/auth';
+import reader from './reducers/reader';
+import persistence from './reducers/persistence';
 // import preference from './reducers/preference/preference';
 
 const store = createStore({
   auth,
   reader,
-  persistence: persist(persistence),
+  persistence: persist(persistence, { storage }),
   // preference,
 }); // , { middleware: logger }
 

@@ -3,13 +3,12 @@ import { View, SafeAreaView, FlatList } from 'react-native';
 import { Loading } from '#components';
 import { StyleSheet, Text } from '#components';
 import { useNavigation } from '@react-navigation/native';
-import { fetchAllContactUs } from '../../service/contact-us/fetchAllContactUs';
 import ContactUsListItem from './ContactUsListItem';
 
 const ContactUs = () => {
   const nav = useNavigation();
   // TODO: 실제 url 로 교체
-  // TODO: GET - Get All Contact Us List 
+  // TODO: GET - Get All Contact Us List
   // const { data, isLoading, error, mutate } = fetchAllContactUs('DUMMY');
 
   // return <Loading style={s.loading} size="large" />;
