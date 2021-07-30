@@ -14,8 +14,6 @@ const SplashDelay = 2000;
 
 export default () => {
   const [isLoadingDone, setLoadingDone] = useState(false);
-  // TODO: 앱 처음 실행 로직은 다른 곳에서 ~
-  
 
   if (!isLoadingDone) {
     return (

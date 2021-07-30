@@ -12,74 +12,43 @@ import * as FileSystem from 'expo-file-system';
 import { useStoreState } from 'easy-peasy';
 import { selectUserId } from '#store/selectors';
 import UserService from '#service/UserService';
+import {
+  uploadLocalImagePath,
+  uploadImageFile,
+} from './ProfileImageFunctionalities';
+import { useProfileImageLoader } from '../hooks/useProfileImageLoader';
 
-const uploadLocalImagePath = async uri => {
-  const ref = firebase.database().ref().child('profileImage');
-  await ref.set(uri);
-
-  console.log('이미지 로컬경로 저장 성공!');
-};
-
-const uploadImageFile = async blob => {
-  const ref = firebase.storage().ref().child('profileImage');
-  await ref.put(blob);
-  const downloadUrl = await ref.getDownloadURL();
-  console.log(
-    `이미지 데이터 저장 성공!~~~ 다운로드 링크 (업로드 테스트 용): ${downloadUrl}`,
-  );
-  return downloadUrl;
-};
+const uploadDirName = 'profileImage';
 
 const MyProfileImage = () => {
+  const userId = useStoreState(selectUserId);
+
   const [isUploaded, completeUpload] = useState(false);
   const [defaultUri, setDefaultUri] = useState('');
+
+  useProfileImageLoader(setDefaultUri);
+
+  const onUploadImageFile = async blob => {
+    // 이미지 원본 먼저 업로드
+    const downloadUrl = await uploadImageFile(uploadDirName, blob);
+
+    // 이미지 원본을 스토리지 저장 후 post 로 유저 정보로 전송
+    await UserService.POST_registerUserProfilePhoto(userId, downloadUrl);
+  };
+
   const { pickImage, imageUri: uploadedImageUri } = useImagePicker(
     uploadLocalImagePath,
-    async blob => {
-      const downloadUrl = await uploadImageFile(blob);
-      // 이미지 원본을 스토리지 저장 후 post 로 유저 정보로 전송
-      console.log('userID before sending image url: ', userId);
-      await UserService.POST_registerUserProfilePhoto(userId, downloadUrl);
-    },
+    onUploadImageFile,
     16,
     9,
   );
-  const userId = useStoreState(selectUserId);
 
+  
   const pickNewProfileImage = async () => {
     // Image Picker 를 통해서 이미지 선택
     await pickImage();
     completeUpload(true);
   };
-
-  useEffect(() => {
-    async function loadProfileImage() {
-      const ref = firebase.storage().ref().child('profileImage');
-      setDefaultUri(await ref.getDownloadURL());
-    }
-
-    async function loadLocalImage() {
-      const ref = firebase.database().ref().child('profileImage');
-      ref.on('value', async snapshot => {
-        const uri = snapshot.val();
-        if (!uri) {
-          await loadProfileImage();
-        }
-
-        const dirInfo = await FileSystem.getInfoAsync(uri);
-
-        if (dirInfo.exists) {
-          console.log('로컬 이미지 파일 존재! 이것 사용');
-          setDefaultUri(uri);
-        } else {
-          console.log('로컬 이미지 파일 X -> 이미지 서버 접근');
-          await loadProfileImage();
-        }
-      });
-    }
-
-    loadLocalImage();
-  }, []);
 
   return (
     <View style={s.profileImageView}>
