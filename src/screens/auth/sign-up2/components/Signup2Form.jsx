@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '#navigators/ScreenNames';
 import { StyleSheet, Text, TextInput, Button } from '#components';
-import AuthService from '#service/AuthService';
+import { AuthService } from '#services';
 
 const initialValues = {
   nickname: '',

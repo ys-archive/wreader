@@ -4,12 +4,7 @@ import sharedStyle from './ShareCardStyle';
 
 const { width, height } = Dimensions.get('window');
 
-const ChapterCard = ({ currentChapterIdx, ...props }) => {
-  const { chapterLimit } = props;
-
-  if (currentChapterIdx >= chapterLimit) {
-    return null;
-  }
+const ChapterCard = ({ ...props }) => {
   
   return (
     <View style={sharedStyle.root}>

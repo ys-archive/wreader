@@ -12,7 +12,7 @@ import { useFormik } from 'formik';
 import { useNavigation } from '@react-navigation/native';
 import * as Yup from 'yup';
 import * as ScreenNames from '#navigators/ScreenNames';
-import AuthService from '#service/AuthService';
+import { AuthService } from '#services';
 
 import SigninInput from './SigninInput';
 import SigninLogin from './SigninLogin';

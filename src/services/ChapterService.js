@@ -2,8 +2,8 @@ import * as axios from './AxiosInstance';
 import { useGetSWR } from '#hooks';
 class ChapterService {
   //TODO: user ID 직접 입력 or persisted store 에서 사용 할 지 결정
-  static async POST_createChapter(groupIndex, content, categoryId, userId) {
-    const { status } = await axios.instance
+  static async POST_createChapter(userId, groupIndex, content, categoryId) {
+    const { data, status } = await axios.instance
       .post('chapter', {
         groupIndex,
         content,
@@ -54,7 +54,7 @@ class ChapterService {
     return status;
   }
 
-  static async DELET_unlikeChapter(chapterId, userId) {
+  static async DELETE_unlikeChapter(chapterId, userId) {
     const { status } = await axios.instance
       .delete(`chapter/${chapterId}/like`, {
         userId,

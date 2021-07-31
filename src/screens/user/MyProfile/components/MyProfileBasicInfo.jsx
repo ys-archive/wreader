@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '#navigators/ScreenNames';
 import { StyleSheet, Text, TextInput, Button } from '#components';
-import UserService from '#service/UserService';
+import { UserService } from '#services';
 import { useStoreState } from 'easy-peasy';
 import {
   selectUserId,

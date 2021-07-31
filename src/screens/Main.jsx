@@ -5,7 +5,7 @@ import { StyleSheet } from '#components';
 
 import EventModal from '#components/modals/EventModal';
 import ReaderMain from './reader/ReaderMain';
-import CategoryService from '#service/CategoryService';
+import { CategoryService } from '#services';
 
 // import ReaderCard from '#components/reader-card/ReaderCard';
 import Card from '#components/reader-card/Card';
@@ -13,8 +13,9 @@ import CategoryCard from '#components/reader-card/CategoryCard';
 import ChapterCard from '#components/reader-card/ChapterCard';
 import WriteChapterCard from '#components/writer-card/WriterChapterCard';
 
-import { useStoreState } from 'easy-peasy';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 import { selectCurrentChapterIdx } from '#store/selectors';
+// import { set}
 
 const orig = [
   {
@@ -152,10 +153,10 @@ const Main = () => {
     },
   ]);
 
-  const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
+  // const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
 
   const {
-    item: rootData,
+    item: rootCategories,
     isLoading,
     error,
   } = CategoryService.useGET_getCategory();
@@ -176,19 +177,47 @@ const Main = () => {
     );
   }
 
-  const CurrentChapterJSX = rootData.map(category => {
+  // rootCategory example
+  // {
+  //   "id": 6,
+  //   "title": "CRIME", -> render
+  //   "subTitle": "Criminal Story\nmissing, murder...", -> render
+  //   "chapterLimit": 10,
+  //   "maxLength": 500,
+  //   "img": null, -> render as a uri
+  //   "chapter": [] -> referenced by next chapters
+  // },
+
+  const CurrentChapterJSX = rootCategories.map(category => {
     const { chapter: chapters } = category;
 
     // 각 챕터들은 후보 챕터들과 새로 쓸 카드를 포함해서
     // 횡으로 배열
     return (
       <View stype={{ flexDirection: 'row' }}>
-        <CategoryCard category={category} />;
+        <CategoryCard category={category} />
+
         <View style={{ flexDirection: 'column' }}>
           {chapters &&
             chapters.length &&
-            chapters.map(chapter => <ChapterCard chapter={chapter} />)}
-          <WriteChapterCard />;
+            chapters.map(chapter => {
+              // chapter example
+              //   {
+              //     "id": "43",
+              //     "categoryId": 5,
+              //     "userId": 5,
+              //     "updateDt": "2021-07-30 14:45:29",
+              //     "content": "hi3",
+              //     "replyCount": 0,
+              //     "like_count": 0,
+              //     "group_index": 0,
+              //     "userImg": "https://imagePath.com/changed",
+              //     "userNick": "",
+              //     "chapterImg": ""
+              // }
+              return <ChapterCard chapter={chapter} />;
+            })}
+          <WriteChapterCard />
         </View>
       </View>
     );

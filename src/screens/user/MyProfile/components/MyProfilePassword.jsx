@@ -4,7 +4,7 @@ import { Alert } from '#components/alert';
 import { TextInput, Text, Button } from '#components';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import UserService from '#service/UserService';
+import { UserService } from '#services';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import { selectUserId } from '#store/selectors';
 import { actionsLogout } from '#store/actions';

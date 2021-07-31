@@ -9,6 +9,15 @@ export const actionsSetUserInfo = actions => actions.auth.setUserInfo;
 // reader
 export const actionsSetCategorySelected = actions =>
   actions.reader.setCategorySelected;
+export const actionsSetLastCategoryIdx = actions =>
+  actions.reader.setLastCategoryIdx;
+export const actionsSetLastChapterIdx = actions =>
+  actions.reader.setLastChapterIdx;
+
+export const actionsMoveTo = actions => actions.reader.moveTo;
+export const actionsMoveToCategory = actions => actions.reader.moveToCategory;
+export const actionsMoveToChapter = actions => actions.reader.moveToChapter;
+
 export const actionsReset = actions => actions.reader.reset;
 export const actionsSwipeToLeft = actions => actions.reader.swipeToLeft;
 export const actionsSwipeToRight = actions => actions.reader.swipeToRight;

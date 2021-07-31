@@ -6,8 +6,11 @@ import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '#navigators/ScreenNames';
 import { StyleSheet, TextInput, Button } from '#components';
-import { AlertWithValue } from '#components/alert';
+import { AlertWithValue, Alert } from '#components/alert';
 import { Feather } from 'react-native-vector-icons';
+import { useStoreState, useStoreActions } from 'easy-peasy';
+import { selectUserId } from '#store/selectors';
+import ChapterService from '#services';
 
 import sharedStyle from './ShareCardStyle';
 
@@ -28,9 +31,28 @@ const validationSchema = Yup.object({
 
 const WriteChapterCard = ({ children }) => {
   const nav = useNavigation();
-  const onSubmit = values => {
-    AlertWithValue('유저가 쓴 챕터', '닫기', JSON.stringify(values, null, 2));
+  const userId = useStoreState(selectUserId);
+
+  const onSubmit = async values => {
+    const { sentence1, sentence2 } = values;
+
+    // TODO: POST_createChapter
+    // TODO: 현재 챕터 가져와 groupIdx 로 쓰기
+    // TODO: 현재 선택한 카테고리
+    const status = await ChapterService.POST_createChapter(
+      userId,
+      undefined,
+      sentence1.append(sentence2),
+      undefined,
+    );
+
+    if (status === 200) {
+      AlertWithValue('유저가 쓴 챕터', '닫기', JSON.stringify(values, null, 2));
+    } else {
+      Alert('새로운 챕터 저장 실패');
+    }
     // TODO: 처리한 카드 기다렸다가 렌더
+    // RenderCards();
   };
 
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =

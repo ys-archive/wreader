@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import { Alert } from '#components/alert';
 import { StyleSheet, TextInput, Button, Text } from '#components';
-import AuthService from '#service/AuthService';
+import { AuthService } from '#services';
 
 const SignupInput = ({
   values,

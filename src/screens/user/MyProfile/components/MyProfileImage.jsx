@@ -14,7 +14,7 @@ import {
 } from 'react-native-responsive-screen';
 import { useStoreState } from 'easy-peasy';
 import { selectUserId } from '#store/selectors';
-import UserService from '#service/UserService';
+import { UserService } from '#services';
 import {
   uploadLocalImagePath,
   uploadImageFile,
