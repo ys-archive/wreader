@@ -1,19 +1,18 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import sharedStyle from './ShareCardStyle';
 
 const { width, height } = Dimensions.get('window');
 
-const ReaderChapterCard = ({
-  currentChapterIdx,
-  ...props
-}) => {
+const ChapterCard = ({ currentChapterIdx, ...props }) => {
   const { chapterLimit } = props;
 
   if (currentChapterIdx >= chapterLimit) {
     return null;
   }
+  
   return (
-    <View style={s.root}>
+    <View style={sharedStyle.root}>
       <View style={s.cardTopView}>
         {/* TODO: 챕터 1 -> 챕터 N */}
         <Text>챕터 1</Text>
@@ -52,14 +51,9 @@ const ReaderChapterCard = ({
   );
 };
 
-export default ReaderChapterCard;
+export default ChapterCard;
 
 const s = StyleSheet.create({
-  root: {
-    minWidth: width,
-    minHeight: height,
-    paddingHorizontal: 35,
-  },
   cardTopView: {
     flexDirection: 'row',
     justifyContent: 'space-around',

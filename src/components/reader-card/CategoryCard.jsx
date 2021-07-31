@@ -1,9 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-const ReaderCategoryCard = () => {
+import sharedStyle from './ShareCardStyle';
+
+const CategoryCard = category => {
+  const { title, subTitle, img } = category;
   return (
-    <View style={s.root}>
+    <View style={sharedStyle.root}>
       <View style={s.cardTitleView}>
         <Text style={s.title}>{title}</Text>
       </View>
@@ -21,6 +24,22 @@ const ReaderCategoryCard = () => {
   );
 };
 
-export default ReaderCategoryCard;
+export default CategoryCard;
 
-const styles = StyleSheet.create({});
+const s = StyleSheet.create({
+  cardTitleView: {
+
+  },
+  title: {
+
+  },
+  cardImageView: {
+
+  },
+  cardSubTitleView: {
+
+  },
+  subTitle: {
+    
+  }
+});

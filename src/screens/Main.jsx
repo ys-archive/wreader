@@ -7,48 +7,14 @@ import EventModal from '#components/modals/EventModal';
 import ReaderMain from './reader/ReaderMain';
 import CategoryService from '#service/CategoryService';
 
-import ReaderCard from '#components/reader-card/ReaderCard';
+// import ReaderCard from '#components/reader-card/ReaderCard';
+import Card from '#components/reader-card/Card';
+import CategoryCard from '#components/reader-card/CategoryCard';
+import ChapterCard from '#components/reader-card/ChapterCard';
+import WriteChapterCard from '#components/writer-card/WriterChapterCard';
 
-// class Novel {
-//   state = {
-//     maxLength: 0,
-//     categories: [
-//       {
-//         id: 1,
-//         title: 'title1',
-//         chapterLimit: 10,
-//         chapters: [
-//           {
-//             id: 1,
-//             author: 'james',
-//             contents:
-//               'Eu ut tempor commodo ad proident ut id esse voluptate veniam laborum do. Non reprehenderit elit ipsum duis culpa occaecat nulla in eu exercitation dolore labore nostrud nostrud. Laboris Lorem non non aliquip cupidatat magna et commodo. Aute excepteur veniam est aliquip. Lorem incididunt ad ipsum tempor ullamco culpa voluptate exercitation laborum sit nulla excepteur esse.',
-//             comments: [{}],
-//             commentCount: 2,
-//             likeCount: 12,
-//           },
-//           {},
-//           {},
-//           {},
-//           {},
-//           {},
-//           {},
-//           {},
-//           {},
-//           {
-//             // add isLast = i === chapterLimit
-//           },
-//         ],
-//         chapterImage: {
-//           id: 1,
-//           categoryId: 1,
-//           path: 'https://wreader.com/image/1.jpg',
-//           // createdAt: ''
-//         },
-//       },
-//     ],
-//   };
-// }
+import { useStoreState } from 'easy-peasy';
+import { selectCurrentChapterIdx } from '#store/selectors';
 
 const orig = [
   {
@@ -186,6 +152,8 @@ const Main = () => {
     },
   ]);
 
+  const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
+
   const {
     item: rootData,
     isLoading,
@@ -208,32 +176,34 @@ const Main = () => {
     );
   }
 
-  const cards = data.map(category => {
-    const { id, title, subTitle, chapterLimit, maxLength, img, chapter } =
-      category;
+  const CurrentChapterJSX = undefined;
 
-    return (
-      <ReaderCard
-        key={id}
-        title={title}
-        content={content}
-        
-      />
+  rootData.map(category => {
+    const { chapter: chapters } = category;
+    const chapterCards = [];
+
+    chapters.length &&
+      chapters.forEach(chapter => {
+        // 쓰여진 챕터들을 모두 jsx 로 만들어 추가
+        chapterCards.push(<ChapterCard chapter={chapter} />);
+      });
+
+    // 각 챕터들은 후보 챕터들과 새로 쓸 카드를 포함해서
+    // 횡으로 배열
+    CurrentChapterJSX = (
+      <View stype={{ flexDirection: 'column' }}>
+        <CategoryCard category={category} />;{...chapterCards}
+        <WriteChapterCard />;
+      </View>
     );
   });
 
   return (
     <View style={s.root}>
       <EventModal />
-      <ReaderMain rootData={rootData} />
+      {/* <ReaderMain rootData={rootData} /> */}
       <Reader>
-        <View>
-          <View style={s.cardView}>{cards}</View>
-          <View style={s.cardView}>{cards}</View>
-          <View style={s.cardView}>{cards}</View>
-          <View style={s.cardView}>{cards}</View>
-          <View style={s.cardView}>{cards}</View>
-        </View>
+        <View>{CurrentChapterJSX}</View>
       </Reader>
     </View>
   );

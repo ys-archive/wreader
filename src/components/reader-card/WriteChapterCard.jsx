@@ -9,6 +9,8 @@ import { StyleSheet, TextInput, Button } from '#components';
 import { AlertWithValue } from '#components/alert';
 import { Feather } from 'react-native-vector-icons';
 
+import sharedStyle from './ShareCardStyle';
+
 const initialValues = {
   sentence1: '',
   sentence2: '',
@@ -24,7 +26,7 @@ const validationSchema = Yup.object({
     .required('반드시 입력하셔야합니다 (20자 내외)'),
 });
 
-const ReaderWriteCard = ({ children }) => {
+const WriteChapterCard = ({ children }) => {
   const nav = useNavigation();
   const onSubmit = values => {
     AlertWithValue('유저가 쓴 챕터', '닫기', JSON.stringify(values, null, 2));
@@ -41,16 +43,25 @@ const ReaderWriteCard = ({ children }) => {
 
   const { sentence1, sentence2 } = values;
 
+  // TODO: 1. Image Picker 를 통해서 이미지 선택
+  // TODO: 2. 선택한 이미지 업로드
+  // TODO: 2-success. alert(성공), 선택한 이미지로 바로 프로필 이미지 변경
+  // TODO: 2-fail. alert(실패), 상태 초기화
+
+  // TODO: -> 를 hook 으로 빼기
+
+  // TODO: 새로운 컨텐츠 25자 2세트 + 이미지 (선택) 로 새로운 챕터 등록
+  // TODO: POST - Create New Chapter
+
   return (
-    // <ScrollView>
-    <KeyboardAwareScrollView contentContainerStyle={s.root}>
+    <KeyboardAwareScrollView contentContainerStyle={sharedStyle.root}>
       <View style={s.inputView}>
         <TextInput
           // style={s.input}
           value={sentence1}
           onBlur={handleBlur('sentence1')}
           onChangeText={handleChange('sentence1')}
-          placeholder="챕터 내용을 입력해주세요 (20자이내)"
+          placeholder="챕터 내용을 입력해주세요 (20자이내)"˝
         />
         {/* {touched.sentence1 && errors.sentence1 ? (
               <View>
@@ -81,15 +92,6 @@ const ReaderWriteCard = ({ children }) => {
   );
 };
 
-export default ReaderWriteCard;
+export default WriteChapterCard;
 
-const s = StyleSheet.create({
-  root: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    // width,
-    // height,
-    // alignItems: 'center',
-  },
-});
+const s = StyleSheet.create({});
