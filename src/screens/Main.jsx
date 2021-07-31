@@ -176,24 +176,20 @@ const Main = () => {
     );
   }
 
-  const CurrentChapterJSX = undefined;
-
-  rootData.map(category => {
+  const CurrentChapterJSX = rootData.map(category => {
     const { chapter: chapters } = category;
-    const chapterCards = [];
-
-    chapters.length &&
-      chapters.forEach(chapter => {
-        // 쓰여진 챕터들을 모두 jsx 로 만들어 추가
-        chapterCards.push(<ChapterCard chapter={chapter} />);
-      });
 
     // 각 챕터들은 후보 챕터들과 새로 쓸 카드를 포함해서
     // 횡으로 배열
-    CurrentChapterJSX = (
-      <View stype={{ flexDirection: 'column' }}>
-        <CategoryCard category={category} />;{...chapterCards}
-        <WriteChapterCard />;
+    return (
+      <View stype={{ flexDirection: 'row' }}>
+        <CategoryCard category={category} />;
+        <View style={{ flexDirection: 'column' }}>
+          {chapters &&
+            chapters.length &&
+            chapters.map(chapter => <ChapterCard chapter={chapter} />)}
+          <WriteChapterCard />;
+        </View>
       </View>
     );
   });
@@ -201,7 +197,6 @@ const Main = () => {
   return (
     <View style={s.root}>
       <EventModal />
-      {/* <ReaderMain rootData={rootData} /> */}
       <Reader>
         <View>{CurrentChapterJSX}</View>
       </Reader>

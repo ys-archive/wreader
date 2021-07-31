@@ -61,7 +61,7 @@ const WriteChapterCard = ({ children }) => {
           value={sentence1}
           onBlur={handleBlur('sentence1')}
           onChangeText={handleChange('sentence1')}
-          placeholder="챕터 내용을 입력해주세요 (20자이내)"˝
+          placeholder="챕터 내용을 입력해주세요 (20자이내)"
         />
         {/* {touched.sentence1 && errors.sentence1 ? (
               <View>
