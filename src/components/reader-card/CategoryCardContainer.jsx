@@ -2,6 +2,11 @@ import React from 'react';
 import { View } from 'react-native';
 import { StyleSheet } from '#components';
 
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+
 import CategoryCard from './CategoryCard';
 import ChapterCardContainer from './ChapterCardContainer';
 
@@ -28,21 +33,26 @@ const CategoryCardContainer = ({ rootData }) => {
 
     return chapters.map((chapter, order) => (
       <ChapterCardContainer
-        key={chapters.id}
+        key={chapter.id}
         currentCategoryId={currentCategoryId}
         chapterOrder={order + 1} // 0 -> category 이므로 1 부터 시작
-        data={chapter}
+        categoryData={chapter}
       />
     ));
   };
 
-  const JSX = rootData.map(category => (
-    <View style={s.root}>
-      <CategoryCard {...category} />
-      {renderChaptersJSX(category.chapters, category.id)}
-    </View>
-  ));
+  const JSX = rootData.map(category => {
+    return (
+      <View key={category.id} style={s.categoryRoot}>
+        {/* <View style={{ alignItems: 'center', height: 50 }}> */}
+        <CategoryCard {...category} />
+        {/* </View> */}
+        {renderChaptersJSX(category.chapter, category.id)}
+      </View>
+    );
+  });
 
+  // return <View style={s.root}>{JSX}</View>;
   return JSX;
 };
 
@@ -50,6 +60,17 @@ export default CategoryCardContainer;
 
 const s = StyleSheet.create({
   root: {
+    // flex: 1,
+  },
+  categoryRoot: {
+    // width: wp('100%'),
+    // height: '100%',
     flexDirection: 'row',
+
+    // flex: 1,
+    justifyContent: 'flex-start',
+
+    // flex: 1,
+    // alignItems: 'center',
   },
 });

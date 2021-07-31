@@ -6,9 +6,7 @@ import { regular, bold } from '#constants';
 
 export const Text = ({ style = {}, isBold = false, children }) => {
   const fontFamily = !isBold ? regular : bold;
-  return (
-    <OrigText style={[style, s.root, { fontFamily }]}>{children}</OrigText>
-  );
+  return <OrigText style={[style, { fontFamily }]}>{children}</OrigText>;
 };
 
 Text.propTypes = {

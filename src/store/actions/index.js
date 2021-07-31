@@ -7,6 +7,9 @@ export const actionsSetEmail = actions => actions.auth.setEmail;
 export const actionsSetUserInfo = actions => actions.auth.setUserInfo;
 
 // reader
+export const actionsSetIsMovingChapterLock = actions =>
+  actions.reader.setIsMovingChapterLock;
+
 export const actionsSetCategorySelected = actions =>
   actions.reader.setCategorySelected;
 export const actionsSetLastCategoryIdx = actions =>

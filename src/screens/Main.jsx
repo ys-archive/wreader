@@ -1,48 +1,40 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 
-import { View } from 'react-native';
-import { StyleSheet } from '#components';
+import { View, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text } from '#components';
+
+// import {
+//   widthPercentageToDP as wp,
+//   heightPercentageToDP as hp,
+// } from 'react-native-responsive-screen';
+
+import { useStoreActions, useStoreState } from 'easy-peasy';
+import {
+  actionsSetLastCategoryIdx,
+  actionsSetLastChapterIdx,
+  actionsSetIsMovingChapterLock,
+} from '#store/actions';
+import {
+  selectCurrentCategoryIdx,
+  selectCurrentChapterIdx,
+} from '#store/selectors';
 
 import EventModal from '#components/modals/EventModal';
 
-import { CategoryService } from '#services';
-import CategoryCardContainer from '../components/reader-card/CategoryCardContainer';
-// import { set}
+import { useGetSWR } from '#hooks';
+import CategoryCardContainer from '#components/reader-card/CategoryCardContainer';
 
-const orig = [
-  {
-    id: 5,
-    title: 'ROMANCE',
-    content: `그녀는 눈을 떴다. 처음 보는 방에서 깨어났다.`,
-  },
-  {
-    id: 1,
-    title: '1',
-    content: `그녀는 오랜 회상에 잠긴다. 갑자기 소리를 지른다.`,
-  },
-  {
-    id: 2,
-    title: '2',
-    content: `그녀는 그를 죽이고 사다리를 올라갔다.`,
-  },
-  {
-    id: 3,
-    title: '3',
-    content: `불타오르는 석양과 땅에서 치솟는 바람이 모든 것에 생명을 채운다.`,
-  },
-  {
-    id: 4,
-    title: '4',
-    content: `그녀도 생명의 시작을 향해 떨어지기 시작한다.`,
-  },
-];
+import Reader from './reader/Reader';
 
 const Main = () => {
-  const {
-    item: rootData,
-    isLoading,
-    error,
-  } = CategoryService.useGET_getCategory();
+  const setLastCategoryIdx = useStoreActions(actionsSetLastCategoryIdx);
+  const setLastChapterIdx = useStoreActions(actionsSetLastChapterIdx);
+  const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
+  const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
+
+  const setIsMovingChapterLock = useStoreActions(actionsSetIsMovingChapterLock);
+
+  const { data, isLoading, error } = useGetSWR(`category`);
 
   if (error) {
     return (
@@ -60,13 +52,36 @@ const Main = () => {
     );
   }
 
+  if (!data || !data.item) {
+    return (
+      <View>
+        <Text>get category 의 데이터가 없습니다!</Text>
+      </View>
+    );
+  }
+
+  const totalCategoryCount = data.item.length;
+  const totalChapterCount = data.item[currentCategoryIdx].chapter.length;
+  console.log('총 카테고리 개수: ', totalCategoryCount);
+  console.log('현재 카테고리 인덱스: ', currentCategoryIdx);
+  console.log('현재 챕터 인덱스: ', currentChapterIdx);
+  console.log('현재 카테고리의 총 챕터 개수: ', totalChapterCount);
+  console.log(
+    '------------------------------------------------------------------------',
+  );
+
+  setIsMovingChapterLock(totalChapterCount <= 0);
+
+  setLastCategoryIdx(totalCategoryCount);
+  setLastChapterIdx(totalChapterCount);
+
   return (
     <View style={s.root}>
-      <EventModal />
-      <Reader>
-        <View style={s.cardView}>
-          <CategoryCardContainer rootData={rootData} />
-        </View>
+      {/* <EventModal /> */}
+      <Reader data={data}>
+        <CategoryCardContainer rootData={data.item} />
+        {/* <View style={s.cardView}>
+        </View> */}
       </Reader>
     </View>
   );
@@ -76,10 +91,11 @@ export default Main;
 
 const s = StyleSheet.create({
   root: {
-    flex: 1,
-    alignItems: 'flex-start',
+    // flex: 1,
+    // alignItems: 'flex-start',
   },
   cardView: {
     flexDirection: 'column',
+    alignItems: 'flex-start',
   },
 });

@@ -7,7 +7,7 @@ import { actionsToggleAutoLogin } from '#store/actions';
 import { selectIsAutoLogin } from '#store/selectors';
 
 const SigninLogin = ({ onSubmit }) => {
-  const isAuthLogin = useStoreState(selectIsAutoLogin);
+  const isAutoLogin = useStoreState(selectIsAutoLogin);
   const toggleAutoLogin = useStoreActions(actionsToggleAutoLogin);
 
   // TODO: 로그인 로직
@@ -16,7 +16,7 @@ const SigninLogin = ({ onSubmit }) => {
     <View style={s.root}>
       <View style={s.autoLogin}>
         <CheckBox
-          isChecked={isAuthLogin}
+          isChecked={isAutoLogin}
           onChange={toggleAutoLogin}
           highlightColor="coral"
         />

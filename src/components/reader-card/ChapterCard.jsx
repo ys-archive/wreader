@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ImageBackground } from 'react-native';
+import { View, ImageBackground, Image } from 'react-native';
 import { StyleSheet, Text, RemoteImage } from '#components';
 import sharedStyle from './ShareCardStyle';
 import {
@@ -7,8 +7,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import { AntDesign, MaterialCommunityIcons } from 'react-native-vector-icons';
-
-const { width, height } = Dimensions.get('window');
+import { FontAwesome } from 'react-native-vector-icons';
 
 // chapter example
 //   {
@@ -25,7 +24,9 @@ const { width, height } = Dimensions.get('window');
 //     "chapterImg": "" -> chapter uri
 // }
 
-const ChapterCard = ({ currentCategoryId, chapterOrder, chapter: data }) => {
+const dummy = require('!images/dummy-image.jpg');
+
+const ChapterCard = ({ currentCategoryId, chapterOrder, data }) => {
   const {
     id: chapterId, // 현재 챕터 Id
     categoryId,
@@ -44,94 +45,74 @@ const ChapterCard = ({ currentCategoryId, chapterOrder, chapter: data }) => {
     return null;
   }
 
-  const topPartJSX = (
-    <View style={s.cardTopSection}>
-      TODO: 앱 로고 TODO: 정렬 기능 추가
-      {/* <AppLogo /> */}
-      <FontAwesome
-        name="sort-amount-desc"
-        size={24}
-        color="black"
-        onPress={() => console.log('카드 정렬')}
-      />
-    </View>
-  );
-
-  const profileJSX = (
-    <View style={s.cardProfileSection}>
-      <Image
-        source={{ uri: authorImageUri }}
-        style={{
-          width: wp('5%'),
-          height: hp('5%'),
-          borderRadius: 50,
-        }}
-      />
-      <View>
-        <Text isBold>{authorNickName}</Text>
-      </View>
-    </View>
-  );
-
-  const titleJSX = (
-    <View style={s.cardTitleSection}>
-      {/* TODO: API 수정 요청 */}
-      <Text>예시 제목</Text>
-    </View>
-  );
-
-  const chapterOrderJSX = (
-    <View style={s.cardChapterOrderSection}>
-      <Text>챕터 {chapterOrder}</Text>
-    </View>
-  );
-
-  const contentJSX = (
-    <View style={s.cardContentSection}>
-      <Text textStyle={s.cardOverlayText}>{content ?? ''}</Text>
-    </View>
-  );
-
-  const likeJSX = (
-    <View style={s.cardLikeSection}>
-      <AntDesign name="heart" size={25} color="#000" />
-      <View>
-        <Text>{likeCount}</Text>
-      </View>
-    </View>
-  );
-
-  const replyJSX = (
-    <View style={s.cardReplySection}>
-      <MaterialCommunityIcons
-        name="comment-text-outline"
-        size={25}
-        color="#000"
-      />
-      <View>
-        <Text>{replyCount}</Text>
-      </View>
-    </View>
-  );
-
   return (
     <ImageBackground
-      style={sharedStyle.root}
+      style={s.root}
       source={{ uri: chapterCoverImageUri }}
       resizeMode="contain"
     >
-      {topPartJSX}
-      {profileJSX}
-      {titleJSX}
-      {/* Separator */}
-      <View style={s.separator}></View>
-      {chapterOrderJSX}
-      {contentJSX}
+      <View style={s.cardTopSection}>
+        {/* TODO: 앱 로고 */}
+        {/* <AppLogo /> */}
+        {/* TODO: 정렬 기능 추가 */}
+        <FontAwesome
+          name="sort-amount-desc"
+          size={24}
+          color="black"
+          onPress={() => console.log('카드 정렬')}
+        />
+      </View>
 
-      <View>
+      <View style={s.cardProfileSection}>
+        <Image
+          // source={{ uri: authorImageUri }}
+          source={dummy}
+          style={{
+            width: wp('10%'),
+            height: hp('10%'),
+            borderRadius: 50,
+          }}
+        />
+
+        <View>
+          <Text isBold>{authorNickName}</Text>
+        </View>
+      </View>
+
+      <View style={s.cardTitleSection}>
+        {/* TODO: API 수정 요청 */}
+        <Text>예시 제목</Text>
+      </View>
+
+      <View style={s.separator}></View>
+
+      <View style={s.cardChapterOrderSection}>
+        <Text>챕터 {chapterOrder}</Text>
+      </View>
+
+      <View style={s.cardContentSection}>
+        <Text textStyle={s.cardOverlayText}>{content ?? ''}</Text>
+      </View>
+
+      <View style={s.cardBottomSection}>
         {/* TODO: 갑자기 조회수?? */}
-        {likeJSX}
-        {replyJSX}
+        <View style={s.cardLikeSection}>
+          <AntDesign name="heart" size={25} color="#000" />
+          <View>
+            <Text>{likeCount}</Text>
+          </View>
+        </View>
+
+        <View style={s.cardReplySection}>
+          <MaterialCommunityIcons
+            name="comment-text-outline"
+            size={25}
+            color="#000"
+          />
+          <View>
+            <Text>{replyCount}</Text>
+          </View>
+        </View>
       </View>
     </ImageBackground>
   );
@@ -140,19 +121,31 @@ const ChapterCard = ({ currentCategoryId, chapterOrder, chapter: data }) => {
 export default ChapterCard;
 
 const s = StyleSheet.create({
+  root: {
+    borderWidth: 2,
+    borderColor: '#000',
+    minWidth: wp('100%'),
+    minHeight: hp('100%'),
+    borderRadius: 50,
+    // padding: 5,
+  },
   cardTopSection: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignSelf: 'flex-start',
-    marginTop: 40,
-    marginBottom: 10,
+    justifyContent: 'flex-end',
   },
   cardProfileSection: {},
   cardTitleSection: {},
   separator: {},
   cardContentSection: {},
-  cardLikeSection: {},
-  carReplySection: {},
+  cardBottomSection: {
+    flexDirection: 'row',
+  },
+  cardLikeSection: {
+    flexDirection: 'row',
+  },
+  cardReplySection: {
+    flexDirection: 'row',
+  },
 
   // cardOverlay: {
   //   position: 'absolute',

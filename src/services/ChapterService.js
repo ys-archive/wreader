@@ -1,5 +1,4 @@
 import * as axios from './AxiosInstance';
-import { useGetSWR } from '#hooks';
 class ChapterService {
   //TODO: user ID 직접 입력 or persisted store 에서 사용 할 지 결정
   static async POST_createChapter(userId, groupIndex, content, categoryId) {
@@ -12,21 +11,6 @@ class ChapterService {
       })
       .catch(console.error);
     return status;
-  }
-
-  static async useGET_getChapter(chapterId) {
-    // const { data, status } = await axios
-    //   .instance(`chapter/${chapterId}`)
-    //   .catch(console.error);
-    // const { code, item } = data;
-    // console.log(item);
-    // return { code, item };
-
-    const { data, isLoading, error, mutate } = await useGetSWR(
-      `chapter/${chapterId}`,
-    );
-
-    return { data, isLoading, error, mutate };
   }
 
   static async PUT_updateChater(chapterId, content) {

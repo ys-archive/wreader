@@ -39,8 +39,7 @@ const MyProfileImage = () => {
   const { pickImage, imageUri: uploadedImageUri } = useImagePicker(
     // 로컬 이미지 uri 저장 콜백
     async uri => {
-      const uri = await uploadLocalImagePath(uploadDirName, uri);
-      setProfileLocalImagePath(uri);
+      setProfileLocalImagePath(await uploadLocalImagePath(uploadDirName, uri));
     },
     // 이미지 download url 저장 콜백
     async blob => {

@@ -16,6 +16,7 @@ const model = {
   currentCategoryIdx: 0,
   lastCategoryIdx: 10,
   currentChapterIdx: 0,
+  isMovingChapterLock: false,
   lastChapterIdx: 10,
   isCategorySelected: false,
   screenWidth: SCREEN_WIDTH,
@@ -26,20 +27,36 @@ export default {
   model,
   // computed
   isFirstCategory: computed(state => state.model.currentCategoryIdx === 0),
-  isLastCategory: computed(
-    state => state.model.currentCategoryIdx === state.model.lastCategoryIdx - 1,
-  ),
+  isLastCategory: computed(state => {
+    return (
+      state.model.lastCategoryIdx === 0 ||
+      state.model.currentCategoryIdx === state.model.lastCategoryIdx
+    );
+  }),
 
   isFirstChapter: computed(state => state.model.currentChapterIdx === 0),
 
-  isLastChapter: computed(
-    state => state.model.currentChapterIdx === state.model.lastChapterIdx - 1,
-  ),
+  isLastChapter: computed(state => {
+    return (
+      state.model.lastChapterIdx === 0 ||
+      state.model.currentChapterIdx === state.model.lastChapterIdx
+    );
+  }),
 
   swiperThresholdHorizontal: computed(state => state.model.screenWidth * 0.4),
   swiperThresholdVertical: computed(state => state.model.screenHeight * 0.4),
 
   // action
+
+  setIsMovingChapterLock: action((state, payload) => {
+    if (typeof payload !== 'boolean')
+      throw new Error(
+        'setIsMovingChapterLock() :: 카테고리 선택은 boolean 이어야 합니다.',
+      );
+
+    state.model.isMovingChapterLock = payload;
+  }),
+
   // 카테고리가 선택 되었는지 설정
   setCategorySelected: action((state, payload) => {
     if (typeof payload !== 'boolean')
@@ -62,7 +79,7 @@ export default {
   }),
 
   // 마지막 챕터 인덱스를 설정 (첫 렌더에 설정)
-  setLastChapterIdx: actions((state, payload) => {
+  setLastChapterIdx: action((state, payload) => {
     if (typeof payload !== 'number')
       throw new Error(
         'setLastChapterIdx() :: 마지막 챕터 인덱스는 반드시 number 이어야 합니다.',
@@ -163,7 +180,7 @@ export default {
     displayIdxStatus(state);
   }),
 
-  // 아래로 스와이프: 카테고리 - 1, 챕터 변화 X -> 이전 카테고리로 이동 
+  // 아래로 스와이프: 카테고리 - 1, 챕터 변화 X -> 이전 카테고리로 이동
   swipeToDown: action((state, payload) => {
     state.model.currentCategoryIdx -= 1;
 

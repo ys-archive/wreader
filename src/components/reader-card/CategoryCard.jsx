@@ -1,26 +1,48 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { View, ImageBackground, Image } from 'react-native';
+import { StyleSheet, Text } from '#components';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
-import sharedStyle from './ShareCardStyle';
+const dummy = require('!images/dummy-image.jpg');
 
 const CategoryCard = category => {
   const { title, subTitle, imageUri } = category;
 
   return (
-    <View style={sharedStyle.root}>
-      <View style={s.cardTitleView}>
-        <Text style={s.title}>{title}</Text>
-      </View>
-      <View style={s.cardImageView}>
-        <LocalImage
-          source={imageUri}
-          resizeMode="cover"
-          style={{ width: width * 0.8, height: height * 0.6 }}
-        />
-      </View>
+    <View style={s.root}>
+      {/* <ImageBackground
+        style={{
+          minWidth: wp('83.7%'),
+          minHeight: hp('78.2%'),
+          backgroundColor: '#555',
+          borderRadius: 50,
+          // alignSelf: 'center',
+          // margin: 0
+          padding: 0
+        }}
+        // source={dummy}
+      > */}
+      <Image
+        style={{
+          minWidth: wp('83.7%'),
+          minHeight: hp('78.2%'),
+          backgroundColor: '#555',
+          borderRadius: 50,
+        }}
+        // source={dummy}
+      />
+      <View style={s.cardTitleView}></View>
+      <Text isBold style={s.title}>
+        {title}
+      </Text>
+
       <View style={s.cardSubTitleView}>
-        <Text textStyle={s.subTitle}>{subTitle}</Text>
+        <Text style={s.subTitle}>{subTitle}</Text>
       </View>
+      {/* </ImageBackground> */}
     </View>
   );
 };
@@ -28,9 +50,38 @@ const CategoryCard = category => {
 export default CategoryCard;
 
 const s = StyleSheet.create({
-  cardTitleView: {},
-  title: {},
+  root: {
+    minWidth: wp('100%'),
+    minHeight: hp('90%'),
+    maxHeight: hp('90%'),
+    marginBottom: hp('10%'),
+    backgroundColor: '#697',
+    // flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cardTitleView: {
+    position: 'absolute',
+    left: '8.3%',
+    top: '70%',
+    width: 207.7,
+    height: 41,
+    backgroundColor: '#fff',
+  },
+  title: {
+    position: 'absolute',
+    left: '15%',
+    top: '70%',
+    color: '#d1cab6',
+    fontSize: 25,
+  },
   cardImageView: {},
-  cardSubTitleView: {},
-  subTitle: {},
+  cardSubTitleView: {
+    position: 'absolute',
+    left: '15%',
+    top: '80%',
+  },
+  subTitle: {
+    color: 'white',
+  },
 });

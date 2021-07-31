@@ -2,9 +2,11 @@ import React from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { StyleSheet, Text } from '#components';
 
-import { ChapterService } from '#services';
 import WriteChapterCard from './WriteChapterCard';
+import ChapterCard from './ChapterCard';
 import sharedStyle from './ShareCardStyle';
+
+import { useGetSWR } from '#hooks';
 
 // chapter example
 //   {
@@ -21,13 +23,16 @@ import sharedStyle from './ShareCardStyle';
 //     "chapterImg": "" -> chapter uri
 // }
 
-const ChapterCardContainer = ({ currentCategoryId, chapterOrder, data }) => {
+const ChapterCardContainer = ({
+  currentCategoryId,
+  chapterOrder,
+  categoryData,
+}) => {
   const {
-    item: candidates,
+    data: chapterData,
     isLoading,
     error,
-  } = ChapterService.useGet_getChapter(chapterOrder);
-
+  } = useGetSWR(`chapter/${chapterOrder}`);
   if (error) {
     return (
       <View>
@@ -44,38 +49,56 @@ const ChapterCardContainer = ({ currentCategoryId, chapterOrder, data }) => {
     );
   }
 
-  if (!candidates || !candidates.length) {
-    return null;
+  if (!chapterData || !chapterData.item) {
+    return (
+      <View>
+        <Text>Get Chapter 데이터가 없습니다.</Text>
+      </View>
+    );
   }
 
+  // console.log(chapterData);
+
   return (
-    <View style={sharedStyle.root}>
+    <View style={s.root}>
       {/* 먼저 챕터 카드 렌더 */}
       <ChapterCard
         currentCategoryId={currentCategoryId}
         chapterOrder={chapterOrder}
-        data={data}
+        data={categoryData}
       />
-      {/* 후보 챕터 카드 모두 렌더 */}
-      {candidates.map((candidate, idx) => {
-        if (chapterIdx + 1 !== candidate.group_index) {
-          return;
-        }
 
-        return (
-          <ChapterCard
-            currentCategoryId={currentCategoryId}
-            chapterOrder={idx}
-            data={candidate}
-          />
-        );
-      })}
+      {/* 후보 챕터 카드 모두 렌더 */}
+      {/* <View>
+        {chapterData.item.map((candidate, idx) => {
+          if (chapterOrder !== candidate.group_index) {
+            return;
+          }
+
+          return (
+            <ChapterCard
+              currentCategoryId={currentCategoryId}
+              chapterOrder={chapterOrder}
+              data={candidate}
+            />
+          );
+        })}
+      </View> */}
       {/* 마지막 카드는 항상 유저가 쓰는 카드 */}
-      <WriteChapterCard />
+      {/* <WriteChapterCard /> */}
     </View>
   );
 };
 
 export default ChapterCardContainer;
 
-const styles = StyleSheet.create({});
+const s = StyleSheet.create({
+  root: {
+    // flexDirection: 'column',
+    // justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    // flex: 1
+    // width: '100%',
+    // height: '100%',
+  },
+});
