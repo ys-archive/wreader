@@ -3,7 +3,9 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import sharedStyle from './ShareCardStyle';
 
-const CategoryCard = ({ title, subTitle, imageUri }) => {
+const CategoryCard = category => {
+  const { title, subTitle, imageUri } = category;
+
   return (
     <View style={sharedStyle.root}>
       <View style={s.cardTitleView}>
