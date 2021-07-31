@@ -19,6 +19,7 @@ export const actionsMoveToCategory = actions => actions.reader.moveToCategory;
 export const actionsMoveToChapter = actions => actions.reader.moveToChapter;
 
 export const actionsReset = actions => actions.reader.reset;
+
 export const actionsSwipeToLeft = actions => actions.reader.swipeToLeft;
 export const actionsSwipeToRight = actions => actions.reader.swipeToRight;
 export const actionsSwipeToUp = actions => actions.reader.swipeToUp;

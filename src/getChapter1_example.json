@@ -1,0 +1,85 @@
+{
+    "code": 1,
+    "message": "success",
+    "item": [
+      {
+        "id": "41",
+        "categoryId": 5,
+        "userId": 3,
+        "updateDt": "2021-07-30 14:24:37",
+        "content": "hi2-1",
+        "replyCount": 0,
+        "like_count": 0,
+        "group_index": 1,
+        "userImg": "",
+        "userNick": "asdasaaaa",
+        "chapterImg": ""
+      },
+      {
+        "id": "42",
+        "categoryId": 5,
+        "userId": 5,
+        "updateDt": "2021-07-30 14:24:56",
+        "content": "hi1-1",
+        "replyCount": 0,
+        "like_count": 0,
+        "group_index": 1,
+        "userImg": "https://imagePath.com/changed",
+        "userNick": "",
+        "chapterImg": ""
+      },
+      {
+        "id": "44",
+        "categoryId": 5,
+        "userId": 5,
+        "updateDt": "2021-07-30 14:46:00",
+        "content": "hi3-1",
+        "replyCount": 0,
+        "like_count": 0,
+        "group_index": 1,
+        "userImg": "https://imagePath.com/changed",
+        "userNick": "",
+        "chapterImg": ""
+      },
+      {
+        "id": "45",
+        "categoryId": 5,
+        "userId": 5,
+        "updateDt": "2021-07-30 14:46:02",
+        "content": "hi3-2",
+        "replyCount": 0,
+        "like_count": 0,
+        "group_index": 1,
+        "userImg": "https://imagePath.com/changed",
+        "userNick": "",
+        "chapterImg": ""
+      },
+      {
+        "id": "46",
+        "categoryId": 5,
+        "userId": 5,
+        "updateDt": "2021-07-30 14:46:05",
+        "content": "hi3-3",
+        "replyCount": 0,
+        "like_count": 0,
+        "group_index": 1,
+        "userImg": "https://imagePath.com/changed",
+        "userNick": "",
+        "chapterImg": ""
+      },
+      {
+        "id": "53",
+        "categoryId": 6,
+        "userId": 8,
+        "updateDt": "2021-07-31 04:16:06",
+        "content": "bonjour1-1",
+        "replyCount": 0,
+        "like_count": 0,
+        "group_index": 1,
+        "userImg": "",
+        "userNick": "dd",
+        "chapterImg": ""
+      }
+    ],
+    "total": 0
+  }

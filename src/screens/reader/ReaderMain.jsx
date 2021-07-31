@@ -3,18 +3,16 @@ import { StyleSheet, Text, View } from 'react-native';
 import Reader from './reader/reader';
 
 const ReaderMain = ({ rootData }) => {
-  //   const [state, setState] = useState(rootData);
-  const readerCategoryJSX =
-    rootData &&
-    rootData.length &&
-    rootData.forEach(data => {
-      return <ReaderCategory categoryData={data} />;
-    });
+  // TODO: 1. get root category informations by invoking GET Category from the server
+  // TODO: 2. fill up the array with 1.
+  // TODO: 3. request the chaining chapters by calling GET Chapter recursively and compare the categoryIdx to verify
+  // TODO: 4. fill up the array with 3.
+  // TODO: 5. render
 
   return (
     <View>
       <Reader>
-        <View>{readerCategoryJSX}</View>
+        
       </Reader>
     </View>
   );

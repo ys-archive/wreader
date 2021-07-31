@@ -56,7 +56,34 @@
             "chapterLimit": 10,
             "maxLength": 500,
             "img": null,
-            "chapter": []
+            "chapter": [
+                {
+                    "id": "51",
+                    "categoryId": 6,
+                    "userId": 8,
+                    "updateDt": "2021-07-31 04:15:21",
+                    "content": "bonjour1",
+                    "replyCount": 0,
+                    "like_count": 0,
+                    "group_index": 0,
+                    "userImg": "",
+                    "userNick": "dd",
+                    "chapterImg": ""
+                },
+                {
+                    "id": "52",
+                    "categoryId": 6,
+                    "userId": 8,
+                    "updateDt": "2021-07-31 04:15:40",
+                    "content": "bonjour2",
+                    "replyCount": 0,
+                    "like_count": 0,
+                    "group_index": 0,
+                    "userImg": "",
+                    "userNick": "dd",
+                    "chapterImg": ""
+                }
+            ]
         },
         {
             "id": 7,
@@ -166,6 +193,5 @@
                 },
             ]
         },
-        
     ]
 }
