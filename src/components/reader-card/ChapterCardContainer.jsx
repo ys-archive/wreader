@@ -47,9 +47,16 @@ const ChapterCardContainer = ({
     error,
   } = useGetSWR(`chapter/${chapterOrder}`);
 
-  // useEffect(() => {
+  useEffect(() => {
+    if (!chapterData) {
+      return;
+    }
 
-  // });
+    if (currentCategoryIdx === chapterOrder - 1) {
+      // console.log('후보 갯수: ', chapterData.item.length);
+      setLastCandidateIdx(chapterData.item.length - 1);
+    }
+  });
 
   if (error) {
     return (
@@ -65,11 +72,6 @@ const ChapterCardContainer = ({
         <ActivityIndicator size="large" />
       </View>
     );
-  }
-
-  if (currentCategoryIdx === chapterOrder - 1) {
-    console.log('후보 갯수: ', chapterData.item.length);
-    setLastCandidateIdx(chapterData.item.length - 1);
   }
 
   return (

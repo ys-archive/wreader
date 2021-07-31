@@ -12,7 +12,7 @@ import { useStoreActions, useStoreState } from 'easy-peasy';
 import {
   actionsSetLastCategoryIdx,
   actionsSetLastChapterIdx,
-  actionsSetIsMovingChapterLock,
+  actionsLockMovingChapter,
 } from '#store/actions';
 import {
   selectCurrentCategoryIdx,
@@ -30,11 +30,30 @@ const Main = () => {
   const setLastCategoryIdx = useStoreActions(actionsSetLastCategoryIdx);
   const setLastChapterIdx = useStoreActions(actionsSetLastChapterIdx);
   const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
-  const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
+  // const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
 
-  const setIsMovingChapterLock = useStoreActions(actionsSetIsMovingChapterLock);
+  const lockMovingChapter = useStoreActions(actionsLockMovingChapter);
 
   const { data, isLoading, error } = useGetSWR(`category`);
+
+  useEffect(() => {
+    if (!data) return;
+    
+    const totalCategoryCount = data.item.length;
+    const totalChapterCount = data.item[currentCategoryIdx].chapter.length;
+    // console.log('총 카테고리 개수: ', totalCategoryCount);
+    // console.log('현재 카테고리 인덱스: ', currentCategoryIdx);
+    // console.log('현재 챕터 인덱스: ', currentChapterIdx);
+    // console.log('현재 카테고리의 총 챕터 개수: ', totalChapterCount);
+    // console.log(
+    //   '------------------------------------------------------------------------',
+    // );
+
+    lockMovingChapter(totalChapterCount <= 0);
+
+    setLastCategoryIdx(totalCategoryCount);
+    setLastChapterIdx(totalChapterCount);
+  });
 
   if (error) {
     return (
@@ -59,21 +78,6 @@ const Main = () => {
       </View>
     );
   }
-
-  const totalCategoryCount = data.item.length;
-  const totalChapterCount = data.item[currentCategoryIdx].chapter.length;
-  // console.log('총 카테고리 개수: ', totalCategoryCount);
-  // console.log('현재 카테고리 인덱스: ', currentCategoryIdx);
-  // console.log('현재 챕터 인덱스: ', currentChapterIdx);
-  // console.log('현재 카테고리의 총 챕터 개수: ', totalChapterCount);
-  // console.log(
-  //   '------------------------------------------------------------------------',
-  // );
-
-  setIsMovingChapterLock(totalChapterCount <= 0);
-
-  setLastCategoryIdx(totalCategoryCount);
-  setLastChapterIdx(totalChapterCount);
 
   return (
     <View style={s.root}>

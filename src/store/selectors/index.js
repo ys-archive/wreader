@@ -9,6 +9,9 @@ export const selectUserInfo = state => state.auth.model.info;
 export const selectIsMovingChapterLock = state =>
   state.reader.model.isMovingChapterLock;
 
+export const selectIsMovingCategoryLock = state =>
+  state.reader.model.isMovingCategoryLock;
+
 export const selectHasCandidateChapter = state =>
   state.reader.model.hasCandidateChapter;
 

@@ -10,7 +10,7 @@ import {
   selectIsFirstChapter,
   selectIsCategorySelected,
   selectIsMovingChapterLock,
-  // selectHasCandidateChapter,
+  selectIsMovingCategoryLock,
   selectCurrentCandidateIdx,
   selectIsLastCandidate,
   selectLastCandidateIdx,
@@ -43,6 +43,7 @@ const Reader = ({ data, children }) => {
 
   // const hasCandidateChapter = useStoreState(selectHasCandidateChapter);
   const isMovingChapterLock = useStoreState(selectIsMovingChapterLock);
+  const isMovingCategoryLock = useStoreState(selectIsMovingCategoryLock);
 
   const { forceSwipeVertically, forceSwipeHorizontally, getStyle } =
     useSwipeGesture();
@@ -61,6 +62,11 @@ const Reader = ({ data, children }) => {
       return;
     }
 
+    if (currentCandidateIdx !== 0) {
+      console.log('현재 후보 챕터 선택 중입니다.');
+      return;
+    }
+
     forceSwipeHorizontally('left');
     swipeToLeft();
   };
@@ -73,6 +79,11 @@ const Reader = ({ data, children }) => {
 
     if (isFirstChapter) {
       console.log('첫 챕터 도달');
+      return;
+    }
+
+    if (currentCandidateIdx !== 0) {
+      console.log('현재 후보 챕터 선택 중입니다.');
       return;
     }
 
@@ -93,23 +104,11 @@ const Reader = ({ data, children }) => {
       return;
     }
 
-    // if (isLastCandidate) {
-    //   console.log('마지막 후보 챕터 도달');
-    //   return;
-    // }
+    if (isMovingCategoryLock) {
+      console.log('카테고리 이동이 잠겼습니다.');
+      return;
+    }
 
-    // if (!hasCandidateChapter && isCategorySelected) {
-
-    // }
-
-    // if (!hasCandidateChapter && ) {
-
-    // }
-
-    // if (!isCandidateSelected && !isLastCategory) {
-    //   console.log('후보 챕터 선택!');
-    //   setCandidateSelected(true);
-    // }
 
     console.log('currentCandidateIdx: ', currentCandidateIdx);
     console.log('lastCandidateIdx: ', lastCandidateIdx);
@@ -131,38 +130,16 @@ const Reader = ({ data, children }) => {
       return;
     }
 
+    if (isMovingCategoryLock) {
+      console.log('카테고리 이동이 잠겼습니다.');
+      return;
+    }
+
     console.log('currentCandidateIdx: ', currentCandidateIdx);
     console.log('lastCandidateIdx: ', lastCandidateIdx);
 
-    // if ()
-
-    // if (isCandidateSelected && isFirstCategory) {
-    //   console.log('후보 챕터 선택 취소!');
-    //   setCandidateSelected(false);
-    //   return;
-    // }
-
-    // if (!isCandidateSelected) {
-    //   return;
-    // }
-
     forceSwipeVertically('down');
     swipeToDown();
-  };
-
-  const onSwipe = (gestureName, state) => {
-    // const totalCategoryCount = data.item.length;
-    // const totalChapterCount = data.item[currentCategoryIdx].chapter.length;
-    // console.log('총 카테고리 개수: ', totalCategoryCount);
-    // console.log('현재 카테고리 인덱스: ', currentCategoryIdx);
-    // console.log('현재 챕터 인덱스: ', currentChapterIdx);
-    // console.log('현재 카테고리의 총 챕터 개수: ', totalChapterCount);
-    // console.log(
-    //   '------------------------------------------------------------------------',
-    // );
-    // setIsMovingChapterLock(totalChapterCount <= 0);
-    // setLastCategoryIdx(totalCategoryCount);
-    // setLastChapterIdx(totalChapterCount);
   };
 
   return (
@@ -171,7 +148,6 @@ const Reader = ({ data, children }) => {
       onSwipeDown={onSwipeDown}
       onSwipeLeft={onSwipeLeft}
       onSwipeRight={onSwipeRight}
-      onSwipe={onSwipe}
       config={{
         velocityThreshold: 0.4,
         directionalOffsetThreshold: 80,

@@ -7,8 +7,11 @@ export const actionsSetEmail = actions => actions.auth.setEmail;
 export const actionsSetUserInfo = actions => actions.auth.setUserInfo;
 
 // reader
-export const actionsSetIsMovingChapterLock = actions =>
-  actions.reader.setIsMovingChapterLock;
+export const actionsLockMovingChapter = actions =>
+  actions.reader.lockMovingChapter;
+
+export const actionsLockMovingCategory = actions =>
+  actions.reader.lockMovingCategory;
 
 export const actionsSetHasCandidateChapter = actions =>
   actions.reader.setHasCandidateChapter;

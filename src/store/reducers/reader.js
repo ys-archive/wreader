@@ -16,12 +16,16 @@ const model = {
   currentCategoryIdx: 0,
   lastCategoryIdx: 10,
   isMovingCategoryLock: false,
+
+  isCategorySelected: false,
+
   currentChapterIdx: 0,
   isMovingChapterLock: false,
   lastChapterIdx: 10,
-  isCategorySelected: false,
+
   currentCandidateIdx: 0,
   lastCandidateIdx: 0,
+
   screenWidth: SCREEN_WIDTH,
   screenHeight: SCREEN_HEIGHT,
 };
@@ -57,13 +61,22 @@ export default {
 
   // action
 
-  setIsMovingChapterLock: action((state, payload) => {
+  lockMovingChapter: action((state, payload) => {
     if (typeof payload !== 'boolean')
       throw new Error(
-        'setIsMovingChapterLock() :: 카테고리 선택은 boolean 이어야 합니다.',
+        'lockMovingChapter() :: 카테고리 선택은 boolean 이어야 합니다.',
       );
 
     state.model.isMovingChapterLock = payload;
+  }),
+
+  lockMovingCategory: action((state, payload) => {
+    if (typeof payload !== 'boolean')
+      throw new Error(
+        'lockMovingCategory() :: 카테고리 선택은 boolean 이어야 합니다.',
+      );
+
+    state.model.isMovingCategoryLock = payload;
   }),
 
   // setHasCandidateChapter: action((state, payload) => {
