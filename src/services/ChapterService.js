@@ -14,7 +14,7 @@ class ChapterService {
     return status;
   }
 
-  static async GET_getChapter(chapterId) {
+  static async useGET_getChapter(chapterId) {
     // const { data, status } = await axios
     //   .instance(`chapter/${chapterId}`)
     //   .catch(console.error);

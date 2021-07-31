@@ -1,5 +1,6 @@
 {
     "item": [
+        // 1 번째 CategoryCard
         {
             "id": 5,
             "title": "ROMANCE",
@@ -8,6 +9,7 @@
             "maxLength": 500,
             "img": null,
             "chapter": [
+                // 1 번째 ChapterCard
                 {
                     "id": "37",
                     "categoryId": 5,
@@ -21,6 +23,7 @@
                     "userNick": "",
                     "chapterImg": ""
                 },
+                // 2번째 ChapterCard
                 {
                     "id": "38",
                     "categoryId": 5,
@@ -34,6 +37,7 @@
                     "userNick": "asdasaaaa",
                     "chapterImg": ""
                 },
+                // 3 번째 ChapterCard
                 {
                     "id": "43",
                     "categoryId": 5,
@@ -49,6 +53,7 @@
                 }
             ]
         },
+        // 2 번째 CategoryCard
         {
             "id": 6,
             "title": "CRIME",
@@ -57,6 +62,7 @@
             "maxLength": 500,
             "img": null,
             "chapter": [
+                // 1 번째 ChapterCard
                 {
                     "id": "51",
                     "categoryId": 6,
@@ -70,6 +76,7 @@
                     "userNick": "dd",
                     "chapterImg": ""
                 },
+                // 2 번째 ChapterCard
                 {
                     "id": "52",
                     "categoryId": 6,
@@ -85,6 +92,7 @@
                 }
             ]
         },
+        // 3 번째 CategoryCard
         {
             "id": 7,
             "title": "FANTASY",
@@ -94,6 +102,7 @@
             "img": null,
             "chapter": []
         },
+        // 4 번째 CategoryCard
         {
             "id": 8,
             "title": "ADULT",
@@ -103,6 +112,7 @@
             "img": null,
             "chapter": []
         },
+        // 5 번째 CategoryCard
         {
             "id": 9,
             "title": "THRILLER",
@@ -112,6 +122,7 @@
             "img": null,
             "chapter": []
         },
+        // 6 번째 CategoryCard
         {
             "id": 10,
             "title": "test",
@@ -121,6 +132,7 @@
             "img": null,
             "chapter": []
         },
+        // 7 번째 CategoryCard
         {
             "id": 11,
             "title": "test",

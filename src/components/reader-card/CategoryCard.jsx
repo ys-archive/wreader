@@ -3,8 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import sharedStyle from './ShareCardStyle';
 
-const CategoryCard = category => {
-  const { title, subTitle, img } = category;
+const CategoryCard = ({ title, subTitle, imageUri }) => {
   return (
     <View style={sharedStyle.root}>
       <View style={s.cardTitleView}>
@@ -12,7 +11,7 @@ const CategoryCard = category => {
       </View>
       <View style={s.cardImageView}>
         <LocalImage
-          source={img}
+          source={imageUri}
           resizeMode="cover"
           style={{ width: width * 0.8, height: height * 0.6 }}
         />
@@ -27,19 +26,9 @@ const CategoryCard = category => {
 export default CategoryCard;
 
 const s = StyleSheet.create({
-  cardTitleView: {
-
-  },
-  title: {
-
-  },
-  cardImageView: {
-
-  },
-  cardSubTitleView: {
-
-  },
-  subTitle: {
-    
-  }
+  cardTitleView: {},
+  title: {},
+  cardImageView: {},
+  cardSubTitleView: {},
+  subTitle: {},
 });

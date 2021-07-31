@@ -5,7 +5,7 @@ import { StyleSheet } from '#components';
 
 import EventModal from '#components/modals/EventModal';
 import ReaderMain from './reader/ReaderMain';
-import { CategoryService } from '#services';
+import { CategoryService, ChapterService } from '#services';
 
 // import ReaderCard from '#components/reader-card/ReaderCard';
 import Card from '#components/reader-card/Card';
@@ -161,6 +161,12 @@ const Main = () => {
     error,
   } = CategoryService.useGET_getCategory();
 
+  const {
+    item: candidates,
+    isLoading,
+    error,
+  } = ChapterService.useGet_getChapter(chapterId);
+
   if (error) {
     return (
       <View>
@@ -177,9 +183,52 @@ const Main = () => {
     );
   }
 
+  const renderCandidatesJSX = (chapterIdx, currentCategoryId) =>
+    candidates &&
+    candidates.length &&
+    candidates.map(
+      (candidate, idx) =>
+        chapterIdx + 1 === candidate.group_index && (
+          <ChapterCard
+            currentCategoryId={currentCategoryId}
+            chapterOrder={idx}
+            data={candidate}
+          />
+        ),
+    );
+
+  // chapter example
+  //   {
+  //     "id": "43", -> 조회용으로 사용
+  //     "categoryId": 5, -> prop categoryId 와 비교해서 렌더 결정
+  //     "userId": 5, -> reply 용으로 사용
+  //     "updateDt": "2021-07-30 14:45:29",
+  //     "content": "hi3", -> render
+  //     "replyCount": 0, -> reply render
+  //     "like_count": 0, -> like count render
+  //     "group_index": 0, -> chaining id
+  //     "userImg": "https://imagePath.com/changed", -> author uri
+  //     "userNick": "", -> author render
+  //     "chapterImg": "" -> chapter uri
+  // }
+
+  const renderChaptersJSX = (chapters, currentCategoryId) =>
+    chapters &&
+    chapters.length &&
+    chapters.map((chapter, order) => (
+      <View key={chapters.id} style={{ flexDirection: 'column' }}>
+        <ChapterCard
+          currentCategoryId={currentCategoryId}
+          chapterOrder={order}
+          data={chapter}
+        />
+        {renderCandidatesJSX(order, currentCategoryId)}
+      </View>
+    ));
+
   // rootCategory example
   // {
-  //   "id": 6,
+  //   "id": 6, -> GetChapter 순차적으로, categoryId 와 비교
   //   "title": "CRIME", -> render
   //   "subTitle": "Criminal Story\nmissing, murder...", -> render
   //   "chapterLimit": 10,
@@ -187,38 +236,18 @@ const Main = () => {
   //   "img": null, -> render as a uri
   //   "chapter": [] -> referenced by next chapters
   // },
-
   const CurrentChapterJSX = rootCategories.map(category => {
-    const { chapter: chapters } = category;
+    // 다음 Chapter 렌더용
+    const { chapter: chapters, id: currentCategoryId } = category;
 
-    // 각 챕터들은 후보 챕터들과 새로 쓸 카드를 포함해서
-    // 횡으로 배열
+    // CategoryCard 렌더용
+    const { title, subTitle, img: imageUri } = category;
+
     return (
       <View stype={{ flexDirection: 'row' }}>
-        <CategoryCard category={category} />
-
-        <View style={{ flexDirection: 'column' }}>
-          {chapters &&
-            chapters.length &&
-            chapters.map(chapter => {
-              // chapter example
-              //   {
-              //     "id": "43",
-              //     "categoryId": 5,
-              //     "userId": 5,
-              //     "updateDt": "2021-07-30 14:45:29",
-              //     "content": "hi3",
-              //     "replyCount": 0,
-              //     "like_count": 0,
-              //     "group_index": 0,
-              //     "userImg": "https://imagePath.com/changed",
-              //     "userNick": "",
-              //     "chapterImg": ""
-              // }
-              return <ChapterCard chapter={chapter} />;
-            })}
-          <WriteChapterCard />
-        </View>
+        <CategoryCard title={title} subTitle={subTitle} imageUri={imageUri} />
+        {renderChaptersJSX(chapters, currentCategoryId)}
+        <WriteChapterCard />
       </View>
     );
   });
@@ -227,7 +256,7 @@ const Main = () => {
     <View style={s.root}>
       <EventModal />
       <Reader>
-        <View>{CurrentChapterJSX}</View>
+        <View style={{ flexDirection: 'column' }}>{CurrentChapterJSX}</View>
       </Reader>
     </View>
   );
