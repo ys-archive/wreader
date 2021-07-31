@@ -47,8 +47,15 @@ const ChapterCard = ({ currentCategoryId, chapterOrder, data }) => {
 
   return (
     <ImageBackground
-      style={s.root}
-      source={{ uri: chapterCoverImageUri }}
+      style={{
+        borderWidth: 2,
+        borderColor: '#000',
+        minWidth: wp('100%'),
+        minHeight: hp('100%'),
+        backgroundColor: '#999',
+        borderRadius: 50,
+      }}
+      // source={{ uri: chapterCoverImageUri ?? "" }}
       resizeMode="contain"
     >
       <View style={s.cardTopSection}>

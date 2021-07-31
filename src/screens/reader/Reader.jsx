@@ -9,40 +9,39 @@ import {
   selectIsLastChapter,
   selectIsFirstChapter,
   selectIsCategorySelected,
-  selectCurrentCategoryIdx,
-  selectCurrentChapterIdx,
   selectIsMovingChapterLock,
+  // selectHasCandidateChapter,
+  selectCurrentCandidateIdx,
+  selectIsLastCandidate,
+  selectLastCandidateIdx,
 } from '#store/selectors';
 import {
-  // actionsReset,
   actionsSwipeToLeft,
   actionsSwipeToRight,
   actionsSwipeToUp,
   actionsSwipeToDown,
-  actionsSetLastCategoryIdx,
-  actionsSetLastChapterIdx,
-  actionsSetIsMovingChapterLock,
+  // actionsSetCandidateSelected,
 } from '#store/actions';
 
 const Reader = ({ data, children }) => {
   const isFirstCategory = useStoreState(selectIsFirstCategory);
   const isLastCategory = useStoreState(selectIsLastCategory);
+
   const isFirstChapter = useStoreState(selectIsFirstChapter);
   const isLastChapter = useStoreState(selectIsLastChapter);
+
+  const isLastCandidate = useStoreState(selectIsLastCandidate);
+  const currentCandidateIdx = useStoreState(selectCurrentCandidateIdx);
+  const lastCandidateIdx = useStoreState(selectLastCandidateIdx);
+
   const isCategorySelected = useStoreState(selectIsCategorySelected);
 
-  // const reset = useStoreActions(actionsReset);
   const swipeToLeft = useStoreActions(actionsSwipeToLeft);
   const swipeToRight = useStoreActions(actionsSwipeToRight);
   const swipeToUp = useStoreActions(actionsSwipeToUp);
   const swipeToDown = useStoreActions(actionsSwipeToDown);
 
-  // const setLastCategoryIdx = useStoreActions(actionsSetLastCategoryIdx);
-  // const setLastChapterIdx = useStoreActions(actionsSetLastChapterIdx);
-  // const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
-  // const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
-
-  // const setIsMovingChapterLock = useStoreActions(actionsSetIsMovingChapterLock);
+  // const hasCandidateChapter = useStoreState(selectHasCandidateChapter);
   const isMovingChapterLock = useStoreState(selectIsMovingChapterLock);
 
   const { forceSwipeVertically, forceSwipeHorizontally, getStyle } =
@@ -82,8 +81,10 @@ const Reader = ({ data, children }) => {
   };
 
   const onSwipeUp = state => {
-    if (isCategorySelected) {
-      console.log('현재 카테고리가 선택되어, 챕터 간 이동만 가능');
+    if (isLastCandidate && isCategorySelected) {
+      console.log(
+        '현재 카테고리가 선택되어, 챕터 간 이동만 가능 (후보 챕터도 없음)',
+      );
       return;
     }
 
@@ -92,20 +93,58 @@ const Reader = ({ data, children }) => {
       return;
     }
 
+    // if (isLastCandidate) {
+    //   console.log('마지막 후보 챕터 도달');
+    //   return;
+    // }
+
+    // if (!hasCandidateChapter && isCategorySelected) {
+
+    // }
+
+    // if (!hasCandidateChapter && ) {
+
+    // }
+
+    // if (!isCandidateSelected && !isLastCategory) {
+    //   console.log('후보 챕터 선택!');
+    //   setCandidateSelected(true);
+    // }
+
+    console.log('currentCandidateIdx: ', currentCandidateIdx);
+    console.log('lastCandidateIdx: ', lastCandidateIdx);
+
     forceSwipeVertically('up');
     swipeToUp();
   };
 
   const onSwipeDown = state => {
-    if (isCategorySelected) {
-      console.log('현재 카테고리가 선택되어, 챕터 간 이동만 가능');
+    if (currentCandidateIdx <= 0 && isCategorySelected) {
+      console.log(
+        '현재 카테고리가 선택되어, 챕터 간 이동만 가능 (후보 챕터도 없음)',
+      );
       return;
     }
 
-    if (isFirstCategory) {
+    if (currentCandidateIdx <= 0 && isFirstCategory) {
       console.log('첫 카테고리 도달');
       return;
     }
+
+    console.log('currentCandidateIdx: ', currentCandidateIdx);
+    console.log('lastCandidateIdx: ', lastCandidateIdx);
+
+    // if ()
+
+    // if (isCandidateSelected && isFirstCategory) {
+    //   console.log('후보 챕터 선택 취소!');
+    //   setCandidateSelected(false);
+    //   return;
+    // }
+
+    // if (!isCandidateSelected) {
+    //   return;
+    // }
 
     forceSwipeVertically('down');
     swipeToDown();
@@ -121,9 +160,7 @@ const Reader = ({ data, children }) => {
     // console.log(
     //   '------------------------------------------------------------------------',
     // );
-
     // setIsMovingChapterLock(totalChapterCount <= 0);
-
     // setLastCategoryIdx(totalCategoryCount);
     // setLastChapterIdx(totalChapterCount);
   };

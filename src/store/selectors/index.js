@@ -9,10 +9,23 @@ export const selectUserInfo = state => state.auth.model.info;
 export const selectIsMovingChapterLock = state =>
   state.reader.model.isMovingChapterLock;
 
+export const selectHasCandidateChapter = state =>
+  state.reader.model.hasCandidateChapter;
+
 export const selectCurrentCategoryIdx = state =>
   state.reader.model.currentCategoryIdx;
+export const selectLastCategoryIdx = state =>
+  state.reader.model.lastCategoryIdx;
+
 export const selectCurrentChapterIdx = state =>
   state.reader.model.currentChapterIdx;
+export const selectLastChapterIdx = state => state.reader.model.lastChapterIdx;
+
+export const selectCurrentCandidateIdx = state =>
+  state.reader.model.currentCandidateIdx;
+export const selectLastCandidateIdx = state =>
+  state.reader.model.lastCandidateIdx;
+export const selectLastCandidate = state => state.reader.model.lastCandidate;
 
 export const selectIsFirstCategory = state => state.reader.isFirstCategory;
 export const selectIsLastCategory = state => state.reader.isLastCategory;
@@ -20,8 +33,14 @@ export const selectIsLastCategory = state => state.reader.isLastCategory;
 export const selectIsFirstChapter = state => state.reader.isFirstChapter;
 export const selectIsLastChapter = state => state.reader.isLastChapter;
 
+export const selectIsFirstCandidate = state => state.reader.isFirstCandidate;
+export const selectIsLastCandidate = state => state.reader.isLastCandidate;
+
 export const selectIsCategorySelected = state =>
   state.reader.model.isCategorySelected;
+
+export const selectIsCandidateSelected = state =>
+  state.reader.model.isCandidateSelected;
 
 export const selectSwipeThresholdHorizontal = state =>
   state.reader.model.swipeThresholdHorizontal;

@@ -15,10 +15,13 @@ const displayIdxStatus = state => {
 const model = {
   currentCategoryIdx: 0,
   lastCategoryIdx: 10,
+  isMovingCategoryLock: false,
   currentChapterIdx: 0,
   isMovingChapterLock: false,
   lastChapterIdx: 10,
   isCategorySelected: false,
+  currentCandidateIdx: 0,
+  lastCandidateIdx: 0,
   screenWidth: SCREEN_WIDTH,
   screenHeight: SCREEN_HEIGHT,
 };
@@ -27,21 +30,27 @@ export default {
   model,
   // computed
   isFirstCategory: computed(state => state.model.currentCategoryIdx === 0),
-  isLastCategory: computed(state => {
-    return (
+  isLastCategory: computed(
+    state =>
       state.model.lastCategoryIdx === 0 ||
-      state.model.currentCategoryIdx === state.model.lastCategoryIdx
-    );
-  }),
+      state.model.currentCategoryIdx === state.model.lastCategoryIdx,
+  ),
 
   isFirstChapter: computed(state => state.model.currentChapterIdx === 0),
 
-  isLastChapter: computed(state => {
-    return (
+  isLastChapter: computed(
+    state =>
       state.model.lastChapterIdx === 0 ||
-      state.model.currentChapterIdx === state.model.lastChapterIdx
-    );
-  }),
+      state.model.currentChapterIdx === state.model.lastChapterIdx,
+  ),
+
+  isFirstCandidateIdx: computed(state => state.model.currentCandidateIdx === 0),
+
+  isLastCandidate: computed(
+    state =>
+      state.model.lastCandidateIdx === 0 ||
+      state.model.currentCandidateIdx === state.model.lastCandidateIdx,
+  ),
 
   swiperThresholdHorizontal: computed(state => state.model.screenWidth * 0.4),
   swiperThresholdVertical: computed(state => state.model.screenHeight * 0.4),
@@ -57,6 +66,15 @@ export default {
     state.model.isMovingChapterLock = payload;
   }),
 
+  // setHasCandidateChapter: action((state, payload) => {
+  //   if (typeof payload !== 'boolean')
+  //     throw new Error(
+  //       'setHasCandidateChapter() :: 카테고리 선택은 boolean 이어야 합니다.',
+  //     );
+
+  //   state.model.hasCandidateChapter = payload;
+  // }),
+
   // 카테고리가 선택 되었는지 설정
   setCategorySelected: action((state, payload) => {
     if (typeof payload !== 'boolean')
@@ -67,6 +85,16 @@ export default {
     const isCategorySelected = payload;
     state.model.isCategorySelected = isCategorySelected;
   }),
+
+  // setCandidateSelected: action((state, payload) => {
+  //   if (typeof payload !== 'boolean')
+  //     throw new Error(
+  //       'setCategorySelected() :: 카테고리 선택은 boolean 이어야 합니다.',
+  //     );
+
+  //   const isCandidateSelected = payload;
+  //   state.model.isCandidateSelected = isCandidateSelected;
+  // }),
 
   // 마지막 카테고리 인덱스를 설정 (첫 렌더에 설정)
   setLastCategoryIdx: action((state, payload) => {
@@ -87,6 +115,16 @@ export default {
 
     const lastChapterIdx = payload;
     state.model.lastChapterIdx = lastChapterIdx;
+  }),
+
+  setLastCandidateIdx: action((state, payload) => {
+    if (typeof payload !== 'number')
+      throw new Error(
+        'setLastCandidateIdx() :: 마지막 후보 인덱스는 반드시 number 이어야 합니다.',
+      );
+
+    const lastCandidateIdx = payload;
+    state.model.lastCandidateIdx = lastCandidateIdx;
   }),
 
   // 리셋
@@ -175,14 +213,25 @@ export default {
 
   // 위로 스와이프: 카테고리 + 1, 챕터 변화 X -> 다음 카테고리로 이동
   swipeToUp: action((state, payload) => {
-    state.model.currentCategoryIdx += 1;
+    if (state.model.isCategorySelected) {
+      state.model.currentCandidateIdx += 1;
+    } else {
+      state.model.currentCategoryIdx += 1;
+    }
 
     displayIdxStatus(state);
   }),
 
   // 아래로 스와이프: 카테고리 - 1, 챕터 변화 X -> 이전 카테고리로 이동
   swipeToDown: action((state, payload) => {
-    state.model.currentCategoryIdx -= 1;
+    if (state.model.isCategorySelected) {
+      // if (!state.model.hasCandidateChapter) {
+      //   state.model.currentCategoryIdx -= 1;
+      // }
+      state.model.currentCandidateIdx -= 1;
+    } else {
+      state.model.currentCategoryIdx -= 1;
+    }
 
     displayIdxStatus(state);
   }),

@@ -62,13 +62,13 @@ const Main = () => {
 
   const totalCategoryCount = data.item.length;
   const totalChapterCount = data.item[currentCategoryIdx].chapter.length;
-  console.log('총 카테고리 개수: ', totalCategoryCount);
-  console.log('현재 카테고리 인덱스: ', currentCategoryIdx);
-  console.log('현재 챕터 인덱스: ', currentChapterIdx);
-  console.log('현재 카테고리의 총 챕터 개수: ', totalChapterCount);
-  console.log(
-    '------------------------------------------------------------------------',
-  );
+  // console.log('총 카테고리 개수: ', totalCategoryCount);
+  // console.log('현재 카테고리 인덱스: ', currentCategoryIdx);
+  // console.log('현재 챕터 인덱스: ', currentChapterIdx);
+  // console.log('현재 카테고리의 총 챕터 개수: ', totalChapterCount);
+  // console.log(
+  //   '------------------------------------------------------------------------',
+  // );
 
   setIsMovingChapterLock(totalChapterCount <= 0);
 

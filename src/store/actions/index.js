@@ -10,12 +10,21 @@ export const actionsSetUserInfo = actions => actions.auth.setUserInfo;
 export const actionsSetIsMovingChapterLock = actions =>
   actions.reader.setIsMovingChapterLock;
 
+export const actionsSetHasCandidateChapter = actions =>
+  actions.reader.setHasCandidateChapter;
+
 export const actionsSetCategorySelected = actions =>
   actions.reader.setCategorySelected;
+
+export const actionsSetCandidateSelected = actions =>
+  actions.reader.setCandidateSelected;
+
 export const actionsSetLastCategoryIdx = actions =>
   actions.reader.setLastCategoryIdx;
 export const actionsSetLastChapterIdx = actions =>
   actions.reader.setLastChapterIdx;
+export const actionsSetLastCandidateIdx = actions =>
+  actions.reader.setLastCandidateIdx;
 
 export const actionsMoveTo = actions => actions.reader.moveTo;
 export const actionsMoveToCategory = actions => actions.reader.moveToCategory;

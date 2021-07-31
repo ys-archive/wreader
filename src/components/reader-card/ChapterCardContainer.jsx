@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { StyleSheet, Text } from '#components';
 
@@ -7,6 +7,14 @@ import ChapterCard from './ChapterCard';
 import sharedStyle from './ShareCardStyle';
 
 import { useGetSWR } from '#hooks';
+
+import { useStoreActions, useStoreState } from 'easy-peasy';
+import {
+  selectCurrentCategoryIdx,
+  selectCurrentChapterIdx,
+  selectIsCategorySelected,
+} from '#store/selectors';
+import { actionsSetLastCandidateIdx } from '#store/actions';
 
 // chapter example
 //   {
@@ -28,11 +36,21 @@ const ChapterCardContainer = ({
   chapterOrder,
   categoryData,
 }) => {
+  const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
+  const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
+  const isCategorySelected = useStoreState(selectIsCategorySelected);
+  const setLastCandidateIdx = useStoreActions(actionsSetLastCandidateIdx);
+
   const {
     data: chapterData,
     isLoading,
     error,
   } = useGetSWR(`chapter/${chapterOrder}`);
+
+  // useEffect(() => {
+
+  // });
+
   if (error) {
     return (
       <View>
@@ -49,15 +67,10 @@ const ChapterCardContainer = ({
     );
   }
 
-  if (!chapterData || !chapterData.item) {
-    return (
-      <View>
-        <Text>Get Chapter 데이터가 없습니다.</Text>
-      </View>
-    );
+  if (currentCategoryIdx === chapterOrder - 1) {
+    console.log('후보 갯수: ', chapterData.item.length);
+    setLastCandidateIdx(chapterData.item.length - 1);
   }
-
-  // console.log(chapterData);
 
   return (
     <View style={s.root}>
@@ -69,22 +82,32 @@ const ChapterCardContainer = ({
       />
 
       {/* 후보 챕터 카드 모두 렌더 */}
-      {/* <View>
-        {chapterData.item.map((candidate, idx) => {
-          if (chapterOrder !== candidate.group_index) {
-            return;
-          }
+      {isCategorySelected && (
+        <View>
+          {chapterData.item.map((candidate, idx) => {
+            if (currentChapterIdx !== candidate.group_index) {
+              return null;
+            }
 
-          return (
-            <ChapterCard
-              currentCategoryId={currentCategoryId}
-              chapterOrder={chapterOrder}
-              data={candidate}
-            />
-          );
-        })}
-      </View> */}
+            if (Math.max(0, candidate.categoryId - 5) !== currentCategoryIdx) {
+              // console.log('후보 챕터 없음!');
+              return null;
+            }
+
+            return (
+              <ChapterCard
+                key={candidate.id}
+                currentCategoryId={currentCategoryId}
+                chapterOrder={chapterOrder}
+                data={candidate}
+              />
+            );
+          })}
+        </View>
+      )}
+
       {/* 마지막 카드는 항상 유저가 쓰는 카드 */}
+
       {/* <WriteChapterCard /> */}
     </View>
   );

@@ -10,6 +10,14 @@ import {
 import CategoryCard from './CategoryCard';
 import ChapterCardContainer from './ChapterCardContainer';
 
+import { useStoreActions, useStoreState } from 'easy-peasy';
+import {
+  selectHasCandidateChapter,
+  selectCurrentCategoryIdx,
+  selectCurrentChapterIdx,
+} from '#store/selectors';
+import { actionsSetHasCandidateChapter } from '#store/actions';
+
 // rootCategory example
 // {
 //   "id": 6, -> GetChapter 순차적으로, categoryId 와 비교
@@ -22,6 +30,10 @@ import ChapterCardContainer from './ChapterCardContainer';
 // }
 
 const CategoryCardContainer = ({ rootData }) => {
+
+  const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
+  const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
+
   if (!rootData || !rootData.length) {
     return null;
   }
