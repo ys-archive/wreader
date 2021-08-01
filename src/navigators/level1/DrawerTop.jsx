@@ -24,7 +24,9 @@ const DrawerTop = props => {
   const { navigation: nav } = props;
   const isLoggedIn = useStoreState(selectIsLoggedIn);
   const userInfo = useStoreState(selectUserInfo);
-  const { nick } = userInfo;
+  console.log(userInfo);
+  const nick = userInfo !== null ? userInfo?.nick : '';
+
   const logout = useStoreActions(actionsLogout);
   const profileImageUrl = useStoreState(selectProfileImageUrl);
   const profileLocalImagePath = useStoreState(selectProfileLocalImagePath);
@@ -71,7 +73,7 @@ const DrawerTop = props => {
           )}
 
           {/* 유저 이름 */}
-          <Text style={s.userName}>{nick}</Text>
+          <Text style={s.userName}>{nick ?? ''}</Text>
         </View>
 
         {/* 홈 (스크린 이동) */}

@@ -19,11 +19,12 @@ class AuthService {
     introduction = '',
     marketingAgree = DISAGREE_MARKETING,
   ) {
-    const asMD5 = md5(password);
+    // const asMD5 = md5(password);
     const { data, status } = await axios.instance
       .post('user', {
         email,
-        pass: asMD5,
+        // pass: asMD5,
+        pass: password,
         nick: nickname,
         instagram,
         facebook,
@@ -46,9 +47,9 @@ class AuthService {
   // code === 102: 잘못된 이메일
   // code === 103: 잘못된 비밀번호
   static async POST_login(email, password) {
-    const asMD5 = md5(password);
+    // const asMD5 = md5(password);
     const { data } = await axios.instance
-      .post('login', { email, pass: asMD5 })
+      .post('login', { email, pass: password })
       .catch(console.error);
 
     const { code, item } = data;

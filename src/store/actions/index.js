@@ -4,6 +4,7 @@ export const actionsLogout = actions => actions.auth.logout;
 
 export const actionsSetUserId = actions => actions.auth.setUserId;
 export const actionsSetEmail = actions => actions.auth.setEmail;
+export const actionsSetPassword = actions => actions.auth.setPassword;
 export const actionsSetUserInfo = actions => actions.auth.setUserInfo;
 
 // reader

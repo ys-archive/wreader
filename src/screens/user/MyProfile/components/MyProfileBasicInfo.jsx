@@ -10,7 +10,7 @@ import { UserService } from '#services';
 import { useStoreState } from 'easy-peasy';
 import {
   selectUserId,
-  selectIsLoggedIn,
+  selectPassword,
   selectUserInfo,
 } from '#store/selectors';
 
@@ -38,13 +38,14 @@ const MyProfileBasicInfo = () => {
 
   const nav = useNavigation();
   const userId = useStoreState(selectUserId);
-  // const isLoggedIn = useStoreState(selectIsLoggedIn);
+  const password = useStoreState(selectPassword);
   const userInfo = useStoreState(selectUserInfo);
 
   const onSubmit = async values => {
     const { nickname, instagramUrl, facebookUrl, introduction } = values;
     const code = await UserService.PUT_updateUserInfo(
       userId,
+      password,
       nickname,
       instagramUrl,
       facebookUrl,
@@ -57,7 +58,7 @@ const MyProfileBasicInfo = () => {
       Alert('프로필 업데이트실패!');
     }
 
-    nav.navigate(ScreenNames.Main);
+    nav.navigate(ScreenNames.MainStack);
   };
 
   const {
@@ -78,12 +79,15 @@ const MyProfileBasicInfo = () => {
   const { nickname, instagramUrl, facebookUrl, introduction } = values;
 
   useEffect(() => {
-    const { nick, instagram, facebook, intro } = userInfo;
+    console.log(userInfo);
+    if (!userInfo) {
+      return;
+    }
 
-    setFieldValue('nickname', nick || '');
-    setFieldValue('instagramUrl', instagram || '');
-    setFieldValue('facebookUrl', facebook || '');
-    setFieldValue('introduction', intro || '');
+    setFieldValue('nickname', userInfo.nick || '');
+    setFieldValue('instagramUrl', userInfo.instagram || '');
+    setFieldValue('facebookUrl', userInfo.facebook || '');
+    setFieldValue('introduction', userInfo.intro || '');
   }, [userInfo]);
 
   return (

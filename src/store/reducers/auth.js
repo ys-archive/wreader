@@ -4,8 +4,8 @@ const model = {
   isLoggedIn: false,
   userId: 0,
   email: '',
+  password: '',
   info: {
-    img: '',
     instagram: '',
     facebook: '',
     intro: '',
@@ -25,6 +25,7 @@ export default {
     state.model.isLoggedIn = false;
     state.model.userId = 0;
     state.model.email = '';
+    state.model.password = '';
     state.model.info = null;
   }),
 
@@ -48,6 +49,14 @@ export default {
     }
 
     state.model.email = payload;
+  }),
+
+  setPassword: action((state, payload) => {
+    if (typeof payload !== 'string') {
+      throw new Error('setEmail() 의 payload 는 string 이어야 합니다.');
+    }
+
+    state.model.password = payload;
   }),
 
   setUserInfo: action((state, payload) => {

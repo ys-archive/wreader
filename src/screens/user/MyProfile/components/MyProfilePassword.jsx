@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { UserService } from '#services';
 import { useStoreState, useStoreActions } from 'easy-peasy';
-import { selectUserId } from '#store/selectors';
+import { selectUserId, selectUserInfo } from '#store/selectors';
 import { actionsLogout } from '#store/actions';
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '#navigators/ScreenNames';
@@ -25,20 +25,33 @@ const MyProfilePassword = () => {
   const nav = useNavigation();
   const userId = useStoreState(selectUserId);
   const logoutAfterChangingPassword = useStoreActions(actionsLogout);
+  const userInfo = useStoreState(selectUserInfo);
 
   const onSubmit = async values => {
     const { password } = values;
-    const code = await UserService.PUT_updateUserPassword(userId, password);
+    if (password) {
+      const { nick, instagram, facebook, intro } = userInfo;
+      const code = await UserService.PUT_updateUserInfo(
+        userId,
+        password,
+        nick,
+        instagram,
+        facebook,
+        intro,
+      );
 
-    if (code === 1) {
-      Alert('비밀번호 변경! 다시 로그인 해주세요');
-      logoutAfterChangingPassword();
+      if (code === 1) {
+        Alert('비밀번호 변경! 다시 로그인 해주세요');
+        logoutAfterChangingPassword();
+      } else {
+        Alert('비밀번호 변경 실패');
+      }
     } else {
       Alert('비밀번호 변경 실패');
     }
 
     setFieldValue('password', '');
-    nav.navigate(ScreenNames.Main);
+    nav.navigate(ScreenNames.MainStack);
   };
 
   const {

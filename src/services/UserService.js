@@ -31,32 +31,34 @@ class UserService {
     return code;
   }
 
-  static async PUT_updateUserPassword(userId, password) {
-    // if (typeof userId !== 'number') {
-    //   throw new Error('userId 는 number 여야합니다');
-    // }
+  // static async PUT_updateUserPassword(userId, password) {
+  //   // if (typeof userId !== 'number') {
+  //   //   throw new Error('userId 는 number 여야합니다');
+  //   // }
 
-    // if (typeof password !== 'string') {
-    //   throw new Error('password 은 string 여야 합니다.');
-    // }
+  //   // if (typeof password !== 'string') {
+  //   //   throw new Error('password 은 string 여야 합니다.');
+  //   // }
 
-    // console.log('PUT_updateUserPassword');
-    const asMD5 = md5(password);
-    const { data, status } = await instance
-      .put(`user/${userId}`, {
-        pass: asMD5,
-      })
-      .catch(console.error);
-    console.log(data, status);
+  //   // console.log('PUT_updateUserPassword');
+  //   // const asMD5 = md5(password);
+  //   const { data, status } = await instance
+  //     .put(`user/${userId}`, {
+  //       // pass: asMD5,
+  //       pass: password,
+  //     })
+  //     .catch(console.error);
+  //   console.log(data, status);
 
-    const { code } = data;
-    return code;
-  }
+  //   const { code } = data;
+  //   return code;
+  // }
 
   // code === 1 -> 업데이트 성공
   // code === 102 -> 해당 유저 정보가 없음 (정보가 없는 회원이 업데이트 시도 했을 시)
   static async PUT_updateUserInfo(
     userId,
+    password,
     nickname,
     introduction,
     facebook,
@@ -85,6 +87,7 @@ class UserService {
     const { data, status } = await instance
       .put(`user/${userId}`, {
         intro: introduction,
+        pass: password,
         facebook,
         instagram,
         nick: nickname,

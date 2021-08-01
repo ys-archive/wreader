@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { Alert } from '#components/alert';
 import { useStoreActions } from 'easy-peasy';
@@ -7,6 +7,7 @@ import {
   actionsSetEmail,
   actionsSetUserId,
   actionsSetUserInfo,
+  actionsSetPassword,
 } from '#store/actions';
 import { useFormik } from 'formik';
 import { useNavigation } from '@react-navigation/native';
@@ -35,6 +36,7 @@ const validationSchema = Yup.object({
 const SigninForms = () => {
   const login = useStoreActions(actionsLogin);
   const setEmail = useStoreActions(actionsSetEmail);
+  const setPassword = useStoreActions(actionsSetPassword);
   const setUserId = useStoreActions(actionsSetUserId);
   const setUserInfo = useStoreActions(actionsSetUserInfo);
   const nav = useNavigation();
@@ -49,6 +51,7 @@ const SigninForms = () => {
       console.log('로그인 완료!', item);
       login();
       setEmail(email);
+      setPassword(password);
       setUserId(item.id);
       setUserInfo(item);
       Alert('로그인 성공');
@@ -67,13 +70,24 @@ const SigninForms = () => {
     }
   };
 
-  const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
-    useFormik({
-      initialValues,
-      validationSchema,
-      // TODO: 실제 로그인 처리
-      onSubmit,
-    });
+  const {
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    setFieldValue,
+    values,
+    errors,
+    touched,
+  } = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit,
+  });
+
+  useEffect(() => {
+    setFieldValue('email', '');
+    setFieldValue('password', '');
+  }, []);
 
   return (
     <View>

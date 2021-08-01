@@ -49,11 +49,11 @@ const SignupInput = ({
         onBlur={onBlur('email')}
         placeholder="이메일을 입력해 주세요"
       />
-      {/* {touched.email && errors.email ? (
+      {touched.email && errors.email ? (
         <View>
           <Text>{errors.email}</Text>
         </View>
-      ) : null} */}
+      ) : null}
       {/* TODO: 이메일 인증 로직 */}
       {/* TODO: Formik 연동 후 이메일을 다시 입력하게함! */}
       <Button style={s.checkEmailButton} onPress={checkEmailValidToUse}>
@@ -73,11 +73,11 @@ const SignupInput = ({
         placeholder="비밀번호를 다시 입력해 주세요"
         secureTextEntry
       />
-      {/* {touched.passwordRepeat && errors.passwordRepeat ? (
+      {touched.passwordRepeat && errors.passwordRepeat ? (
         <View>
           <Text>{errors.passwordRepeat}</Text>
         </View>
-      ) : null} */}
+      ) : null}
       {/* TODO: 비밀번호 체크 */}
       <Button style={s.checkPasswordButton} onPress={checkValidPassword}>
         확인
