@@ -1,58 +1,57 @@
 import { PixelRatio, Platform } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 
-export const getImagePathByScreenResolution = imageFileName => {
+export const getImagePathByScreenResolution = (
+  level,
+  imageFileName,
+  ext = 'png',
+) => {
   if (imageFileName === '') {
     throw new Error('이미지 파일 이름이 비어있으면 안 됩니다!');
   }
 
   const ratio = PixelRatio.get();
-  let imageRoot = undefined;
+  let imageRoot = '';
+  let resolution = undefined;
 
   // android - mdpi
   // ios - x
   if (ratio < 1) {
-    imageRoot = '!images/mdpi';
-    console.log('this is mdpi device');
+    resolution = 'mdpi';
   }
 
   // android - hdpi
   // ios - x
   if (ratio <= 1 && ratio < 2) {
-    imageRoot = '!images/hdpi';
-    console.log('this is hdpi device');
+    resolution = 'hdpi';
   }
 
   // android - xhdpi
   // ios - iPhone se, 6s, 7, 8, xr, 11
   if (ratio <= 2 && ratio < 3) {
-    imageRoot = '!images/xhdpi';
-    console.log('this is xhdpi device');
+    resolution = 'xhdpi';
   }
 
   // android - xxhdpi, pixel, pixel2
   // ios - 6s+, 7+, 8+, x, xs, xs max, 11 pro, 11 pro max
   if (ratio <= 3 && ratio < 3.5) {
-    imageRoot = '!images/xxhdpi';
-    console.log('this is xxhdpi device');
+    resolution = 'xxhdpi';
   }
 
   // anroid - xxxhdpi, pixel xl, pixel 2 xl, nexus 6
   // ios - x
   if (ratio >= 3.5) {
-    imageRoot = '!images/xxxhdpi';
-    console.log('this is xxxhdpi device');
+    resolution = 'xxxhdpi';
   }
 
-  console.log(
-    `current pixel ratio of this device is ${ratio}:${imageRoot
-      .split()[1]
-      .trim()}`,
-  );
+  for (let i = 0; i < level; ++i) {
+    imageRoot += '../';
+  }
 
-  const actualPath = `${imageRoot}${imageFileName}`;
-  console.log(`actual path is @${actualPath}`);
-  return actualPath;
+  imageRoot += `assets/images/${resolution}`;
+  const imagePath = `${imageRoot}/${imageFileName}.${ext}`;
+  // console.log(`pixel ratio: ${ratio}(${resolution}) :: ${imagePath}`);
+  return imagePath;
 };
 
 export const getImageExtension = uri => {

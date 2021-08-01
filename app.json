@@ -4,12 +4,7 @@
     "slug": "wreader",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "cover",
-      "backgroundColor": "#6d665a"
-    },
+    "icon": "./assets/images/icon.png",
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -25,18 +20,32 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.wreader.wreader-resource",
-      "googleServicesFile": "./GoogleService-Info.plist"
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "splash": {
+        "image": "./assets/images/splash.png",
+        "resizeMode": "cover",
+        "backgroundColor": "#6d665a"
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.wreader.wreader_resource",
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json",
+      "splash": {
+        "hdpi": "./assets/images/hdpi/splash.png",
+        "mdpi": "./assets/images/mdpi/splash.png",
+        "xhdpi": "./assets/images/xhdpi/splash.png",
+        "xxhdpi": "./assets/images/xxhdpi/splash.png",
+        "xxxhdpi": "./assets/images/xxxhdpi/splash.png",
+        "resizeMode": "cover",
+        "backgroundColor": "#6d665a"
+      }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/images/favicon.png"
     }
   }
 }

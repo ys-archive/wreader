@@ -45,6 +45,10 @@ const ChapterCard = ({ currentCategoryId, chapterOrder, data }) => {
   //   return null;
   // }
 
+  const onSortChapter = () => {
+    console.log('카드 정렬');
+  };
+
   return (
     <View
       // style={{
@@ -59,6 +63,7 @@ const ChapterCard = ({ currentCategoryId, chapterOrder, data }) => {
       // source={{ uri: chapterCoverImageUri ?? "" }}
       // resizeMode="contain"
     >
+      {/* 로고 및 정렬 */}
       <View style={s.cardTopSection}>
         {/* TODO: 앱 로고 */}
         {/* <AppLogo /> */}
@@ -67,10 +72,11 @@ const ChapterCard = ({ currentCategoryId, chapterOrder, data }) => {
           name="sort-amount-desc"
           size={24}
           color="black"
-          onPress={() => console.log('카드 정렬')}
+          onPress={onSortChapter}
         />
       </View>
 
+      {/* 프로필 및 작가 이름 */}
       <View style={s.cardProfileSection}>
         <Image
           // source={{ uri: authorImageUri }}
@@ -87,6 +93,7 @@ const ChapterCard = ({ currentCategoryId, chapterOrder, data }) => {
         </View>
       </View>
 
+      {/* 챕터 제목 */}
       <View style={s.cardTitleSection}>
         {/* TODO: API 수정 요청 */}
         <Text>예시 제목</Text>
@@ -98,10 +105,12 @@ const ChapterCard = ({ currentCategoryId, chapterOrder, data }) => {
         <Text>챕터 {chapterOrder}</Text>
       </View>
 
+      {/* 챕터 내용 */}
       <View style={s.cardContentSection}>
         <Text textStyle={s.cardOverlayText}>{content ?? ''}</Text>
       </View>
 
+      {/* 조회수 (?), 좋아요, 댓글 */}
       <View style={s.cardBottomSection}>
         {/* TODO: 갑자기 조회수?? */}
         <View style={s.cardLikeSection}>
@@ -111,6 +120,7 @@ const ChapterCard = ({ currentCategoryId, chapterOrder, data }) => {
           </View>
         </View>
 
+        {/* 댓글 구현 */}
         <View style={s.cardReplySection}>
           <MaterialCommunityIcons
             name="comment-text-outline"

@@ -1,5 +1,5 @@
 import { regular, bold, loadFontsAsync } from './fonts';
-import { light } from './colors';
-import { loadedImages } from './images';
+import { colors } from './colors';
+import { getImage } from './images';
 
-export { regular, bold, loadFontsAsync, light, loadedImages };
+export { regular, bold, loadFontsAsync, colors, getImage };
