@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { Animated, Dimensions, LayoutAnimation } from 'react-native';
+import { useSharedValue } from 'react-native-reanimated';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const SWIPE_OUT_DURATION = 250;
@@ -22,7 +23,7 @@ export const useSwipeGesture = () => {
       toValue: { x: swipeAmount.x, y: swipeAmount.y },
       duration: SWIPE_OUT_DURATION,
       useNativeDriver: true,
-    }).start(); // () => onSwipeComplete(dir)
+    }).start(() => onSwipeComplete(dir)); // () => onSwipeComplete(dir)
   };
 
   const forceSwipeHorizontally = dir => {
@@ -35,30 +36,16 @@ export const useSwipeGesture = () => {
       toValue: { x: swipeAmount.x, y: swipeAmount.y },
       duration: SWIPE_OUT_DURATION,
       useNativeDriver: true,
-    }).start(); // () => onSwipeComplete(dir)
+    }).start(() => onSwipeComplete(dir)); //
   };
 
-  // const onSwipeComplete = dir => {
-  //   // position.setValue({ x: 0, y: 0 });
-  //   LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-  // };
+  const onSwipeComplete = dir => {
+    // position.setValue({ x: 0, y: 0 });
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+  };
 
   const getStyle = () => {
     const { x: translateX, y: translateY } = position;
-
-    // let finalX = translateX;
-    // let finalY = translateY;
-
-    // if (isNaN(finalX)) {
-    //   console.log('x is nan');
-    //   finalX = 0;
-    // }
-
-    // if (isNaN(finalY)) {
-    //   console.log('y is nan');
-    //   finalY = 0;
-    // }
-
     return {
       transform: [{ translateX }, { translateY }],
     };

@@ -1,19 +1,15 @@
 import { useImagePicker } from './useImagePicker';
 import { useGetSWR } from './useGetSWR';
-// import {
-//   useNavigationScreenOptionsProvider,
-//   useMainDrawerScreenOptions,
-//   useMainStackScreenOptions,
-// } from './useNavigationScreenOptions';
 import { useSwipeGesture } from './useSwipeGesture';
 import { useProfileImageLoader } from './useProfileImageLoader';
+import { useSwipeHorizontal } from './useSwipeHorizontal';
+import { useSwipeVertical } from './useSwipeVertical';
 
 export {
   useImagePicker,
   useGetSWR,
-  // useNavigationScreenOptionsProvider,
-  // useMainDrawerScreenOptions,
-  // useMainStackScreenOptions,
   useSwipeGesture,
   useProfileImageLoader,
+  useSwipeHorizontal,
+  useSwipeVertical,
 };

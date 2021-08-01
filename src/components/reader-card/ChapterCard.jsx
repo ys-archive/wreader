@@ -41,22 +41,23 @@ const ChapterCard = ({ currentCategoryId, chapterOrder, data }) => {
   } = data;
 
   // 카테고리 Id 가 모두 같아아함
-  if (currentCategoryId !== categoryId) {
-    return null;
-  }
+  // if (currentCategoryId !== categoryId) {
+  //   return null;
+  // }
 
   return (
-    <ImageBackground
-      style={{
-        borderWidth: 2,
-        borderColor: '#000',
-        minWidth: wp('100%'),
-        minHeight: hp('100%'),
-        backgroundColor: '#999',
-        borderRadius: 50,
-      }}
+    <View
+      // style={{
+      //   borderWidth: 2,
+      //   borderColor: '#000',
+      //   minWidth: wp('100%'),
+      //   minHeight: hp('100%'),
+      //   backgroundColor: '#999',
+      //   borderRadius: 50,
+      // }}
+      style={s.root}
       // source={{ uri: chapterCoverImageUri ?? "" }}
-      resizeMode="contain"
+      // resizeMode="contain"
     >
       <View style={s.cardTopSection}>
         {/* TODO: 앱 로고 */}
@@ -75,8 +76,8 @@ const ChapterCard = ({ currentCategoryId, chapterOrder, data }) => {
           // source={{ uri: authorImageUri }}
           source={dummy}
           style={{
-            width: wp('10%'),
-            height: hp('10%'),
+            width: wp('30%'),
+            height: hp('30%'),
             borderRadius: 50,
           }}
         />
@@ -104,24 +105,24 @@ const ChapterCard = ({ currentCategoryId, chapterOrder, data }) => {
       <View style={s.cardBottomSection}>
         {/* TODO: 갑자기 조회수?? */}
         <View style={s.cardLikeSection}>
-          <AntDesign name="heart" size={25} color="#000" />
+          <AntDesign name="heart" size={45} color="#000" />
           <View>
-            <Text>{likeCount}</Text>
+            <Text isBold>{likeCount}</Text>
           </View>
         </View>
 
         <View style={s.cardReplySection}>
           <MaterialCommunityIcons
             name="comment-text-outline"
-            size={25}
+            size={45}
             color="#000"
           />
           <View>
-            <Text>{replyCount}</Text>
+            <Text isBold>{replyCount}</Text>
           </View>
         </View>
       </View>
-    </ImageBackground>
+    </View>
   );
 };
 
@@ -131,8 +132,8 @@ const s = StyleSheet.create({
   root: {
     borderWidth: 2,
     borderColor: '#000',
-    minWidth: wp('100%'),
-    minHeight: hp('100%'),
+    minWidth: wp('10%'),
+    minHeight: hp('10%'),
     borderRadius: 50,
     // padding: 5,
   },

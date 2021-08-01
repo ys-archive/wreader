@@ -30,10 +30,6 @@ import { actionsSetHasCandidateChapter } from '#store/actions';
 // }
 
 const CategoryCardContainer = ({ rootData }) => {
-
-  const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
-  const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
-
   if (!rootData || !rootData.length) {
     return null;
   }
@@ -56,15 +52,12 @@ const CategoryCardContainer = ({ rootData }) => {
   const JSX = rootData.map(category => {
     return (
       <View key={category.id} style={s.categoryRoot}>
-        {/* <View style={{ alignItems: 'center', height: 50 }}> */}
         <CategoryCard {...category} />
-        {/* </View> */}
         {renderChaptersJSX(category.chapter, category.id)}
       </View>
     );
   });
 
-  // return <View style={s.root}>{JSX}</View>;
   return JSX;
 };
 
