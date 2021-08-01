@@ -132,8 +132,8 @@ const s = StyleSheet.create({
   root: {
     borderWidth: 2,
     borderColor: '#000',
-    minWidth: wp('10%'),
-    minHeight: hp('10%'),
+    minWidth: wp('100%'),
+    minHeight: hp('100%'),
     borderRadius: 50,
     // padding: 5,
   },

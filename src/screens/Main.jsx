@@ -19,6 +19,13 @@ import {
   selectCurrentChapterIdx,
 } from '#store/selectors';
 
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+
+import GestureRecognizer from 'react-native-swipe-gestures';
+
 import EventModal from '#components/modals/EventModal';
 
 import { useGetSWR } from '#hooks';
@@ -38,7 +45,7 @@ const Main = () => {
 
   useEffect(() => {
     if (!data) return;
-    
+
     const totalCategoryCount = data.item.length;
     const totalChapterCount = data.item[currentCategoryIdx].chapter.length;
     // console.log('총 카테고리 개수: ', totalCategoryCount);
@@ -82,7 +89,7 @@ const Main = () => {
   return (
     <View style={s.root}>
       {/* <EventModal /> */}
-      <Reader data={data}>
+      <Reader>
         <CategoryCardContainer rootData={data.item} />
         {/* <View style={s.cardView}>
         </View> */}
@@ -95,8 +102,8 @@ export default Main;
 
 const s = StyleSheet.create({
   root: {
-    // flex: 1,
-    // alignItems: 'flex-start',
+    width: wp('100%'),
+    height: hp('100%'),
   },
   cardView: {
     flexDirection: 'column',

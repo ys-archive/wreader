@@ -13,18 +13,6 @@ const CategoryCard = category => {
 
   return (
     <View style={s.root}>
-      {/* <ImageBackground
-        style={{
-          minWidth: wp('83.7%'),
-          minHeight: hp('78.2%'),
-          backgroundColor: '#555',
-          borderRadius: 50,
-          // alignSelf: 'center',
-          // margin: 0
-          padding: 0
-        }}
-        // source={dummy}
-      > */}
       <Image
         style={{
           minWidth: wp('83.7%'),
@@ -42,7 +30,6 @@ const CategoryCard = category => {
       <View style={s.cardSubTitleView}>
         <Text style={s.subTitle}>{subTitle}</Text>
       </View>
-      {/* </ImageBackground> */}
     </View>
   );
 };
