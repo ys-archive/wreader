@@ -69,7 +69,7 @@ const s = StyleSheet.create({
   },
   categoryRoot: {
     // width: wp('100%'),
-    // height: '100%',
+    // height: '100%' - 28.8,
     flexDirection: 'row',
 
     // flex: 1,

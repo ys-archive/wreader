@@ -6,6 +6,7 @@ import {
   isArrayTypeofExcept,
 } from './type';
 import {
+  getResolutionByPixelRatio,
   getImagePathByScreenResolution,
   getImageExtension,
   findImageInCache,
@@ -20,6 +21,7 @@ export {
   isTypeOfExcept,
   isArrayTypeof,
   isArrayTypeofExcept,
+  getResolutionByPixelRatio,
   getImagePathByScreenResolution,
   getImageExtension,
   findImageInCache,

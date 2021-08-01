@@ -1,17 +1,8 @@
 import { PixelRatio, Platform } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 
-export const getImagePathByScreenResolution = (
-  level,
-  imageFileName,
-  ext = 'png',
-) => {
-  if (imageFileName === '') {
-    throw new Error('이미지 파일 이름이 비어있으면 안 됩니다!');
-  }
-
+export const getResolutionByPixelRatio = () => {
   const ratio = PixelRatio.get();
-  let imageRoot = '';
   let resolution = undefined;
 
   // android - mdpi
@@ -44,6 +35,21 @@ export const getImagePathByScreenResolution = (
     resolution = 'xxxhdpi';
   }
 
+  return resolution;
+};
+
+export const getImagePathByScreenResolution = (
+  level,
+  imageFileName,
+  ext = 'png',
+) => {
+  if (imageFileName === '') {
+    throw new Error('이미지 파일 이름이 비어있으면 안 됩니다!');
+  }
+
+  const resolution = getResolutionByPixelRatio();
+
+  let imageRoot = '';
   for (let i = 0; i < level; ++i) {
     imageRoot += '../';
   }

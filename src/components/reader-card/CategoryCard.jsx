@@ -10,18 +10,13 @@ import { colors } from '#constants';
 
 import { getImage } from '#constants';
 
-// const rommanceCategoryBG = require('!images/xxxhdpi/romance-category-bg.png');
-// const romance = .;
-const romance = require('!images/xxxhdpi/romance-category-bg.png');
-const crime = require('!images/xxxhdpi/crime-category-bg.png');
-const fantasy = require('!images/xxxhdpi/fantasy-category-bg.png');
-const thriller = require('!images/xxxhdpi/thriller-category-bg.png');
-const adult = require('!images/xxxhdpi/adult-category-bg.png');
-
-// const crime = images.crime;
-// const fantasy = images.fantasy;
-// const thriller = images.thriller;
-// const adult = images.adult;
+import {
+  getRomanceCategoryBG,
+  getCrimeCategoryBG,
+  getFantasyCategoryBG,
+  getThrillerCategoryBG,
+  getAdultCategoryBG,
+} from '#constants/images';
 
 const CategoryCard = category => {
   const { title, subTitle, imageUri } = category;
@@ -44,33 +39,33 @@ const CategoryCard = category => {
   const makeBGImagePath = () => {
     const id = title.toLowerCase().trim();
     if (id === 'romance') {
-      return romance;
+      return getRomanceCategoryBG();
     }
 
     if (id === 'crime') {
-      return crime;
+      return getCrimeCategoryBG();
     }
 
     if (id === 'fantasy') {
-      return fantasy;
+      return getFantasyCategoryBG();
     }
 
     if (id === 'thriller') {
-      return thriller;
+      return getThrillerCategoryBG();
     }
 
     if (id === 'adult') {
-      return adult;
+      return getAdultCategoryBG();
     }
 
-    return fantasy;
+    return getFantasyCategoryBG();
   };
 
   return (
     <View style={s.root}>
       <ImageBackground
         style={{
-          width: wp('83.7%'),
+          width: wp('83.4%'),
           height: hp('78.2%'),
           borderRadius: 20,
           overflow: 'hidden',

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, Image, ScrollView } from 'react-native';
 import { StyleSheet, Text } from '#components';
 
 // import {
@@ -24,14 +24,14 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-import GestureRecognizer from 'react-native-swipe-gestures';
-
 import EventModal from '#components/modals/EventModal';
 
 import { useGetSWR } from '#hooks';
 import CategoryCardContainer from '#components/reader-card/CategoryCardContainer';
 
 import Reader from './reader/Reader';
+
+import { getLogo, getSortIcons } from '#constants/images';
 
 const Main = () => {
   const setLastCategoryIdx = useStoreActions(actionsSetLastCategoryIdx);
@@ -88,12 +88,34 @@ const Main = () => {
 
   return (
     <View style={s.root}>
-      {/* <EventModal /> */}
-      <Reader>
-        <CategoryCardContainer rootData={data.item} />
-        {/* <View style={s.cardView}>
-        </View> */}
-      </Reader>
+      <Image
+        style={{
+          width: 107.4,
+          height: 28.8,
+          position: 'absolute',
+          left: wp('8.3%'),
+          top: hp('3.6%'),
+          zIndex: 1000,
+        }}
+        source={getLogo()}
+      />
+      <Image
+        style={{
+          width: 24.7,
+          height: 15,
+          position: 'absolute',
+          right: wp('7%'),
+          top: hp('4.7%'),
+          zIndex: 1000,
+        }}
+        source={getSortIcons()}
+      />
+      <ScrollView scrollEnabled={false}>
+        {/* <EventModal /> */}
+        <Reader>
+          <CategoryCardContainer rootData={data.item} />
+        </Reader>
+      </ScrollView>
     </View>
   );
 };
@@ -108,5 +130,12 @@ const s = StyleSheet.create({
   cardView: {
     flexDirection: 'column',
     alignItems: 'flex-start',
+  },
+  logo: {
+    width: wp('10%'),
+    height: hp('10%'),
+    // position: 'absolute',
+    // left: 0,
+    // top: 0,
   },
 });
