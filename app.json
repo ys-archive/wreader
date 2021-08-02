@@ -22,7 +22,7 @@
       "bundleIdentifier": "com.wreader.wreader-resource",
       "googleServicesFile": "./GoogleService-Info.plist",
       "splash": {
-        "image": "./assets/images/splash.png",
+        "image": "./assets/images/splash@3x.png",
         "resizeMode": "cover",
         "backgroundColor": "#6d665a"
       }
@@ -35,11 +35,11 @@
       "package": "com.wreader.wreader_resource",
       "googleServicesFile": "./google-services.json",
       "splash": {
-        "hdpi": "./assets/images/hdpi/splash.png",
-        "mdpi": "./assets/images/mdpi/splash.png",
-        "xhdpi": "./assets/images/xhdpi/splash.png",
-        "xxhdpi": "./assets/images/xxhdpi/splash.png",
-        "xxxhdpi": "./assets/images/xxxhdpi/splash.png",
+        "hdpi": "./assets/images/splash.png",
+        "mdpi": "./assets/images/splash.png",
+        "xhdpi": "./assets/images/splash@2x.png",
+        "xxhdpi": "./assets/images/splash@3x.png",
+        "xxxhdpi": "./assets/images/splash@3x.png",
         "resizeMode": "cover",
         "backgroundColor": "#6d665a"
       }

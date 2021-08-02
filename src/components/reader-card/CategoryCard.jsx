@@ -8,14 +8,13 @@ import {
 
 import { colors } from '#constants';
 
-import { getImage } from '#constants';
 
 import {
-  getRomanceCategoryBG,
-  getCrimeCategoryBG,
-  getFantasyCategoryBG,
-  getThrillerCategoryBG,
-  getAdultCategoryBG,
+  romanceCategoryBG,
+  crimeCategoryBG,
+  fantasyCategoryBG,
+  thrillerCategoryBG,
+  adultCategoryBG,
 } from '#constants/images';
 
 const CategoryCard = category => {
@@ -39,26 +38,26 @@ const CategoryCard = category => {
   const makeBGImagePath = () => {
     const id = title.toLowerCase().trim();
     if (id === 'romance') {
-      return getRomanceCategoryBG();
+      return romanceCategoryBG;
     }
 
     if (id === 'crime') {
-      return getCrimeCategoryBG();
+      return crimeCategoryBG;
     }
 
     if (id === 'fantasy') {
-      return getFantasyCategoryBG();
+      return fantasyCategoryBG;
     }
 
     if (id === 'thriller') {
-      return getThrillerCategoryBG();
+      return thrillerCategoryBG;
     }
 
     if (id === 'adult') {
-      return getAdultCategoryBG();
+      return adultCategoryBG;
     }
 
-    return getFantasyCategoryBG();
+    return fantasyCategoryBG;
   };
 
   return (

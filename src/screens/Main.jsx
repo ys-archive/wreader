@@ -31,7 +31,7 @@ import CategoryCardContainer from '#components/reader-card/CategoryCardContainer
 
 import Reader from './reader/Reader';
 
-import { getLogo, getSortIcons } from '#constants/images';
+import { logo, sortIcon } from '#constants/images';
 
 const Main = () => {
   const setLastCategoryIdx = useStoreActions(actionsSetLastCategoryIdx);
@@ -97,7 +97,7 @@ const Main = () => {
           top: hp('3.6%'),
           zIndex: 1000,
         }}
-        source={getLogo()}
+        source={logo}
       />
       <Image
         style={{
@@ -108,7 +108,7 @@ const Main = () => {
           top: hp('4.7%'),
           zIndex: 1000,
         }}
-        source={getSortIcons()}
+        source={sortIcon}
       />
       <ScrollView scrollEnabled={false}>
         {/* <EventModal /> */}

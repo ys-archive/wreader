@@ -67,75 +67,86 @@ export const getResolutionIdx = () => {
 // export const xxh_logo = require('!images/xxhdpi/app-logo.png');
 // export const xxxh_logo = require('!images/xxxhdpi/app-logo.png');
 
-const romanceCategoryBGs = [
-  require('!images/hdpi/romance-category-bg.png'),
-  require('!images/mdpi/romance-category-bg.png'),
-  require('!images/xhdpi/romance-category-bg.png'),
-  require('!images/xxhdpi/romance-category-bg.png'),
-  require('!images/xxxhdpi/romance-category-bg.png'),
-];
+// const romanceCategoryBGs = [
+//   require('!images/hdpi/romance-category-bg.png'),
+//   require('!images/mdpi/romance-category-bg.png'),
+//   require('!images/xhdpi/romance-category-bg.png'),
+//   require('!images/xxhdpi/romance-category-bg.png'),
+//   require('!images/xxxhdpi/romance-category-bg.png'),
+// ];
 
-const crimeCategoryBGs = [
-  require('!images/hdpi/crime-category-bg.png'),
-  require('!images/mdpi/crime-category-bg.png'),
-  require('!images/xhdpi/crime-category-bg.png'),
-  require('!images/xxhdpi/crime-category-bg.png'),
-  require('!images/xxxhdpi/crime-category-bg.png'),
-];
+// const crimeCategoryBGs = [
+//   require('!images/hdpi/crime-category-bg.png'),
+//   require('!images/mdpi/crime-category-bg.png'),
+//   require('!images/xhdpi/crime-category-bg.png'),
+//   require('!images/xxhdpi/crime-category-bg.png'),
+//   require('!images/xxxhdpi/crime-category-bg.png'),
+// ];
 
-const fantasyCategoryBGs = [
-  require('!images/hdpi/fantasy-category-bg.png'),
-  require('!images/mdpi/fantasy-category-bg.png'),
-  require('!images/xhdpi/fantasy-category-bg.png'),
-  require('!images/xxhdpi/fantasy-category-bg.png'),
-  require('!images/xxxhdpi/fantasy-category-bg.png'),
-];
+// const fantasyCategoryBGs = [
+//   require('!images/hdpi/fantasy-category-bg.png'),
+//   require('!images/mdpi/fantasy-category-bg.png'),
+//   require('!images/xhdpi/fantasy-category-bg.png'),
+//   require('!images/xxhdpi/fantasy-category-bg.png'),
+//   require('!images/xxxhdpi/fantasy-category-bg.png'),
+// ];
 
-const thrillerCategoryBGs = [
-  require('!images/hdpi/thriller-category-bg.png'),
-  require('!images/mdpi/thriller-category-bg.png'),
-  require('!images/xhdpi/thriller-category-bg.png'),
-  require('!images/xxhdpi/thriller-category-bg.png'),
-  require('!images/xxxhdpi/thriller-category-bg.png'),
-];
+// const thrillerCategoryBGs = [
+//   require('!images/hdpi/thriller-category-bg.png'),
+//   require('!images/mdpi/thriller-category-bg.png'),
+//   require('!images/xhdpi/thriller-category-bg.png'),
+//   require('!images/xxhdpi/thriller-category-bg.png'),
+//   require('!images/xxxhdpi/thriller-category-bg.png'),
+// ];
 
-const adultCategoryBGs = [
-  require('!images/hdpi/adult-category-bg.png'),
-  require('!images/mdpi/adult-category-bg.png'),
-  require('!images/xhdpi/adult-category-bg.png'),
-  require('!images/xxhdpi/adult-category-bg.png'),
-  require('!images/xxxhdpi/adult-category-bg.png'),
-];
+// const adultCategoryBGs = [
+//   require('!images/hdpi/adult-category-bg.png'),
+//   require('!images/mdpi/adult-category-bg.png'),
+//   require('!images/xhdpi/adult-category-bg.png'),
+//   require('!images/xxhdpi/adult-category-bg.png'),
+//   require('!images/xxxhdpi/adult-category-bg.png'),
+// ];
 
-const logos = [
-  require('!images/hdpi/app-logo.png'),
-  require('!images/mdpi/app-logo.png'),
-  require('!images/xhdpi/app-logo.png'),
-  require('!images/xxhdpi/app-logo.png'),
-  require('!images/xxxhdpi/app-logo.png'),
-];
+// const logos = [
+//   require('!images/hdpi/app-logo.png'),
+//   require('!images/mdpi/app-logo.png'),
+//   require('!images/xhdpi/app-logo.png'),
+//   require('!images/xxhdpi/app-logo.png'),
+//   require('!images/xxxhdpi/app-logo.png'),
+// ];
 
-const sortIcons = [
-  require('!images/hdpi/sort-icon.png'),
-  require('!images/mdpi/sort-icon.png'),
-  require('!images/xhdpi/sort-icon.png'),
-  require('!images/xxhdpi/sort-icon.png'),
-  require('!images/xxxhdpi/sort-icon.png'),
-];
+// const sortIcons = [
+//   require('!images/hdpi/sort-icon.png'),
+//   require('!images/mdpi/sort-icon.png'),
+//   require('!images/xhdpi/sort-icon.png'),
+//   require('!images/xxhdpi/sort-icon.png'),
+//   require('!images/xxxhdpi/sort-icon.png'),
+// ];
 
-export const getRomanceCategoryBG = () =>
-  romanceCategoryBGs[getResolutionIdx()];
+// export const getRomanceCategoryBG = () =>
+//   romanceCategoryBGs[getResolutionIdx()];
 
-export const getCrimeCategoryBG = () => crimeCategoryBGs[getResolutionIdx()];
+// export const getCrimeCategoryBG = () => crimeCategoryBGs[getResolutionIdx()];
 
-export const getFantasyCategoryBG = () =>
-  fantasyCategoryBGs[getResolutionIdx()];
+// export const getFantasyCategoryBG = () =>
+//   fantasyCategoryBGs[getResolutionIdx()];
 
-export const getThrillerCategoryBG = () =>
-  thrillerCategoryBGs[getResolutionIdx()];
+// export const getThrillerCategoryBG = () =>
+//   thrillerCategoryBGs[getResolutionIdx()];
 
-export const getAdultCategoryBG = () => adultCategoryBGs[getResolutionIdx()];
+// export const getAdultCategoryBG = () => adultCategoryBGs[getResolutionIdx()];
 
-export const getLogo = () => logos[getResolutionIdx()];
+// export const getLogo = () => logos[getResolutionIdx()];
 
-export const getSortIcons = () => sortIcons[getResolutionIdx()];
+// export const getSortIcons = () => sortIcons[getResolutionIdx()];
+
+export const romanceCategoryBG = require('!images/romance-category-bg.png');
+export const fantasyCategoryBG = require('!images/fantasy-category-bg.png');
+export const thrillerCategoryBG = require('!images/thriller-category-bg.png');
+export const adultCategoryBG = require('!images/adult-category-bg.png');
+export const crimeCategoryBG = require('!images/crime-category-bg.png');
+
+export const logo = require('!images/app-logo.png');
+export const sortIcon = require('!images/sort-icon.png');
+export const likeIcon = require('!images/like-icon.png');
+export const viewCountIcon = require('!images/view-count-icon.png');
