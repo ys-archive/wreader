@@ -15,21 +15,6 @@ import {
 } from '#store/selectors';
 import { actionsSetLastCandidateIdx } from '#store/actions';
 
-// chapter example
-//   {
-//     "id": "43", -> 조회용으로 사용
-//     "categoryId": 5, -> prop categoryId 와 비교해서 렌더 결정
-//     "userId": 5, -> reply 용으로 사용
-//     "updateDt": "2021-07-30 14:45:29",
-//     "content": "hi3", -> render
-//     "replyCount": 0, -> reply render
-//     "like_count": 0, -> like count render
-//     "group_index": 0, -> chaining id
-//     "userImg": "https://imagePath.com/changed", -> author uri
-//     "userNick": "", -> author render
-//     "chapterImg": "" -> chapter uri
-// }
-
 const ChapterCardContainer = ({
   currentCategoryId,
   chapterOrder,
@@ -55,14 +40,11 @@ const ChapterCardContainer = ({
       const maxLength = chapterData.item.filter(chapter => {
         return chapter.categoryId - 5 === currentCategoryIdx;
       }).length;
+      console.log(
+        `[${chapterOrder}:${currentCategoryIdx}] ${maxLength} / ${chapterData.item.length}`,
+      );
       setLastCandidateIdx(maxLength);
     }
-
-    // if (currentCategoryIdx === chapterOrder - 1) {
-    //   // console.log('후보 갯수: ', chapterData.item.length);
-
-    //   // setLastCandidateIdx(chapterData.item.length - 1);
-    // }
   });
 
   if (error) {
@@ -84,29 +66,27 @@ const ChapterCardContainer = ({
   return (
     <View style={s.root}>
       {/* 먼저 챕터 카드 렌더 */}
-      <ChapterCard
-        currentCategoryId={currentCategoryId}
-        chapterOrder={chapterOrder}
-        data={categoryData}
-      />
+      {/*  */}
 
-      {/* 후보 챕터 카드 모두 렌더 */}
+      {currentCategoryIdx === categoryData.categoryId - 5 && (
+        <ChapterCard chapterOrder={chapterOrder} data={categoryData} />
+      )}
+
+      {/* 현재 챕터의 후보 챕터 카드들 렌더 */}
       {isCategorySelected && (
         <View>
-          {chapterData.item.map((candidate, idx) => {
+          {chapterData.item.map(candidate => {
             // if (currentChapterIdx !== candidate.group_index) {
             //   return null;
             // }
 
-            // if (Math.max(0, candidate.categoryId - 5) !== currentCategoryIdx) {
-            //   // console.log('후보 챕터 없음!');
-            //   return null;
-            // }
+            if (Math.max(0, candidate.categoryId - 5) !== currentCategoryIdx) {
+              return null;
+            }
 
             return (
               <ChapterCard
                 key={candidate.id}
-                currentCategoryId={currentCategoryId}
                 chapterOrder={chapterOrder}
                 data={candidate}
               />
@@ -116,7 +96,6 @@ const ChapterCardContainer = ({
       )}
 
       {/* 마지막 카드는 항상 유저가 쓰는 카드 */}
-
       {/* <WriteChapterCard /> */}
     </View>
   );
@@ -127,10 +106,10 @@ export default ChapterCardContainer;
 const s = StyleSheet.create({
   root: {
     // flexDirection: 'column',
-    // justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    // flex: 1
-    // width: '100%',
+    // justifyContent: 'center',
+    // alignItems: 'flex-start',
+    // flex: 1,
+    width: '100%',
     // height: '100%',
   },
 });

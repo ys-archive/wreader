@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, ImageBackground, Image } from 'react-native';
+import React from 'react';
+import { View, ImageBackground } from 'react-native';
 import { StyleSheet, Text } from '#components';
 import {
   widthPercentageToDP as wp,
@@ -7,7 +7,6 @@ import {
 } from 'react-native-responsive-screen';
 
 import { colors } from '#constants';
-
 
 import {
   romanceCategoryBG,
@@ -17,48 +16,33 @@ import {
   adultCategoryBG,
 } from '#constants/images';
 
+const makeBGImagePath = title => {
+  const id = title.toLowerCase().trim();
+  if (id === 'romance') {
+    return romanceCategoryBG;
+  }
+
+  if (id === 'crime') {
+    return crimeCategoryBG;
+  }
+
+  if (id === 'fantasy') {
+    return fantasyCategoryBG;
+  }
+
+  if (id === 'thriller') {
+    return thrillerCategoryBG;
+  }
+
+  if (id === 'adult') {
+    return adultCategoryBG;
+  }
+
+  return fantasyCategoryBG;
+};
+
 const CategoryCard = category => {
   const { title, subTitle, imageUri } = category;
-  // const [bgImgUri, setBgImgUri] = useState('');
-
-  // useEffect(() => {
-  //   if (imageUri) return;
-
-  //   const img = getImage(3, title.toLowerCase().trim());
-  //   // console.log('image: ', img);
-
-  //   if (!img) return;
-
-  //   console.log('카테고리 배경이미지: ', img);
-  //   setBgImgUri(img);
-  // }, [title]);
-
-  // console.log(bgImgUri);
-
-  const makeBGImagePath = () => {
-    const id = title.toLowerCase().trim();
-    if (id === 'romance') {
-      return romanceCategoryBG;
-    }
-
-    if (id === 'crime') {
-      return crimeCategoryBG;
-    }
-
-    if (id === 'fantasy') {
-      return fantasyCategoryBG;
-    }
-
-    if (id === 'thriller') {
-      return thrillerCategoryBG;
-    }
-
-    if (id === 'adult') {
-      return adultCategoryBG;
-    }
-
-    return fantasyCategoryBG;
-  };
 
   return (
     <View style={s.root}>
@@ -69,7 +53,7 @@ const CategoryCard = category => {
           borderRadius: 20,
           overflow: 'hidden',
         }}
-        source={makeBGImagePath()}
+        source={makeBGImagePath(title)}
         // source={{ uri: bgImgUri }}
         resizeMode="cover"
       >
@@ -94,7 +78,6 @@ const s = StyleSheet.create({
     minWidth: wp('100%'),
     minHeight: hp('100%'),
     backgroundColor: colors.light.primary,
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -107,7 +90,6 @@ const s = StyleSheet.create({
     minWidth: 207.7,
     minHeight: 41,
     justifyContent: 'center',
-    // alignItems: 'center',
   },
   title: {
     position: 'relative',
@@ -117,7 +99,6 @@ const s = StyleSheet.create({
   },
   cardSubTitleView: {
     position: 'absolute',
-    // left: '0%',
     top: '80%',
   },
   subTitle: {

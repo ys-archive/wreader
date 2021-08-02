@@ -150,3 +150,4 @@ export const logo = require('!images/app-logo.png');
 export const sortIcon = require('!images/sort-icon.png');
 export const likeIcon = require('!images/like-icon.png');
 export const viewCountIcon = require('!images/view-count-icon.png');
+export const replyIcon = require('!images/reply-icon.png');

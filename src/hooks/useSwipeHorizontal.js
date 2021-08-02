@@ -4,12 +4,22 @@ import {
   selectIsFirstChapter,
   selectIsMovingChapterLock,
   selectCurrentCandidateIdx,
+  selectIsCategorySelected,
 } from '#store/selectors';
-import { actionsSwipeToLeft, actionsSwipeToRight } from '#store/actions';
+import {
+  actionsSwipeToLeft,
+  actionsSwipeToRight,
+  actionsSetCategorySelectedDelayed,
+} from '#store/actions';
 
 export const useSwipeHorizontal = forceSwipeHorizontally => {
   const swipeToLeft = useStoreActions(actionsSwipeToLeft);
   const swipeToRight = useStoreActions(actionsSwipeToRight);
+
+  // const isCategorySelected = useStoreState(selectIsCategorySelected);
+  // const setCategorySelectedDelayed = useStoreActions(
+  //   actionsSetCategorySelectedDelayed,
+  // );
 
   const isMovingChapterLock = useStoreState(selectIsMovingChapterLock);
 

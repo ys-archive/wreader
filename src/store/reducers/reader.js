@@ -1,4 +1,4 @@
-import { action, computed } from 'easy-peasy';
+import { action, computed, thunk } from 'easy-peasy';
 
 import { Dimensions } from 'react-native';
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
@@ -87,6 +87,11 @@ export default {
 
     const isCategorySelected = payload;
     state.model.isCategorySelected = isCategorySelected;
+  }),
+
+  setCategorySelectedDelayed: thunk(async (actions, payload) => {
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    actions.setCategorySelected(payload);
   }),
 
   // 마지막 카테고리 인덱스를 설정 (첫 렌더에 설정)

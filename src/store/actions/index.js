@@ -20,6 +20,9 @@ export const actionsSetHasCandidateChapter = actions =>
 export const actionsSetCategorySelected = actions =>
   actions.reader.setCategorySelected;
 
+export const actionsSetCategorySelectedDelayed = actions =>
+  actions.reader.setCategorySelectedDelayed;
+
 export const actionsSetCandidateSelected = actions =>
   actions.reader.setCandidateSelected;
 

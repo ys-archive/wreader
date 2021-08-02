@@ -104,7 +104,8 @@ export default Main;
 
 const s = StyleSheet.create({
   root: {
-    width: wp('100%'),
-    height: hp('100%'),
+    // width: wp('100%'),
+    // height: hp('100%'),
+    justifyContent: 'flex-start'
   },
 });

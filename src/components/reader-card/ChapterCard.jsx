@@ -1,31 +1,21 @@
 import React from 'react';
 import { View, ImageBackground, Image } from 'react-native';
-import { StyleSheet, Text, RemoteImage } from '#components';
+import { StyleSheet, Text } from '#components';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import { AntDesign, MaterialCommunityIcons } from 'react-native-vector-icons';
-import { FontAwesome } from 'react-native-vector-icons';
+import { colors } from '#constants';
 
-// chapter example
-//   {
-//     "id": "43", -> 조회용으로 사용
-//     "categoryId": 5, -> prop categoryId 와 비교해서 렌더 결정
-//     "userId": 5, -> reply 용으로 사용
-//     "updateDt": "2021-07-30 14:45:29",
-//     "content": "hi3", -> render
-//     "replyCount": 0, -> reply render
-//     "like_count": 0, -> like count render
-//     "group_index": 0, -> chaining id
-//     "userImg": "https://imagePath.com/changed", -> author uri
-//     "userNick": "", -> author render
-//     "chapterImg": "" -> chapter uri
-// }
+import { TextInput } from '#components';
+import { ViewCount, Like, Reply } from '#components/icon';
 
 const dummy = require('!images/dummy-image.jpg');
 
-const ChapterCard = ({ currentCategoryId, chapterOrder, data }) => {
+const borderRadiusOutside = 20;
+const borderRadiusInside = 17;
+
+const ChapterCard = ({ chapterOrder, data }) => {
   const {
     id: chapterId, // 현재 챕터 Id
     categoryId,
@@ -38,99 +28,104 @@ const ChapterCard = ({ currentCategoryId, chapterOrder, data }) => {
     userNick: authorNickName, // -> author
     chapterImg: chapterCoverImageUri, // -> cover
   } = data;
-
-  // 카테고리 Id 가 모두 같아아함
-  // if (currentCategoryId !== categoryId) {
-  //   return null;
-  // }
-
-  const onSortChapter = () => {
-    console.log('카드 정렬');
-  };
+  const viewCount = 142;
 
   return (
-    <View
-      // style={{
-      //   borderWidth: 2,
-      //   borderColor: '#000',
-      //   minWidth: wp('100%'),
-      //   minHeight: hp('100%'),
-      //   backgroundColor: '#999',
-      //   borderRadius: 50,
-      // }}
-      style={s.root}
-      // source={{ uri: chapterCoverImageUri ?? "" }}
-      // resizeMode="contain"
-    >
-      {/* 로고 및 정렬 */}
-      <View style={s.cardTopSection}>
-        {/* TODO: 앱 로고 */}
-        {/* <AppLogo /> */}
-        {/* TODO: 정렬 기능 추가 */}
-        <FontAwesome
-          name="sort-amount-desc"
-          size={24}
-          color="black"
-          onPress={onSortChapter}
-        />
-      </View>
-
-      {/* 프로필 및 작가 이름 */}
-      <View style={s.cardProfileSection}>
-        <Image
-          // source={{ uri: authorImageUri }}
-          source={dummy}
-          style={{
-            width: wp('30%'),
-            height: hp('30%'),
-            borderRadius: 50,
-          }}
-        />
-
-        <View>
-          <Text isBold>{authorNickName}</Text>
-        </View>
-      </View>
-
-      {/* 챕터 제목 */}
-      <View style={s.cardTitleSection}>
-        {/* TODO: API 수정 요청 */}
-        <Text>예시 제목</Text>
-      </View>
-
-      <View style={s.separator}></View>
-
-      <View style={s.cardChapterOrderSection}>
-        <Text>챕터 {chapterOrder}</Text>
-      </View>
-
-      {/* 챕터 내용 */}
-      <View style={s.cardContentSection}>
-        <Text textStyle={s.cardOverlayText}>{content ?? ''}</Text>
-      </View>
-
-      {/* 조회수 (?), 좋아요, 댓글 */}
-      <View style={s.cardBottomSection}>
-        {/* TODO: 갑자기 조회수?? */}
-        <View style={s.cardLikeSection}>
-          <AntDesign name="heart" size={45} color="#000" />
-          <View>
-            <Text isBold>{likeCount}</Text>
-          </View>
-        </View>
-
-        {/* 댓글 구현 */}
-        <View style={s.cardReplySection}>
-          <MaterialCommunityIcons
-            name="comment-text-outline"
-            size={45}
-            color="#000"
+    <View style={s.root}>
+      <ImageBackground
+        style={{
+          minWidth: wp('83.3%'),
+          minHeight: hp('81.2%'),
+          backgroundColor: '#999',
+          borderRadius: borderRadiusOutside,
+          overflow: 'hidden',
+          alignItems: 'center',
+        }}
+        // source={{ uri: chapterCoverImageUri ?? "" }}
+        // resizeMode="contain"
+      >
+        {/* 프로필 및 작가 이름 */}
+        <View style={s.authorSection}>
+          <Image
+            style={{
+              width: 30,
+              height: 30,
+              borderRadius: 100,
+            }}
+            source={dummy}
+            // source={{ uri: authorImageUri }}
           />
-          <View>
-            <Text isBold>{replyCount}</Text>
-          </View>
+          <Text isBold style={s.authorNameText}>
+            {authorNickName || 'Jessica Momo'}
+          </Text>
         </View>
-      </View>
+
+        <ImageBackground
+          style={{
+            minWidth: wp('75.6%'),
+            minHeight: hp('69.7%'),
+            backgroundColor: colors.light.chapterBGInside,
+            borderRadius: borderRadiusInside,
+          }}
+        >
+          {/* 챕터 제목 */}
+          <View style={s.titleSection}>
+            {/* TODO: API 수정 요청 */}
+            <Text isBold style={s.title}>
+              THE FIRST HEART
+            </Text>
+          </View>
+
+          <View style={s.separator}></View>
+
+          <View style={s.chapterOrderSection}>
+            <Text isBold style={s.chapterOrderPlaceholder}>
+              CHAPTER
+            </Text>
+            <Text isBold style={s.chapterOrderText}>
+              {chapterOrder}
+            </Text>
+          </View>
+
+          {/* 챕터 내용 */}
+          <View style={s.contentSection}>
+            <Text style={s.contentText}>&nbsp;&nbsp;{content ?? ''}</Text>
+          </View>
+
+          {/* 조회수 (?), 좋아요, 댓글 */}
+          <View style={s.bottomSection}>
+            <View style={s.bottomInfoPlacer}>
+              <View style={s.viewCountSection}>
+                <ViewCount />
+                <Text style={s.viewCountText}>{viewCount}</Text>
+              </View>
+
+              <View style={s.likeSection}>
+                <Like />
+                <Text style={s.likeText}>{likeCount}</Text>
+              </View>
+
+              <View style={s.replySection}>
+                <Reply />
+                <Text style={s.replyText}>{replyCount}</Text>
+              </View>
+            </View>
+
+            <View style={s.bottomReplyPlacer}>
+              <Image
+                style={{
+                  width: 24,
+                  height: 24,
+                  borderRadius: 100,
+                }}
+                source={dummy}
+                // source={{ uri: myProfileUri }}
+              />
+              <TextInput style={s.replyTextInput} />
+            </View>
+          </View>
+        </ImageBackground>
+      </ImageBackground>
     </View>
   );
 };
@@ -139,36 +134,115 @@ export default ChapterCard;
 
 const s = StyleSheet.create({
   root: {
-    borderWidth: 2,
-    borderColor: '#000',
     minWidth: wp('100%'),
     minHeight: hp('100%'),
-    borderRadius: 50,
-    // padding: 5,
+    backgroundColor: colors.light.primary,
+    // flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  cardTopSection: {
+  authorSection: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    minWidth: wp('83.3%'),
+    paddingLeft: wp('6.7%'),
+    minHeight: hp('9.5%'),
+    alignItems: 'center',
   },
-  cardProfileSection: {},
-  cardTitleSection: {},
-  separator: {},
-  cardContentSection: {},
-  cardBottomSection: {
+  authorNameText: {
+    marginLeft: wp('2%'),
+    fontSize: 15,
+    color: colors.light.boldText2,
+  },
+  titleSection: {
+    marginLeft: wp('5.5%'),
+    marginTop: hp('4.2%'),
+  },
+  title: {
+    fontSize: 22,
+  },
+  separator: {
+    maxWidth: 100,
+    minHeight: 1,
+    backgroundColor: '#000',
+    marginLeft: wp('5.5%'),
+    marginTop: hp('1.3%'),
+  },
+  chapterOrderSection: {
     flexDirection: 'row',
+    paddingLeft: wp('5.5%'),
+    paddingTop: hp('2.6%'),
+    position: 'absolute',
+    // top: '32.6%',
+    top: 78.0,
   },
-  cardLikeSection: {
+  chapterOrderPlaceholder: {
+    fontSize: 15,
+  },
+  chapterOrderText: {
+    fontSize: 26,
+    marginLeft: '8%',
+    marginTop: '-6%',
+  },
+  contentSection: {
+    marginLeft: wp('5.5%'),
+    marginTop: hp('6.1%'),
+  },
+  contentText: {
+    fontSize: 15,
+  },
+  bottomSection: {
+    // flexDirection: 'row',
+    position: 'absolute',
+    bottom: '0%',
+    minWidth: wp('75.6%'),
+    borderBottomStartRadius: borderRadiusInside,
+    borderBottomEndRadius: borderRadiusInside,
+    backgroundColor: colors.light.boldText2,
+    // minHeight: hp('12.2%'),
+    minHeight: 72.2,
+    paddingTop: hp('2.4%'),
+    // paddingLeft: wp('5.5%'),
+  },
+  bottomInfoPlacer: {
     flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    minWidth: wp('56.8%'),
+    // marginTop: hp('2.5%')
   },
-  cardReplySection: {
+  viewCountSection: {
     flexDirection: 'row',
+    // marginLeft: wp('9.5%'),
   },
-
-  // cardOverlay: {
-  //   position: 'absolute',
-  //   left: '15%',
-  //   top: '25%',
-  //   padding: 55,
-  //   fontSize: 23,
-  // },
+  viewCountText: {
+    color: colors.light.text2,
+    marginLeft: wp('1.8%'),
+  },
+  likeSection: {
+    flexDirection: 'row',
+    // marginLeft: wp('8.8%'),
+  },
+  likeText: {
+    color: colors.light.text2,
+    marginLeft: wp('1.8%'),
+  },
+  replySection: {
+    flexDirection: 'row',
+    // marginLeft: wp('8.8%'),
+  },
+  replyText: {
+    color: colors.light.text2,
+    marginLeft: wp('1.8%'),
+  },
+  bottomReplyPlacer: {
+    flexDirection: 'row',
+    paddingTop: hp('1.4%'),
+    paddingLeft: wp('9.5%'),
+    paddingBottom: hp('1.4%'),
+  },
+  replyTextInput: {
+    padding: 0,
+    margin: 0,
+    marginLeft: 10,
+    borderColor: colors.light.text2,
+  },
 });
