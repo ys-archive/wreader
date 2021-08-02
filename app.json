@@ -22,7 +22,8 @@
       "bundleIdentifier": "com.wreader.wreader-resource",
       "googleServicesFile": "./GoogleService-Info.plist",
       "splash": {
-        "image": "./assets/images/splash@3x.png",
+        "image": "./assets/images/splash@2x.png",
+        "tabletImage": "./assets//images/splash@3x.png",
         "resizeMode": "cover",
         "backgroundColor": "#6d665a"
       }

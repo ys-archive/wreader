@@ -2,9 +2,8 @@ import React, { useEffect } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { StyleSheet, Text } from '#components';
 
-import WriteChapterCard from './WriteChapterCard';
+// import WriteChapterCard from './WriteChapterCard';
 import ChapterCard from './ChapterCard';
-import sharedStyle from './ShareCardStyle';
 
 import { useGetSWR } from '#hooks';
 
@@ -52,10 +51,18 @@ const ChapterCardContainer = ({
       return;
     }
 
-    if (currentCategoryIdx === chapterOrder - 1) {
-      // console.log('후보 갯수: ', chapterData.item.length);
-      setLastCandidateIdx(chapterData.item.length - 1);
+    if (currentChapterIdx === chapterOrder) {
+      const maxLength = chapterData.item.filter(chapter => {
+        return chapter.categoryId - 5 === currentCategoryIdx;
+      }).length;
+      setLastCandidateIdx(maxLength);
     }
+
+    // if (currentCategoryIdx === chapterOrder - 1) {
+    //   // console.log('후보 갯수: ', chapterData.item.length);
+
+    //   // setLastCandidateIdx(chapterData.item.length - 1);
+    // }
   });
 
   if (error) {
@@ -87,14 +94,14 @@ const ChapterCardContainer = ({
       {isCategorySelected && (
         <View>
           {chapterData.item.map((candidate, idx) => {
-            if (currentChapterIdx !== candidate.group_index) {
-              return null;
-            }
+            // if (currentChapterIdx !== candidate.group_index) {
+            //   return null;
+            // }
 
-            if (Math.max(0, candidate.categoryId - 5) !== currentCategoryIdx) {
-              // console.log('후보 챕터 없음!');
-              return null;
-            }
+            // if (Math.max(0, candidate.categoryId - 5) !== currentCategoryIdx) {
+            //   // console.log('후보 챕터 없음!');
+            //   return null;
+            // }
 
             return (
               <ChapterCard

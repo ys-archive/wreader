@@ -2,21 +2,21 @@ import React from 'react';
 import { View } from 'react-native';
 import { StyleSheet } from '#components';
 
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+// import {
+//   widthPercentageToDP as wp,
+//   heightPercentageToDP as hp,
+// } from 'react-native-responsive-screen';
 
 import CategoryCard from './CategoryCard';
 import ChapterCardContainer from './ChapterCardContainer';
 
-import { useStoreActions, useStoreState } from 'easy-peasy';
-import {
-  selectHasCandidateChapter,
-  selectCurrentCategoryIdx,
-  selectCurrentChapterIdx,
-} from '#store/selectors';
-import { actionsSetHasCandidateChapter } from '#store/actions';
+// import { useStoreActions, useStoreState } from 'easy-peasy';
+// import {
+//   selectHasCandidateChapter,
+//   selectCurrentCategoryIdx,
+//   selectCurrentChapterIdx,
+// } from '#store/selectors';
+// import { actionsSetHasCandidateChapter } from '#store/actions';
 
 // rootCategory example
 // {

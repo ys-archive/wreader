@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, ImageBackground, Image } from 'react-native';
 import { StyleSheet, Text, RemoteImage } from '#components';
-import sharedStyle from './ShareCardStyle';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,

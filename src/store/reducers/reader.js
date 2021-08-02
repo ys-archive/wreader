@@ -1,5 +1,4 @@
 import { action, computed } from 'easy-peasy';
-// import Novel from '../../../data/novel/novel';
 
 import { Dimensions } from 'react-native';
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
@@ -79,15 +78,6 @@ export default {
     state.model.isMovingCategoryLock = payload;
   }),
 
-  // setHasCandidateChapter: action((state, payload) => {
-  //   if (typeof payload !== 'boolean')
-  //     throw new Error(
-  //       'setHasCandidateChapter() :: 카테고리 선택은 boolean 이어야 합니다.',
-  //     );
-
-  //   state.model.hasCandidateChapter = payload;
-  // }),
-
   // 카테고리가 선택 되었는지 설정
   setCategorySelected: action((state, payload) => {
     if (typeof payload !== 'boolean')
@@ -98,16 +88,6 @@ export default {
     const isCategorySelected = payload;
     state.model.isCategorySelected = isCategorySelected;
   }),
-
-  // setCandidateSelected: action((state, payload) => {
-  //   if (typeof payload !== 'boolean')
-  //     throw new Error(
-  //       'setCategorySelected() :: 카테고리 선택은 boolean 이어야 합니다.',
-  //     );
-
-  //   const isCandidateSelected = payload;
-  //   state.model.isCandidateSelected = isCandidateSelected;
-  // }),
 
   // 마지막 카테고리 인덱스를 설정 (첫 렌더에 설정)
   setLastCategoryIdx: action((state, payload) => {
@@ -204,7 +184,6 @@ export default {
   swipeToLeft: action((state, payload) => {
     if (!state.model.isCategorySelected) {
       state.model.isCategorySelected = true;
-      // console.log('select!');
     }
 
     state.model.currentChapterIdx += 1;
@@ -215,7 +194,6 @@ export default {
   swipeToRight: action((state, payload) => {
     if (state.model.currentChapterIdx === 1) {
       state.model.isCategorySelected = false;
-      // console.log('deselect!');
     }
 
     // TODO: 마지막 뷰어에서 뒤로 이동할때는 같은 장르내에서 전 챕터로 이동이 되도록 해주세요~

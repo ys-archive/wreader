@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { View, ActivityIndicator, Image, ScrollView } from 'react-native';
+import { View, ActivityIndicator, ScrollView } from 'react-native';
 import { StyleSheet, Text } from '#components';
 
 // import {
@@ -16,7 +16,7 @@ import {
 } from '#store/actions';
 import {
   selectCurrentCategoryIdx,
-  selectCurrentChapterIdx,
+  // selectCurrentChapterIdx,
 } from '#store/selectors';
 
 import {
@@ -31,7 +31,7 @@ import CategoryCardContainer from '#components/reader-card/CategoryCardContainer
 
 import Reader from './reader/Reader';
 
-import { logo, sortIcon } from '#constants/images';
+import { Logo, Sort } from '#components/icon';
 
 const Main = () => {
   const setLastCategoryIdx = useStoreActions(actionsSetLastCategoryIdx);
@@ -88,28 +88,8 @@ const Main = () => {
 
   return (
     <View style={s.root}>
-      <Image
-        style={{
-          width: 107.4,
-          height: 28.8,
-          position: 'absolute',
-          left: wp('8.3%'),
-          top: hp('3.6%'),
-          zIndex: 1000,
-        }}
-        source={logo}
-      />
-      <Image
-        style={{
-          width: 24.7,
-          height: 15,
-          position: 'absolute',
-          right: wp('7%'),
-          top: hp('4.7%'),
-          zIndex: 1000,
-        }}
-        source={sortIcon}
-      />
+      <Logo />
+      <Sort />
       <ScrollView scrollEnabled={false}>
         {/* <EventModal /> */}
         <Reader>
@@ -126,16 +106,5 @@ const s = StyleSheet.create({
   root: {
     width: wp('100%'),
     height: hp('100%'),
-  },
-  cardView: {
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-  },
-  logo: {
-    width: wp('10%'),
-    height: hp('10%'),
-    // position: 'absolute',
-    // left: 0,
-    // top: 0,
   },
 });

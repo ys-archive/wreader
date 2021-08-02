@@ -1,6 +1,5 @@
 import { useRef } from 'react';
-import { Animated, Dimensions, LayoutAnimation } from 'react-native';
-import { useSharedValue } from 'react-native-reanimated';
+import { Animated, Dimensions } from 'react-native';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const SWIPE_OUT_DURATION = 250;
@@ -17,32 +16,28 @@ export const useSwipeGesture = () => {
     const isUp = dir === 'up';
     const delta = SCREEN_HEIGHT * (isUp ? -1 : 1);
     swipeAmount.y += delta;
-    // swipeYAmount = Math.min(0, swipeYAmount);
-    // Animated.add(swipeYAmount, new Animated.Value(delta));
     Animated.timing(position, {
       toValue: { x: swipeAmount.x, y: swipeAmount.y },
       duration: SWIPE_OUT_DURATION,
       useNativeDriver: true,
-    }).start(() => onSwipeComplete(dir)); // () => onSwipeComplete(dir)
+    }).start();
   };
 
   const forceSwipeHorizontally = dir => {
     const isLeft = dir === 'left';
     const delta = SCREEN_WIDTH * (isLeft ? -1 : 1);
     swipeAmount.x += delta;
-    // swipeXAmount = Math.min(0, swipeXAmount);
-    // Animated.add(swipeXAmount, new Animated.Value(delta));
     Animated.timing(position, {
       toValue: { x: swipeAmount.x, y: swipeAmount.y },
       duration: SWIPE_OUT_DURATION,
       useNativeDriver: true,
-    }).start(() => onSwipeComplete(dir)); //
+    }).start();
   };
 
-  const onSwipeComplete = dir => {
-    // position.setValue({ x: 0, y: 0 });
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-  };
+  // const onSwipeComplete = dir => {
+  //   // position.setValue({ x: 0, y: 0 });
+  //   LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+  // };
 
   const getStyle = () => {
     const { x: translateX, y: translateY } = position;
