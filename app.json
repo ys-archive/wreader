@@ -10,12 +10,7 @@
     },
     "assetBundlePatterns": [
       "assets/fonts/*",
-      "assets/images/*",
-      "assets/images/mdpi/*",
-      "assets/images/hdpi/*",
-      "assets/images/xhdpi/*",
-      "assets/images/xxhdpi/*",
-      "assets/images/xxxhdpi/*"
+      "assets/images/*"
     ],
     "ios": {
       "supportsTablet": true,
