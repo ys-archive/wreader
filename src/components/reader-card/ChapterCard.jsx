@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, ImageBackground, Image } from 'react-native';
 import { StyleSheet, Text } from '#components';
 import {
@@ -17,11 +17,14 @@ import {
   selectProfileLocalImagePath,
   selectProfileImageUrl,
 } from '#store/selectors';
+import CommentsModal from '#components/modals/CommentsModal';
 
 const borderRadiusOutside = 20;
 const borderRadiusInside = 17;
 
 const ChapterCard = ({ chapterOrder, chapterData, categoryTitle }) => {
+  const [isCommentsOpen, setCommentsOpen] = useState(false);
+
   const {
     id: chapterId, // 현재 챕터 Id
     categoryId,
@@ -40,6 +43,15 @@ const ChapterCard = ({ chapterOrder, chapterData, categoryTitle }) => {
 
   const myProfileLocalImagePath = useStoreState(selectProfileLocalImagePath);
   const myProfileImageUrl = useStoreState(selectProfileImageUrl);
+
+  const onPressLike = () => {
+    console.log('좋아요 버튼 누름!');
+  };
+
+  const onPressReply = () => {
+    setCommentsOpen(prv => !prv);
+    console.log('reply modal : ', isCommentsOpen);
+  };
 
   return (
     <View style={s.root}>
@@ -118,12 +130,17 @@ const ChapterCard = ({ chapterOrder, chapterData, categoryTitle }) => {
               </View>
 
               <View style={s.likeSection}>
-                <Like />
+                <Like onPress={onPressLike} />
                 <Text style={s.likeText}>{likeCount}</Text>
               </View>
 
               <View style={s.replySection}>
-                <Reply />
+                <Reply onPress={onPressReply} />
+                <CommentsModal
+                  setCommentsOpen={setCommentsOpen}
+                  isCommentsOpen={isCommentsOpen}
+                />
+                {/* {isCommentsOpen && <CommentsModal />} */}
                 <Text style={s.replyText}>{replyCount}</Text>
               </View>
             </View>
@@ -143,7 +160,11 @@ const ChapterCard = ({ chapterOrder, chapterData, categoryTitle }) => {
                     : dummyProfile
                 }
               />
-              <TextInput style={s.replyTextInput} />
+              <TextInput
+                style={s.replyTextInput}
+                placeholder="Add a comment ..."
+                placeholderTextColor={colors.light.text2}
+              />
             </View>
           </View>
         </ImageBackground>
@@ -159,7 +180,7 @@ const s = StyleSheet.create({
     minWidth: wp('100%'),
     minHeight: hp('100%'),
     backgroundColor: colors.light.primary,
-    flex: 1,
+    // flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
