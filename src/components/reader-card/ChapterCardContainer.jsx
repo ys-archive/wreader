@@ -32,7 +32,7 @@ const ChapterCardContainer = ({
   } = useGetSWR(`chapter/${chapterOrder}`);
 
   useEffect(() => {
-    if (!chapterData) {
+    if (!chapterData || !isCategorySelected) {
       return;
     }
 
@@ -71,6 +71,10 @@ const ChapterCardContainer = ({
     );
   }
 
+  if (!isCategorySelected) {
+    return null;
+  }
+
   // 현재 카테고리와 보고있는 카드의 카테고리가 같아야 함
   const isRenderingCardSameCategory =
     currentCategoryIdx === Math.max(0, categoryData.categoryId - 5);
@@ -78,35 +82,36 @@ const ChapterCardContainer = ({
   return (
     <View style={s.root}>
       {/* 챕터 카드 먼저 렌더 */}
-      {isRenderingCardSameCategory && isCategorySelected && (
+      {isRenderingCardSameCategory && (
         <ChapterCard
           chapterOrder={chapterOrder}
           chapterData={categoryData}
           categoryTitle={categoryTitle}
         />
       )}
-      {/* 후보 챕터 카드들 렌더 */}
-      {isCategorySelected &&
-        chapterData.item?.map(candidateChapterData => {
-          if (
-            currentCategoryIdx !==
-            Math.max(0, candidateChapterData.categoryId - 5)
-          ) {
-            return null;
-          }
 
-          return (
-            <ChapterCard
-              key={candidateChapterData.id}
-              chapterOrder={chapterOrder}
-              chapterData={candidateChapterData}
-              categoryTitle={categoryTitle}
-            />
-          );
-        })}
+      {/* 후보 챕터 카드들 렌더 */}
+      {chapterData.item?.map(candidateChapterData => {
+        // 현재 후보 챕터가 선택한 카테고리랑 맞는 것만 렌더
+        if (
+          currentCategoryIdx !==
+          Math.max(0, candidateChapterData.categoryId - 5)
+        ) {
+          return null;
+        }
+
+        return (
+          <ChapterCard
+            key={candidateChapterData.id}
+            chapterOrder={chapterOrder}
+            chapterData={candidateChapterData}
+            categoryTitle={categoryTitle}
+          />
+        );
+      })}
 
       {/* 마지막 카드는 항상 유저가 쓰는 카드 */}
-      {isRenderingCardSameCategory && isCategorySelected && (
+      {isRenderingCardSameCategory && (
         <WriteChapterCard categoryTitle={categoryTitle} />
       )}
     </View>
