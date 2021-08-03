@@ -32,13 +32,13 @@ const Reader = ({ children }) => {
           directionalOffsetThreshold: 80,
         }}
         style={{
-          minWidth: wp('100%'),
-          minHeight: hp('100%'),
+          minWidth: wp('95%'),
+          minHeight: hp('80%'),
           position: 'absolute',
           left: 0,
           top: 0,
-          zIndex: 5,
-          backgroundColor: 'rgba(255,255,255,0.01)',
+          // zIndex: 5,
+          backgroundColor: 'rgba(255,255,255, 0.5)',
         }}
       />
     </View>
