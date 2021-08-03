@@ -35,7 +35,7 @@ const ChapterCard = ({ chapterOrder, chapterData, categoryTitle }) => {
     chapterImg: chapterCoverImageUri, // -> cover
   } = chapterData;
 
-  console.log('현재 챕터의 작가 프로필 이미지 path: ', authorImageUri);
+  // console.log('현재 챕터의 작가 프로필 이미지 path: ', authorImageUri);
   const viewCount = 142;
 
   const myProfileLocalImagePath = useStoreState(selectProfileLocalImagePath);

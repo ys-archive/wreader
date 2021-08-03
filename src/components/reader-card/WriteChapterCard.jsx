@@ -1,18 +1,29 @@
 import React from 'react';
-import { View, Platform, ScrollView } from 'react-native';
+import { View, Platform, ImageBackground } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { useNavigation } from '@react-navigation/native';
-import * as ScreenNames from '#navigators/ScreenNames';
 import { StyleSheet, TextInput, Button } from '#components';
 import { AlertWithValue, Alert } from '#components/alert';
+
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+
+import { useNavigation } from '@react-navigation/native';
+import * as ScreenNames from '#navigators/ScreenNames';
+
 import { Feather } from 'react-native-vector-icons';
+import { colors } from '#constants';
+
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import { selectUserId } from '#store/selectors';
+
 import ChapterService from '#services';
 
-import sharedStyle from './ShareCardStyle';
+import { makeCategoryBGImagePath, dummyProfile } from '#constants/images';
 
 const initialValues = {
   sentence1: '',
@@ -29,9 +40,13 @@ const validationSchema = Yup.object({
     .required('반드시 입력하셔야합니다 (20자 내외)'),
 });
 
-const WriteChapterCard = ({ children }) => {
+const borderRadiusOutside = 20;
+const borderRadiusInside = 17;
+
+const WriteChapterCard = ({ categoryTitle }) => {
   const nav = useNavigation();
   const userId = useStoreState(selectUserId);
+  console.log('카테고리 타이틀 (write card): ', categoryTitle);
 
   const onSubmit = async values => {
     const { sentence1, sentence2 } = values;
@@ -76,44 +91,64 @@ const WriteChapterCard = ({ children }) => {
   // TODO: POST - Create New Chapter
 
   return (
-    <KeyboardAwareScrollView contentContainerStyle={sharedStyle.root}>
-      <View style={s.inputView}>
-        <TextInput
-          // style={s.input}
-          value={sentence1}
-          onBlur={handleBlur('sentence1')}
-          onChangeText={handleChange('sentence1')}
-          placeholder="챕터 내용을 입력해주세요 (20자이내)"
-        />
-        {/* {touched.sentence1 && errors.sentence1 ? (
-              <View>
-                <Text>{errors.sentence1}</Text>
-              </View>
-            ) : null} */}
-      </View>
-      <View style={s.inputView}>
-        <TextInput
-          // style={s.input}
-          value={sentence2}
-          onBlur={handleBlur('sentence2')}
-          onChangeText={handleChange('sentence2')}
-          placeholder="챕터 내용을 입력해주세요 (20자이내)"
-        />
-        {/* {touched.sentence2 && errors.sentence2 ? (
-              <View>
-                <Text>{errors.sentence2}</Text>
-              </View>
-            ) : null} */}
-      </View>
-      <Feather name="camera" size={24} color="black" />
-      <Button style={s.summitButton} onPress={handleSubmit}>
-        저장하기
-      </Button>
-      {/* </ScrollView> */}
+    <KeyboardAwareScrollView contentContainerStyle={s.root}>
+      <ImageBackground
+        style={{
+          minWidth: wp('83.3%'),
+          minHeight: hp('81.2%'),
+          // backgroundColor: '#999',
+          borderRadius: borderRadiusOutside,
+          overflow: 'hidden',
+          alignItems: 'center',
+        }}
+        source={makeCategoryBGImagePath(categoryTitle)}
+        // resizeMode="contain"
+      >
+        <View style={s.inputView}>
+          <TextInput
+            // style={s.input}
+            value={sentence1}
+            onBlur={handleBlur('sentence1')}
+            onChangeText={handleChange('sentence1')}
+            placeholder="챕터 내용을 입력해주세요 (20자이내)"
+          />
+          {touched.sentence1 && errors.sentence1 ? (
+            <View>
+              <Text>{errors.sentence1}</Text>
+            </View>
+          ) : null}
+        </View>
+        <View style={s.inputView}>
+          <TextInput
+            // style={s.input}
+            value={sentence2}
+            onBlur={handleBlur('sentence2')}
+            onChangeText={handleChange('sentence2')}
+            placeholder="챕터 내용을 입력해주세요 (20자이내)"
+          />
+          {touched.sentence2 && errors.sentence2 ? (
+            <View>
+              <Text>{errors.sentence2}</Text>
+            </View>
+          ) : null}
+        </View>
+        <Feather name="camera" size={24} color="black" />
+        <Button style={s.summitButton} onPress={handleSubmit}>
+          저장하기
+        </Button>
+      </ImageBackground>
     </KeyboardAwareScrollView>
   );
 };
 
 export default WriteChapterCard;
 
-const s = StyleSheet.create({});
+const s = StyleSheet.create({
+  root: {
+    minWidth: wp('100%'),
+    minHeight: hp('100%'),
+    backgroundColor: colors.light.primary,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { StyleSheet, Text } from '#components';
 
-// import WriteChapterCard from './WriteChapterCard';
+import WriteChapterCard from './WriteChapterCard';
 import ChapterCard from './ChapterCard';
 
 import { useGetSWR } from '#hooks';
@@ -41,11 +41,14 @@ const ChapterCardContainer = ({
     if (currentChapterIdx === chapterOrder) {
       // 현재 get Chapter 의 결과를 filter
       // 카테고리 id 가 현재 선택한 카테고리의 idx 와 같아야 렌더
-      const maxLength = chapterData?.item.filter(
-        chapter => chapter.categoryId - 5 === currentCategoryIdx,
-      )?.length;
+      const maxLength =
+        chapterData?.item.filter(
+          chapter => chapter.categoryId - 5 === currentCategoryIdx,
+        )?.length + 1;
       console.log(
-        `[${chapterOrder}:${currentCategoryIdx}] ${maxLength} / ${chapterData.item.length}`,
+        `[${chapterOrder}:${currentCategoryIdx}] ${maxLength} / ${
+          chapterData.item.length + 1
+        }`,
       );
 
       setLastCandidateIdx(maxLength);
@@ -86,7 +89,7 @@ const ChapterCardContainer = ({
       {/* 후보 챕터 카드들 렌더 */}
       {isCategorySelected && (
         <View>
-          {chapterData.item?.map(candidateChapterData => {
+          {/* {chapterData.item?.map(candidateChapterData => {
             if (!isRenderingCardSameCategory) {
               return null;
             }
@@ -99,12 +102,12 @@ const ChapterCardContainer = ({
                 categoryTitle={categoryTitle}
               />
             );
-          })}
+          })} */}
+
+          {/* 마지막 카드는 항상 유저가 쓰는 카드 */}
+          <WriteChapterCard categoryTitle={categoryTitle} />
         </View>
       )}
-
-      {/* 마지막 카드는 항상 유저가 쓰는 카드 */}
-      {/* <WriteChapterCard /> */}
     </View>
   );
 };
