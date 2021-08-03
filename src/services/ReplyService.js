@@ -17,7 +17,7 @@ class ReplyService {
   }
 
   static async GET_getReply(chapterId) {
-    const { data, isLoading, error, mutate } = await useGetSWR(
+    const { data, isLoading, error, mutate } = useGetSWR(
       `chapter/${chapterId}/reply`,
     );
     if (!error) {

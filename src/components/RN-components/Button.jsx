@@ -4,12 +4,20 @@ import { View, TouchableOpacity } from 'react-native';
 import { Text } from './Text';
 import { StyleSheet } from './StyleSheet';
 
-export const Button = ({ style = {}, textStyle = {}, onPress, children }) => {
+export const Button = ({
+  style = {},
+  textStyle = {},
+  onPress,
+  isBold = false,
+  children,
+}) => {
   // console.log(style, textStyle, onPress, children);
   return (
     <TouchableOpacity style={{ ...s.root, ...style }} onPress={onPress}>
       <View style={s.view}>
-        <Text style={{ ...s.text, ...textStyle }}>{children}</Text>
+        <Text isBold={isBold} style={{ ...s.text, ...textStyle }}>
+          {children}
+        </Text>
       </View>
     </TouchableOpacity>
   );
@@ -19,12 +27,14 @@ Button.propTypes = {
   style: PropTypes.object,
   textStyle: PropTypes.object,
   onPress: PropTypes.func.isRequired,
+  isBold: PropTypes.bool,
   children: PropTypes.any.isRequired,
 };
 
 Button.defaultProps = {
   style: {},
   textStyle: {},
+  isBold: false,
 };
 
 const s = StyleSheet.create({

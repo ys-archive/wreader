@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import { View, ActivityIndicator, ScrollView } from 'react-native';
 import { StyleSheet, Text } from '#components';
@@ -61,6 +61,19 @@ const Main = () => {
     setLastChapterIdx(totalChapterCount);
   });
 
+  const refs = {
+    likeRef: useRef(null),
+    replyRef: useRef(null),
+    replyInpuRef: useRef(null),
+  };
+
+  console.log(refs);
+
+  const onPressSortIcon = () => {
+    console.log('정렬 아이콘 눌림!');
+    // TODO: 후보 챕터들을 조회수 별로 정렬F
+  };
+
   if (error) {
     return (
       <View>
@@ -88,11 +101,11 @@ const Main = () => {
   return (
     <View style={s.root}>
       <Logo />
-      <Sort />
+      <Sort onPress={onPressSortIcon} />
       <ScrollView scrollEnabled={false}>
         {/* <EventModal /> */}
         <Reader>
-          <CategoryCardContainer rootData={rootData.item} />
+          <CategoryCardContainer rootData={rootData.item} refs={refs} />
         </Reader>
       </ScrollView>
     </View>
