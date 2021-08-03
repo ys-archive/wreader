@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { View, ActivityIndicator, ScrollView, Animated } from 'react-native';
+import { View, ActivityIndicator, ScrollView } from 'react-native';
 import { StyleSheet, Text } from '#components';
 
 // import {
@@ -24,7 +24,7 @@ import {
 //   heightPercentageToDP as hp,
 // } from 'react-native-responsive-screen';
 
-import { useGetSWR, useSwipeGesture } from '#hooks';
+import { useGetSWR } from '#hooks';
 import EventModal from '#components/modals/EventModal';
 import CategoryCardContainer from '#components/reader-card/CategoryCardContainer';
 import Reader from './reader/Reader';
@@ -37,9 +37,6 @@ const Main = () => {
   const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
 
   const lockMovingChapter = useStoreActions(actionsLockMovingChapter);
-
-  const { forceSwipeVertically, forceSwipeHorizontally, getStyle } =
-    useSwipeGesture();
 
   const { data: rootData, isLoading, error } = useGetSWR(`category`);
 

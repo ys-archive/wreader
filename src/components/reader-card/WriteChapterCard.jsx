@@ -80,6 +80,10 @@ const WriteChapterCard = ({ categoryTitle }) => {
 
   const { sentence1, sentence2 } = values;
 
+  const onPressCameraIcon = () => {
+    console.log('camera icon pressed!');
+  };
+
   // TODO: 1. Image Picker 를 통해서 이미지 선택
   // TODO: 2. 선택한 이미지 업로드
   // TODO: 2-success. alert(성공), 선택한 이미지로 바로 프로필 이미지 변경
@@ -96,17 +100,17 @@ const WriteChapterCard = ({ categoryTitle }) => {
         style={{
           minWidth: wp('83.3%'),
           minHeight: hp('81.2%'),
-          // backgroundColor: '#999',
           borderRadius: borderRadiusOutside,
           overflow: 'hidden',
           alignItems: 'center',
+          justifyContent: 'center',
         }}
         source={makeCategoryBGImagePath(categoryTitle)}
         // resizeMode="contain"
       >
         <View style={s.inputView}>
           <TextInput
-            // style={s.input}
+            style={s.input}
             value={sentence1}
             onBlur={handleBlur('sentence1')}
             onChangeText={handleChange('sentence1')}
@@ -120,7 +124,7 @@ const WriteChapterCard = ({ categoryTitle }) => {
         </View>
         <View style={s.inputView}>
           <TextInput
-            // style={s.input}
+            style={s.input}
             value={sentence2}
             onBlur={handleBlur('sentence2')}
             onChangeText={handleChange('sentence2')}
@@ -132,10 +136,22 @@ const WriteChapterCard = ({ categoryTitle }) => {
             </View>
           ) : null}
         </View>
-        <Feather name="camera" size={24} color="black" />
-        <Button style={s.summitButton} onPress={handleSubmit}>
-          저장하기
-        </Button>
+        <View style={s.bottomSection}>
+          <Feather
+            name="camera"
+            size={35}
+            style={s.imageIcon}
+            onPress={onPressCameraIcon}
+          />
+          <Button
+            style={s.summitButton}
+            textStyle={s.summitInsideText}
+            onPress={handleSubmit}
+            isBold
+          >
+            저장하기
+          </Button>
+        </View>
       </ImageBackground>
     </KeyboardAwareScrollView>
   );
@@ -150,5 +166,40 @@ const s = StyleSheet.create({
     backgroundColor: colors.light.primary,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#fff',
+    borderRadius: borderRadiusInside,
+    backgroundColor: '#fff',
+    minWidth: wp('76%'),
+    minHeight: hp('15%'),
+  },
+  bottomSection: {
+    minWidth: wp('83%'),
+    marginTop: hp('25%'),
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    // backgroundColor: 'rgba(255, 255, 255, 0.6)',
+  },
+  imageIcon: {
+    color: colors.light.text2,
+    marginRight: 150,
+  },
+  summitButton: {
+    marginHorizontal: 0,
+    borderWidth: 1,
+    borderColor: '#fff',
+    paddingVertical: 10,
+    paddingHorizontal: 3,
+
+    justifyContent: 'center',
+
+    borderRadius: borderRadiusInside,
+  },
+  summitInsideText: {
+    fontSize: 16,
+    color: colors.light.text2,
   },
 });
