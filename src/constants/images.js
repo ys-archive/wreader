@@ -10,6 +10,8 @@ export const likeIcon = require('!images/like-icon.png');
 export const viewCountIcon = require('!images/view-count-icon.png');
 export const replyIcon = require('!images/reply-icon.png');
 
+export const dummyProfile = require('!images/dummy-image.jpg');
+
 export const makeCategoryBGImagePath = title => {
   const id = title.toLowerCase().trim();
   if (id === 'romance') {

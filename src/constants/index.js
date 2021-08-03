@@ -11,6 +11,7 @@ import {
   likeIcon,
   viewCountIcon,
   replyIcon,
+  dummyProfile,
   makeCategoryBGImagePath,
 } from './images';
 
@@ -29,5 +30,6 @@ export {
   likeIcon,
   viewCountIcon,
   replyIcon,
+  dummyProfile,
   makeCategoryBGImagePath,
 };

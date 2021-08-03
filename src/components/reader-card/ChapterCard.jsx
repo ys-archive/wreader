@@ -10,9 +10,13 @@ import { colors } from '#constants';
 import { TextInput } from '#components';
 import { ViewCount, Like, Reply } from '#components/icon';
 
-const dummy = require('!images/dummy-image.jpg');
+import { makeCategoryBGImagePath, dummyProfile } from '#constants/images';
 
-import { makeCategoryBGImagePath } from '#constants/images';
+import { useStoreState } from 'easy-peasy';
+import {
+  selectProfileLocalImagePath,
+  selectProfileImageUrl,
+} from '#store/selectors';
 
 const borderRadiusOutside = 20;
 const borderRadiusInside = 17;
@@ -30,7 +34,12 @@ const ChapterCard = ({ chapterOrder, chapterData, categoryTitle }) => {
     userNick: authorNickName, // -> author
     chapterImg: chapterCoverImageUri, // -> cover
   } = chapterData;
+
+  console.log('현재 챕터의 작가 프로필 이미지 path: ', authorImageUri);
   const viewCount = 142;
+
+  const myProfileLocalImagePath = useStoreState(selectProfileLocalImagePath);
+  const myProfileImageUrl = useStoreState(selectProfileImageUrl);
 
   return (
     <View style={s.root}>
@@ -60,8 +69,8 @@ const ChapterCard = ({ chapterOrder, chapterData, categoryTitle }) => {
               height: 30,
               borderRadius: 100,
             }}
-            source={dummy}
-            // source={{ uri: authorImageUri }}
+            // source={authorImageUri !== '' ? { uri: authorImageUri } : dummyProfile}
+            source={dummyProfile}
           />
           <Text isBold style={s.authorNameText}>
             {authorNickName || 'Jessica Momo'}
@@ -126,8 +135,13 @@ const ChapterCard = ({ chapterOrder, chapterData, categoryTitle }) => {
                   height: 24,
                   borderRadius: 100,
                 }}
-                source={dummy}
-                // source={{ uri: myProfileUri }}
+                source={
+                  myProfileLocalImagePath !== ''
+                    ? { uri: myProfileLocalImagePath }
+                    : myProfileImageUrl !== ''
+                    ? { uri: myProfileImageUrl }
+                    : dummyProfile
+                }
               />
               <TextInput style={s.replyTextInput} />
             </View>
