@@ -41,5 +41,6 @@ export default CategoryCardContainer;
 const s = StyleSheet.create({
   root: {
     flexDirection: 'row',
+    // flex: 1,
   },
 });

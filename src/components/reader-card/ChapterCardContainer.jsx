@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { StyleSheet, Text } from '#components';
 
-import WriteChapterCard from './WriteChapterCard';
 import ChapterCard from './ChapterCard';
+import WriteChapterCard from './WriteChapterCard';
 
 import { useGetSWR } from '#hooks';
 
@@ -78,35 +78,36 @@ const ChapterCardContainer = ({
   return (
     <View style={s.root}>
       {/* 챕터 카드 먼저 렌더 */}
-      {isRenderingCardSameCategory && (
+      {isRenderingCardSameCategory && isCategorySelected && (
         <ChapterCard
           chapterOrder={chapterOrder}
           chapterData={categoryData}
           categoryTitle={categoryTitle}
         />
       )}
-
       {/* 후보 챕터 카드들 렌더 */}
-      {isCategorySelected && (
-        <View>
-          {/* {chapterData.item?.map(candidateChapterData => {
-            if (!isRenderingCardSameCategory) {
-              return null;
-            }
+      {isCategorySelected &&
+        chapterData.item?.map(candidateChapterData => {
+          if (
+            currentCategoryIdx !==
+            Math.max(0, candidateChapterData.categoryId - 5)
+          ) {
+            return null;
+          }
 
-            return (
-              <ChapterCard
-                key={candidateChapterData.id}
-                chapterOrder={chapterOrder}
-                chapterData={candidateChapterData}
-                categoryTitle={categoryTitle}
-              />
-            );
-          })} */}
+          return (
+            <ChapterCard
+              key={candidateChapterData.id}
+              chapterOrder={chapterOrder}
+              chapterData={candidateChapterData}
+              categoryTitle={categoryTitle}
+            />
+          );
+        })}
 
-          {/* 마지막 카드는 항상 유저가 쓰는 카드 */}
-          <WriteChapterCard categoryTitle={categoryTitle} />
-        </View>
+      {/* 마지막 카드는 항상 유저가 쓰는 카드 */}
+      {isRenderingCardSameCategory && isCategorySelected && (
+        <WriteChapterCard categoryTitle={categoryTitle} />
       )}
     </View>
   );
@@ -120,7 +121,7 @@ const s = StyleSheet.create({
     // justifyContent: 'center',
     // alignItems: 'flex-start',
     // flex: 1,
-    width: '100%',
+    // width: '100%',
     // height: '100%',
   },
 });
