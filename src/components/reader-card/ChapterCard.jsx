@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, ImageBackground, Image } from 'react-native';
-import { StyleSheet, Text } from '#components';
+import { StyleSheet, View, ImageBackground, Image } from 'react-native';
+import { Text } from '#components';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -61,7 +61,7 @@ const ChapterCard = ({ chapterOrder, chapterData, categoryTitle }) => {
           minHeight: hp('81.2%'),
           // backgroundColor: '#999',
           borderRadius: borderRadiusOutside,
-          overflow: 'hidden',
+          // overflow: 'hidden',
           alignItems: 'center',
         }}
         source={

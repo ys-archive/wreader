@@ -28,11 +28,12 @@ const Reader = ({ forceSwipeVertically, forceSwipeHorizontally }) => {
         }}
         style={{
           minWidth: wp('95%'),
-          minHeight: hp('81%'),
+          minHeight: hp('76%'),
           position: 'absolute',
           left: 0,
           top: 0,
-          // backgroundColor: 'rgba(255,255,255, 0.2)',
+          zIndex: 10,
+          backgroundColor: 'rgba(255,255,255, 0.2)',
         }}
       />
       {/* 아랫 부분 터치 */}
@@ -52,7 +53,8 @@ const Reader = ({ forceSwipeVertically, forceSwipeHorizontally }) => {
           position: 'absolute',
           left: 0,
           top: hp('88%'),
-          // backgroundColor: 'rgba(255,255,255, 0.7)',
+          zIndex: 10,
+          backgroundColor: 'rgba(255,255,255, 0.7)',
         }}
       />
     </>

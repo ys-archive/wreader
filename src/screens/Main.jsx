@@ -92,19 +92,22 @@ const Main = () => {
   }
 
   return (
-    <View style={s.root}>
+    <View style={s.root} pointerEvents="box-none">
       <Logo />
       <Sort onPress={onPressSortIcon} />
-      <ScrollView scrollEnabled={false}>
-        {/* <EventModal /> */}
-        <Animated.View style={getStyle()}>
-          <CategoryCardContainer rootData={rootData.item} />
-        </Animated.View>
-        <Reader
-          forceSwipeVertically={forceSwipeVertically}
-          forceSwipeHorizontally={forceSwipeHorizontally}
+      {/* <EventModal /> */}
+      <Animated.View style={getStyle()} pointerEvents="box-none">
+        <CategoryCardContainer
+          rootData={rootData.item}
+          pointerEvents="box-none"
         />
-      </ScrollView>
+      </Animated.View>
+      <Reader
+        forceSwipeVertically={forceSwipeVertically}
+        forceSwipeHorizontally={forceSwipeHorizontally}
+        pointerEvents="box-none"
+      />
+      {/* <ScrollView scrollEnabled={false}></ScrollView> */}
     </View>
   );
 };
@@ -114,6 +117,6 @@ export default Main;
 const s = StyleSheet.create({
   root: {
     justifyContent: 'flex-start',
-    // flex: 1,
+    flex: 1,
   },
 });

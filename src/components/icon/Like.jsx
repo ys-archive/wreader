@@ -7,7 +7,8 @@ import {
 } from 'react-native-responsive-screen';
 
 const Like = ({ onPress }) => (
-  <TouchableOpacity onPress={onPress} style={{ zIndex: 1000 }}>
+  // zIndex: 10,
+  <TouchableOpacity onPress={onPress} >
     <Image
       style={{
         width: 16,

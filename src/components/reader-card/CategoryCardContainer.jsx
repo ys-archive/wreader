@@ -17,6 +17,7 @@ const renderChaptersJSX = (chapters, categoryTitle) => {
       chapterOrder={order + 1} // 0 -> category 이므로 1 부터 시작
       categoryData={chapter}
       categoryTitle={categoryTitle || ''}
+      pointerEvents="box-none"
     />
   ));
 };
@@ -29,7 +30,7 @@ const CategoryCardContainer = ({ rootData }) => {
 
   return rootData.map(category => (
     // 현재 카테고리와 이하의 모든 챕터들 은 종 방향 렌더
-    <View key={category.id} style={s.root}>
+    <View key={category.id} style={s.root} pointerEvents="box-none">
       <CategoryCard {...category} />
       {renderChaptersJSX(category.chapter, category.title)}
     </View>
@@ -41,6 +42,6 @@ export default CategoryCardContainer;
 const s = StyleSheet.create({
   root: {
     flexDirection: 'row',
-    flex: 1,
+    // flex: 1,
   },
 });

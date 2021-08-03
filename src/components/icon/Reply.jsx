@@ -7,7 +7,8 @@ import {
 } from 'react-native-responsive-screen';
 
 const Reply = ({ onPress }) => (
-  <TouchableOpacity onPress={onPress} style={{ zIndex: 1000 }}>
+  // style={{ zIndex: 1000 }}
+  <TouchableOpacity onPress={onPress}>
     <Image
       style={{
         width: 16,

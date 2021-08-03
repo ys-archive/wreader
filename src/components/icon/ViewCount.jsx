@@ -3,7 +3,8 @@ import { Image, TouchableOpacity } from 'react-native';
 import { viewCountIcon } from '#constants/images';
 
 const ViewCount = ({ onPress }) => (
-  <TouchableOpacity onPress={onPress} style={{ zIndex: 1000 }}>
+  // style={{ zIndex: 1000 }}
+  <TouchableOpacity onPress={onPress}>
     <Image
       style={{
         width: 16,
