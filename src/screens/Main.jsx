@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 
-import { View, ActivityIndicator, ScrollView } from 'react-native';
+import { View, ActivityIndicator, ScrollView, Animated } from 'react-native';
 import { StyleSheet, Text } from '#components';
 
 // import {
@@ -24,11 +24,9 @@ import {
 //   heightPercentageToDP as hp,
 // } from 'react-native-responsive-screen';
 
+import { useGetSWR, useSwipeGesture } from '#hooks';
 import EventModal from '#components/modals/EventModal';
-
-import { useGetSWR } from '#hooks';
 import CategoryCardContainer from '#components/reader-card/CategoryCardContainer';
-
 import Reader from './reader/Reader';
 
 import { Logo, Sort } from '#components/icon';
@@ -39,6 +37,9 @@ const Main = () => {
   const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
 
   const lockMovingChapter = useStoreActions(actionsLockMovingChapter);
+
+  const { forceSwipeVertically, forceSwipeHorizontally, getStyle } =
+    useSwipeGesture();
 
   const { data: rootData, isLoading, error } = useGetSWR(`category`);
 
@@ -60,14 +61,6 @@ const Main = () => {
     setLastCategoryIdx(totalCategoryCount);
     setLastChapterIdx(totalChapterCount);
   });
-
-  const refs = {
-    likeRef: useRef(null),
-    replyRef: useRef(null),
-    replyInpuRef: useRef(null),
-  };
-
-  console.log(refs);
 
   const onPressSortIcon = () => {
     console.log('정렬 아이콘 눌림!');
@@ -104,9 +97,13 @@ const Main = () => {
       <Sort onPress={onPressSortIcon} />
       <ScrollView scrollEnabled={false}>
         {/* <EventModal /> */}
-        <Reader>
-          <CategoryCardContainer rootData={rootData.item} refs={refs} />
-        </Reader>
+        <Animated.View style={getStyle()}>
+          <CategoryCardContainer rootData={rootData.item} />
+        </Animated.View>
+        <Reader
+          forceSwipeVertically={forceSwipeVertically}
+          forceSwipeHorizontally={forceSwipeHorizontally}
+        />
       </ScrollView>
     </View>
   );
@@ -117,5 +114,6 @@ export default Main;
 const s = StyleSheet.create({
   root: {
     justifyContent: 'flex-start',
+    // flex: 1,
   },
 });

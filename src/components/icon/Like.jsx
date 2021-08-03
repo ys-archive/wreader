@@ -7,20 +7,11 @@ import {
 } from 'react-native-responsive-screen';
 
 const Like = ({ onPress }) => (
-  <TouchableOpacity
-    onPress={onPress}
-    style={{
-      width: wp('4.4%'),
-      height: hp('2.2%'),
-      zIndex: 1000,
-    }}
-  >
+  <TouchableOpacity onPress={onPress} style={{ zIndex: 1000 }}>
     <Image
       style={{
         width: 16,
         height: 15,
-
-        // zIndex: 1000,
       }}
       source={likeIcon}
     />

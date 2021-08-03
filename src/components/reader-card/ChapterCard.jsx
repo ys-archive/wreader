@@ -159,6 +159,7 @@ const s = StyleSheet.create({
     minWidth: wp('100%'),
     minHeight: hp('100%'),
     backgroundColor: colors.light.primary,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },

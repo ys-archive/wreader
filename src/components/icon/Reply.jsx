@@ -12,8 +12,6 @@ const Reply = ({ onPress }) => (
       style={{
         width: 16,
         height: 13.7,
-        // width: wp('4.4%'),
-        // height: hp('2.1%')
       }}
       source={replyIcon}
     />
