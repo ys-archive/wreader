@@ -19,10 +19,10 @@ import {
   // selectCurrentChapterIdx,
 } from '#store/selectors';
 
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+// import {
+//   widthPercentageToDP as wp,
+//   heightPercentageToDP as hp,
+// } from 'react-native-responsive-screen';
 
 import EventModal from '#components/modals/EventModal';
 
@@ -37,27 +37,26 @@ const Main = () => {
   const setLastCategoryIdx = useStoreActions(actionsSetLastCategoryIdx);
   const setLastChapterIdx = useStoreActions(actionsSetLastChapterIdx);
   const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
-  // const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
 
   const lockMovingChapter = useStoreActions(actionsLockMovingChapter);
 
-  const { data, isLoading, error } = useGetSWR(`category`);
+  const { data: rootData, isLoading, error } = useGetSWR(`category`);
 
   useEffect(() => {
-    if (!data) return;
+    // 카테고리 데이터 없으면 갱신 X
+    if (!rootData) {
+      return;
+    }
 
-    const totalCategoryCount = data.item.length;
-    const totalChapterCount = data.item[currentCategoryIdx].chapter.length;
-    // console.log('총 카테고리 개수: ', totalCategoryCount);
-    // console.log('현재 카테고리 인덱스: ', currentCategoryIdx);
-    // console.log('현재 챕터 인덱스: ', currentChapterIdx);
-    // console.log('현재 카테고리의 총 챕터 개수: ', totalChapterCount);
-    // console.log(
-    //   '------------------------------------------------------------------------',
-    // );
+    // 현재 총 카테고리 갯수
+    const totalCategoryCount = rootData.item.length;
+    // 현재 카테고리의 총 챕터 갯수
+    const totalChapterCount = rootData.item[currentCategoryIdx].chapter.length;
 
+    // 현재 챕터가 0 개이면 종 방향 이동 잠금
     lockMovingChapter(totalChapterCount <= 0);
 
+    // 마지막 카테고리 & 챕터 갯수 갱신
     setLastCategoryIdx(totalCategoryCount);
     setLastChapterIdx(totalChapterCount);
   });
@@ -78,7 +77,7 @@ const Main = () => {
     );
   }
 
-  if (!data || !data.item) {
+  if (!rootData || !rootData.item) {
     return (
       <View>
         <Text>get category 의 데이터가 없습니다!</Text>
@@ -93,7 +92,7 @@ const Main = () => {
       <ScrollView scrollEnabled={false}>
         {/* <EventModal /> */}
         <Reader>
-          <CategoryCardContainer rootData={data.item} />
+          <CategoryCardContainer rootData={rootData.item} />
         </Reader>
       </ScrollView>
     </View>
@@ -104,8 +103,6 @@ export default Main;
 
 const s = StyleSheet.create({
   root: {
-    // width: wp('100%'),
-    // height: hp('100%'),
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
   },
 });

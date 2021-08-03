@@ -16,9 +16,9 @@ import {
 import { actionsSetLastCandidateIdx } from '#store/actions';
 
 const ChapterCardContainer = ({
-  currentCategoryId,
   chapterOrder,
   categoryData,
+  categoryTitle,
 }) => {
   const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
   const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
@@ -36,13 +36,18 @@ const ChapterCardContainer = ({
       return;
     }
 
+    // 현재 렌더하는 챕터가 보고있는 챕터와 동일 할 때,
+    // 챕터 최소, 최대 재 설정
     if (currentChapterIdx === chapterOrder) {
-      const maxLength = chapterData.item.filter(chapter => {
-        return chapter.categoryId - 5 === currentCategoryIdx;
-      }).length;
+      // 현재 get Chapter 의 결과를 filter
+      // 카테고리 id 가 현재 선택한 카테고리의 idx 와 같아야 렌더
+      const maxLength = chapterData?.item.filter(
+        chapter => chapter.categoryId - 5 === currentCategoryIdx,
+      )?.length;
       console.log(
         `[${chapterOrder}:${currentCategoryIdx}] ${maxLength} / ${chapterData.item.length}`,
       );
+
       setLastCandidateIdx(maxLength);
     }
   });
@@ -63,32 +68,35 @@ const ChapterCardContainer = ({
     );
   }
 
+  // 현재 카테고리와 보고있는 카드의 카테고리가 같아야 함
+  const isRenderingCardSameCategory =
+    currentCategoryIdx === Math.max(0, categoryData.categoryId - 5);
+
   return (
     <View style={s.root}>
-      {/* 먼저 챕터 카드 렌더 */}
-      {/*  */}
-
-      {currentCategoryIdx === categoryData.categoryId - 5 && (
-        <ChapterCard chapterOrder={chapterOrder} data={categoryData} />
+      {/* 챕터 카드 먼저 렌더 */}
+      {isRenderingCardSameCategory && (
+        <ChapterCard
+          chapterOrder={chapterOrder}
+          chapterData={categoryData}
+          categoryTitle={categoryTitle}
+        />
       )}
 
-      {/* 현재 챕터의 후보 챕터 카드들 렌더 */}
+      {/* 후보 챕터 카드들 렌더 */}
       {isCategorySelected && (
         <View>
-          {chapterData.item.map(candidate => {
-            // if (currentChapterIdx !== candidate.group_index) {
-            //   return null;
-            // }
-
-            if (Math.max(0, candidate.categoryId - 5) !== currentCategoryIdx) {
+          {chapterData.item?.map(candidateChapterData => {
+            if (!isRenderingCardSameCategory) {
               return null;
             }
 
             return (
               <ChapterCard
-                key={candidate.id}
+                key={candidateChapterData.id}
                 chapterOrder={chapterOrder}
-                data={candidate}
+                chapterData={candidateChapterData}
+                categoryTitle={categoryTitle}
               />
             );
           })}

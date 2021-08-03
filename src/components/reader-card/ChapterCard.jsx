@@ -12,10 +12,12 @@ import { ViewCount, Like, Reply } from '#components/icon';
 
 const dummy = require('!images/dummy-image.jpg');
 
+import { makeCategoryBGImagePath } from '#constants/images';
+
 const borderRadiusOutside = 20;
 const borderRadiusInside = 17;
 
-const ChapterCard = ({ chapterOrder, data }) => {
+const ChapterCard = ({ chapterOrder, chapterData, categoryTitle }) => {
   const {
     id: chapterId, // 현재 챕터 Id
     categoryId,
@@ -27,7 +29,7 @@ const ChapterCard = ({ chapterOrder, data }) => {
     userImg: authorImageUri, // -> author
     userNick: authorNickName, // -> author
     chapterImg: chapterCoverImageUri, // -> cover
-  } = data;
+  } = chapterData;
   const viewCount = 142;
 
   return (
@@ -36,12 +38,18 @@ const ChapterCard = ({ chapterOrder, data }) => {
         style={{
           minWidth: wp('83.3%'),
           minHeight: hp('81.2%'),
-          backgroundColor: '#999',
+          // backgroundColor: '#999',
           borderRadius: borderRadiusOutside,
           overflow: 'hidden',
           alignItems: 'center',
         }}
-        // source={{ uri: chapterCoverImageUri ?? "" }}
+        source={
+          chapterCoverImageUri
+            ? {
+                uri: chapterCoverImageUri,
+              }
+            : makeCategoryBGImagePath(categoryTitle)
+        }
         // resizeMode="contain"
       >
         {/* 프로필 및 작가 이름 */}
@@ -137,7 +145,6 @@ const s = StyleSheet.create({
     minWidth: wp('100%'),
     minHeight: hp('100%'),
     backgroundColor: colors.light.primary,
-    // flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
