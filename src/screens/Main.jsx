@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { View, ActivityIndicator, ScrollView } from 'react-native';
+import { View, ActivityIndicator, ScrollView, Animated } from 'react-native';
 import { StyleSheet, Text } from '#components';
 
 // import {
@@ -24,7 +24,7 @@ import {
 //   heightPercentageToDP as hp,
 // } from 'react-native-responsive-screen';
 
-import { useGetSWR } from '#hooks';
+import { useGetSWR, useSwipeGesture } from '#hooks';
 import EventModal from '#components/modals/EventModal';
 import CategoryCardContainer from '#components/reader-card/CategoryCardContainer';
 import Reader from './reader/Reader';
@@ -37,6 +37,9 @@ const Main = () => {
   const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
 
   const lockMovingChapter = useStoreActions(actionsLockMovingChapter);
+
+  const { forceSwipeVertically, forceSwipeHorizontally, getStyle } =
+    useSwipeGesture();
 
   const { data: rootData, isLoading, error } = useGetSWR(`category`);
 
@@ -89,22 +92,19 @@ const Main = () => {
   }
 
   return (
-    <View style={s.root} pointerEvents="box-none">
+    <View style={s.root}>
       <Logo />
       <Sort onPress={onPressSortIcon} />
-      {/* <EventModal /> */}
-      <Animated.View style={getStyle()} pointerEvents="box-none">
-        <CategoryCardContainer
-          rootData={rootData.item}
-          pointerEvents="box-none"
+      <ScrollView scrollEnabled={false}>
+        <EventModal />
+        <Animated.View style={getStyle()}>
+          <CategoryCardContainer rootData={rootData.item} />
+        </Animated.View>
+        <Reader
+          forceSwipeVertically={forceSwipeVertically}
+          forceSwipeHorizontally={forceSwipeHorizontally}
         />
-      </Animated.View>
-      <Reader
-        forceSwipeVertically={forceSwipeVertically}
-        forceSwipeHorizontally={forceSwipeHorizontally}
-        pointerEvents="box-none"
-      />
-      {/* <ScrollView scrollEnabled={false}></ScrollView> */}
+      </ScrollView>
     </View>
   );
 };

@@ -15,6 +15,11 @@ import {
 } from '#store/selectors';
 import { actionsSetLastCandidateIdx } from '#store/actions';
 
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+
 const ChapterCardContainer = ({
   chapterOrder,
   categoryData,
@@ -125,8 +130,8 @@ const s = StyleSheet.create({
     // flexDirection: 'column',
     // justifyContent: 'center',
     // alignItems: 'flex-start',
-    // flex: 1,
-    // width: '100%',
+    flex: 1,
+    minWidth: wp('100%'),
     // height: '100%',
   },
 });

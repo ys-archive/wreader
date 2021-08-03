@@ -8,9 +8,8 @@ import {
 } from 'react-native-responsive-screen';
 import { useSwipeGesture, useSwipeHorizontal, useSwipeVertical } from '#hooks';
 
-const Reader = ({ children }) => {
-  const { forceSwipeVertically, forceSwipeHorizontally, getStyle } =
-    useSwipeGesture();
+const Reader = ({ forceSwipeVertically, forceSwipeHorizontally, children }) => {
+  
 
   const { onSwipeLeft, onSwipeRight } = useSwipeHorizontal(
     forceSwipeHorizontally,
@@ -19,7 +18,7 @@ const Reader = ({ children }) => {
 
   return (
     <>
-      <Animated.View style={[getStyle()]}>{children}</Animated.View>
+      {/* <Animated.View style={[getStyle()]}>{children}</Animated.View> */}
       {/* 스와이프 View (overlay) + 카드 View - touch through 안 되서 고정 으로 스와이프 범위를 정했음  */}
       {/* 윗 부분 터치 */}
       <GestureRecognizer

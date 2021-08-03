@@ -6,8 +6,9 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { loadFontsAsync } from './constants/fonts';
 import { ReduxProvider } from '#store';
 import { NavigationProvider } from '#navigators';
-
-import './Setup';
+import { enableScreens } from 'react-native-screens';
+enableScreens(true);
+// import './Setup';
 import './firebase/firebase';
 
 const SplashDelay = 2000;
