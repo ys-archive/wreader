@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Platform, ImageBackground } from 'react-native';
+import { View, Platform, ImageBackground, Text } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { StyleSheet, TextInput, Button } from '#components';
 import { AlertWithValue, Alert } from '#components/alert';

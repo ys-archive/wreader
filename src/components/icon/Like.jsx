@@ -8,7 +8,7 @@ import {
 
 const Like = ({ onPress }) => (
   // zIndex: 10,
-  <TouchableOpacity onPress={onPress} >
+  <TouchableOpacity onPress={onPress} style={{ zIndex: 100 }}>
     <Image
       style={{
         width: 16,

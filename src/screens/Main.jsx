@@ -38,9 +38,6 @@ const Main = () => {
 
   const lockMovingChapter = useStoreActions(actionsLockMovingChapter);
 
-  const { forceSwipeVertically, forceSwipeHorizontally, getStyle } =
-    useSwipeGesture();
-
   const { data: rootData, isLoading, error } = useGetSWR(`category`);
 
   useEffect(() => {
@@ -95,16 +92,18 @@ const Main = () => {
     <View style={s.root}>
       <Logo />
       <Sort onPress={onPressSortIcon} />
-      <ScrollView scrollEnabled={false}>
-        <EventModal />
-        <Animated.View style={getStyle()}>
+      {/* <ScrollView scrollEnabled={false}> */}
+      {/* <EventModal /> */}
+      {/* <Animated.View style={getStyle()}>
           <CategoryCardContainer rootData={rootData.item} />
-        </Animated.View>
-        <Reader
-          forceSwipeVertically={forceSwipeVertically}
-          forceSwipeHorizontally={forceSwipeHorizontally}
-        />
-      </ScrollView>
+        </Animated.View> */}
+      <Reader
+      // forceSwipeVertically={forceSwipeVertically}
+      // forceSwipeHorizontally={forceSwipeHorizontally}
+      >
+        <CategoryCardContainer rootData={rootData.item} />
+      </Reader>
+      {/* </ScrollView> */}
     </View>
   );
 };

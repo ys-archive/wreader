@@ -8,8 +8,9 @@ import {
 } from 'react-native-responsive-screen';
 import { useSwipeGesture, useSwipeHorizontal, useSwipeVertical } from '#hooks';
 
-const Reader = ({ forceSwipeVertically, forceSwipeHorizontally, children }) => {
-  
+const Reader = ({ children }) => {
+  const { forceSwipeVertically, forceSwipeHorizontally, getStyle } =
+    useSwipeGesture();
 
   const { onSwipeLeft, onSwipeRight } = useSwipeHorizontal(
     forceSwipeHorizontally,
@@ -17,8 +18,7 @@ const Reader = ({ forceSwipeVertically, forceSwipeHorizontally, children }) => {
   const { onSwipeUp, onSwipeDown } = useSwipeVertical(forceSwipeVertically);
 
   return (
-    <>
-      {/* <Animated.View style={[getStyle()]}>{children}</Animated.View> */}
+    <View>
       {/* 스와이프 View (overlay) + 카드 View - touch through 안 되서 고정 으로 스와이프 범위를 정했음  */}
       {/* 윗 부분 터치 */}
       <GestureRecognizer
@@ -36,10 +36,13 @@ const Reader = ({ forceSwipeVertically, forceSwipeHorizontally, children }) => {
           position: 'absolute',
           left: 0,
           top: 0,
-          zIndex: 10,
-          backgroundColor: 'rgba(255,255,255, 0.2)',
+          // zIndex: 10,
+          backgroundColor: 'rgba(255,255,255, 0.7)',
         }}
-      />
+        pointerEvents="box-none"
+      >
+        <Animated.View style={[getStyle()]}>{children}</Animated.View>
+      </GestureRecognizer>
       {/* 아랫 부분 터치 */}
       {/* <GestureRecognizer
         onSwipeUp={onSwipeUp}
@@ -60,21 +63,21 @@ const Reader = ({ forceSwipeVertically, forceSwipeHorizontally, children }) => {
           backgroundColor: 'rgba(255,255,255, 0.7)',
         }}
       /> */}
-    </>
+    </View>
   );
 };
 
 export default Reader;
 
-const s = StyleSheet.create({
-  root: {
-    // minWidth: wp('100%'),
-    // minHeight: hp('100%'),
-    // position: 'absolute',
-    // left: 0,
-    // top: 0,
-    // zIndex: 5,
-    // opacity: 1,
-    backgroundColor: 'rgba(255,255,255, 0.2)',
-  },
-});
+// const s = StyleSheet.create({
+//   root: {
+//     minWidth: wp('100%'),
+//     // minHeight: hp('100%'),
+//     // position: 'absolute',
+//     // left: 0,
+//     // top: 0,
+//     zIndex: 5,
+//     opacity: 1,
+//     backgroundColor: 'rgba(255,255,255, 0.2)',
+//   },
+// });
