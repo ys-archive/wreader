@@ -46,7 +46,6 @@ const borderRadiusInside = 17;
 const WriteChapterCard = ({ categoryTitle }) => {
   const nav = useNavigation();
   const userId = useStoreState(selectUserId);
-  console.log('카테고리 타이틀 (write card): ', categoryTitle);
 
   const onSubmit = async values => {
     const { sentence1, sentence2 } = values;

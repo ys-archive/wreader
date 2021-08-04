@@ -56,7 +56,7 @@ const ChapterCard = ({ chapterOrder, chapterData, categoryTitle }) => {
 
   const onPressReply = () => {
     setCommentsOpen(prv => !prv);
-    console.log('reply modal : ', isCommentsOpen);
+    console.log('댓글 열림 : ', isCommentsOpen);
   };
 
   return (
