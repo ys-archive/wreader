@@ -13,6 +13,7 @@ const CommentsModal = ({
   commentsCount,
   commentsData,
 }) => {
+  
   const onCloseModal = () => {
     setCommentsOpen(false);
   };

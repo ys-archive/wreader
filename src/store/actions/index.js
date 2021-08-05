@@ -44,6 +44,11 @@ export const actionsSwipeToRight = actions => actions.reader.swipeToRight;
 export const actionsSwipeToUp = actions => actions.reader.swipeToUp;
 export const actionsSwipeToDown = actions => actions.reader.swipeToDown;
 
+export const actionsHasOnRight = actions => actions.reader.setHasOnRight;
+export const actionsHasOnLeft = actions => actions.reader.setHasOnLeft;
+export const actionsHasOnUp = actions => actions.reader.setHasOnUp;
+export const actionsHasOnDown = actions => actions.reader.setHasOnDown;
+
 // TODO: App preference 추가
 
 // persistence

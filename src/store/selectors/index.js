@@ -51,6 +51,11 @@ export const selectSwipeThresholdHorizontal = state =>
 export const selectSwipeThresholdVertical = state =>
   state.reader.model.swipeThresholdVertical;
 
+export const selectHasOnRight = state => state.reader.model.hasOnRight;
+export const selectHasOnLeft = state => state.reader.model.hasOnLeft;
+export const selectHasOnUp = state => state.reader.model.hasOnUp;
+export const selectHasOnDown = state => state.reader.model.hasOnDown;
+
 // persistence
 export const selectIsAutoLogin = state => state.persistence.model.isAutoLogin;
 export const selectIsDueDateOver = state => stat.persistence.isDueDateOver;

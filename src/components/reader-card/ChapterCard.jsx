@@ -25,6 +25,8 @@ import {
 } from '#store/selectors';
 import CommentsModal from '#components/modals/CommentsModal';
 
+import { ChapterService } from '#services';
+
 const borderRadiusOutside = 20;
 const borderRadiusInside = 17;
 
@@ -32,14 +34,14 @@ const ChapterCard = ({ chapterOrder, chapterData, categoryTitle }) => {
   const [isCommentsOpen, setCommentsOpen] = useState(false);
 
   const {
-    // id: chapterId, // 현재 챕터 Id
-    // categoryId,
-    // userId, // -> reply
+    id: chapterId, // 현재 챕터 Id
+    categoryId,
+    userId, // -> like
     content,
     replyCount, // -> reply
     like_count: likeCount, // -> like
     group_index: groupIdx, // candiate 붙이는 용도 (검사값)
-    // userImg: authorImageUri, // -> author
+    userImg: authorImageUri, // -> author
     userNick: authorNickName, // -> author
     chapterImg: chapterCoverImageUri, // -> cover
   } = chapterData;
@@ -52,6 +54,7 @@ const ChapterCard = ({ chapterOrder, chapterData, categoryTitle }) => {
 
   const onPressLike = () => {
     console.log('좋아요 버튼 누름!');
+    
   };
 
   const onPressReply = () => {
@@ -66,7 +69,6 @@ const ChapterCard = ({ chapterOrder, chapterData, categoryTitle }) => {
           style={{
             minWidth: wp('83.3%'),
             minHeight: hp('81.2%'),
-            // backgroundColor: '#999',
             borderRadius: borderRadiusOutside,
             overflow: 'hidden',
             alignItems: 'center',
@@ -126,10 +128,6 @@ const ChapterCard = ({ chapterOrder, chapterData, categoryTitle }) => {
             {/* 조회수 (?), 좋아요, 댓글 */}
             <View style={s.bottomSection}>
               <View style={s.bottomInfoPlacer}>
-                <View style={s.viewCountSection}>
-                  <ViewCount />
-                  <Text style={s.viewCountText}>{viewCount}</Text>
-                </View>
                 <View style={s.likeSection}>
                   <Like onPress={onPressLike} />
                   <Text style={s.likeText}>{likeCount}</Text>
@@ -251,14 +249,6 @@ const s = StyleSheet.create({
     justifyContent: 'space-evenly',
     minWidth: wp('56.8%'),
     // marginTop: hp('2.5%')
-  },
-  viewCountSection: {
-    flexDirection: 'row',
-    // marginLeft: wp('9.5%'),
-  },
-  viewCountText: {
-    color: colors.light.text2,
-    marginLeft: wp('1.8%'),
   },
   likeSection: {
     flexDirection: 'row',

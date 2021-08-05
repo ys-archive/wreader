@@ -25,8 +25,10 @@ const model = {
   currentCandidateIdx: 0,
   lastCandidateIdx: 0,
 
-  screenWidth: SCREEN_WIDTH,
-  screenHeight: SCREEN_HEIGHT,
+  hasOnRight: false,
+  hasOnLeft: false,
+  hasOnUp: false,
+  hasOnDown: false,
 };
 
 export default {
@@ -54,9 +56,6 @@ export default {
       state.model.lastCandidateIdx === 0 ||
       state.model.currentCandidateIdx === state.model.lastCandidateIdx,
   ),
-
-  swiperThresholdHorizontal: computed(state => state.model.screenWidth * 0.4),
-  swiperThresholdVertical: computed(state => state.model.screenHeight * 0.4),
 
   // action
 
@@ -89,10 +88,10 @@ export default {
     state.model.isCategorySelected = isCategorySelected;
   }),
 
-  setCategorySelectedDelayed: thunk(async (actions, payload) => {
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    actions.setCategorySelected(payload);
-  }),
+  // setCategorySelectedDelayed: thunk(async (actions, payload) => {
+  //   await new Promise(resolve => setTimeout(resolve, 1000));
+  //   actions.setCategorySelected(payload);
+  // }),
 
   // 마지막 카테고리 인덱스를 설정 (첫 렌더에 설정)
   setLastCategoryIdx: action((state, payload) => {
@@ -230,5 +229,37 @@ export default {
     }
 
     displayIdxStatus(state);
+  }),
+
+  setHasOnRight: action((state, payload) => {
+    if (typeof payload !== 'boolean') {
+      throw new Error('setHasOnRight:: payload must be boolean');
+    }
+
+    state.model.hasOnRight = payload;
+  }),
+
+  setHasOnLeft: action((state, payload) => {
+    if (typeof payload !== 'boolean') {
+      throw new Error('setHasOnLeft:: payload must be boolean');
+    }
+
+    state.model.hasOnLeft = payload;
+  }),
+
+  setHasOnUp: action((state, payload) => {
+    if (typeof payload !== 'boolean') {
+      throw new Error('setHasOnUp:: payload must be boolean');
+    }
+
+    state.model.hasOnUp = payload;
+  }),
+
+  setHasOnDown: action((state, payload) => {
+    if (typeof payload !== 'boolean') {
+      throw new Error('setHasOnDown:: payload must be boolean');
+    }
+
+    state.model.hasOnDown = payload;
   }),
 };
