@@ -8,6 +8,8 @@ import { FormikError } from './FormikError';
 import { RemoteImage } from './RN-components/RemoteImage';
 import { LocalImage } from './RN-components/LocalImage';
 import { ImagePicker } from './RN-components/ImagePicker';
+import { Alert } from './alert/Alert';
+import { AlertWithValue } from './alert/AlertWithValue';
 
 export {
   Button,
@@ -20,4 +22,6 @@ export {
   RemoteImage,
   LocalImage,
   ImagePicker,
+  Alert,
+  AlertWithValue,
 };

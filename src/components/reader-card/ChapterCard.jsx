@@ -6,7 +6,7 @@ import {
   Image,
   TouchableWithoutFeedback,
 } from 'react-native';
-import { Text } from '#components';
+import { Text, Alert } from '#components';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -22,6 +22,8 @@ import { useStoreState } from 'easy-peasy';
 import {
   selectProfileLocalImagePath,
   selectProfileImageUrl,
+  selectIsLoggedIn,
+  selectUserId,
 } from '#store/selectors';
 import CommentsModal from '#components/modals/CommentsModal';
 
@@ -30,13 +32,18 @@ import { ChapterService } from '#services';
 const borderRadiusOutside = 20;
 const borderRadiusInside = 17;
 
-const ChapterCard = ({ chapterOrder, chapterData, categoryTitle }) => {
+const ChapterCard = ({
+  chapterOrder,
+  chapterData,
+  categoryTitle,
+  triggerUpdatingLike,
+}) => {
   const [isCommentsOpen, setCommentsOpen] = useState(false);
 
   const {
     id: chapterId, // 현재 챕터 Id
     categoryId,
-    userId, // -> like
+    _, // -> like
     content,
     replyCount, // -> reply
     like_count: likeCount, // -> like
@@ -44,17 +51,35 @@ const ChapterCard = ({ chapterOrder, chapterData, categoryTitle }) => {
     userImg: authorImageUri, // -> author
     userNick: authorNickName, // -> author
     chapterImg: chapterCoverImageUri, // -> cover
+    isLike,
   } = chapterData;
 
   // console.log('현재 챕터의 작가 프로필 이미지 path: ', authorImageUri);
-  const viewCount = 142;
+
+  const isLoggedIn = useStoreState(selectIsLoggedIn);
+  const userId = useStoreState(selectUserId);
 
   const myProfileLocalImagePath = useStoreState(selectProfileLocalImagePath);
   const myProfileImageUrl = useStoreState(selectProfileImageUrl);
 
-  const onPressLike = () => {
-    console.log('좋아요 버튼 누름!');
-    
+  const onPressLike = async () => {
+    if (!isLoggedIn) {
+      Alert('좋아요는 로그인 후에 가능합니다', '닫기');
+      return;
+    }
+
+    console.log(userId, chapterId);
+
+    await triggerUpdatingLike();
+
+    // 이미 좋아요 했음
+    if (isLike === 1) {
+      await ChapterService.DELETE_unlikeChapter(chapterId, userId);
+      console.log('좋아요 취소');
+    } else {
+      await ChapterService.POST_likeChapter(chapterId, userId);
+      console.log('좋아요');
+    }
   };
 
   const onPressReply = () => {
@@ -63,111 +88,109 @@ const ChapterCard = ({ chapterOrder, chapterData, categoryTitle }) => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={() => console.log('챕터 클릭!')}>
-      <View style={s.root}>
+    <View style={s.root}>
+      <ImageBackground
+        style={{
+          minWidth: wp('83.3%'),
+          minHeight: hp('81.2%'),
+          borderRadius: borderRadiusOutside,
+          overflow: 'hidden',
+          alignItems: 'center',
+        }}
+        source={
+          chapterCoverImageUri
+            ? {
+                uri: chapterCoverImageUri,
+              }
+            : makeCategoryBGImagePath(categoryTitle)
+        }
+        // resizeMode="contain"
+      >
+        {/* 프로필 및 작가 이름 */}
+        <View style={s.authorSection}>
+          <Image
+            style={{
+              width: 30,
+              height: 30,
+              borderRadius: 100,
+            }}
+            // source={authorImageUri !== '' ? { uri: authorImageUri } : dummyProfile}
+            source={dummyProfile}
+          />
+          <Text isBold style={s.authorNameText}>
+            {authorNickName || 'Jessica Momo'}
+          </Text>
+        </View>
         <ImageBackground
           style={{
-            minWidth: wp('83.3%'),
-            minHeight: hp('81.2%'),
-            borderRadius: borderRadiusOutside,
-            overflow: 'hidden',
-            alignItems: 'center',
+            minWidth: wp('75.6%'),
+            minHeight: hp('69.7%'),
+            backgroundColor: colors.light.chapterBGInside,
+            borderRadius: borderRadiusInside,
           }}
-          source={
-            chapterCoverImageUri
-              ? {
-                  uri: chapterCoverImageUri,
-                }
-              : makeCategoryBGImagePath(categoryTitle)
-          }
-          // resizeMode="contain"
         >
-          {/* 프로필 및 작가 이름 */}
-          <View style={s.authorSection}>
-            <Image
-              style={{
-                width: 30,
-                height: 30,
-                borderRadius: 100,
-              }}
-              // source={authorImageUri !== '' ? { uri: authorImageUri } : dummyProfile}
-              source={dummyProfile}
-            />
-            <Text isBold style={s.authorNameText}>
-              {authorNickName || 'Jessica Momo'}
+          {/* 챕터 제목 */}
+          <View style={s.titleSection}>
+            {/* TODO: API 수정 요청 */}
+            <Text isBold style={s.title}>
+              THE FIRST HEART
             </Text>
           </View>
-          <ImageBackground
-            style={{
-              minWidth: wp('75.6%'),
-              minHeight: hp('69.7%'),
-              backgroundColor: colors.light.chapterBGInside,
-              borderRadius: borderRadiusInside,
-            }}
-          >
-            {/* 챕터 제목 */}
-            <View style={s.titleSection}>
-              {/* TODO: API 수정 요청 */}
-              <Text isBold style={s.title}>
-                THE FIRST HEART
-              </Text>
-            </View>
-            <View style={s.separator}></View>
-            <View style={s.chapterOrderSection}>
-              <Text isBold style={s.chapterOrderPlaceholder}>
-                CHAPTER
-              </Text>
-              <Text isBold style={s.chapterOrderText}>
-                {chapterOrder}
-              </Text>
-            </View>
-            {/* 챕터 내용 */}
-            <View style={s.contentSection}>
-              <Text style={s.contentText}>&nbsp;&nbsp;{content ?? ''}</Text>
-            </View>
-            {/* 조회수 (?), 좋아요, 댓글 */}
-            <View style={s.bottomSection}>
-              <View style={s.bottomInfoPlacer}>
-                <View style={s.likeSection}>
-                  <Like onPress={onPressLike} />
-                  <Text style={s.likeText}>{likeCount}</Text>
-                </View>
-                <View style={s.replySection}>
-                  <Reply onPress={onPressReply} />
-                  <CommentsModal
-                    setCommentsOpen={setCommentsOpen}
-                    isCommentsOpen={isCommentsOpen}
-                  />
-                  {/* {isCommentsOpen && <CommentsModal />} */}
-                  <Text style={s.replyText}>{replyCount}</Text>
-                </View>
+          <View style={s.separator}></View>
+          <View style={s.chapterOrderSection}>
+            <Text isBold style={s.chapterOrderPlaceholder}>
+              CHAPTER
+            </Text>
+            <Text isBold style={s.chapterOrderText}>
+              {chapterOrder}
+            </Text>
+          </View>
+          {/* 챕터 내용 */}
+          <View style={s.contentSection}>
+            <Text style={s.contentText}>&nbsp;&nbsp;{content ?? ''}</Text>
+          </View>
+          {/* 조회수 (?), 좋아요, 댓글 */}
+          <View style={s.bottomSection}>
+            <View style={s.bottomInfoPlacer}>
+              <View style={s.likeSection}>
+                <Like onPress={onPressLike} />
+                <Text style={s.likeText}>{likeCount}</Text>
               </View>
-              <View style={s.bottomReplyPlacer}>
-                <Image
-                  style={{
-                    width: 24,
-                    height: 24,
-                    borderRadius: 100,
-                  }}
-                  source={
-                    myProfileLocalImagePath !== ''
-                      ? { uri: myProfileLocalImagePath }
-                      : myProfileImageUrl !== ''
-                      ? { uri: myProfileImageUrl }
-                      : dummyProfile
-                  }
+              <View style={s.replySection}>
+                <Reply onPress={onPressReply} />
+                <CommentsModal
+                  setCommentsOpen={setCommentsOpen}
+                  isCommentsOpen={isCommentsOpen}
                 />
-                <TextInput
-                  style={s.replyTextInput}
-                  placeholder="Add a comment ..."
-                  placeholderTextColor={colors.light.text2}
-                />
+                {/* {isCommentsOpen && <CommentsModal />} */}
+                <Text style={s.replyText}>{replyCount}</Text>
               </View>
             </View>
-          </ImageBackground>
+            <View style={s.bottomReplyPlacer}>
+              <Image
+                style={{
+                  width: 24,
+                  height: 24,
+                  borderRadius: 100,
+                }}
+                source={
+                  myProfileLocalImagePath !== ''
+                    ? { uri: myProfileLocalImagePath }
+                    : myProfileImageUrl !== ''
+                    ? { uri: myProfileImageUrl }
+                    : dummyProfile
+                }
+              />
+              <TextInput
+                style={s.replyTextInput}
+                placeholder="Add a comment ..."
+                placeholderTextColor={colors.light.text2}
+              />
+            </View>
+          </View>
         </ImageBackground>
-      </View>
-    </TouchableWithoutFeedback>
+      </ImageBackground>
+    </View>
   );
 };
 

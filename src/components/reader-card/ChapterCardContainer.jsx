@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { StyleSheet, Text } from '#components';
 
@@ -12,6 +12,8 @@ import {
   selectCurrentCategoryIdx,
   selectCurrentChapterIdx,
   selectIsCategorySelected,
+  selectUserId,
+  selectIsLoggedIn,
 } from '#store/selectors';
 import { actionsSetLastCandidateIdx } from '#store/actions';
 
@@ -19,6 +21,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import { ChapterService } from '#services';
 
 const ChapterCardContainer = ({
   chapterOrder,
@@ -29,12 +32,28 @@ const ChapterCardContainer = ({
   const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
   const isCategorySelected = useStoreState(selectIsCategorySelected);
   const setLastCandidateIdx = useStoreActions(actionsSetLastCandidateIdx);
+  const userId = useStoreState(selectUserId);
+  const isLoggedIn = useStoreState(selectIsLoggedIn);
 
-  const {
-    data: chapterData,
-    isLoading,
-    error,
-  } = useGetSWR(`chapter/${chapterOrder}`);
+  const [chapterData, setChapterData] = useState(null);
+  const [isLikeUpdated, updateLike] = useState(false);
+  const triggerUpdatingLike = useCallback(() => updateLike(prv => !prv), []);
+
+  useEffect(() => {
+    (async function () {
+      const { data, status } = await ChapterService.GET_getChapter(
+        chapterOrder,
+        userId,
+      );
+
+      console.log(data);
+      // console.log(data.item.filter(i => i.isLike === 1).length === 1);
+
+      if (data) {
+        setChapterData(data);
+      }
+    })();
+  }, [userId, isLikeUpdated]);
 
   useEffect(() => {
     if (!chapterData || !isCategorySelected) {
@@ -50,6 +69,7 @@ const ChapterCardContainer = ({
         chapterData?.item.filter(
           chapter => chapter.categoryId - 5 === currentCategoryIdx,
         )?.length + 1;
+
       console.log(
         `[${chapterOrder}:${currentCategoryIdx}] ${maxLength} / ${
           chapterData.item.length + 1
@@ -60,21 +80,21 @@ const ChapterCardContainer = ({
     }
   });
 
-  if (error) {
-    return (
-      <View>
-        <Text>로드 중 에러!</Text>
-      </View>
-    );
-  }
+  // if (error) {
+  //   return (
+  //     <View>
+  //       <Text>로드 중 에러!</Text>
+  //     </View>
+  //   );
+  // }
 
-  if (isLoading) {
-    return (
-      <View>
-        <ActivityIndicator size="large" />
-      </View>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <View>
+  //       <ActivityIndicator size="large" />
+  //     </View>
+  //   );
+  // }
 
   if (!isCategorySelected) {
     return null;
@@ -92,6 +112,7 @@ const ChapterCardContainer = ({
           chapterOrder={chapterOrder}
           chapterData={categoryData}
           categoryTitle={categoryTitle}
+          triggerUpdatingLike={triggerUpdatingLike}
         />
       )}
 
@@ -111,6 +132,7 @@ const ChapterCardContainer = ({
             chapterOrder={chapterOrder}
             chapterData={candidateChapterData}
             categoryTitle={categoryTitle}
+            triggerUpdatingLike={triggerUpdatingLike}
           />
         );
       })}
