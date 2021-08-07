@@ -63,7 +63,7 @@ const s = StyleSheet.create({
   title: {
     position: 'relative',
     left: '10.6%',
-    color: colors.light.boldText,
+    color: colors.light.ivory4,
     fontSize: 25,
   },
   cardSubTitleView: {

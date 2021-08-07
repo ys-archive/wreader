@@ -3,6 +3,10 @@ import { View } from 'react-native';
 import { Text } from '#components';
 import { useStoreState } from 'easy-peasy';
 import { selectIsLoggedIn } from '#store/selectors';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 import * as ScreenNames from '../ScreenNames';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -26,7 +30,7 @@ const MainDrawer = () => {
     <Drawer.Navigator
       initialRouteName={ScreenNames.MainStack}
       drawerPosition="right"
-      drawerStyle={{ width: 230 }}
+      drawerStyle={{ width: wp('83.3%') }}
       drawerContent={props => <DrawerTop {...props} />}
     >
       <Drawer.Screen

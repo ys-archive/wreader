@@ -231,7 +231,7 @@ const s = StyleSheet.create({
   authorNameText: {
     marginLeft: wp('2%'),
     fontSize: 15,
-    color: colors.light.boldText2,
+    color: colors.light.ivory3,
   },
   titleSection: {
     marginLeft: wp('5.5%'),
@@ -277,7 +277,7 @@ const s = StyleSheet.create({
     minWidth: wp('75.6%'),
     borderBottomStartRadius: borderRadiusInside,
     borderBottomEndRadius: borderRadiusInside,
-    backgroundColor: colors.light.boldText2,
+    backgroundColor: colors.light.ivory3,
     // minHeight: hp('12.2%'),
     minHeight: 72.2,
     paddingTop: hp('2.4%'),
@@ -294,7 +294,7 @@ const s = StyleSheet.create({
     // marginLeft: wp('8.8%'),
   },
   likeText: {
-    color: colors.light.text2,
+    color: colors.light.ivory1,
     marginLeft: wp('1.8%'),
   },
   replySection: {
@@ -302,7 +302,7 @@ const s = StyleSheet.create({
     // marginLeft: wp('8.8%'),
   },
   replyText: {
-    color: colors.light.text2,
+    color: colors.light.ivory1,
     marginLeft: wp('1.8%'),
   },
   bottomReplyPlacer: {
@@ -316,13 +316,13 @@ const s = StyleSheet.create({
     padding: 0,
     margin: 0,
     marginLeft: 10,
-    borderColor: colors.light.text2,
+    borderColor: colors.light.ivory1,
   },
   replyPostText: {
     position: 'relative',
     right: 45,
     top: 7,
     fontSize: 10,
-    color: colors.light.text2,
+    color: colors.light.ivory1,
   },
 });

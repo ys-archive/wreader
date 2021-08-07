@@ -183,7 +183,7 @@ const s = StyleSheet.create({
     // backgroundColor: 'rgba(255, 255, 255, 0.6)',
   },
   imageIcon: {
-    color: colors.light.text2,
+    color: colors.light.ivory1,
     marginRight: 150,
   },
   summitButton: {
@@ -199,6 +199,6 @@ const s = StyleSheet.create({
   },
   summitInsideText: {
     fontSize: 16,
-    color: colors.light.text2,
+    color: colors.light.ivory1,
   },
 });

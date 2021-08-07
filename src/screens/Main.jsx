@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
-
 import { View, ActivityIndicator, ScrollView, Animated } from 'react-native';
 import { StyleSheet, Text } from '#components';
-
-// import {
-//   widthPercentageToDP as wp,
-//   heightPercentageToDP as hp,
-// } from 'react-native-responsive-screen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import { useNavigation } from '@react-navigation/native';
 
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import {
@@ -32,6 +31,7 @@ import Reader from './reader/Reader';
 import { Logo, Sort, Menu } from '#components/icon';
 
 const Main = () => {
+  const nav = useNavigation();
   const setLastCategoryIdx = useStoreActions(actionsSetLastCategoryIdx);
   const setLastChapterIdx = useStoreActions(actionsSetLastChapterIdx);
   const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
@@ -67,6 +67,7 @@ const Main = () => {
   const onPressMenuIcon = () => {
     console.log('메뉴 아콘');
     // TODO: drawer 열기
+    nav.openDrawer();
   }
 
   if (error) {
