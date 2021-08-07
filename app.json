@@ -15,6 +15,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.wreader.wreader-resource",
+      "buildNumber": "1.0.0",
       "googleServicesFile": "./GoogleService-Info.plist",
       "splash": {
         "image": "./assets/images/splash@2x.png",
@@ -29,6 +30,7 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.wreader.wreader_resource",
+      "versionCode": 1,
       "googleServicesFile": "./google-services.json",
       "splash": {
         "hdpi": "./assets/images/splash.png",
