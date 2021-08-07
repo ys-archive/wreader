@@ -31,6 +31,7 @@ export const lockIcon = require('!images/lock-icon.png');
 export const meIcon = require('!images/me-icon.png');
 export const passwordLockIcon = require('!images/password-lock-icon.png');
 export const personIcon = require('!images/person-icon.png');
+export const person2Icon = require('!images/person2-icon.png');
 export const photoIcon = require('!images/photo-icon.png');
 export const sortIcon = require('!images/sort-icon.png');
 export const unlikeIcon = require('!images/unlike-icon.png');

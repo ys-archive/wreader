@@ -1,5 +1,8 @@
 import React from 'react';
 import { SafeAreaView, View, TouchableOpacity, Image } from 'react-native';
+import { Alert, RequireLoginAlert } from '#components/alert';
+import { colors } from '#constants';
+import { DrawerCancel, Arrow, Person2 } from '#components/icon';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -22,9 +25,6 @@ import {
 } from '#store/selectors';
 import { actionsLogout } from '#store/actions';
 import { useProfileImageLoader } from '#hooks';
-import { Alert, RequireLoginAlert } from '#components/alert';
-import { colors } from '#constants';
-import { DrawerCancel, Arrow } from '#components/icon';
 
 const DrawerTop = props => {
   const { navigation: nav } = props;
@@ -44,6 +44,12 @@ const DrawerTop = props => {
     isLoggedIn
       ? nav.navigate(ScreenNames.MyProfileStack) // true -> 프로필 스크린으로 이동
       : RequireLoginAlert(); // false -> 로그인 확인 메시지
+  };
+
+  const onPressUserName = () => {
+    if (nick === 'SIGN IN') {
+      nav.navigate(ScreenNames.SigninStack);
+    }
   };
 
   return (
@@ -68,19 +74,24 @@ const DrawerTop = props => {
               />
             </TouchableOpacity>
           ) : (
-            <Ionicons
-              name="person-circle-outline"
-              size={60}
-              color="white"
-              style={s.profileImage}
-              onPress={onPressProfileImage}
-            />
+            // <Ionicons
+            //   name="person-circle-outline"
+            //   size={60}
+            //   color="white"
+            //   style={s.profileImage}
+            //   onPress={onPressProfileImage}
+            // />
+            <Person2 style={s.profileImage} />
           )}
 
           {/* 유저 이름 */}
-          <Text isBold style={s.userName}>
-            {nick}
-          </Text>
+          <TouchableOpacity onPress={onPressUserName}>
+            <View style={s.userNamePlacer}>
+              <Text isBold style={s.userName}>
+                {nick}
+              </Text>
+            </View>
+          </TouchableOpacity>
         </View>
 
         <View style={s.drawerView}>
@@ -196,6 +207,11 @@ const s = StyleSheet.create({
     zIndex: 5,
   },
   profileImage: {},
+  userNamePlacer: {
+    position: 'absolute',
+    marginLeft: 9,
+    top: -28,
+  },
   userName: {
     color: 'white',
     fontSize: 22,
