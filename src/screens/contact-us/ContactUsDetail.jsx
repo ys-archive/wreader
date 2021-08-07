@@ -2,6 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { AlertWithValue } from '#components/alert';
+import { RenderError } from '#components';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
@@ -52,11 +53,7 @@ const ContactUsDetail = () => {
           onChangeText={handleChange('title')}
           placeholder="문의제목을 입력해주세요"
         />
-        {/* {touched.title && errors.title ? (
-              <View>
-                <Text>{errors.title}</Text>
-              </View>
-            ) : null} */}
+        <RenderError touched={touched.title} errors={errors.title} />
       </View>
       <View style={s.contentsView}>
         <Text isBold>※ 문의내용</Text>
@@ -69,11 +66,7 @@ const ContactUsDetail = () => {
           onChangeText={handleChange('contents')}
           placeholder="문의내용을 입력해주세요"
         />
-        {/* {touched.contents && errors.contents ? (
-              <View>
-                <Text>{errors.contents}</Text>
-              </View>
-            ) : null} */}
+        <RenderError touched={touched.Contents} errors={errors.Contents} />
       </View>
       <View>
         <Button style={s.summitButton} onPress={handleSubmit}>

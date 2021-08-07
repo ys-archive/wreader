@@ -3,14 +3,7 @@ import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import { CheckBox, Button, StyleSheet, Text } from '#components';
 
-const SignupPolicyAndConditions = ({
-  onSubmit,
-  values,
-  setFieldValue,
-  // onBlur,
-  // errors,
-  // touched,
-}) => {
+const SignupPolicyAndConditions = ({ onSubmit, values, setFieldValue }) => {
   const {
     isAllAllowed,
     isAgreementAllowed,

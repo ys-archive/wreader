@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Platform, ScrollView } from 'react-native';
+import { RenderError } from '#components';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -53,11 +54,7 @@ const FindPassword = () => {
             onChangeText={handleChange('email')}
             placeholder="example@gmail.com..."
           />
-          {/* {touched.email && errors.email ? (
-                <View>
-                  <Text>{errors.email}</Text>
-                </View>
-              ) : null} */}
+          <RenderError touched={touched.email} errors={errors.email} />
         </View>
         <View>
           <Text>인증메일이 도착하지 않았나요?</Text>

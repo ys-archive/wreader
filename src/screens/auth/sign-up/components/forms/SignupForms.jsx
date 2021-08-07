@@ -89,9 +89,6 @@ const SignupForms = () => {
         onSubmit={handleSubmit}
         values={values}
         setFieldValue={setFieldValue}
-        // onBlur={handleBlur}
-        // errors={errors}
-        // touched={touched}
       />
     </View>
   );

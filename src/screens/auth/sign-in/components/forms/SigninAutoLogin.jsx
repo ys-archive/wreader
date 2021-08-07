@@ -28,14 +28,6 @@ const SigninAutoLogin = () => {
   );
 };
 
-SigninAutoLogin.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
-
-SigninAutoLogin.defaultProps = {
-  //
-};
-
 export default SigninAutoLogin;
 
 const s = StyleSheet.create({

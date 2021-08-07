@@ -11,7 +11,6 @@ export const Button = ({
   isBold = false,
   children,
 }) => {
-  // console.log(style, textStyle, onPress, children);
   return (
     <TouchableOpacity style={{ ...s.root, ...style }} onPress={onPress}>
       <View style={s.view}>

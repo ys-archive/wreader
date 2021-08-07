@@ -2,6 +2,7 @@ import React from 'react';
 import { View, ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Alert } from '#components/alert';
+import { RenderError } from '#components';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
@@ -56,11 +57,8 @@ const ChangePassword = () => {
             placeholder="비밀번호 입력 해주세요 (4 ~ 12자)"
             secureTextEntry
           />
-          {/* {touched.password && errors.password ? (
-            <View>
-              <Text>{errors.password}</Text>
-            </View>
-          ) : null} */}
+          <RenderError touched={touched.password} errors={errors.password} />
+
           <TextInput
             value={passwordRepeat}
             onBlue={handleBlur('passwordRepeat')}
@@ -68,11 +66,10 @@ const ChangePassword = () => {
             placeholder="비밀번호를 다시 입력 해주세요 (4 ~ 12자)"
             secureTextEntry
           />
-          {/* {touched.passwordRepeat && errors.passwordRepeat ? (
-            <View>
-              <Text>{errors.passwordRepeat}</Text>
-            </View>
-          ) : null} */}
+          <RenderError
+            touched={touched.passwordRepeat}
+            errors={errors.passwordRepeat}
+          />
         </View>
         <Button style={s.summitButton} onPress={handleSubmit} isBold>
           비밀번호 변경완료

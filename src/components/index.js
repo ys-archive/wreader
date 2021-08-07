@@ -4,7 +4,7 @@ import { Separator } from './RN-components/Separator';
 import { StyleSheet } from './RN-components/StyleSheet';
 import { TextInput } from './RN-components/TextInput';
 import { Text } from './RN-components/Text';
-import { FormikError } from './FormikError';
+import { RenderError } from './RenderError';
 import { RemoteImage } from './RN-components/RemoteImage';
 import { LocalImage } from './RN-components/LocalImage';
 import { ImagePicker } from './RN-components/ImagePicker';
@@ -18,7 +18,7 @@ export {
   StyleSheet,
   TextInput,
   Text,
-  FormikError,
+  RenderError,
   RemoteImage,
   LocalImage,
   ImagePicker,

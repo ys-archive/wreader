@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { View } from 'react-native';
-import { TextInput, Text, StyleSheet } from '#components';
+import { TextInput, Text, StyleSheet, Alert, RenderError } from '#components';
 import { Email, LockPassword } from '#components/icon';
 import { colors } from '#constants';
 import {
@@ -11,6 +11,7 @@ import {
 
 const SigninInput = ({ values, onChange, onBlur, errors, touched }) => {
   const { email, password } = values;
+
   return (
     <View style={s.root}>
       <View style={s.inputSection}>
@@ -26,14 +27,10 @@ const SigninInput = ({ values, onChange, onBlur, errors, touched }) => {
           onChangeText={onChange('email')}
           onBlur={onBlur('email')}
           placeholder="EMAIL ACCOUNT"
-          placeholderTextColor={colors.light.ivory1}
+          placeholderTextColor={colors.light.ivory1Transparent}
         />
-        {touched.email && errors.email ? (
-          <View>
-            <Text>{errors.email}</Text>
-          </View>
-        ) : null}
       </View>
+      <RenderError touched={touched.email} errors={errors.email} />
 
       <View style={s.inputSection}>
         <LockPassword />
@@ -47,15 +44,11 @@ const SigninInput = ({ values, onChange, onBlur, errors, touched }) => {
           onChangeText={onChange('password')}
           onBlur={onBlur('password')}
           placeholder="PASSWORD"
-          placeholderTextColor={colors.light.ivory1}
+          placeholderTextColor={colors.light.ivory1Transparent}
           secureTextEntry
         />
-        {touched.password && errors.password ? (
-          <View>
-            <Text>{errors.password}</Text>
-          </View>
-        ) : null}
       </View>
+      <RenderError touched={touched.password} errors={errors.password} />
     </View>
   );
 };

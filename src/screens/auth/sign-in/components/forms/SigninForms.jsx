@@ -27,12 +27,14 @@ const initialValues = {
 
 const validationSchema = Yup.object({
   email: Yup.string()
-    .email('이메일 형식에 맞지 않습니다. (예시: wreader1@gmail.com ...)')
-    .required('필수 항목입니다.'),
+    .email(
+      'please, provide it again in email format (e.g. wreader1@gmail.com ...)',
+    )
+    .required("You can't leave out this field"),
 
   password: Yup.string()
-    .max(28, '28 자 이내여야 합니다.')
-    .required('필수 입력 항목입니다.'),
+    .max(28, "lettres can't be more than 28")
+    .required("You can't leave out this field"),
 });
 
 const SigninForms = () => {
@@ -46,24 +48,36 @@ const SigninForms = () => {
   const onSubmit = async values => {
     const { email, password } = values;
 
+    if (!email) {
+      Alert('Please, fill out the email');
+      return;
+    }
+
+    if (!password) {
+      Alert('Please, fill out the password');
+      return;
+    }
+
     const { code, item } = await AuthService.POST_login(email, password);
     if (code === 1) {
-      console.log('로그인 완료!', item);
+      // console.log('!', item);
       login();
       setEmail(email);
       setPassword(password);
       setUserId(item.id);
       setUserInfo(item);
-      Alert('로그인 성공');
+      // Alert('로그인 성공');
       nav.navigate(ScreenNames.Main);
     }
 
     if (code === 100) {
-      Alert('로그인 실패 (탈퇴 신청 중인 회원입니다)');
+      Alert("Fail (it's in the withdrawal status)");
+      return;
     }
 
     if (code === 102 || code === 103) {
-      Alert('로그인 실패! (이메일이나 비밀번호가 잘못되었습니다)');
+      Alert('Fail (neither email or password is correct)');
+      return;
     }
   };
 

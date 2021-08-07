@@ -1,6 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Alert } from '#components/alert';
+import { RenderError } from '#components';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
@@ -99,11 +100,8 @@ const Signup2Form = ({ route }) => {
           <Button style={s.checkNickNameButton} onPress={checkNickNameValid}>
             중복 확인
           </Button>
-          {touched.nickname && errors.nickname ? (
-              <View>
-                <Text>{errors.nickname}</Text>
-              </View>  
-            ) : null}
+          <RenderError touched={touched.nickname} errors={errors.nickname} />
+
           <TextInput
             style={s.input}
             value={instagramUrl}
@@ -111,11 +109,11 @@ const Signup2Form = ({ route }) => {
             onChangeText={handleChange('instagramUrl')}
             placeholder="(선택)"
           />
-          {touched.instagramUrl && errors.instagramUrl ? (
-              <View>
-                <Text>{errors.instagramUrl}</Text>
-              </View>
-            ) : null}
+          <RenderError
+            touched={touched.instagramUrl}
+            errors={errors.instagramUrl}
+          />
+
           <TextInput
             style={s.input}
             value={facebookUrl}
@@ -123,11 +121,11 @@ const Signup2Form = ({ route }) => {
             onChangeText={handleChange('facebookUrl')}
             placeholder="(선택)"
           />
-          {touched.facebookUrl && errors.facebookUrl ? (
-            <View>
-              <Text>{errors.facebookUrl}</Text>
-            </View>
-          ) : null}
+          <RenderError
+            touched={touched.facebookUrl}
+            errors={errors.facebookUrl}
+          />
+
           <TextInput
             style={s.input}
             value={introduction}
@@ -135,11 +133,10 @@ const Signup2Form = ({ route }) => {
             onChangeText={handleChange('introduction')}
             placeholder="나를 소개할 문구를 적어주세요 (50자)"
           />
-          {touched.introduction && errors.introduction ? (
-              <View>
-                <Text>{errors.introduction}</Text>
-              </View>
-            ) : null}
+          <RenderError
+            touched={touched.introduction}
+            errors={errors.introduction}
+          />
         </View>
       </View>
       <Button style={s.summitButton} onPress={handleSubmit}>

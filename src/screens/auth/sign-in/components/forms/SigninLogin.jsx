@@ -5,11 +5,14 @@ import { colors } from '#constants';
 
 const SigninLogin = ({ onSubmit }) => {
   return (
-    <View>
-      <Button style={s.button} textStyle={s.buttonInnerText} isBold>
-        SIGN IN
-      </Button>
-    </View>
+    <Button
+      style={s.button}
+      textStyle={s.buttonInnerText}
+      isBold
+      onPress={onSubmit}
+    >
+      SIGN IN
+    </Button>
   );
 };
 
@@ -21,6 +24,7 @@ const s = StyleSheet.create({
     height: 28.2,
     paddingVertical: 13,
     paddingHorizontal: 20,
+    marginTop: 33.5,
     borderRadius: 13,
     backgroundColor: colors.light.ivory4,
   },
