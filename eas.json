@@ -4,9 +4,6 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal"
-    },
-    "preview": {
-      "simulator": true
     }
   }
 }
