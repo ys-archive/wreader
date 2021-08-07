@@ -6,13 +6,10 @@ import { Ionicons } from '@expo/vector-icons';
 export const CheckBox = ({
   isChecked = false,
   onChange,
-  highlightColor = '#000',
+  highlightColor = '#fff',
 }) => (
   <Pressable
-    style={[
-      styles.checkboxBase,
-      isChecked && { backgroundColor: highlightColor },
-    ]}
+    style={[s.checkboxBase, isChecked && { backgroundColor: highlightColor }]}
     onPress={onChange}
   >
     {isChecked && <Ionicons name="checkmark" size={24} color="white" />}
@@ -26,44 +23,18 @@ CheckBox.propTypes = {
 };
 
 CheckBox.defaultProps = {
-  highlightColor: '#000',
+  highlightColor: '#fff',
 };
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   checkboxBase: {
-    width: 24,
-    height: 24,
+    width: 16,
+    height: 16,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 4,
+    // borderRadius: 4,
     borderWidth: 2,
-    borderColor: 'coral',
+    borderColor: 'white',
     backgroundColor: 'transparent',
-  },
-
-  // checkboxChecked: {
-  //   backgroundColor: 'coral',
-  // },
-
-  appContainer: {
-    flex: 1,
-    alignItems: 'center',
-  },
-
-  appTitle: {
-    marginVertical: 16,
-    // fontWeight: 'bold',
-    fontSize: 24,
-  },
-
-  checkboxContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-
-  checkboxLabel: {
-    marginLeft: 8,
-    // fontWeight: 500,
-    fontSize: 18,
   },
 });

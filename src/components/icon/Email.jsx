@@ -1,23 +1,22 @@
 import React from 'react';
 import { Image } from 'react-native';
-import { logoIcon } from '#constants/images';
+import { emailIcon } from '#constants/images';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-const Logo = () => (
+const Email = () => (
   <Image
     style={{
-      width: 107.4,
-      height: 28.8,
+      width: 15.1 + 4,
+      height: 10.1 + 4,
       position: 'absolute',
-      left: wp('8.3%'),
-      top: hp('3.6%'),
-      zIndex: 1000,
+      top: '36%',
+      left: '7.8%'
     }}
-    source={logoIcon}
+    source={emailIcon}
   />
 );
 
-export default Logo;
+export default Email;

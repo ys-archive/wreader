@@ -32,7 +32,7 @@ TextInput.defaultProps = {
 
 const s = StyleSheet.create({
   root: {
-    minWidth: wp('50%'),
+    width: wp('80%'),
     margin: 12,
     padding: 10,
     borderBottomWidth: 1,

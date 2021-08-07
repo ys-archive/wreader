@@ -68,7 +68,7 @@ const Main = () => {
     console.log('메뉴 아콘');
     // TODO: drawer 열기
     nav.openDrawer();
-  }
+  };
 
   if (error) {
     return (

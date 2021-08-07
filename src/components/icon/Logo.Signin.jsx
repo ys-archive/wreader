@@ -6,18 +6,17 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-const Logo = () => (
+const LogoSignin = () => (
   <Image
     style={{
-      width: 107.4,
-      height: 28.8,
+      width: '77.4%',
+      // height: '11.5%',
       position: 'absolute',
-      left: wp('8.3%'),
-      top: hp('3.6%'),
-      zIndex: 1000,
+      top: '25.5%',
     }}
     source={logoIcon}
+    resizeMode="contain"
   />
 );
 
-export default Logo;
+export default LogoSignin;

@@ -1,23 +1,22 @@
 import React from 'react';
 import { Image } from 'react-native';
-import { logoIcon } from '#constants/images';
+import { passwordLockIcon } from '#constants/images';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-const Logo = () => (
+const LockPassword = () => (
   <Image
     style={{
-      width: 107.4,
-      height: 28.8,
+      width: 12.5 + 4,
+      height: 15.4 + 4,
       position: 'absolute',
-      left: wp('8.3%'),
-      top: hp('3.6%'),
-      zIndex: 1000,
+      top: '30%',
+      left: '8%',
     }}
-    source={logoIcon}
+    source={passwordLockIcon}
   />
 );
 
-export default Logo;
+export default LockPassword;

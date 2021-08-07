@@ -7,6 +7,7 @@ export const fantasyCategoryBG = require('!images/fantasy-category-bg.png');
 export const thrillerCategoryBG = require('!images/thriller-category-bg.png');
 export const adultCategoryBG = require('!images/adult-category-bg.png');
 export const crimeCategoryBG = require('!images/crime-category-bg.png');
+export const bg = require('!images/bg.png');
 
 // layout
 export const signupCheckboxOutline = require('!images/signup-checkbox-outline.png');
