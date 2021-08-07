@@ -1,16 +1,45 @@
+// dummy
+export const dummyProfile = require('!images/dummy-image.jpg');
+
+// Background
 export const romanceCategoryBG = require('!images/romance-category-bg.png');
 export const fantasyCategoryBG = require('!images/fantasy-category-bg.png');
 export const thrillerCategoryBG = require('!images/thriller-category-bg.png');
 export const adultCategoryBG = require('!images/adult-category-bg.png');
 export const crimeCategoryBG = require('!images/crime-category-bg.png');
 
-export const logo = require('!images/app-logo.png');
-export const sortIcon = require('!images/sort-icon.png');
+// layout
+export const signupCheckboxOutline = require('!images/signup-checkbox-outline.png');
+
+// icon
+export const logoIcon = require('!images/app-logo-icon.png');
+export const menuIcon = require('!images/menu-icon.png');
 export const likeIcon = require('!images/like-icon.png');
 export const viewCountIcon = require('!images/view-count-icon.png');
 export const replyIcon = require('!images/reply-icon.png');
+export const addImageIcon = require('!images/add-image-icon.png');
+export const addStoryIcon = require('!images/add-story-icon.png');
+export const cancelIcon = require('!images/cancel-icon.png');
+export const commentBox = require('!images/comment-box.png');
+export const drawerCancelIcon = require('!images/drawer-cancel-icon.png');
+export const editIcon = require('!images/edit-icon.png');
+export const edit2Icon = require('!images/edit2-icon.png');
+export const emailIcon = require('!images/email-icon.png');
+export const facebookIcon = require('!images/facebook-icon.png');
+export const instagramIcon = require('!images/instagram-icon.png');
+export const lockIcon = require('!images/lock-icon.png');
+export const meIcon = require('!images/me-icon.png');
+export const passwordLockIcon = require('!images/password-lock-icon.png');
+export const personIcon = require('!images/person-icon.png');
+export const photoIcon = require('!images/photo-icon.png');
+export const sortIcon = require('!images/sort-icon.png');
+export const unlikeIcon = require('!images/unlike-icon.png');
+export const wreaderCircleLogo = require('!images/wreader-circle-logo.png');
 
-export const dummyProfile = require('!images/dummy-image.jpg');
+// arrow
+export const leftArrow = require('!images/left-arrow.png');
+export const rightArrow = require('!images/right-arrow.png');
+export const downArrow = require('!images/down-arrow.png');
 
 export const makeCategoryBGImagePath = title => {
   const id = title.toLowerCase().trim();
