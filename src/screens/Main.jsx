@@ -93,14 +93,8 @@ const Main = () => {
       <Logo />
       <Sort onPress={onPressSortIcon} />
       {/* <ScrollView scrollEnabled={false}> */}
-      {/* <EventModal /> */}
-      {/* <Animated.View style={getStyle()}>
-          <CategoryCardContainer rootData={rootData.item} />
-        </Animated.View> */}
-      <Reader
-      // forceSwipeVertically={forceSwipeVertically}
-      // forceSwipeHorizontally={forceSwipeHorizontally}
-      >
+      <EventModal />
+      <Reader>
         <CategoryCardContainer rootData={rootData.item} />
       </Reader>
       {/* </ScrollView> */}

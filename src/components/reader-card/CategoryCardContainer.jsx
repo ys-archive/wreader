@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { StyleSheet } from '#components';
+import { StyleSheet, Text } from '#components';
 
 import CategoryCard from './CategoryCard';
 import ChapterCardContainer from './ChapterCardContainer';
@@ -31,13 +31,23 @@ const CategoryCardContainer = ({ rootData }) => {
     return null;
   }
 
-  return rootData.map(category => (
+  const CategoryCards = rootData.map(category => (
     // 현재 카테고리와 이하의 모든 챕터들 은 종 방향 렌더
     <View key={category.id} style={s.root}>
       <CategoryCard {...category} />
       {renderChaptersJSX(category.chapter, category.title, forceUpdate)}
     </View>
   ));
+
+  return (
+    <>
+      {CategoryCards}
+      <View style={s.copyright}>
+        <Text>{'\u00A9'}&nbsp;</Text>
+        <Text>2021 W.READER. ALL rights reserved.</Text>
+      </View>
+    </>
+  );
 };
 
 export default CategoryCardContainer;
@@ -46,5 +56,11 @@ const s = StyleSheet.create({
   root: {
     flexDirection: 'row',
     // flex: 1,
+  },
+  copyright: {
+    flexDirection: 'row',
+    position: 'absolute',
+    left: '20%',
+    bottom: '0.7%',
   },
 });
