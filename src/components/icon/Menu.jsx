@@ -1,29 +1,29 @@
 import React from 'react';
 import { Image, TouchableOpacity } from 'react-native';
-import { sortIcon } from '#constants/images';
+import { menuIcon } from '#constants/images';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-const Sort = ({ onPress }) => (
+const Menu = ({ onPress }) => (
   <TouchableOpacity
     onPress={onPress}
     style={{
       position: 'absolute',
-      right: wp('16.9%'),
-      top: hp('4.7%'),
+      right: wp('7%'),
+      top: hp('4.9%'),
       zIndex: 1000,
     }}
   >
     <Image
       style={{
-        width: 22.5,
-        height: 17.2,
+        width: 24.7,
+        height: 15,
       }}
-      source={sortIcon}
+      source={menuIcon}
     />
   </TouchableOpacity>
 );
 
-export default Sort;
+export default Menu;

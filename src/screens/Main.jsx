@@ -29,7 +29,7 @@ import EventModal from '#components/modals/EventModal';
 import CategoryCardContainer from '#components/reader-card/CategoryCardContainer';
 import Reader from './reader/Reader';
 
-import { Logo, Sort } from '#components/icon';
+import { Logo, Sort, Menu } from '#components/icon';
 
 const Main = () => {
   const setLastCategoryIdx = useStoreActions(actionsSetLastCategoryIdx);
@@ -60,9 +60,14 @@ const Main = () => {
   });
 
   const onPressSortIcon = () => {
-    console.log('정렬 아이콘 눌림!');
-    // TODO: 후보 챕터들을 조회수 별로 정렬F
+    console.log('정렬 아이콘');
+    // TODO: 후보 챕터들을 조회수 별로 정렬
   };
+
+  const onPressMenuIcon = () => {
+    console.log('메뉴 아콘');
+    // TODO: drawer 열기
+  }
 
   if (error) {
     return (
@@ -92,8 +97,9 @@ const Main = () => {
     <View style={s.root}>
       <Logo />
       <Sort onPress={onPressSortIcon} />
+      <Menu onPress={onPressMenuIcon} />
       {/* <ScrollView scrollEnabled={false}> */}
-      <EventModal />
+      {/* <EventModal /> */}
       <Reader>
         <CategoryCardContainer rootData={rootData.item} />
       </Reader>
