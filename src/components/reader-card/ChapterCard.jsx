@@ -6,7 +6,7 @@ import {
   Image,
   TouchableWithoutFeedback,
 } from 'react-native';
-import { Text, Alert } from '#components';
+import { Text, Alert, Button } from '#components';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -87,6 +87,10 @@ const ChapterCard = ({
     console.log('댓글 열림 : ', isCommentsOpen);
   };
 
+  const onPressPostReply = () => {
+    console.log('댓글 쓰기');
+  };
+
   return (
     <View style={s.root}>
       <ImageBackground
@@ -136,7 +140,9 @@ const ChapterCard = ({
               THE FIRST HEART
             </Text>
           </View>
+
           <View style={s.separator}></View>
+
           <View style={s.chapterOrderSection}>
             <Text isBold style={s.chapterOrderPlaceholder}>
               CHAPTER
@@ -145,27 +151,30 @@ const ChapterCard = ({
               {chapterOrder}
             </Text>
           </View>
+
           {/* 챕터 내용 */}
           <View style={s.contentSection}>
             <Text style={s.contentText}>&nbsp;&nbsp;{content ?? ''}</Text>
           </View>
-          {/* 조회수 (?), 좋아요, 댓글 */}
+
+          {/* 좋아요, 댓글 */}
           <View style={s.bottomSection}>
             <View style={s.bottomInfoPlacer}>
               <View style={s.likeSection}>
                 <Like onPress={onPressLike} />
                 <Text style={s.likeText}>{likeCount}</Text>
               </View>
+
               <View style={s.replySection}>
                 <Reply onPress={onPressReply} />
                 <CommentsModal
                   setCommentsOpen={setCommentsOpen}
                   isCommentsOpen={isCommentsOpen}
                 />
-                {/* {isCommentsOpen && <CommentsModal />} */}
                 <Text style={s.replyText}>{replyCount}</Text>
               </View>
             </View>
+
             <View style={s.bottomReplyPlacer}>
               <Image
                 style={{
@@ -186,6 +195,13 @@ const ChapterCard = ({
                 placeholder="Add a comment ..."
                 placeholderTextColor={colors.light.text2}
               />
+              <Button
+                isBold
+                textStyle={s.replyPostText}
+                onPress={onPressPostReply}
+              >
+                Post
+              </Button>
             </View>
           </View>
         </ImageBackground>
@@ -294,11 +310,19 @@ const s = StyleSheet.create({
     paddingTop: hp('1.4%'),
     paddingLeft: wp('9.5%'),
     paddingBottom: hp('1.4%'),
+    maxWidth: wp('50%'),
   },
   replyTextInput: {
     padding: 0,
     margin: 0,
     marginLeft: 10,
     borderColor: colors.light.text2,
+  },
+  replyPostText: {
+    position: 'relative',
+    right: 45,
+    top: 7,
+    fontSize: 10,
+    color: colors.light.text2,
   },
 });
