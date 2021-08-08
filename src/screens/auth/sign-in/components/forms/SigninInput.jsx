@@ -18,16 +18,9 @@ const SigninInput = ({ values, onChange, onBlur, errors, touched }) => {
         <Email />
         <TextInput
           value={email}
-          style={{
-            paddingLeft: 55,
-            // width: 237.3,
-            width: wp('76%'),
-            borderColor: colors.light.ivory1,
-          }}
           onChangeText={onChange('email')}
           onBlur={onBlur('email')}
           placeholder="EMAIL ACCOUNT"
-          placeholderTextColor={colors.light.ivory1Transparent}
         />
       </View>
       <RenderError touched={touched.email} errors={errors.email} />
@@ -36,15 +29,9 @@ const SigninInput = ({ values, onChange, onBlur, errors, touched }) => {
         <LockPassword />
         <TextInput
           value={password}
-          style={{
-            paddingLeft: 55,
-            width: wp('76%'),
-            borderColor: colors.light.ivory1,
-          }}
           onChangeText={onChange('password')}
           onBlur={onBlur('password')}
           placeholder="PASSWORD"
-          placeholderTextColor={colors.light.ivory1Transparent}
           secureTextEntry
         />
       </View>

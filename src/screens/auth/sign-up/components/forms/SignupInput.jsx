@@ -5,6 +5,14 @@ import { Alert } from '#components/alert';
 import { StyleSheet, TextInput, Button, Text, RenderError } from '#components';
 import { AuthService } from '#services';
 
+import { Email, LockPassword } from '#components/icon';
+import { colors } from '#constants';
+
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+
 const SignupInput = ({
   values,
   onChange,
@@ -43,40 +51,72 @@ const SignupInput = ({
 
   return (
     <View>
-      <TextInput
-        value={email}
-        onChangeText={onChange('email')}
-        onBlur={onBlur('email')}
-        placeholder="이메일을 입력해 주세요"
-      />
-      <RenderError touched={touched.email} errors={errors.email} />
+      <View>
+        <Email />
+        <TextInput
+          value={email}
+          onChangeText={onChange('email')}
+          onBlur={onBlur('email')}
+          placeholder="E-MAIL ACCOUNT"
+          style={{
+            marginHorizontal: 0,
+            minWidth: '96.7%',
+            maxWidth: '96.7%',
+          }}
+        />
+        <RenderError touched={touched.email} errors={errors.email} />
+        <Button
+          style={s.checkEmailButton}
+          textStyle={s.checkEmailText}
+          isBold
+          onPress={checkEmailValidToUse}
+        >
+          VERIFY
+        </Button>
+      </View>
 
-      {/* TODO: 이메일 인증 로직 */}
-      {/* TODO: Formik 연동 후 이메일을 다시 입력하게함! */}
-      <Button style={s.checkEmailButton} onPress={checkEmailValidToUse}>
-        중복 확인
-      </Button>
-      <TextInput
-        value={password}
-        onChangeText={onChange('password')}
-        onBlur={onBlur('password')}
-        placeholder="비밀번호를 입력해 주세요"
-        secureTextEntry
-      />
-      <TextInput
-        value={passwordRepeat}
-        onChangeText={onChange('passwordRepeat')}
-        onBlur={onBlur('passwordRepeat')}
-        placeholder="비밀번호를 다시 입력해 주세요"
-        secureTextEntry
-      />
-      <RenderError
-        touched={touched.passwordRepeat}
-        errors={errors.passwordRepeat}
-      />
+      <View>
+        <LockPassword />
+        <TextInput
+          value={password}
+          onChangeText={onChange('password')}
+          onBlur={onBlur('password')}
+          placeholder="PASSWORD"
+          style={{
+            marginHorizontal: 0,
+            minWidth: '96.7%',
+            maxWidth: '96.7%',
+          }}
+          secureTextEntry
+        />
+      </View>
+      <View>
+        <LockPassword />
+        <TextInput
+          value={passwordRepeat}
+          onChangeText={onChange('passwordRepeat')}
+          onBlur={onBlur('passwordRepeat')}
+          placeholder="REPEAT THE PASSWORD"
+          style={{
+            marginHorizontal: 0,
+            minWidth: '96.7%',
+            maxWidth: '96.7%',
+          }}
+          secureTextEntry
+        />
+        <RenderError
+          touched={touched.passwordRepeat}
+          errors={errors.passwordRepeat}
+        />
+      </View>
 
-      <Button style={s.checkPasswordButton} onPress={checkValidPassword}>
-        확인
+      <Button
+        style={s.checkPasswordButton}
+        textStyle={s.checkEmailText}
+        isBold
+        onPress={checkValidPassword}
+      >
+        CHECK
       </Button>
     </View>
   );
@@ -101,12 +141,15 @@ const s = StyleSheet.create({
   checkEmailButton: {
     position: 'absolute',
     right: '0%',
-    top: '10%',
-    // textDecorationLine: 'underline line-through',
+    top: '41%',
+  },
+  checkEmailText: {
+    color: colors.light.white,
+    fontSize: 14,
   },
   checkPasswordButton: {
     position: 'absolute',
     right: '0%',
-    top: '77%',
+    top: '81%',
   },
 });

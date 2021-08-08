@@ -6,10 +6,6 @@ import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '#navigators/ScreenNames';
 
-// TODO: 회원가입에 store 필요?
-// import { useStoreActions } from 'easy-peasy';
-// import { actionsSignup } from '#store/actions';
-
 import SignupInput from './SignupInput';
 import SignupPolicyAndConditions from './SignupPolicyAndConditions';
 

@@ -6,6 +6,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import { colors } from '#constants';
 
 export const TextInput = props => {
   return (
@@ -15,27 +16,20 @@ export const TextInput = props => {
         ...s.root,
         ...props.style,
       }}
+      placeholderTextColor={colors.light.ivory1Transparent}
       autoCapitalize="none"
     />
   );
 };
 
-TextInput.propTypes = {
-  // style: PropTypes.object,
-  // text: PropTypes.string.isRequired,
-  // onChangeText: PropTypes.func.isRequired,
-};
-
-TextInput.defaultProps = {
-  // style: {},
-};
-
 const s = StyleSheet.create({
   root: {
-    width: wp('80%'),
     margin: 12,
     padding: 10,
     borderBottomWidth: 1,
-    // height: 40,
+    paddingLeft: 55,
+    minWidth: wp('76%'),
+    maxWidth: wp('76%'),
+    borderColor: colors.light.ivory1,
   },
 });
