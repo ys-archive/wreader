@@ -18,7 +18,7 @@ const SigninAutoLogin = () => {
         <CheckBox
           isChecked={isAutoLogin}
           onChange={toggleAutoLogin}
-          highlightColor="transparent"
+          highlightColor={colors.light.transparent}
         />
         <Text isBold style={s.autoLoginText}>
           STAY SIGNED IN

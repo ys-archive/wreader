@@ -2,6 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import { CheckBox, Button, StyleSheet, Text } from '#components';
+import { colors } from '#constants';
+import { Arrow } from '#components/icon';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 const SignupPolicyAndConditions = ({ onSubmit, values, setFieldValue }) => {
   const {
@@ -16,7 +22,6 @@ const SignupPolicyAndConditions = ({ onSubmit, values, setFieldValue }) => {
       <View style={s.policyCheckBoxItem}>
         <CheckBox
           isChecked={isAllAllowed}
-          // onChange={() => dispatch({ type: actionNames.toggleAllAllowed })}
           onChange={() => {
             const res = !isAllAllowed;
             setFieldValue('isAllAllowed', res);
@@ -24,43 +29,58 @@ const SignupPolicyAndConditions = ({ onSubmit, values, setFieldValue }) => {
             setFieldValue('isPrivacyPolicyAllowed', res);
             setFieldValue('isMarketingAllowedOptional', res);
           }}
-          highlightColor="coral"
+          borderColor={colors.light.ivory5}
+          highlightColor={colors.light.transparent}
+          checkColor={colors.light.ivory5}
         />
-        <Text style={s.autoLoginText}>전체 동의</Text>
+        <Text style={s.autoLoginText} isBold>
+          AGREE TO ALL TERMS
+        </Text>
       </View>
 
-      <View style={s.policyCheckBoxItem}>
+      <View style={s.policyCheckBoxItemOutline}>
         <CheckBox
           isChecked={isAgreementAllowed}
           onChange={() =>
             setFieldValue('isAgreementAllowed', !isAgreementAllowed)
           }
-          highlightColor="coral"
+          borderColor={colors.light.ivory5}
+          highlightColor={colors.light.transparent}
+          checkColor={colors.light.ivory5}
         />
-        <Text style={s.autoLoginText}>이용약관(필수)</Text>
+        <Text isBold style={s.autoLoginText}>
+          TERMS OF USE
+        </Text>
 
         {/* TODO: 내용 열기 */}
-        <Button style={s.policyDetailText} onPress={() => {}}>
-          내용
-        </Button>
+        <Arrow
+          direction="down"
+          style={[{ width: 18, height: 10 }, s.policyArrow]}
+        />
       </View>
 
-      <View style={s.policyCheckBoxItem}>
+      <View style={s.policyCheckBoxItemOutline}>
         <CheckBox
           isChecked={isPrivacyPolicyAllowed}
           onChange={() =>
             setFieldValue('isPrivacyPolicyAllowed', !isPrivacyPolicyAllowed)
           }
-          highlightColor="coral"
+          borderColor={colors.light.ivory5}
+          highlightColor={colors.light.transparent}
+          checkColor={colors.light.ivory5}
         />
-        <Text style={s.autoLoginText}>개인정보 취급방침(필수)</Text>
+        <Text isBold style={s.autoLoginText}>
+          PRIVACY POLICY
+        </Text>
+
         {/* TODO: 내용 열기 */}
-        <Button style={s.policyDetailText} onPress={() => {}}>
-          내용
-        </Button>
+        <Arrow
+          direction="down"
+          style={[{ width: 18, height: 10 }, s.policyArrow]}
+        />
       </View>
 
-      <View style={s.policyCheckBoxItem}>
+      <View style={s.policyCheckBoxItemOutline}>
         <CheckBox
           isChecked={isMarketingAllowedOptional}
           onChange={() =>
@@ -69,21 +89,30 @@ const SignupPolicyAndConditions = ({ onSubmit, values, setFieldValue }) => {
               !isMarketingAllowedOptional,
             )
           }
-          highlightColor="coral"
+          borderColor={colors.light.ivory5}
+          highlightColor={colors.light.transparent}
+          checkColor={colors.light.ivory5}
         />
-        <Text style={s.autoLoginText}>마켓팅 이용 권한(선택)</Text>
+        <Text isBold style={s.autoLoginText}>
+          MARKETING
+        </Text>
+
         {/* TODO: 내용 열기 */}
-        <Button style={s.policyDetailText} onPress={() => {}}>
-          내용
-        </Button>
+        <Arrow
+          direction="down"
+          style={[{ width: 18, height: 10 }, s.policyArrow]}
+        />
       </View>
 
-      <View>
-        {/* TODO: 다음 구현 열기 */}
-        <Button style={s.nextButton} onPress={onSubmit}>
-          다음
-        </Button>
-      </View>
+      <Button
+        isBold
+        style={s.nextButton}
+        textStyle={s.nextButtonText}
+        onPress={onSubmit}
+      >
+        NEXT
+        <Arrow direction="right" style={s.nextButtonArrow} />
+      </Button>
     </View>
   );
 };
@@ -101,20 +130,55 @@ export default SignupPolicyAndConditions;
 const s = StyleSheet.create({
   policyCheckBoxItem: {
     flexDirection: 'row',
-    marginVertical: 15,
+    // marginVertical: 15,
+    marginHorizontal: 10,
+    paddingLeft: 15,
+    // paddingBottom: 15,
+  },
+  policyCheckBoxItemOutline: {
+    flexDirection: 'row',
+    marginHorizontal: 0,
+    paddingLeft: 25,
+    paddingBottom: 15,
+    paddingTop: 35,
+    borderLeftWidth: 0.5,
+    borderBottomWidth: 0.5,
+    borderBottomStartRadius: 24,
+    borderColor: colors.light.ivory5,
+    alignItems: 'center',
   },
   nextButton: {
-    marginTop: '15%',
-    paddingHorizontal: '40%',
-    paddingVertical: '4%',
-    borderWidth: 1,
-    borderRadius: 15,
+    marginTop: 48,
+    // width: '120%',
+    // paddingHorizontal: '40%',
+    marginHorizontal: 0,
+    paddingVertical: '4.5%',
+    borderRadius: 11,
+    backgroundColor: colors.light.ivory4,
+  },
+  nextButtonText: {
+    color: colors.light.white,
+    fontSize: 18,
+  },
+  nextButtonArrow: {
+    width: 10,
+    height: 23,
+    position: 'absolute',
+    right: -130,
+    top: -17,
   },
   policyDetailText: {
     position: 'absolute',
     right: '0%',
   },
   autoLoginText: {
-    marginLeft: '5%',
+    fontSize: 18,
+    marginLeft: '3%',
+    color: colors.light.ivory5,
+  },
+  policyArrow: {
+    position: 'absolute',
+    right: 8,
+    top: 20,
   },
 });

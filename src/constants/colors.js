@@ -3,6 +3,7 @@ export const colors = {
     black: '#000',
     white: '#fff',
     whiteTransparent: 'rgba(255,255,255, 0.5)',
+    transparent: 'rgba(255, 255, 255, 0.01)',
     ivory1: '#fff8e1',
     ivory1Transparent: 'rgba(255, 248, 225, 0.5)',
     ivory2: '#bcb49f',

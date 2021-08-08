@@ -116,5 +116,6 @@ const s = StyleSheet.create({
     // width: 1000,
     minHeight: 1,
     backgroundColor: colors.light.ivory5,
+    marginBottom: 15,
   },
 });

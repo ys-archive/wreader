@@ -6,7 +6,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-const Arrow = ({ style, onPress, direction }) => {
+const Arrow = ({ style = {}, onPress, direction = 'left' }) => {
   let source = leftArrow;
 
   if (direction === 'right') {
@@ -20,10 +20,13 @@ const Arrow = ({ style, onPress, direction }) => {
   return (
     <TouchableOpacity onPress={onPress} style={style}>
       <Image
-        style={{
-          width: 5,
-          height: 10,
-        }}
+        style={[
+          {
+            width: 5,
+            height: 10,
+          },
+          style,
+        ]}
         source={source}
       />
     </TouchableOpacity>

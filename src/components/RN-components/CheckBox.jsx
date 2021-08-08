@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -6,13 +6,26 @@ import { Ionicons } from '@expo/vector-icons';
 export const CheckBox = ({
   isChecked = false,
   onChange,
+  borderColor = '#fff',
   highlightColor = '#fff',
+  checkColor = '#fff',
 }) => (
   <Pressable
-    style={[s.checkboxBase, isChecked && { backgroundColor: highlightColor }]}
+    style={[
+      s.checkboxBase,
+      { borderColor },
+      isChecked && { backgroundColor: highlightColor },
+    ]}
     onPress={onChange}
   >
-    {isChecked && <Ionicons name="checkmark" size={24} color="white" />}
+    {isChecked && (
+      <Ionicons
+        name="checkmark"
+        size={12}
+        style={{ zIndex: 50 }}
+        color={checkColor}
+      />
+    )}
   </Pressable>
 );
 
@@ -35,6 +48,6 @@ const s = StyleSheet.create({
     // borderRadius: 4,
     borderWidth: 2,
     borderColor: 'white',
-    backgroundColor: 'transparent',
+    // backgroundColor: 'transparent',
   },
 });

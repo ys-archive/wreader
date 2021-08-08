@@ -54,9 +54,9 @@ const SignupInput = ({
   };
 
   return (
-    <View>
-      <View>
-        <Email style={{ top: '28%' }} />
+    <View style={s.root}>
+      <View style={s.inputSection}>
+        <Email style={{ top: '50%' }} />
         <TextInput
           value={email}
           onChangeText={onChange('email')}
@@ -79,8 +79,8 @@ const SignupInput = ({
         </Button>
       </View>
 
-      <View>
-        <LockPassword style={{ top: '27%' }} />
+      <View style={s.inputSection}>
+        <LockPassword style={{ top: '44%' }} />
         <TextInput
           value={password}
           onChangeText={onChange('password')}
@@ -95,8 +95,9 @@ const SignupInput = ({
           secureTextEntry
         />
       </View>
-      <View>
-        <LockPassword style={{ top: '27%' }} />
+
+      <View style={s.inputSection}>
+        <LockPassword style={{ top: '44%' }} />
         <TextInput
           value={passwordRepeat}
           onChangeText={onChange('passwordRepeat')}
@@ -139,14 +140,15 @@ export default SignupInput;
 
 const s = StyleSheet.create({
   root: {
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    marginBottom: 30,
+  },
+  inputSection: {
+    paddingVertical: 10,
   },
   checkEmailButton: {
     position: 'absolute',
     right: '0%',
-    top: '30%',
+    top: '55%',
   },
   checkEmailText: {
     color: colors.light.white,
@@ -155,6 +157,6 @@ const s = StyleSheet.create({
   checkPasswordButton: {
     position: 'absolute',
     right: '0%',
-    top: '79%',
+    top: '81%',
   },
 });
