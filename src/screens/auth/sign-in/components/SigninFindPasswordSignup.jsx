@@ -18,7 +18,7 @@ const SigninFindPasswordSignup = () => {
   };
 
   return (
-    <View>
+    <View style={s.root}>
       <Button
         style={s.findPWButton}
         textStyle={s.findPWText}
@@ -44,6 +44,9 @@ const SigninFindPasswordSignup = () => {
 export default SigninFindPasswordSignup;
 
 const s = StyleSheet.create({
+  root: {
+    alignItems: 'center',
+  },
   findPWButton: {
     marginTop: 6,
   },

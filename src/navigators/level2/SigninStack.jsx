@@ -24,9 +24,10 @@ const SigninStack = () => {
         name={ScreenNames.Signup}
         component={Signup}
         options={({ navigation }) => ({
-          title: () => null,
-          headerLeft: () => null,
-          headerRight: () => <GoToSignin navigation={navigation} />,
+          headerShown: false,
+          // title: () => null,
+          // headerLeft: () => null,
+          // headerRight: () => <GoToSignin navigation={navigation} />,
         })}
       />
       <Stack.Screen

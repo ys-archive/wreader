@@ -1,4 +1,5 @@
 import Arrow from './Arrow';
+import Cancel from './Cancel';
 import DrawerCancel from './DrawerCancel';
 import Email from './Email';
 import Lock from './Lock';
@@ -16,6 +17,7 @@ import Reply from './Reply';
 
 export {
   Arrow,
+  Cancel,
   DrawerCancel,
   Email,
   Lock,

@@ -8,6 +8,7 @@ export const colors = {
     ivory2: '#bcb49f',
     ivory3: '#c9c0a6',
     ivory4: '#7f7663',
+    ivory5: '#a39b88',
     background: '#d1cab6',
     chapterBGInside: 'rgba(255, 248, 225, 0.8)', // #fff8e1 + alpha 60%
     tint: '#b00',

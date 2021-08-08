@@ -1,35 +1,120 @@
 import React from 'react';
-import { View } from 'react-native';
-import { StyleSheet, Text, Separator } from '#components';
+import { View, SafeAreaView } from 'react-native';
+import { StyleSheet, Text } from '#components';
 
-const SignupPolicyTexts = () => (
-  <View style={s.root}>
-    <Text>서비스 이용을 위해 기본정보 입력 및 약관에 동의해 주세요</Text>
-    <Separator
-      style={s.separator}
-      direction="horizontal"
-      width="100%"
-      height={1}
-    />
-    <Text style={s.accountInfoInstruction} isBold>
-      ※ 계정정보
-    </Text>
-  </View>
-);
+import { useNavigation } from '@react-navigation/native';
+import * as ScreenNames from '#navigators/ScreenNames';
+
+import { Cancel } from '#components/icon';
+import { colors } from '#constants';
+
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+
+const SignupPolicyTexts = () => {
+  const nav = useNavigation();
+
+  const onPressGoBackIcon = () => {
+    nav.navigate(ScreenNames.Signin);
+  };
+
+  return (
+    <SafeAreaView>
+      <View style={s.root}>
+        <Cancel onPress={onPressGoBackIcon} />
+        <View style={s.topSection}>
+          <Text isBold style={s.titleText}>
+            CREATE ACCOUNT
+          </Text>
+        </View>
+
+        <View style={[s.titleSection, { width: wp('84.7%') }]}>
+          <Text isBold style={s.subtitleText}>
+            WELCOME TO W.READER
+          </Text>
+          <View style={s.subtitleDetailsView}>
+            <Text style={s.subtitleDetailText}>
+              TO USE OUR SERVICE, PLEASE WRITE DOWN
+            </Text>
+            <Text style={s.subtitleDetailText}>
+              YOUR INFORMATION AND AGREE TO POLICIES
+            </Text>
+          </View>
+        </View>
+
+        <View style={s.basicInfoSection}>
+          <Text isBold style={s.basicInfo}>
+            ACCOUNT INFO
+          </Text>
+        </View>
+        <View style={s.separator} />
+      </View>
+    </SafeAreaView>
+  );
+};
 
 export default SignupPolicyTexts;
 
 const s = StyleSheet.create({
   root: {
-    width: '100%',
+    // width: '100%',
+    height: hp('100%'),
+    // alignItems: 'center',
+  },
+  topSection: {
+    flexDirection: 'row',
+    marginTop: hp('3.1%'),
+    alignSelf: 'center',
+  },
+  titleSection: {
+    marginTop: 19.1,
+    height: hp('7.9%'),
+    borderLeftWidth: 0.5,
+    borderBottomWidth: 0.5,
+    borderBottomStartRadius: 17,
+    borderColor: colors.light.ivory5,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  separator: {
-    marginTop: 15,
-    marginBottom: 40,
+  titleText: {
+    fontSize: 21,
+    color: colors.light.ivory5,
+    lineHeight: 28,
+    letterSpacing: 0,
   },
-  accountInfoInstruction: {
-    alignSelf: 'flex-start',
+  subtitleDetailsView: {
+    marginVertical: 11,
+  },
+  subtitleText: {
+    fontSize: 13,
+    textAlign: 'center',
+    color: colors.light.ivory5,
+  },
+  subtitleDetailText: {
+    marginTop: 5.7,
+    width: 178,
+    height: 23,
+    fontSize: 13,
+    letterSpacing: -0.7,
+    textAlign: 'center',
+    color: colors.light.ivory5,
+  },
+  basicInfoSection: {},
+  basicInfo: {
+    marginTop: hp('3.7%'),
+    width: 69,
+    height: 17,
+    fontSize: 15,
+    textAlign: 'left',
+    color: '#a39b88',
+  },
+  separator: {
+    marginTop: 2.5,
+    maxWidth: wp('35.7%'),
+    // width: 1000,
+    minHeight: 1,
+    backgroundColor: colors.light.ivory5,
   },
 });

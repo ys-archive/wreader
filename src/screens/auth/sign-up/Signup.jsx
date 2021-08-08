@@ -7,13 +7,15 @@ import { useNavigation } from '@react-navigation/native';
 import SignupPolicyTexts from './components/SignupPolicyTexts';
 import SignupForms from './components/forms/SignupForms';
 
+import { colors } from '#constants';
+
 const Signup = () => {
   // const nav = useNavigation();
 
   // TODO: headerRight -> signin 으로 돌아가기
   return (
     <KeyboardAwareScrollView contentContainerStyle={s.root}>
-      <View style={s.root}>
+      <View style={s.placer}>
         <SignupPolicyTexts />
         <SignupForms />
       </View>
@@ -26,10 +28,11 @@ export default Signup;
 const s = StyleSheet.create({
   root: {
     flex: 1,
-    marginVertical: 10,
-    marginHorizontal: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    // backgroundColor: '#fff',
+    backgroundColor: colors.light.background,
+  },
+  placer: {
+    flex: 1,
+    height: '100%',
+    marginHorizontal: '5.7%',
   },
 });

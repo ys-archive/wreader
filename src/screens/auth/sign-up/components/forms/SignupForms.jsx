@@ -57,7 +57,7 @@ const SignupForms = () => {
   const nav = useNavigation();
 
   const onSubmit = values => {
-    // AlertWithValue('signup2', '닫기', JSON.stringify(values, null, 2));
+    // AlertWithValue('signup2', '닫기', JSON.stringif˝y(values, null, 2));
     nav?.navigate(ScreenNames.Signup2, values);
   };
 
