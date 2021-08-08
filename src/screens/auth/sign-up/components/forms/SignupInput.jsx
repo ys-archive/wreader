@@ -71,7 +71,7 @@ const SignupInput = ({
         <RenderError touched={touched.email} errors={errors.email} />
         <Button
           style={s.checkEmailButton}
-          textStyle={s.checkEmailText}
+          textStyle={s.checkPasswordText}
           isBold
           onPress={checkEmailValidToUse}
         >
@@ -118,7 +118,7 @@ const SignupInput = ({
 
       <Button
         style={s.checkPasswordButton}
-        textStyle={s.checkEmailText}
+        textStyle={s.checkPasswordText}
         isBold
         onPress={checkValidPassword}
       >
@@ -150,7 +150,7 @@ const s = StyleSheet.create({
     right: '0%',
     top: '55%',
   },
-  checkEmailText: {
+  checkPasswordText: {
     color: colors.light.white,
     fontSize: 14,
   },

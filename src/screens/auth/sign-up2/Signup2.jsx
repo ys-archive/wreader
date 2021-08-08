@@ -3,34 +3,36 @@ import { View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { StyleSheet, Text } from '#components';
 
-import Signup2Form from './components/Signup2Form';
+import { colors } from '#constants';
 
-const Signup2 = ({ route }) => {
-  return (
-    <KeyboardAwareScrollView contentContainerStyle={s.root}>
-      <View style={s.root}>
-        <Text style={s.accountInfoInstruction} isBold>
-          ※ 기본정보
-        </Text>
-        <Signup2Form route={route} />
-      </View>
-    </KeyboardAwareScrollView>
-  );
-};
+import Signup2Form from './components/Signup2Form';
+import SignupPolicyTexts from '../sign-up/components/SignupPolicyTexts';
+
+const Signup2 = ({ route }) => (
+  <KeyboardAwareScrollView contentContainerStyle={s.root}>
+    <View style={s.placer}>
+      <SignupPolicyTexts
+        title="CREATE ACCOUNT"
+        subtitle="WELCOME TO W.READER"
+        subtitleDetail1="TO USE OUR SERVICE, PLEASE WRITE DOWN"
+        subtitleDetail2="YOUR INFORMATION AND AGREE TO POLICIES"
+        basicInfo="BASIC INFO"
+      />
+      <Signup2Form route={route} />
+    </View>
+  </KeyboardAwareScrollView>
+);
 
 export default Signup2;
 
 const s = StyleSheet.create({
   root: {
     flex: 1,
-    marginVertical: '25%',
-    marginHorizontal: 10,
-    // justifyContent: 'center',
-    alignItems: 'center',
-    // backgroundColor: '#fff',
+    backgroundColor: colors.light.background,
   },
-  accountInfoInstruction: {
-    alignSelf: 'flex-start',
-    // marginBottom: 50,
+  placer: {
+    flex: 1,
+    height: '100%',
+    marginHorizontal: '5.7%',
   },
 });

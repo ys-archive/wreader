@@ -17,8 +17,8 @@ const Me = ({
     <Image
       style={[
         {
-          width: 40,
-          height: 40,
+          width: 16,
+          height: 19,
         },
         iconStyle,
       ]}

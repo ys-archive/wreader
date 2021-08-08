@@ -9,19 +9,20 @@ import SignupForms from './components/forms/SignupForms';
 
 import { colors } from '#constants';
 
-const Signup = () => {
-  // const nav = useNavigation();
-
-  // TODO: headerRight -> signin 으로 돌아가기
-  return (
-    <KeyboardAwareScrollView contentContainerStyle={s.root}>
-      <View style={s.placer}>
-        <SignupPolicyTexts />
-        <SignupForms />
-      </View>
-    </KeyboardAwareScrollView>
-  );
-};
+const Signup = () => (
+  <KeyboardAwareScrollView contentContainerStyle={s.root}>
+    <View style={s.placer}>
+      <SignupPolicyTexts
+        title="CREATE ACCOUNT"
+        subtitle="WELCOME TO W.READER"
+        subtitleDetail1="TO USE OUR SERVICE, PLEASE WRITE DOWN"
+        subtitleDetail2="YOUR INFORMATION AND AGREE TO POLICIES"
+        basicInfo="ACCOUNT INFO"
+      />
+      <SignupForms />
+    </View>
+  </KeyboardAwareScrollView>
+);
 
 export default Signup;
 

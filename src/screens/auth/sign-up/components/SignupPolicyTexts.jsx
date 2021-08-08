@@ -13,7 +13,13 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-const SignupPolicyTexts = () => {
+const SignupPolicyTexts = ({
+  title,
+  subtitle,
+  subtitleDetail1,
+  subtitleDetail2,
+  basicInfo,
+}) => {
   const nav = useNavigation();
 
   const onPressGoBackIcon = () => {
@@ -26,27 +32,23 @@ const SignupPolicyTexts = () => {
         <Cancel onPress={onPressGoBackIcon} />
         <View style={s.topSection}>
           <Text isBold style={s.titleText}>
-            CREATE ACCOUNT
+            {title}
           </Text>
         </View>
 
         <View style={[s.titleSection, { width: wp('84.7%') }]}>
           <Text isBold style={s.subtitleText}>
-            WELCOME TO W.READER
+            {subtitle}
           </Text>
           <View style={s.subtitleDetailsView}>
-            <Text style={s.subtitleDetailText}>
-              TO USE OUR SERVICE, PLEASE WRITE DOWN
-            </Text>
-            <Text style={s.subtitleDetailText}>
-              YOUR INFORMATION AND AGREE TO POLICIES
-            </Text>
+            <Text style={s.subtitleDetailText}>{subtitleDetail1}</Text>
+            <Text style={s.subtitleDetailText}>{subtitleDetail2}</Text>
           </View>
         </View>
 
         <View style={s.basicInfoSection}>
           <Text isBold style={s.basicInfo}>
-            ACCOUNT INFO
+            {basicInfo}
           </Text>
         </View>
         <View style={s.separator} />

@@ -34,27 +34,30 @@ const SigninStack = () => {
         name={ScreenNames.Signup2}
         component={Signup2}
         options={({ navigation }) => ({
-          title: () => null,
-          headerLeft: () => null,
-          headerRight: () => <GoToSignin navigation={navigation} />,
+          headerShown: false,
+          // title: () => null,
+          // headerLeft: () => null,
+          // headerRight: () => <GoToSignin navigation={navigation} />,
         })}
       />
       <Stack.Screen
         name={ScreenNames.FindPassword}
         component={FindPassword}
         options={({ navigation }) => ({
-          title: () => null,
-          headerLeft: () => null,
-          headerRight: () => <GoToSignin navigation={navigation} />,
+          headerShown: false,
+          // title: () => null,
+          // headerLeft: () => null,
+          // headerRight: () => <GoToSignin navigation={navigation} />,
         })}
       />
       <Stack.Screen
         name={ScreenNames.ChangePassword}
         component={ChangePassword}
         options={({ navigation }) => ({
-          title: () => null,
-          headerLeft: () => null,
-          headerRight: () => <GoToSignin navigation={navigation} />,
+          headerShown: false,
+          // title: () => null,
+          // headerLeft: () => null,
+          // headerRight: () => <GoToSignin navigation={navigation} />,
         })}
       />
     </Stack.Navigator>

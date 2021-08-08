@@ -154,7 +154,7 @@ const s = StyleSheet.create({
     marginHorizontal: 0,
     paddingVertical: '4.5%',
     borderRadius: 11,
-    backgroundColor: colors.light.ivory4,
+    backgroundColor: colors.light.ivory5,
   },
   nextButtonText: {
     color: colors.light.white,

@@ -17,8 +17,8 @@ const Person = ({
     <Image
       style={[
         {
-          width: 40,
-          height: 40,
+          width: 19,
+          height: 19,
         },
         iconStyle,
       ]}

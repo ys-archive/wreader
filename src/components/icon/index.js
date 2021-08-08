@@ -7,6 +7,8 @@ import LockPassword from './Lock.Password';
 import Logo from './Logo';
 import LogoSignin from './Logo.Signin';
 import Me from './Me';
+import Facebook from './Facebook';
+import Instagram from './Instagram';
 import Sort from './Sort';
 import Menu from './Menu';
 import Like from './Like';
@@ -25,6 +27,8 @@ export {
   Logo,
   LogoSignin,
   Me,
+  Facebook,
+  Instagram,
   Sort,
   Menu,
   Like,
