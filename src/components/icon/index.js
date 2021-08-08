@@ -4,6 +4,7 @@ import DrawerCancel from './DrawerCancel';
 import Email from './Email';
 import Lock from './Lock';
 import LockPassword from './Lock.Password';
+import LockFindPassword from './Lock.FindPassword';
 import Logo from './Logo';
 import LogoSignin from './Logo.Signin';
 import Me from './Me';
@@ -24,6 +25,7 @@ export {
   Email,
   Lock,
   LockPassword,
+  LockFindPassword,
   Logo,
   LogoSignin,
   Me,

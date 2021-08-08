@@ -20,14 +20,14 @@ const initialValues = {
 
 const validationSchema = Yup.object({
   nickname: Yup.string()
-    .min(2, '2자 이상으로 정해주세요!')
-    .required('필수 항목입니다.'),
+    .min(2, 'User Name must be at least 2')
+    .required('You must fill out with this input'),
 
   instagramUrl: Yup.string(),
 
   facebookUrl: Yup.string(),
 
-  introduction: Yup.string().max(50, '최대 50자까지 작성 하실 수 있습니다.'),
+  introduction: Yup.string().max(50, "You can't type longer than 50"),
 });
 
 const Signup2Form = ({ route }) => {
@@ -49,12 +49,12 @@ const Signup2Form = ({ route }) => {
 
     // 회원가입 완료
     if (code === 1) {
-      Alert('회원가입 완료');
+      Alert('Sign up Complete');
     }
 
     // 이메일이 이미 존재
     if (code === 101) {
-      Alert('회원가입 실패 (입력한 이메일이 이미 존재합니다)');
+      Alert('Sign up Fail (Email already exists)');
     }
 
     // 다시 로그인 화면으로 되돌아감
@@ -65,12 +65,12 @@ const Signup2Form = ({ route }) => {
     const code = await AuthService.GET_CheckUserNickExists(nickname);
     console.log(code);
     if (code === 1) {
-      Alert('사용 가능한 닉네임입니다.');
+      Alert('Available user name');
     }
 
     // 중복!
     else {
-      Alert('이미 사용된 닉네임입니다.');
+      Alert('Already claimed user name');
     }
   };
 

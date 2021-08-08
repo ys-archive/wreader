@@ -7,8 +7,14 @@ import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '#navigators/ScreenNames';
 import { StyleSheet, Text, TextInput, Button } from '#components';
+import SignupPolicyTexts from '../sign-up/components/SignupPolicyTexts';
 import { Alert } from '#components/alert';
-import { Ionicons } from '@expo/vector-icons';
+import { colors } from '#constants';
+import { LockFindPassword, Email } from '#components/icon';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 const initialValues = {
   email: '',
@@ -16,12 +22,15 @@ const initialValues = {
 
 const validationSchema = Yup.object({
   email: Yup.string()
-    .email('이메일 형식에 맞지 않습니다. (예시: wreader1@gmail.com ...)')
-    .required('필수 항목입니다.'),
+    .email(
+      'please, provide it again in email format (e.g. wreader1@gmail.com ...)',
+    )
+    .required("You can't leave out this field"),
 });
 
 const FindPassword = () => {
   const nav = useNavigation();
+
   const onSubmit = values => {
     Alert('존재하는 메일입니다!');
     nav?.navigate(ScreenNames.ChangePassword);
@@ -37,18 +46,25 @@ const FindPassword = () => {
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={s.root}>
-      <View style={s.root}>
+      <View style={s.placer}>
+        <SignupPolicyTexts
+          title="FORGOT PASSWORD"
+          subtitle="VERFYING YOUR ACCOUNT"
+          subtitleDetail1="A VERIFYING MAIL SENT TO YOUR E-MAIL ACCOUNT."
+          subtitleDetail2="PLEASE CHECK THE E-MAIL AND"
+          subtitleDetail3="PRESS THE [VERIFYING COMPLETE] BUTTON"
+        />
+
+        <View style={s.lockSection}></View>
+
+        <LockFindPassword
+          style={{ position: 'absolute', left: '34%', top: '28%' }}
+        />
+
         <View>
-          <Text>인증메일이 발송되었습니다.</Text>
-          <Text>인증메일을 확인 후 [메일 인증완료]</Text>
-          <Text>버튼을 터치해 주세요.</Text>
-          <View style={{ alignSelf: 'center' }}>
-            <Ionicons name="ios-mail-outline" size={120} color="black" />
-          </View>
-        </View>
-        <View style={s.emailSection}>
+          <Email style={{ top: '34%', left: '10%' }} />
           <TextInput
-            style={s.email}
+            style={s.emailInput}
             value={email}
             onBlur={handleBlur('email')}
             onChangeText={handleChange('email')}
@@ -56,20 +72,34 @@ const FindPassword = () => {
           />
           <RenderError touched={touched.email} errors={errors.email} />
         </View>
-        <View>
-          <Text>인증메일이 도착하지 않았나요?</Text>
-          <Text>[인증메일 재발송] 버튼을 터치해 주세요.</Text>
+
+        <View style={s.resendSection}>
+          <View>
+            <Text style={s.resendInstructionText}>
+              IF YOU DIDN’T GET A VERIFYING MAIL
+            </Text>
+            <Text style={s.resendInstructionText}>
+              PRESS THE [RE-SEND] BOTTON
+            </Text>
+          </View>
           <Button
-            style={s.resendAuthMail}
+            style={s.resendAuthMailButton}
             textStyle={s.resendAuthMailText}
+            isBold
             onPress={() => {}}
           >
-            인증메일 재발송
-          </Button>
-          <Button style={s.summitButton} onPress={handleSubmit}>
-            메일 인증완료
+            RE-SEND
           </Button>
         </View>
+
+        <Button
+          style={s.summitButton}
+          textStyle={s.summitText}
+          isBold
+          onPress={handleSubmit}
+        >
+          VERIFY COMPLETE
+        </Button>
       </View>
     </KeyboardAwareScrollView>
   );
@@ -80,25 +110,59 @@ export default FindPassword;
 const s = StyleSheet.create({
   root: {
     flex: 1,
-    paddingHorizontal: 15,
-    paddingVertical: '25%',
+    backgroundColor: colors.light.background,
+  },
+  placer: {
+    flex: 1,
+    height: '100%',
+    marginHorizontal: '5.7%',
+  },
+  lockSection: {
+    // flex: 0.5,
     width: '100%',
+    minHeight: 250,
   },
-  emailSection: {
-    alignItems: 'center',
+  emailInput: {
+    marginLeft: 0,
+    paddingLeft: 65,
+    maxWidth: wp('83%'),
+    minWidth: wp('83%'),
   },
-  email: {},
-  resendAuthMail: {
-    alignSelf: 'flex-end',
+  resendSection: {
+    marginTop: 40,
+    // flex: 0.4,
+    flexDirection: 'row',
+  },
+  resendInstructionText: {
+    color: colors.light.ivory1,
+    fontSize: 11,
+    marginLeft: 30,
+    letterSpacing: -0.7,
+  },
+  resendAuthMailButton: {
+    // marginTop: 48,
+    // width: '120%',
+    marginLeft: 45,
+    paddingHorizontal: '5%',
+    // marginHorizontal: 0,
+    // flex: 1,
+    paddingVertical: '3.5%',
+    borderRadius: 11,
+    backgroundColor: colors.light.ivory5,
   },
   resendAuthMailText: {
-    color: 'blue',
+    // color: 'blue',
+    color: colors.light.ivory1,
   },
   summitButton: {
-    marginTop: '10%',
-    paddingHorizontal: '20%',
+    marginTop: '50%',
+    // paddingHorizontal: '20%',
     paddingVertical: '4%',
-    borderWidth: 1,
-    borderRadius: 15,
+    borderRadius: 11,
+    backgroundColor: colors.light.ivory5,
+  },
+  summitText: {
+    color: colors.light.white,
+    fontSize: 18,
   },
 });

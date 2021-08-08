@@ -18,6 +18,7 @@ const SignupPolicyTexts = ({
   subtitle,
   subtitleDetail1,
   subtitleDetail2,
+  subtitleDetail3,
   basicInfo,
 }) => {
   const nav = useNavigation();
@@ -43,15 +44,20 @@ const SignupPolicyTexts = ({
           <View style={s.subtitleDetailsView}>
             <Text style={s.subtitleDetailText}>{subtitleDetail1}</Text>
             <Text style={s.subtitleDetailText}>{subtitleDetail2}</Text>
+            {subtitleDetail3 && (
+              <Text style={s.subtitleDetailText}>{subtitleDetail3}</Text>
+            )}
           </View>
         </View>
 
-        <View style={s.basicInfoSection}>
-          <Text isBold style={s.basicInfo}>
-            {basicInfo}
-          </Text>
-        </View>
-        <View style={s.separator} />
+        {basicInfo && (
+          <View style={s.basicInfoSection}>
+            <Text isBold style={s.basicInfo}>
+              {basicInfo}
+            </Text>
+          </View>
+        )}
+        {basicInfo && <View style={s.separator} />}
       </View>
     </SafeAreaView>
   );
@@ -98,7 +104,7 @@ const s = StyleSheet.create({
     marginTop: 5.7,
     width: 178,
     height: 23,
-    fontSize: 13,
+    fontSize: 11,
     letterSpacing: -0.7,
     textAlign: 'center',
     color: colors.light.ivory5,

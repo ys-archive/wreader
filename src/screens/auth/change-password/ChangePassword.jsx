@@ -9,6 +9,13 @@ import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '#navigators/ScreenNames';
 import { StyleSheet, Text, TextInput, Button } from '#components';
 import { Ionicons } from '@expo/vector-icons';
+import { LockFindPassword, Email, LockPassword } from '#components/icon';
+import { colors } from '#constants';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import SignupPolicyTexts from '../sign-up/components/SignupPolicyTexts';
 
 const initialValues = {
   password: '',
@@ -17,62 +24,117 @@ const initialValues = {
 
 const validationSchema = Yup.object({
   password: Yup.string()
-    .max(28, '28 자 이내여야 합니다.')
-    .required('필수 입력 항목입니다.'),
+    .max(28, "lettres can't be longer than 28")
+    .min(8, 'your password must be 8 or more characters long')
+    .required("You can't leave out this field"),
 
-  passwordRepeat: Yup.string().oneOf(
-    [Yup.ref('password'), null],
-    '재입력한 비밀번호가 일치하지 않습니다!',
-  ),
+  passwordRepeat: Yup.string()
+    .oneOf([Yup.ref('password'), null], 'neither password matches')
+    .max(28, "lettres can't be longer than 28")
+    .min(8, 'your password must be 8 or more characters long')
+    .required("You can't leave out this field"),
 });
 
 const ChangePassword = () => {
   const nav = useNavigation();
   const onSubmit = values => {
-    Alert('비밀번호 변경 성공');
-    // TODO: data 도 넘긴다!
+    Alert('Changing password succeeds!');
     nav?.navigate(ScreenNames.Signin);
   };
 
-  const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
-    useFormik({
-      initialValues,
-      validationSchema,
-      onSubmit,
-    });
+  const {
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    setFieldValue,
+    values,
+    errors,
+    touched,
+  } = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit,
+  });
+
   const { password, passwordRepeat } = values;
+
+  const checkValidPassword = () => {
+    if (password === passwordRepeat) {
+      Alert('입력하신 비밀번호가 서로 같습니다.');
+      setFieldValue('isGoodToProceed', true);
+      return;
+    }
+
+    Alert('입력하신 비밀번호가 서로 다릅니다.');
+    setFieldValue('isGoodToProceed', false);
+    setFieldValue('password', '');
+    setFieldValue('passwordRepeat', '');
+  };
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={s.root}>
-      <View style={s.root}>
-        <View style={s.row1}>
-          <Ionicons name="checkmark" size={70} color="black" />
-          <Text>새로운 비밀번호를 입력 해주세요.</Text>
-        </View>
-        <View>
-          <TextInput
-            value={password}
-            onBlue={handleBlur('password')}
-            onChangeText={handleChange('password')}
-            placeholder="비밀번호 입력 해주세요 (4 ~ 12자)"
-            secureTextEntry
-          />
-          <RenderError touched={touched.password} errors={errors.password} />
+      <View style={s.placer}>
+        <SignupPolicyTexts
+          title="FORGOT PASSWORD"
+          subtitle="VERFYING YOUR ACCOUNT"
+          subtitleDetail1="A VERIFYING MAIL SENT TO YOUR E-MAIL ACCOUNT."
+          subtitleDetail2="PLEASE CHECK THE E-MAIL AND"
+          subtitleDetail3="PRESS THE [VERIFYING COMPLETE] BUTTON"
+        />
 
-          <TextInput
-            value={passwordRepeat}
-            onBlue={handleBlur('passwordRepeat')}
-            onChangeText={handleChange('passwordRepeat')}
-            placeholder="비밀번호를 다시 입력 해주세요 (4 ~ 12자)"
-            secureTextEntry
-          />
-          <RenderError
-            touched={touched.passwordRepeat}
-            errors={errors.passwordRepeat}
-          />
+        <View style={s.lockSection}></View>
+
+        <LockFindPassword
+          style={{ position: 'absolute', left: '34%', top: '28%' }}
+        />
+
+        <View>
+          <View>
+            <LockPassword />
+            <TextInput
+              style={s.passwordInput}
+              value={password}
+              onBlue={handleBlur('password')}
+              onChangeText={handleChange('password')}
+              placeholder="PASSWORD"
+              secureTextEntry
+            />
+            <RenderError touched={touched.password} errors={errors.password} />
+          </View>
+
+          <View>
+            <LockPassword />
+            <TextInput
+              style={s.passwordInput}
+              value={passwordRepeat}
+              onBlue={handleBlur('passwordRepeat')}
+              onChangeText={handleChange('passwordRepeat')}
+              placeholder="REPEAT THE PASSWORD"
+              secureTextEntry
+            />
+            <RenderError
+              touched={touched.passwordRepeat}
+              errors={errors.passwordRepeat}
+            />
+          </View>
+
+          <Button
+            style={s.checkPasswordButton}
+            textStyle={s.checkPasswordText}
+            isBold
+            onPress={checkValidPassword}
+          >
+            CHECK
+          </Button>
         </View>
-        <Button style={s.summitButton} onPress={handleSubmit} isBold>
-          비밀번호 변경완료
+
+        <Button
+          style={s.summitButton}
+          textStyle={s.summitText}
+          isBold
+          onPress={handleSubmit}
+        >
+          CHANGE PASSWORD
         </Button>
       </View>
     </KeyboardAwareScrollView>
@@ -84,19 +146,42 @@ export default ChangePassword;
 const s = StyleSheet.create({
   root: {
     flex: 1,
-    paddingHorizontal: 15,
-    paddingVertical: '25%',
-    width: '100%',
+    backgroundColor: colors.light.background,
   },
-  row1: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  placer: {
+    flex: 1,
+    height: '100%',
+    marginHorizontal: '5.7%',
+  },
+  lockSection: {
+    // flex: 0.5,
+    width: '100%',
+    minHeight: 250,
+  },
+  passwordInput: {
+    marginLeft: 0,
+    paddingLeft: 55,
+    maxWidth: wp('83%'),
+    minWidth: wp('83%'),
   },
   summitButton: {
-    marginTop: '10%',
-    paddingHorizontal: '10%',
+    marginTop: '50%',
+    // paddingHorizontal: '20%',
     paddingVertical: '4%',
-    borderWidth: 1,
-    borderRadius: 15,
+    borderRadius: 11,
+    backgroundColor: colors.light.ivory5,
+  },
+  summitText: {
+    color: colors.light.white,
+    fontSize: 18,
+  },
+  checkPasswordText: {
+    color: colors.light.white,
+    fontSize: 14,
+  },
+  checkPasswordButton: {
+    position: 'absolute',
+    right: '5%',
+    top: '70%',
   },
 });
