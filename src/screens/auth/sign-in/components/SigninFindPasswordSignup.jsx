@@ -64,9 +64,9 @@ const s = StyleSheet.create({
     height: 28.2,
     paddingVertical: 13,
     paddingHorizontal: 120,
-    marginTop: 33.5,
+    marginTop: 23.5,
     borderRadius: 13,
-    backgroundColor: colors.light.ivory4,
+    backgroundColor: colors.light.ivory5,
   },
   signupText: {
     color: colors.light.ivory1,

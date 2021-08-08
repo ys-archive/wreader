@@ -6,7 +6,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-const Arrow = ({ style = {}, onPress, direction = 'left' }) => {
+const Arrow = ({ style = {}, iconStyle = {}, onPress, direction = 'left' }) => {
   let source = leftArrow;
 
   if (direction === 'right') {
@@ -25,7 +25,7 @@ const Arrow = ({ style = {}, onPress, direction = 'left' }) => {
             width: 5,
             height: 10,
           },
-          style,
+          iconStyle,
         ]}
         source={source}
       />

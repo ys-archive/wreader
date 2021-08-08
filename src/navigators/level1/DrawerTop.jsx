@@ -2,7 +2,7 @@ import React from 'react';
 import { SafeAreaView, View, TouchableOpacity, Image } from 'react-native';
 import { Alert, RequireLoginAlert } from '#components/alert';
 import { colors } from '#constants';
-import { DrawerCancel, Arrow, Person2 } from '#components/icon';
+import { Cancel, Arrow, Person2 } from '#components/icon';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -57,8 +57,9 @@ const DrawerTop = props => {
       <SafeAreaView>
         <View style={s.elementPlacer}>
           {/* 드로어 닫기 */}
-          <DrawerCancel
-            style={s.closeDrawer}
+          <Cancel
+            style={s.closeDrawerPlacer}
+            iconStyle={s.closeDrawer}
             onPress={() => nav.closeDrawer()}
           />
 
@@ -66,22 +67,12 @@ const DrawerTop = props => {
           {profileImageUrl || profileLocalImagePath ? (
             <TouchableOpacity onPress={onPressProfileImage}>
               <Image
-                style={[
-                  s.profileImage,
-                  { width: 40, height: 40, borderRadius: 50 },
-                ]}
+                style={{ width: 45, height: 45, borderRadius: 50 }}
                 source={{ uri: profileImageUrl || profileLocalImagePath }}
               />
             </TouchableOpacity>
           ) : (
-            // <Ionicons
-            //   name="person-circle-outline"
-            //   size={60}
-            //   color="white"
-            //   style={s.profileImage}
-            //   onPress={onPressProfileImage}
-            // />
-            <Person2 style={s.profileImage} />
+            <Person2 iconStyle={{ width: 45, height: 45, borderRadius: 50 }} />
           )}
 
           {/* 유저 이름 */}
@@ -108,7 +99,8 @@ const DrawerTop = props => {
               HOME
             </Text>
             <Arrow
-              style={s.drawerItemArrow}
+              style={s.drawerItemArrowPlacer}
+              iconStyle={s.drawerItemArrow}
               onPress={() => {}}
               direction="right"
             />
@@ -127,7 +119,8 @@ const DrawerTop = props => {
                   HELP & FEEDBACK
                 </Text>
                 <Arrow
-                  style={s.drawerItemArrow}
+                  style={s.drawerItemArrowPlacer}
+                  iconStyle={s.drawerItemArrow}
                   onPress={() => {}}
                   direction="right"
                 />
@@ -145,7 +138,8 @@ const DrawerTop = props => {
               TERMS OF USE
             </Text>
             <Arrow
-              style={s.drawerItemArrow}
+              style={s.drawerItemArrowPlacer}
+              iconStyle={s.drawerItemArrow}
               onPress={() => {}}
               direction="right"
             />
@@ -192,29 +186,40 @@ export default DrawerTop;
 
 const s = StyleSheet.create({
   root: {
-    backgroundColor: colors.light.ivory4,
+    backgroundColor: colors.light.ivory5,
     flex: 1,
   },
   elementPlacer: {
     flexDirection: 'row',
     alignItems: 'flex-end',
-    backgroundColor: colors.light.ivory4,
-    minHeight: '21.9%',
+    backgroundColor: colors.light.ivory5,
+    minHeight: '14.9%',
     paddingLeft: 26.7,
     paddingBottom: 20,
     borderBottomStartRadius: 20,
     borderBottomEndRadius: 20,
     zIndex: 5,
   },
-  profileImage: {},
+  closeDrawer: {
+    tintColor: colors.light.ivory1,
+    minWidth: 18,
+    maxWidth: 18,
+    minHeight: 18,
+    maxHeight: 18,
+  },
+  closeDrawerPlacer: {
+    position: 'absolute',
+    right: '6.8%',
+    top: '6.4%',
+  },
   userNamePlacer: {
     position: 'absolute',
-    marginLeft: 9,
-    top: -28,
+    marginLeft: 11,
+    top: -30,
   },
   userName: {
     color: 'white',
-    fontSize: 22,
+    fontSize: 18,
   },
   drawerView: {
     backgroundColor: colors.light.ivory1,
@@ -230,24 +235,25 @@ const s = StyleSheet.create({
   },
   drawerItemText: {
     fontSize: 18,
-    color: colors.light.ivory4,
+    color: colors.light.ivory5,
   },
   drawerItemArrow: {
+    minWidth: 8,
+    maxWidth: 8,
+    minHeight: 13,
+    maxHeight: 13,
+  },
+  drawerItemArrowPlacer: {
     position: 'absolute',
-    right: wp('7.3%'),
+    right: '5%',
     top: 0,
   },
   separator: {
     maxWidth: '100%',
     minHeight: 1,
-    backgroundColor: colors.light.ivory4,
+    backgroundColor: colors.light.ivory5,
     marginLeft: '5.9%',
     marginTop: '2%',
     marginBottom: '10.8%',
-  },
-  closeDrawer: {
-    position: 'absolute',
-    right: '6.8%',
-    top: '16.4%',
   },
 });

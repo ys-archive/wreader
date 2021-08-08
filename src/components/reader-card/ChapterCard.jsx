@@ -316,6 +316,9 @@ const s = StyleSheet.create({
     padding: 0,
     margin: 0,
     marginLeft: 10,
+    paddingLeft: 3,
+    minWidth: wp('50%'),
+    maxWidth: wp('50%'),
     borderColor: colors.light.ivory1,
   },
   replyPostText: {

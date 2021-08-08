@@ -54,7 +54,7 @@ const s = StyleSheet.create({
   root: {
     flexDirection: 'column',
     alignItems: 'center',
-    marginTop: hp('25%'),
+    marginTop: hp('43%'),
   },
   inputSection: {
     flexDirection: 'row',

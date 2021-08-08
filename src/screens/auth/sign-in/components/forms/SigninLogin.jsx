@@ -24,9 +24,9 @@ const s = StyleSheet.create({
     height: 28.2,
     paddingVertical: 13,
     paddingHorizontal: 20,
-    marginTop: 33.5,
+    marginTop: 13.5,
     borderRadius: 13,
-    backgroundColor: colors.light.ivory4,
+    backgroundColor: colors.light.ivory5,
   },
   buttonInnerText: {
     color: colors.light.ivory1,

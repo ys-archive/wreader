@@ -143,16 +143,17 @@ const s = StyleSheet.create({
     // marginTop: 48,
     // width: '120%',
     marginLeft: 45,
-    paddingHorizontal: '5%',
+    paddingHorizontal: '4%',
     // marginHorizontal: 0,
     // flex: 1,
-    paddingVertical: '3.5%',
-    borderRadius: 11,
+    paddingVertical: '2.5%',
+    borderRadius: 10,
     backgroundColor: colors.light.ivory5,
   },
   resendAuthMailText: {
     // color: 'blue',
     color: colors.light.ivory1,
+    fontSize: 15
   },
   summitButton: {
     marginTop: '50%',
