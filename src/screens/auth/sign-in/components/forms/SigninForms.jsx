@@ -33,7 +33,7 @@ const validationSchema = Yup.object({
     .required("You can't leave out this field"),
 
   password: Yup.string()
-    .max(28, "lettres can't be more than 28")
+    .max(28, "lettres can't be longer than 28")
     .required("You can't leave out this field"),
 });
 
@@ -59,14 +59,14 @@ const SigninForms = () => {
     }
 
     const { code, item } = await AuthService.POST_login(email, password);
+
     if (code === 1) {
-      // console.log('!', item);
       login();
       setEmail(email);
       setPassword(password);
       setUserId(item.id);
       setUserInfo(item);
-      // Alert('로그인 성공');
+      Alert('로그인 성공');
       nav.navigate(ScreenNames.Main);
     }
 

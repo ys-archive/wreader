@@ -25,34 +25,38 @@ const SignupInput = ({
 
   const checkEmailValidToUse = async () => {
     const code = await AuthService.GET_CheckUserExists(email);
-    console.log(code);
 
     if (code === 1) {
       Alert('사용가능한 메일입니다.');
       setFieldValue('isGoodToProceed', true);
+      return;
     }
 
     if (code === 101) {
       Alert('이미 사용중인 메일입니다. 다른 이메일을 입력해주세요');
       setFieldValue('isGoodToProceed', false);
-      // setFieldValue('email', '');
+      setFieldValue('email', '');
+      return;
     }
   };
 
   const checkValidPassword = () => {
-    const isValid = password === passwordRepeat;
-    if (isValid) {
+    if (password === passwordRepeat) {
       Alert('입력하신 비밀번호가 서로 같습니다.');
-    } else {
-      Alert('입력하신 비밀번호가 서로 다릅니다.');
+      setFieldValue('isGoodToProceed', true);
+      return;
     }
-    setFieldValue('isGoodToProceed', isValid);
+
+    Alert('입력하신 비밀번호가 서로 다릅니다.');
+    setFieldValue('isGoodToProceed', false);
+    setFieldValue('password', '');
+    setFieldValue('passwordRepeat', '');
   };
 
   return (
     <View>
       <View>
-        <Email />
+        <Email style={{ top: '28%' }} />
         <TextInput
           value={email}
           onChangeText={onChange('email')}
@@ -76,7 +80,7 @@ const SignupInput = ({
       </View>
 
       <View>
-        <LockPassword />
+        <LockPassword style={{ top: '27%' }} />
         <TextInput
           value={password}
           onChangeText={onChange('password')}
@@ -84,6 +88,7 @@ const SignupInput = ({
           placeholder="PASSWORD"
           style={{
             marginHorizontal: 0,
+            // marginLeft: 10,
             minWidth: '96.7%',
             maxWidth: '96.7%',
           }}
@@ -91,7 +96,7 @@ const SignupInput = ({
         />
       </View>
       <View>
-        <LockPassword />
+        <LockPassword style={{ top: '27%' }} />
         <TextInput
           value={passwordRepeat}
           onChangeText={onChange('passwordRepeat')}
@@ -141,7 +146,7 @@ const s = StyleSheet.create({
   checkEmailButton: {
     position: 'absolute',
     right: '0%',
-    top: '41%',
+    top: '30%',
   },
   checkEmailText: {
     color: colors.light.white,
@@ -150,6 +155,6 @@ const s = StyleSheet.create({
   checkPasswordButton: {
     position: 'absolute',
     right: '0%',
-    top: '81%',
+    top: '79%',
   },
 });

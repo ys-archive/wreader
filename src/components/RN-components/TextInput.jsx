@@ -26,8 +26,10 @@ const s = StyleSheet.create({
   root: {
     margin: 12,
     padding: 10,
-    borderBottomWidth: 1,
     paddingLeft: 55,
+    // paddingRight: -35,
+    // marginRight: 55,
+    borderBottomWidth: 1,
     minWidth: wp('76%'),
     maxWidth: wp('76%'),
     borderColor: colors.light.ivory1,

@@ -22,38 +22,44 @@ const initialValues = {
 
 const validationSchema = Yup.object({
   email: Yup.string()
-    .email('이메일 형식에 맞지 않습니다. (예시: wreader1@gmail.com ...)')
-    .required('필수 항목입니다.'),
+    .email(
+      'please, provide it again in email format (e.g. wreader1@gmail.com ...)',
+    )
+    .required("You can't leave out this field"),
 
   password: Yup.string()
-    .max(28, '28 자 이내여야 합니다.')
-    .required('필수 입력 항목입니다.'),
+    .max(28, "lettres can't be longer than 28")
+    .required("You can't leave out this field"),
 
   passwordRepeat: Yup.string().oneOf(
     [Yup.ref('password'), null],
-    '재입력한 비밀번호가 일치하지 않습니다!',
+    'neither password matches',
   ),
 
   isAllAllowed: Yup.bool(),
 
-  isAgreementAllowed: Yup.bool().oneOf([true], '이용약관 동의는 필수입니다.'),
+  isAgreementAllowed: Yup.bool().oneOf(
+    [true],
+    "It's mandatory that allow the agreement",
+  ),
 
   isPrivacyPolicyAllowed: Yup.bool().oneOf(
     [true],
-    '개인정보 취급방침 동의는 필수입니다.',
+    "It's mandatory that allow the privacy policy",
   ),
 
   isMarketingAllowedOptional: Yup.bool(),
 
-  isGoodToProceed: Yup.bool().oneOf([true]),
+  isGoodToProceed: Yup.bool().oneOf(
+    [true],
+    "You can't proceed without blank of any mandatory",
+  ),
 });
 
 const SignupForms = () => {
-  // const signup = useStoreActions(actionsSignup);
   const nav = useNavigation();
 
   const onSubmit = values => {
-    // AlertWithValue('signup2', '닫기', JSON.stringif˝y(values, null, 2));
     nav?.navigate(ScreenNames.Signup2, values);
   };
 

@@ -6,15 +6,18 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-const LockPassword = () => (
+const LockPassword = ({ style }) => (
   <Image
-    style={{
-      width: 12.5 + 4,
-      height: 15.4 + 4,
-      position: 'absolute',
-      top: '30%',
-      left: '8%',
-    }}
+    style={[
+      {
+        width: 12.5 + 4,
+        height: 15.4 + 4,
+        position: 'absolute',
+        top: '30%',
+        left: '8%',
+      },
+      style,
+    ]}
     source={passwordLockIcon}
   />
 );

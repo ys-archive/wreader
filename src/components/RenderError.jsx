@@ -10,7 +10,7 @@ export const RenderError = ({
 }) =>
   touched && errors ? (
     <View>
-      <Text isBold={isBold} style={{ color }}>
+      <Text isBold={isBold} style={{ color, textAlign: 'center' }}>
         {errors}
       </Text>
     </View>
