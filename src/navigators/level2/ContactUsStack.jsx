@@ -53,8 +53,33 @@ const ContactUsStack = () => {
         name={ScreenNames.ContactUsDetail}
         component={ContactUsDetail}
         options={({ navigation, route }) => ({
-          title: '문의하기',
-          headerLeft: () => <GoBack navigation={navigation} />,
+          title: 'SUPPORT',
+          headerTitleStyle: {
+            color: '#fff',
+            fontFamily: 'mont-heavy-demo',
+            fontSize: 20,
+            ...Platform.select({
+              android: {
+                marginLeft: 85,
+              },
+            }),
+          },
+          headerStyle: {
+            backgroundColor: colors.light.ivory5,
+            // borderBottomStartRadius: 23,
+            // borderBottomEndRadius: 23,
+          },
+          headerLeft: () => (
+            <Arrow
+              onPress={() => navigation.goBack()}
+              direction="left"
+              iconStyle={{
+                width: 20,
+                height: 18,
+                marginLeft: 25,
+              }}
+            />
+          ),
         })}
       />
     </Stack.Navigator>

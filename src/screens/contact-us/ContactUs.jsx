@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, SafeAreaView, FlatList } from 'react-native';
-import { Loading } from '#components';
+import { View, TouchableOpacity } from 'react-native';
+// import { Loading } from '#components';
 import { StyleSheet, Text } from '#components';
 import { colors } from '#constants';
 import {
@@ -9,8 +9,9 @@ import {
 } from 'react-native-responsive-screen';
 
 import { useNavigation } from '@react-navigation/native';
-import ContactUsListItem from './ContactUsListItem';
 import { LogoCircle, Arrow, Plus } from '#components/icon';
+
+import * as ScreenNames from '#navigators/ScreenNames';
 
 const ContactUs = () => {
   const nav = useNavigation();
@@ -39,6 +40,10 @@ const ContactUs = () => {
   // }
   // 문의 갯수, 각 contactUsItem (id, 답변 상태: pending | complete, date, contents)
   // const { contactUsItems } = data;
+
+  const moveToContactUsDetail = () => {
+    nav.navigate(ScreenNames.ContactUsDetail);
+  };
 
   return (
     <View style={s.root}>
@@ -175,21 +180,27 @@ const ContactUs = () => {
 
         <View style={s.separator2} />
 
-        <View
-          style={[
-            s.titleSection,
-            { width: wp('84.7%'), minHeight: hp('6.2%') },
-          ]}
-        >
-          <Text isBold style={s.subtitle}>
-            TELL US MORE
-          </Text>
-          <Arrow
-            direction="right"
-            iconStyle={{ width: 8, height: 14, tintColor: colors.light.ivory4 }}
-            style={{ position: 'absolute', bottom: 13, right: 10 }}
-          />
-        </View>
+        <TouchableOpacity onPress={moveToContactUsDetail}>
+          <View
+            style={[
+              s.titleSection,
+              { width: wp('84.7%'), minHeight: hp('6.2%') },
+            ]}
+          >
+            <Text isBold style={s.subtitle}>
+              TELL US MORE
+            </Text>
+            <Arrow
+              direction="right"
+              iconStyle={{
+                width: 8,
+                height: 14,
+                tintColor: colors.light.ivory4,
+              }}
+              style={{ position: 'absolute', bottom: 13, right: 10 }}
+            />
+          </View>
+        </TouchableOpacity>
       </View>
     </View>
   );

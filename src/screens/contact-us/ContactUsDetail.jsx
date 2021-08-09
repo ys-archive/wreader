@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Platform } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { AlertWithValue } from '#components/alert';
 import { RenderError } from '#components';
@@ -7,7 +7,12 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '#navigators/ScreenNames';
+import { colors } from '#constants';
 import { StyleSheet, Text, TextInput, Button } from '#components';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 const initialValues = {
   title: '',
@@ -39,39 +44,77 @@ const ContactUsDetail = () => {
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={s.root}>
-      <View style={s.instructionText}>
-        <Text>Wreader와 관련된 문의사항을 입력하여</Text>
-        <Text>보내주시면 운영팀에서 확인 후 신속하게</Text>
-        <Text>답변드리도록 하겠습니다.</Text>
-      </View>
-      <View style={s.titleView}>
-        <Text isBold>※ 문의제목</Text>
-        <TextInput
-          style={s.input}
-          value={title}
-          onBlur={handleBlur('title')}
-          onChangeText={handleChange('title')}
-          placeholder="문의제목을 입력해주세요"
-        />
-        <RenderError touched={touched.title} errors={errors.title} />
-      </View>
-      <View style={s.contentsView}>
-        <Text isBold>※ 문의내용</Text>
-        <TextInput
-          style={{ ...s.input, ...s.inputContent }}
-          multiline
-          // numberOfLines={5}
-          value={contents}
-          onBlur={handleBlur('contents')}
-          onChangeText={handleChange('contents')}
-          placeholder="문의내용을 입력해주세요"
-        />
-        <RenderError touched={touched.Contents} errors={errors.Contents} />
-      </View>
-      <View>
-        <Button style={s.summitButton} onPress={handleSubmit}>
-          보내기
-        </Button>
+      <View style={s.placer}>
+        <Text isBold style={s.title}>
+          CONTACT US
+        </Text>
+
+        <View style={s.separator} />
+
+        <View
+          style={[
+            s.titleSection,
+            { width: wp('84.7%'), minHeight: hp('6.2%') },
+          ]}
+        >
+          <Text isBold style={s.subtitle}>
+            TELL US MORE
+          </Text>
+        </View>
+
+        <View style={s.descriptionView}>
+          <Text style={s.descriptionText}>
+            If there’s any inquiries about W.REASDER , let us know it. We are
+            going to reply you as soon as possible. Thank you.
+          </Text>
+        </View>
+
+        <Text isBold style={s.underTitle}>
+          THEME
+        </Text>
+
+        <View style={[s.inputView, { marginBottom: 48 }]}>
+          <TextInput
+            style={s.input}
+            value={title}
+            onBlur={handleBlur('title')}
+            onChangeText={handleChange('title')}
+            placeholder="Write down a theme of your inquery"
+          />
+          <RenderError touched={touched.title} errors={errors.title} />
+        </View>
+
+        <Text isBold style={s.underTitle}>
+          CONTENTS
+        </Text>
+
+        <View style={s.inputView}>
+          <TextInput
+            style={s.input}
+            value={contents}
+            onBlur={handleBlur('contents')}
+            onChangeText={handleChange('contents')}
+            placeholder="Write down contents of your inquery"
+          />
+          <TextInput style={s.dummyInput} />
+          <TextInput style={s.dummyInput} />
+          <TextInput style={s.dummyInput} />
+          <TextInput style={s.dummyInput} />
+          <RenderError touched={touched.contents} errors={errors.contents} />
+        </View>
+        <View>
+          {/* <Button style={s.summitButton} onPress={handleSubmit}>
+            보내기
+          </Button> */}
+          <Button
+            style={s.summitButton}
+            textStyle={s.summitText}
+            isBold
+            onPress={handleSubmit}
+          >
+            SEND
+          </Button>
+        </View>
       </View>
     </KeyboardAwareScrollView>
   );
@@ -82,28 +125,96 @@ export default ContactUsDetail;
 const s = StyleSheet.create({
   root: {
     flex: 1,
+    backgroundColor: colors.light.background,
+  },
+  placer: {
+    marginHorizontal: '8.3%',
+  },
+  title: {
+    marginTop: 45.6,
+    fontSize: 21,
+    color: '#fff',
+  },
+  separator: {
+    maxWidth: '50%',
+    minHeight: 1,
+    backgroundColor: colors.light.ivory5,
+    marginTop: '2%',
+    marginBottom: '10.8%',
+  },
+  titleSection: {
+    borderLeftWidth: 0.5,
+    borderBottomWidth: 0.5,
+    borderBottomStartRadius: 17,
+    borderColor: colors.light.ivory5,
+    justifyContent: 'flex-end',
+  },
+  subtitle: {
+    color: colors.light.ivory5,
+    marginLeft: '2.8%',
+    marginBottom: 10.4,
+    fontSize: 17,
+  },
+  descriptionView: {
+    marginTop: 10.1,
+    marginLeft: '3.2%',
+  },
+  descriptionText: {
+    fontSize: 10,
+    maxWidth: 288,
+    maxHeight: 29,
+    color: colors.light.ivory5,
+  },
+  underTitle: {
+    marginTop: Platform.OS === 'android' ? 10.7 : 24.7,
+    fontSize: 17,
+    color: '#fff',
+    marginLeft: 5.9,
+  },
 
-    padding: 20,
-  },
   instructionText: {},
-  titleView: {
-    marginTop: '15%',
-  },
-  contentsView: {
-    marginTop: '15%',
-  },
+  // titleView: {
+  //   marginTop: '15%',
+  // },
+  // contentsView: {
+  //   marginTop: '15%',
+  // },
+
   input: {
-    borderWidth: 1,
-    borderColor: '#000',
+    borderBottomWidth: 1,
+    borderColor: colors.light.ivory2,
+    marginHorizontal: 0,
+    paddingLeft: 10,
+    paddingBottom: 0,
+    // ...Platform.select({
+    //   android: {
+    //     marginBottom: 0,
+    //   },
+    // }),
+    minWidth: '96.7%',
+    maxWidth: '96.7%',
+    fontSize: Platform.OS === 'android' ? 13 : 12,
   },
-  inputContent: {
-    height: 250,
+  dummyInput: {
+    // margin: 0,
+    borderBottomWidth: 1,
+    borderColor: colors.light.ivory2,
+    marginHorizontal: 0,
+    minWidth: '96.7%',
+    maxWidth: '96.7%',
+    padding: 0,
   },
+
   summitButton: {
-    marginTop: '5%',
-    paddingHorizontal: '25%',
-    paddingVertical: '4%',
-    borderWidth: 1,
-    borderRadius: 15,
+    maxWidth: 305,
+    minHeight: 33.8,
+    paddingVertical: 13,
+    marginTop: Platform.OS === 'android' ? 30 : 37.7,
+    borderRadius: 13,
+    backgroundColor: colors.light.ivory5,
+  },
+  summitText: {
+    color: colors.light.ivory1,
+    fontSize: 17,
   },
 });
