@@ -2,8 +2,15 @@ import React from 'react';
 import { View, SafeAreaView, FlatList } from 'react-native';
 import { Loading } from '#components';
 import { StyleSheet, Text } from '#components';
+import { colors } from '#constants';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+
 import { useNavigation } from '@react-navigation/native';
 import ContactUsListItem from './ContactUsListItem';
+import { LogoCircle, Arrow, Plus } from '#components/icon';
 
 const ContactUs = () => {
   const nav = useNavigation();
@@ -33,82 +40,156 @@ const ContactUs = () => {
   // 문의 갯수, 각 contactUsItem (id, 답변 상태: pending | complete, date, contents)
   // const { contactUsItems } = data;
 
-  const contactUsItems = [
-    {
-      id: '1',
-      status: 'pending',
-      date: '2021-01-01',
-      contents: 'first contact us',
-    },
-    {
-      id: '2',
-      status: 'pending',
-      date: '2021-01-12',
-      contents: 'second contact us',
-    },
-    {
-      id: '3',
-      status: 'complete',
-      date: '2021-02-03',
-      contents: 'third contact us',
-    },
-    {
-      id: '4',
-      status: 'pending',
-      date: '2021-04-11',
-      contents: 'fourth contact us',
-    },
-    {
-      id: '5',
-      status: 'pending',
-      date: '2021-11-20',
-      contents: 'fifth contact us',
-    },
-    {
-      id: '6',
-      status: 'pending',
-      date: '2021-01-01',
-      contents: 'first contact us',
-    },
-    {
-      id: '7',
-      status: 'pending',
-      date: '2021-01-12',
-      contents: 'second contact us',
-    },
-    {
-      id: '8',
-      status: 'complete',
-      date: '2021-02-03',
-      contents: 'third contact us',
-    },
-    {
-      id: '9',
-      status: 'complete',
-      date: '2021-04-11',
-      contents: 'fourth contact us',
-    },
-    {
-      id: '10',
-      status: 'complete',
-      date: '2021-11-20',
-      contents: 'fifth contact us',
-    },
-  ];
-
-  // TOOD: 문의하기 -> header Right
-
   return (
     <View style={s.root}>
-      <Text isBold style={s.contactUsCount}>
-        문의 {contactUsItems.length}&nbsp;건
-      </Text>
+      <View style={s.placer}>
+        <Text isBold style={s.title}>
+          INQUARIES
+        </Text>
 
-      <View style={s.contactUsItemsView}>
-        <FlatList
-          data={contactUsItems}
-          renderItem={item => <ContactUsListItem item={item.item} />}
-        />
+        <View style={s.separator} />
+
+        <View
+          style={[
+            s.titleSection,
+            { width: wp('84.7%'), minHeight: hp('6.2%') },
+          ]}
+        >
+          <Text isBold style={s.subtitle}>
+            How to invite friends?
+          </Text>
+          <Arrow
+            direction="down"
+            iconStyle={{ width: 14, height: 8 }}
+            style={{ position: 'absolute', bottom: 15, right: 10 }}
+          />
+        </View>
+
+        <View
+          style={[
+            s.titleSection,
+            { width: wp('84.7%'), minHeight: hp('10.2%') },
+          ]}
+        >
+          <View style={s.selectedTopView}>
+            <Text isBold style={s.selectedSubtitle}>
+              How to invite friends?
+            </Text>
+
+            <Text style={s.selectedDate}>2021.07.28</Text>
+          </View>
+
+          <Text style={s.selectedDetail}>
+            I wanna write down a science fiction story. Then, What kind of
+            category is the right part of it?
+          </Text>
+
+          <View style={s.selectedBottomView}>
+            <LogoCircle style={s.logo} />
+            <Text style={s.logoDetail}>
+              Hello, Let us help you. If you want to write about it please
+              choose the fantasy category
+            </Text>
+          </View>
+          <Arrow
+            direction="up"
+            iconStyle={{ width: 14, height: 8 }}
+            style={{ position: 'absolute', bottom: 15, right: 10 }}
+          />
+        </View>
+
+        <View
+          style={[
+            s.titleSection,
+            { width: wp('84.7%'), minHeight: hp('6.2%') },
+          ]}
+        >
+          <Text isBold style={s.subtitle}>
+            How to invite friends?
+          </Text>
+          <Arrow
+            direction="down"
+            iconStyle={{ width: 14, height: 8 }}
+            style={{ position: 'absolute', bottom: 15, right: 10 }}
+          />
+        </View>
+
+        <View
+          style={[
+            s.titleSection,
+            { width: wp('84.7%'), minHeight: hp('6.2%') },
+          ]}
+        >
+          <Text isBold style={s.subtitle}>
+            How to invite friends?
+          </Text>
+          <Arrow
+            direction="down"
+            iconStyle={{ width: 14, height: 8 }}
+            style={{ position: 'absolute', bottom: 15, right: 10 }}
+          />
+        </View>
+
+        <View
+          style={[
+            s.titleSection,
+            { width: wp('84.7%'), minHeight: hp('6.2%') },
+          ]}
+        >
+          <Text isBold style={s.subtitle}>
+            How to invite friends?
+          </Text>
+          <Arrow
+            direction="down"
+            iconStyle={{ width: 14, height: 8 }}
+            style={{ position: 'absolute', bottom: 15, right: 10 }}
+          />
+        </View>
+
+        <View
+          style={[
+            s.titleSection,
+            { width: wp('84.7%'), minHeight: hp('6.2%') },
+          ]}
+        >
+          <Text isBold style={s.subtitle}>
+            How to invite friends?
+          </Text>
+          <Arrow
+            direction="down"
+            iconStyle={{ width: 14, height: 8 }}
+            style={{ position: 'absolute', bottom: 15, right: 10 }}
+          />
+        </View>
+
+        <View style={s.seeMoreSection}>
+          <Plus />
+          <Text isBold style={s.seeMore}>
+            SEE MORE
+          </Text>
+        </View>
+
+        <Text isBold style={s.title}>
+          CONTACT US
+        </Text>
+
+        <View style={s.separator2} />
+
+        <View
+          style={[
+            s.titleSection,
+            { width: wp('84.7%'), minHeight: hp('6.2%') },
+          ]}
+        >
+          <Text isBold style={s.subtitle}>
+            TELL US MORE
+          </Text>
+          <Arrow
+            direction="right"
+            iconStyle={{ width: 8, height: 14, tintColor: colors.light.ivory4 }}
+            style={{ position: 'absolute', bottom: 13, right: 10 }}
+          />
+        </View>
       </View>
     </View>
   );
@@ -119,14 +200,90 @@ export default ContactUs;
 const s = StyleSheet.create({
   root: {
     flex: 1,
+    backgroundColor: colors.light.background,
   },
-  contactUsCount: {
-    fontSize: 20,
-    margin: 15,
-    // marginHorizontal: 15,
-    // marginVertical: 25,
+  placer: {
+    marginHorizontal: '8.3%',
   },
-  contactUsItemsView: {
-    marginHorizontal: '5%',
+  title: {
+    marginTop: 45.6,
+    fontSize: 21,
+    color: '#fff',
+  },
+  separator: {
+    maxWidth: '50%',
+    minHeight: 1,
+    backgroundColor: colors.light.ivory5,
+    marginTop: '2%',
+    marginBottom: '10.8%',
+  },
+  separator2: {
+    maxWidth: '50%',
+    minHeight: 1,
+    backgroundColor: colors.light.ivory5,
+    marginTop: '2%',
+    marginBottom: 15.2,
+  },
+  subtitle: {
+    color: colors.light.ivory5,
+    marginLeft: '2.8%',
+    marginBottom: 10.4,
+    fontSize: 17,
+  },
+  selectedTopView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  selectedSubtitle: {
+    color: '#fff',
+    marginLeft: '2.8%',
+    marginBottom: 10.4,
+    fontSize: 17,
+  },
+  selectedDate: {
+    color: '#fff',
+    fontSize: 13,
+    marginBottom: 10.4,
+  },
+  selectedDetail: {
+    color: '#fff',
+    marginLeft: '2.8%',
+    fontSize: 11.5,
+    marginRight: '18.4%',
+  },
+  logo: {
+    marginLeft: '2.8%',
+    marginRight: 8.9,
+  },
+  logoDetail: {
+    fontSize: 10,
+    maxWidth: 200,
+    maxHeight: 30,
+    color: colors.light.ivory4,
+  },
+  selectedBottomView: {
+    flexDirection: 'row',
+    marginTop: 13.9,
+    marginBottom: 13.4,
+  },
+  titleSection: {
+    borderLeftWidth: 0.5,
+    borderBottomWidth: 0.5,
+    borderBottomStartRadius: 17,
+    borderColor: colors.light.ivory5,
+    justifyContent: 'flex-end',
+  },
+  seeMoreSection: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 15.2,
+  },
+  seeMore: {
+    color: '#fff',
+    fontSize: 17,
+    marginLeft: 5.9,
   },
 });

@@ -7,6 +7,7 @@ import LockPassword from './Lock.Password';
 import LockFindPassword from './Lock.FindPassword';
 import Logo from './Logo';
 import LogoSignin from './Logo.Signin';
+import LogoCircle from './Logo.Circle';
 import Me from './Me';
 import Facebook from './Facebook';
 import Instagram from './Instagram';
@@ -17,6 +18,7 @@ import ViewCount from './ViewCount';
 import Person2 from './Person2';
 import Person from './Person';
 import Reply from './Reply';
+import Plus from './Plus';
 
 export {
   Arrow,
@@ -28,6 +30,7 @@ export {
   LockFindPassword,
   Logo,
   LogoSignin,
+  LogoCircle,
   Me,
   Facebook,
   Instagram,
@@ -38,4 +41,5 @@ export {
   Person,
   Person2,
   Reply,
+  Plus,
 };

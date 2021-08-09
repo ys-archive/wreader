@@ -20,6 +20,8 @@ import SigninStack from '../level2/SigninStack';
 import PolicyAndConditionStack from '../level2/PolicyAndConditionStack';
 import MyProfileStack from '../level2/MyProfileStack';
 
+import { colors } from '#constants';
+
 const Drawer = createDrawerNavigator();
 
 const MainDrawer = () => {

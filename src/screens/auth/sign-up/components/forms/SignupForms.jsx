@@ -6,6 +6,11 @@ import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '#navigators/ScreenNames';
 
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+
 import SignupInput from './SignupInput';
 import SignupPolicyAndConditions from './SignupPolicyAndConditions';
 
@@ -78,7 +83,7 @@ const SignupForms = () => {
   });
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <SignupInput
         values={values}
         onChange={handleChange}

@@ -35,5 +35,10 @@ const s = StyleSheet.create({
     flex: 1,
     height: '100%',
     marginHorizontal: '5.7%',
+    ...Platform.select({
+      android: {
+        marginTop: '7%',
+      },
+    }),
   },
 });

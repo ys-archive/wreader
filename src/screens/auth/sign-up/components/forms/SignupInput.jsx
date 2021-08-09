@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View } from 'react-native';
+import { View, Platform } from 'react-native';
 import { Alert } from '#components/alert';
 import { StyleSheet, TextInput, Button, Text, RenderError } from '#components';
 import { AuthService } from '#services';
@@ -141,9 +141,10 @@ export default SignupInput;
 const s = StyleSheet.create({
   root: {
     marginBottom: 30,
+    // flex: 1,
   },
   inputSection: {
-    paddingVertical: 10,
+    paddingVertical: 5,
   },
   checkEmailButton: {
     position: 'absolute',

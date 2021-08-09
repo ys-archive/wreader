@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ImageBackground } from 'react-native';
+import { ImageBackground } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { StyleSheet } from '#components';
 import {
@@ -9,8 +9,8 @@ import {
 
 import { bg } from '#constants/images';
 import { LogoSignin } from '#components/icon';
+import { colors } from '#constants';
 
-import SigninLogoTitle from './components/SigninLogoTitle';
 import SigninForms from './components/forms/SigninForms';
 import SigninFindPasswordSignup from './components/SigninFindPasswordSignup';
 
@@ -23,7 +23,8 @@ const Signin = () => {
           minHeight: '100%',
           justifyContent: 'center',
           alignItems: 'center',
-          // flex: 1,
+          backgroundColor: colors.light.background,
+          flex: 1,
         }}
         source={bg}
         resizeMode="cover"
@@ -43,5 +44,6 @@ const s = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: colors.light.background,
   },
 });

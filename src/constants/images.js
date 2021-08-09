@@ -37,6 +37,7 @@ export const photoIcon = require('!images/photo-icon.png');
 export const sortIcon = require('!images/sort-icon.png');
 export const unlikeIcon = require('!images/unlike-icon.png');
 export const wreaderCircleLogo = require('!images/wreader-circle-logo.png');
+export const plusIcon = require('!images/plus.png');
 
 // arrow
 export const leftArrow = require('!images/left-arrow.png');

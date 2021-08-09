@@ -1,4 +1,5 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import * as ScreenNames from '../ScreenNames';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -11,7 +12,12 @@ const Stack = createStackNavigator();
 
 const PolicyAndConditionStack = () => {
   return (
-    <Stack.Navigator initialRouteName={ScreenNames.PolicyAndCondition}>
+    <Stack.Navigator
+      initialRouteName={ScreenNames.PolicyAndCondition}
+      // screenOptions={{
+      //   headerTitleStyle: { backgroundColor: colors.light.background },
+      // }}
+    >
       <Stack.Screen
         name={ScreenNames.PolicyAndCondition}
         component={PolicyAndCondition}
@@ -19,9 +25,13 @@ const PolicyAndConditionStack = () => {
           title: 'TERMS OF USE',
           headerTitleStyle: {
             color: '#fff',
-            fontWeight: 'bold',
             fontFamily: 'mont-heavy-demo',
             fontSize: 20,
+            ...Platform.select({
+              android: {
+                marginLeft: 60,
+              },
+            }),
           },
           headerStyle: {
             backgroundColor: colors.light.ivory5,

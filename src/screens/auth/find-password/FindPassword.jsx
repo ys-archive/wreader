@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Platform, ScrollView } from 'react-native';
+import { View, Platform } from 'react-native';
 import { RenderError } from '#components';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useFormik } from 'formik';
@@ -142,7 +142,7 @@ const s = StyleSheet.create({
   resendAuthMailButton: {
     // marginTop: 48,
     // width: '120%',
-    marginLeft: 45,
+    marginLeft: Platform.OS === 'android' ? 45 : 20,
     paddingHorizontal: '4%',
     // marginHorizontal: 0,
     // flex: 1,
@@ -153,7 +153,7 @@ const s = StyleSheet.create({
   resendAuthMailText: {
     // color: 'blue',
     color: colors.light.ivory1,
-    fontSize: 15
+    fontSize: 15,
   },
   summitButton: {
     marginTop: '50%',

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView, View, TouchableOpacity, Image } from 'react-native';
 import { Alert, RequireLoginAlert } from '#components/alert';
 import { colors } from '#constants';
@@ -26,11 +26,14 @@ import {
 import { actionsLogout } from '#store/actions';
 import { useProfileImageLoader } from '#hooks';
 
+const useForceUpdate = () => useState()[1];
+
 const DrawerTop = props => {
   const { navigation: nav } = props;
   const isLoggedIn = useStoreState(selectIsLoggedIn);
   const userInfo = useStoreState(selectUserInfo);
   const nick = userInfo !== null && userInfo.nick ? userInfo?.nick : 'SIGN IN';
+  const forceUpdate = useForceUpdate();
 
   const logout = useStoreActions(actionsLogout);
   const profileImageUrl = useStoreState(selectProfileImageUrl);
@@ -47,6 +50,7 @@ const DrawerTop = props => {
   };
 
   const onPressUserName = () => {
+    console.log('user name clicked!');
     if (nick === 'SIGN IN') {
       nav.navigate(ScreenNames.SigninStack);
     }
@@ -55,7 +59,7 @@ const DrawerTop = props => {
   return (
     <DrawerContentScrollView {...props} contentContainerStyle={s.root}>
       <SafeAreaView>
-        <View style={s.elementPlacer}>
+        <View style={s.elementPlacer} pointerEvents="box-none">
           {/* 드로어 닫기 */}
           <Cancel
             style={s.closeDrawerPlacer}
@@ -77,11 +81,12 @@ const DrawerTop = props => {
 
           {/* 유저 이름 */}
           <TouchableOpacity onPress={onPressUserName}>
-            <View style={s.userNamePlacer}>
-              <Text isBold style={s.userName}>
-                {nick}
-              </Text>
-            </View>
+            <Text
+              isBold
+              style={[s.userName, { marginLeft: 8, marginBottom: 9 }]}
+            >
+              {nick}
+            </Text>
           </TouchableOpacity>
         </View>
 
@@ -169,7 +174,9 @@ const DrawerTop = props => {
                   nav.closeDrawer();
                 }}
               >
-                <Text>로그아웃</Text>
+                <Text isBold style={s.drawerItemText}>
+                  LOGOUT
+                </Text>
               </TouchableOpacity>
               <View style={s.separator} />
             </>
@@ -198,7 +205,7 @@ const s = StyleSheet.create({
     paddingBottom: 20,
     borderBottomStartRadius: 20,
     borderBottomEndRadius: 20,
-    zIndex: 5,
+    zIndex: 1,
   },
   closeDrawer: {
     tintColor: colors.light.ivory1,

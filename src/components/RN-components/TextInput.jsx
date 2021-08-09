@@ -32,6 +32,7 @@ const s = StyleSheet.create({
     borderBottomWidth: 1,
     minWidth: wp('76%'),
     maxWidth: wp('76%'),
+    color: '#fff',
     borderColor: colors.light.ivory1,
   },
 });

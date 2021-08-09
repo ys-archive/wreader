@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Platform } from 'react-native';
 import { Alert } from '#components/alert';
 import { RenderError } from '#components';
 import { useFormik } from 'formik';
@@ -87,7 +87,13 @@ const Signup2Form = ({ route }) => {
     <View style={s.root}>
       <View style={s.inputSection}>
         <View style={s.inputSectionItem}>
-          <Me iconStyle={{ position: 'absolute', top: 20, left: 30 }} />
+          <Me
+            iconStyle={{
+              position: 'absolute',
+              top: Platform.OS === 'android' ? 28 : 20,
+              left: 30,
+            }}
+          />
           <TextInput
             style={s.input}
             value={nickname}
@@ -137,7 +143,13 @@ const Signup2Form = ({ route }) => {
         </View>
 
         <View style={s.inputSectionItem}>
-          <Person iconStyle={{ position: 'absolute', top: 22, left: 28 }} />
+          <Person
+            iconStyle={{
+              position: 'absolute',
+              top: Platform.OS === 'android' ? 28 : 20,
+              left: 28,
+            }}
+          />
           <TextInput
             style={s.input}
             value={introduction}
@@ -179,6 +191,15 @@ const s = StyleSheet.create({
     marginHorizontal: 0,
     minWidth: '96.7%',
     maxWidth: '96.7%',
+    ...Platform.select({
+      ios: {
+        fontSize: 11,
+      },
+      android: {
+        fontSize: 14,
+      },
+    }),
+    // Platform.select({ios: {fontSize: 10}
   },
   checkNickNameButton: {
     position: 'absolute',
@@ -190,7 +211,7 @@ const s = StyleSheet.create({
   },
   summitButton: {
     marginLeft: 0,
-    marginTop: '70%',
+    marginTop: Platform.OS === 'ios' ? '50%' : '35%',
     minWidth: '96.7%',
     maxWidth: '96.7%',
     paddingVertical: '4.5%',

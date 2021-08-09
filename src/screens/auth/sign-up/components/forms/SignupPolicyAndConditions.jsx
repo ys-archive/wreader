@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { CheckBox, Button, StyleSheet, Text } from '#components';
 import { colors } from '#constants';
 import { Arrow } from '#components/icon';
@@ -18,7 +18,7 @@ const SignupPolicyAndConditions = ({ onSubmit, values, setFieldValue }) => {
   } = values;
 
   return (
-    <View>
+    <View style={s.root}>
       <View style={s.policyCheckBoxItem}>
         <CheckBox
           isChecked={isAllAllowed}
@@ -55,7 +55,8 @@ const SignupPolicyAndConditions = ({ onSubmit, values, setFieldValue }) => {
         {/* TODO: 내용 열기 */}
         <Arrow
           direction="down"
-          style={[{ width: 18, height: 10 }, s.policyArrow]}
+          style={s.policyArrow}
+          iconStyle={{ width: 18, height: 10 }}
         />
       </View>
 
@@ -76,7 +77,8 @@ const SignupPolicyAndConditions = ({ onSubmit, values, setFieldValue }) => {
         {/* TODO: 내용 열기 */}
         <Arrow
           direction="down"
-          style={[{ width: 18, height: 10 }, s.policyArrow]}
+          style={s.policyArrow}
+          iconStyle={{ width: 18, height: 10 }}
         />
       </View>
 
@@ -100,7 +102,8 @@ const SignupPolicyAndConditions = ({ onSubmit, values, setFieldValue }) => {
         {/* TODO: 내용 열기 */}
         <Arrow
           direction="down"
-          style={[{ width: 18, height: 10 }, s.policyArrow]}
+          style={s.policyArrow}
+          iconStyle={{ width: 18, height: 10 }}
         />
       </View>
 
@@ -111,8 +114,12 @@ const SignupPolicyAndConditions = ({ onSubmit, values, setFieldValue }) => {
         onPress={onSubmit}
       >
         NEXT
-        <Arrow direction="right" style={s.nextButtonArrow} />
       </Button>
+      <Arrow
+        direction="right"
+        style={{ position: 'absolute', right: 10, bottom: 60 }}
+        iconStyle={{ width: 10, height: 20, tintColor: 'white' }}
+      />
     </View>
   );
 };
@@ -128,6 +135,9 @@ SignupPolicyAndConditions.defaultProps = {
 export default SignupPolicyAndConditions;
 
 const s = StyleSheet.create({
+  root: {
+    // marginTop: 20,
+  },
   policyCheckBoxItem: {
     flexDirection: 'row',
     // marginVertical: 15,
@@ -140,7 +150,7 @@ const s = StyleSheet.create({
     marginHorizontal: 0,
     paddingLeft: 25,
     paddingBottom: 15,
-    paddingTop: 35,
+    paddingTop: 25,
     borderLeftWidth: 0.5,
     borderBottomWidth: 0.5,
     borderBottomStartRadius: 24,
@@ -149,10 +159,11 @@ const s = StyleSheet.create({
   },
   nextButton: {
     marginTop: 48,
+    marginBottom: 48,
     // width: '120%',
     // paddingHorizontal: '40%',
     marginHorizontal: 0,
-    paddingVertical: '4.5%',
+    paddingVertical: '3.5%',
     borderRadius: 11,
     backgroundColor: colors.light.ivory5,
   },
@@ -161,24 +172,22 @@ const s = StyleSheet.create({
     fontSize: 18,
   },
   nextButtonArrow: {
-    width: 10,
-    height: 23,
     position: 'absolute',
-    right: -130,
-    top: -17,
+    right: -100,
+    top: 0,
   },
   policyDetailText: {
     position: 'absolute',
     right: '0%',
   },
   autoLoginText: {
-    fontSize: 18,
+    fontSize: 13,
     marginLeft: '3%',
     color: colors.light.ivory5,
   },
   policyArrow: {
     position: 'absolute',
     right: 8,
-    top: 20,
+    bottom: 20,
   },
 });
