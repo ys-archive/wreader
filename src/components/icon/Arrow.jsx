@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image, TouchableOpacity } from 'react-native';
-import { leftArrow, rightArrow, downArrow } from '#constants/images';
+import { leftArrow, rightArrow, upArrow, downArrow } from '#constants/images';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -15,6 +15,10 @@ const Arrow = ({ style = {}, iconStyle = {}, onPress, direction = 'left' }) => {
 
   if (direction === 'down') {
     source = downArrow;
+  }
+
+  if (direction === 'up') {
+    source = upArrow;
   }
 
   return (

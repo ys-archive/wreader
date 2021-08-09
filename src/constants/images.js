@@ -41,6 +41,7 @@ export const wreaderCircleLogo = require('!images/wreader-circle-logo.png');
 // arrow
 export const leftArrow = require('!images/left-arrow.png');
 export const rightArrow = require('!images/right-arrow.png');
+export const upArrow = require('!images/up-arrow.png');
 export const downArrow = require('!images/down-arrow.png');
 
 export const makeCategoryBGImagePath = title => {
