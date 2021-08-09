@@ -76,7 +76,10 @@ const DrawerTop = props => {
               />
             </TouchableOpacity>
           ) : (
-            <Person2 iconStyle={{ width: 45, height: 45, borderRadius: 50 }} />
+            <Person2
+              iconStyle={{ width: 45, height: 45, borderRadius: 50 }}
+              onPress={onPressProfileImage}
+            />
           )}
 
           {/* 유저 이름 */}
