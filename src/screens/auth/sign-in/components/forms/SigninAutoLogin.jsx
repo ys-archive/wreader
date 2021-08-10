@@ -1,16 +1,27 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import { StyleSheet, Text, CheckBox } from '#components';
 import { colors } from '#constants';
-
-import { useStoreActions, useStoreState } from 'easy-peasy';
-import { actionsToggleAutoLogin } from '#store/actions';
-import { selectIsAutoLogin } from '#store/selectors';
+import StorageService from '../../../../../services/StorageService';
+import * as SecureStore from 'expo-secure-store';
 
 const SigninAutoLogin = () => {
-  const isAutoLogin = useStoreState(selectIsAutoLogin);
-  const toggleAutoLogin = useStoreActions(actionsToggleAutoLogin);
+  const [isAutoLogin, setAutoLogin] = useState(false);
+
+  const toggleAutoLogin = useCallback(async () => {
+    await StorageService.toggleAutoLogin();
+    setAutoLogin(prv => !prv);
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      console.log(SecureStore);
+      const isAutoLogin = await SecureStore.getItemAsync('isAutoLogin');
+      console.log('isAutoLogin: ', isAutoLogin);
+      setAutoLogin(isAutoLogin === 'true' ? true : false);
+    })();
+  }, []);
 
   return (
     <View style={s.root}>

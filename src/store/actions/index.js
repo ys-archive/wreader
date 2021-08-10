@@ -58,6 +58,8 @@ export const actionsDisableAutoLogin = actions =>
   actions.persistence.disableAutoLogin;
 export const actionsToggleAutoLogin = actions =>
   actions.persistence.toggleAutoLogin;
+export const actionsSecureEmailPW = actions =>
+  actions.persistence.secureEmailPW;
 export const actionsExecuteAppFirstTime = actions =>
   actions.persistence.executeAppFirstTime;
 export const actionsIgnoreEventModalFor1day = actions =>

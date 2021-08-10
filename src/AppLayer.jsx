@@ -8,6 +8,7 @@ import { ReduxProvider } from '#store';
 import { NavigationProvider } from '#navigators';
 import { enableScreens } from 'react-native-screens';
 enableScreens(true);
+
 // import './Setup';
 import './firebase/firebase';
 

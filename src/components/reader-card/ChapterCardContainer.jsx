@@ -46,7 +46,7 @@ const ChapterCardContainer = ({
         userId,
       );
 
-      console.log(data);
+      // console.log(data);
       // console.log(data.item.filter(i => i.isLike === 1).length === 1);
 
       if (data) {

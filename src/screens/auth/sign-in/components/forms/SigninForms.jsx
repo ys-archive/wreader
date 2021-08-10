@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { Alert } from '#components/alert';
 
@@ -19,6 +19,10 @@ import { AuthService } from '#services';
 import SigninInput from './SigninInput';
 import SigninAutoLogin from './SigninAutoLogin';
 import SigninLogin from './SigninLogin';
+
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as SecureStore from 'expo-secure-store';
+import StorageService from '../../../../../services/StorageService';
 
 const initialValues = {
   email: '',
@@ -67,6 +71,12 @@ const SigninForms = () => {
       setUserId(item.id);
       setUserInfo(item);
       Alert('로그인 성공');
+
+      if (await SecureStore.getItemAsync('isAutoLogin')) {
+        await StorageService.saveSigninInfo(email, password);
+        console.log('Auto Login + 데이터 등록됨: ', email, password);
+      }
+
       nav.navigate(ScreenNames.Main);
     }
 
