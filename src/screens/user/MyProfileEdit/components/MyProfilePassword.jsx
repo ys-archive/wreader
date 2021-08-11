@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, KeyboardAvoidingView, Platform } from 'react-native';
 import { Alert } from '#components/alert';
-import { TextInput, Text, Button } from '#components';
+import { TextInput, Text, Button, RenderError } from '#components';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { UserService } from '#services';
 import { useStoreState, useStoreActions } from 'easy-peasy';
-import { selectUserId, selectUserInfo } from '#store/selectors';
+import { selectUserId } from '#store/selectors';
 import { actionsLogout } from '#store/actions';
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '#navigators/ScreenNames';
+import { colors } from '#constants';
+import * as SecureStore from 'expo-secure-store';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 const initialValues = {
   password: '',
@@ -21,11 +27,20 @@ const validationSchema = Yup.object({
     .required('필수 입력 항목입니다.'),
 });
 
-const MyProfilePassword = () => {
+const MyProfilePassword = ({ isEditingPassword }) => {
   const nav = useNavigation();
   const userId = useStoreState(selectUserId);
   const logoutAfterChangingPassword = useStoreActions(actionsLogout);
-  const userInfo = useStoreState(selectUserInfo);
+
+  const [currentPasswordLength, setCurrentPasswordLength] = useState(0);
+
+  useEffect(() => {
+    (async () => {
+      setCurrentPasswordLength(
+        (await SecureStore.getItemAsync('password')).length,
+      );
+    })();
+  }, []);
 
   const onSubmit = async values => {
     const { password } = values;
@@ -72,27 +87,32 @@ const MyProfilePassword = () => {
 
   return (
     <View style={s.root}>
-      <Text>비밀번호:&nbsp;</Text>
+      <Text style={s.infoPlaceholder}>PW</Text>
       <View style={s.inputSection}>
-        <TextInput
-          style={s.textInput}
-          value={password}
-          onChangeText={handleChange('password')}
-          onBlur={handleBlur('password')}
-          placeholder="새 비밀번호를 입력하세요"
-        />
-        <Button
-          style={s.button}
-          textStyle={s.buttonText}
-          onPress={handleSubmit}
-        >
-          수정
-        </Button>
-        {/* {touched.password && errors.password ? (
-          <View>
-            <Text>{errors.password}</Text>
-          </View>
-        ) : null} */}
+        {isEditingPassword ? (
+          <>
+            <TextInput
+              style={s.textInput}
+              value={password}
+              onChangeText={handleChange('password')}
+              onBlur={handleBlur('password')}
+              placeholder="WRITE NEW PASSWORD"
+            />
+            <RenderError touched={touched.password} errors={errors.password} />
+            <Button
+              style={s.button}
+              isBold
+              textStyle={s.buttonText}
+              onPress={handleSubmit}
+            >
+              UPDATE
+            </Button>
+          </>
+        ) : (
+          <Text style={s.passwordText}>
+            {new Array(currentPasswordLength).fill('*').map(letter => letter)}
+          </Text>
+        )}
       </View>
     </View>
   );
@@ -103,8 +123,19 @@ export default MyProfilePassword;
 const s = StyleSheet.create({
   root: {
     flexDirection: 'row',
-    width: '75%',
+    paddingTop: hp('3%'),
     alignItems: 'center',
+  },
+  infoPlaceholder: {
+    color: colors.light.white,
+    fontSize: 17,
+  },
+  passwordText: {
+    marginLeft: wp('15.2%'),
+    color: colors.light.white,
+    fontSize: 28,
+    position: 'relative',
+    top: '2%',
   },
   inputSection: {
     width: '100%',
@@ -113,16 +144,21 @@ const s = StyleSheet.create({
     marginLeft: 18,
   },
   textInput: {
-    // marginLeft: 10,
-    width: '60%',
+    marginTop: 8,
+    marginLeft: 60,
+    paddingLeft: 5,
+    maxWidth: '45%',
+    minWidth: '45%',
     padding: 0,
-    textAlign: 'center',
+    margin: 0,
   },
   button: {
-    // paddingVertical: 5,
-    // paddingHorizontal: 15,
+    position: 'relative',
+    right: 0,
+    top: 4,
   },
   buttonText: {
-    textAlign: 'center',
+    color: colors.light.white,
+    fontSize: 17,
   },
 });

@@ -4,7 +4,7 @@ import * as ScreenNames from '../ScreenNames';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import PolicyAndCondition from '../../screens/policy-and-condition/PolicyAndCondition';
-import GoBack from '../header/GoBack';
+
 import { Arrow } from '#components/icon';
 import { colors } from '#constants';
 

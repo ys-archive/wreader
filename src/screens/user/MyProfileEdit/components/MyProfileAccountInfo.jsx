@@ -1,23 +1,59 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
 import { StyleSheet, Text } from '#components';
 import MyProfilePassword from './MyProfilePassword';
 import { useStoreState } from 'easy-peasy';
-import { selectEmail } from '#store/selectors';
+import { selectEmail, selectUserInfo } from '#store/selectors';
+import { Edit2 } from '#components/icon';
+import { colors } from '#constants';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 const MyProfileAccountInfo = () => {
+  const userInfo = useStoreState(selectUserInfo);
+  const { nick } = userInfo;
   const email = useStoreState(selectEmail);
+
+  const [isEditingUserName, setEditingUserName] = useState(false);
+  const toggleEditingUserName = () => setEditingUserName(prv => !prv);
+
+  const [isEditingUserInfo, setEditingUserInfo] = useState(false);
+  const toggleEditingUserInfo = () => setEditingUserInfo(prv => !prv);
+
+  const [isEditingPassword, setEditingPassword] = useState(false);
+  const toggleEditingPassword = () => setEditingPassword(prv => !prv);
 
   return (
     <View style={s.root}>
-      <Text isBold>⁕&nbsp;계정정보</Text>
+      <View style={s.userNamePlacer}>
+        <Text isBold style={s.userName}>
+          {nick || 'NONE'}
+        </Text>
+      </View>
+      <Edit2
+        style={{ position: 'absolute', right: -20, top: 2 }}
+        onPress={toggleEditingUserName}
+      />
+
+      <Text isBold style={s.title}>
+        ACCOUNT INFO
+      </Text>
+      <Edit2
+        style={{ position: 'absolute', right: -20, top: 65 }}
+        onPress={toggleEditingPassword}
+      />
+
+      <View style={s.separator} />
+
       <View style={s.accountInfoSection}>
         <View style={s.emailView}>
-          <Text>이메일:&nbsp;</Text>
+          <Text style={s.infoPlaceholder}>E-MAIL</Text>
           <Text style={s.emailText}>{email}</Text>
         </View>
         <View style={s.passwordView}>
-          <MyProfilePassword />
+          <MyProfilePassword isEditingPassword={isEditingPassword} />
         </View>
       </View>
     </View>
@@ -28,19 +64,47 @@ export default MyProfileAccountInfo;
 
 const s = StyleSheet.create({
   root: {
-    paddingBottom: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: 'black',
+    // paddingBottom: 15,
+    // borderBottomWidth: 1,
+    // borderBottomColor: 'black',
+  },
+  userNamePlacer: {
+    flexDirection: 'row',
+    // alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  userName: {
+    fontSize: 21,
+    color: '#fff',
+  },
+  title: {
+    marginTop: 45.6,
+    fontSize: 21,
+    color: '#fff',
+    // textSpacing: -0.7
+  },
+  separator: {
+    maxWidth: '55%',
+    minHeight: 1,
+    backgroundColor: colors.light.ivory5,
+    marginTop: '2%',
+    // marginBottom: '10.8%',
   },
   accountInfoSection: {
-    marginTop: 25,
-    marginLeft: 20,
+    marginTop: hp('3.5%'),
   },
   emailView: {
     flexDirection: 'row',
   },
+  infoPlaceholder: {
+    color: colors.light.white,
+    fontSize: 17,
+  },
   emailText: {
-    marginLeft: 50,
+    marginLeft: wp('12.4%'),
+    color: colors.light.white,
+    fontSize: 17,
   },
   passwordView: {
     flexDirection: 'row',

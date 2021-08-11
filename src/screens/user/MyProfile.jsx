@@ -23,15 +23,8 @@ import {
 
 import { useProfileImageLoader } from '#hooks';
 
-import { useStoreActions, useStoreState } from 'easy-peasy';
-import {
-  selectIsLoggedIn,
-  selectUserInfo,
-  selectProfileImageUrl,
-  selectProfileLocalImagePath,
-} from '#store/selectors';
-
-const forceUpdate = () => useState()[1];
+import { useStoreState } from 'easy-peasy';
+import { selectUserInfo } from '#store/selectors';
 
 const MyProfile = () => {
   const nav = useNavigation();
@@ -62,7 +55,11 @@ const MyProfile = () => {
         <View style={s.topSection}>
           {defaultUri ? (
             <Image
-              style={{ maxWidth: 200, maxHeight: 200, borderRadius: 200 }}
+              style={{
+                maxWidth: wp('55.6%'),
+                maxHeight: 230,
+                borderRadius: 200,
+              }}
               source={{ uri: defaultUri }}
             />
           ) : (
@@ -129,8 +126,9 @@ const MyProfile = () => {
 
         <View style={s.introductionSection}>
           <Text style={s.introductionText}>
-            Hello, I’m Jessica Momo It19 my hobbies to write some stories. Love
-            to share my stories.
+            {intro || 'NONE'}
+            {/* Hello, I’m Jessica Momo It19 my hobbies to write some stories. Love
+            to share my stories. */}
           </Text>
         </View>
       </View>
@@ -182,9 +180,10 @@ const s = StyleSheet.create({
   },
   socialSection: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-around',
     alignItems: 'center',
-    marginTop: 45.4,
+    // marginTop: 45.4,
+    marginTop: hp('7%'),
   },
   social: {
     flexDirection: 'row',
@@ -198,10 +197,11 @@ const s = StyleSheet.create({
   introductionSection: {
     maxWidth: wp('76.1%'),
     alignSelf: 'center',
-    marginTop: hp('4.6%'),
+    marginTop: hp('6.4%'),
   },
   introductionText: {
     fontSize: 19,
     color: colors.light.white,
+    textAlign: 'justify',
   },
 });

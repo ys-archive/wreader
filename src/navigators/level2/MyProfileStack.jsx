@@ -2,9 +2,10 @@ import React from 'react';
 import * as ScreenNames from '../ScreenNames';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import GoBack from '../header/GoBack';
+import { Arrow } from '#components/icon';
+import { colors } from '#constants';
 
-import MyProfile from '../../screens/user/MyProfile/MyProfile';
+import MyProfile from '../../screens/user/MyProfile';
 import MyProfileEdit from '../../screens/user/MyProfileEdit/MyProfileEdit';
 
 const Stack = createStackNavigator();
@@ -21,8 +22,33 @@ const MyProfileStack = () => {
         name={ScreenNames.MyProfileEdit}
         component={MyProfileEdit}
         options={({ navigation, route }) => ({
-          title: null,
-          headerLeft: () => <GoBack navigation={navigation} />,
+          title: 'EDIT PROFILE',
+          headerTitleStyle: {
+            color: '#fff',
+            fontFamily: 'mont-heavy-demo',
+            fontSize: 20,
+            ...Platform.select({
+              android: {
+                marginLeft: 60,
+              },
+            }),
+          },
+          headerStyle: {
+            backgroundColor: colors.light.ivory5,
+            // borderBottomStartRadius: 23,
+            // borderBottomEndRadius: 23,
+          },
+          headerLeft: () => (
+            <Arrow
+              onPress={() => navigation.goBack()}
+              direction="left"
+              iconStyle={{
+                width: 20,
+                height: 18,
+                marginLeft: 25,
+              }}
+            />
+          ),
         })}
       />
     </Stack.Navigator>

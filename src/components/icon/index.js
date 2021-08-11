@@ -21,6 +21,7 @@ import Person2 from './Person2';
 import Person from './Person';
 import Reply from './Reply';
 import Plus from './Plus';
+import Photo from './Photo';
 
 export {
   Arrow,
@@ -46,4 +47,5 @@ export {
   Person2,
   Reply,
   Plus,
+  Photo
 };

@@ -1,25 +1,30 @@
 import React, { useState } from 'react';
 import { View, Image } from 'react-native';
 import { StyleSheet } from '#components';
-import { Ionicons } from '@expo/vector-icons';
-import { useImagePicker } from '#hooks';
-import { useStoreActions } from 'easy-peasy';
+// import { Ionicons } from '@expo/vector-icons';
+
+import { Photo } from '#components/icon';
+import { colors } from '#constants';
+
+import { useImagePicker, useProfileImageLoader } from '#hooks';
+
+import { useStoreState, useStoreActions } from 'easy-peasy';
 import {
   actionsSetProfileImageUrl,
   actionsSetProfileLocalImagePath,
 } from '#store/actions';
+
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import { useStoreState } from 'easy-peasy';
+
 import { selectUserId } from '#store/selectors';
 import { UserService } from '#services';
 import {
   uploadLocalImagePath,
   uploadImageFile,
 } from './ProfileImageFunctionalities';
-import { useProfileImageLoader } from '#hooks';
 
 const uploadDirName = 'profileImage';
 
@@ -61,16 +66,26 @@ const MyProfileImage = () => {
   };
 
   return (
-    <View style={s.profileImageView}>
-      <Image
-        style={{ width: wp('80%'), height: hp('35%'), borderRadius: 200 }}
-        source={{ uri: !isUploaded ? defaultUri : uploadedImageUri }}
-      />
-      <Ionicons
-        style={s.cameraIcon}
-        name="camera"
-        size={48}
-        color="black"
+    <View style={s.root}>
+      {defaultUri ? (
+        <Image
+          // style={{ width: wp('80%'), height: hp('35%'), borderRadius: 200 }}
+          style={{ width: wp('33.3%'), height: hp('15%'), borderRadius: 200 }}
+          source={{ uri: !isUploaded ? defaultUri : uploadedImageUri }}
+        />
+      ) : (
+        <View
+          style={{
+            width: wp('33.3%'),
+            height: hp('15%'),
+            borderRadius: 200,
+            backgroundColor: '#000',
+          }}
+        />
+      )}
+      <Photo
+        style={{ position: 'absolute', bottom: '6.4%', right: '32.3%' }}
+        iconStyle={{ width: 23, height: 17 }}
         onPress={pickNewProfileImage}
       />
     </View>
@@ -80,9 +95,11 @@ const MyProfileImage = () => {
 export default MyProfileImage;
 
 const s = StyleSheet.create({
-  profileImageView: {
-    alignSelf: 'center',
-    minHeight: hp('30%'),
+  root: {
+    // flex: 1,
+    marginTop: hp('3.9%'),
+    alignItems: 'center',
+    marginBottom: hp('1.3%'),
   },
   profileImage: {
     maxWidth: 200,
@@ -93,8 +110,8 @@ const s = StyleSheet.create({
   },
   cameraIcon: {
     position: 'absolute',
-    right: 0,
-    bottom: 0,
+    right: wp('1.8%'),
+    // top: ,
     // zIndex: -1,
   },
 });
