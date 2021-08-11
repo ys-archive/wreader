@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import firebase from 'firebase';
+import * as FileSystem from 'expo-file-system';
 
 export const useProfileImageLoader = setDefaultUri => {
   useEffect(() => {
@@ -14,13 +15,16 @@ export const useProfileImageLoader = setDefaultUri => {
         // 로컬 이미지 경로 가져오기
         const uri = snapshot.val();
 
-        if (!uri) {
-          // 경로가 없으면 바로 원본 이미지 가져오기
-          await loadProfileImage();
-        }
+        // if (!uri) {
+        //   // 경로가 없으면 바로 원본 이미지 가져오기
+        //   await loadProfileImage();
+        // }
 
         // 로컬 이미지 경로로 현재 기기에 사진이 있는지 확인
-        const dirInfo = await FileSystem.getInfoAsync(uri);
+        const dirInfo = await FileSystem.getInfoAsync(uri).catch(async err => {
+          console.log(err);
+          await loadProfileImage();
+        });
 
         // 파일 존재, 바로 사용
         if (dirInfo.exists) {

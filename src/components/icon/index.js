@@ -1,6 +1,8 @@
 import Arrow from './Arrow';
 import Cancel from './Cancel';
 import DrawerCancel from './DrawerCancel';
+import Edit from './Edit';
+import Edit2 from './Edit2';
 import Email from './Email';
 import Lock from './Lock';
 import LockPassword from './Lock.Password';
@@ -24,6 +26,8 @@ export {
   Arrow,
   Cancel,
   DrawerCancel,
+  Edit,
+  Edit2,
   Email,
   Lock,
   LockPassword,

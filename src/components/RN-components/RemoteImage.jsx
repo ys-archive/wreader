@@ -70,14 +70,12 @@ export const RemoteImage = ({ uri, cacheKey, style = {}, ...rest }) => {
 };
 
 RemoteImage.propTypes = {
-  isLocal: PropTypes.bool,
   uri: PropTypes.string.isRequired,
   cacheKey: PropTypes.string.isRequired,
   style: PropTypes.object,
 };
 
 RemoteImage.defaultProps = {
-  isLocal: true,
   style: {},
 };
 

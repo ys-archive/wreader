@@ -6,17 +6,31 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-const Like = ({ onPress }) => (
-  // zIndex: 10,
-  <TouchableOpacity onPress={onPress} style={{ zIndex: 100 }}>
+const Like = ({ style, onPress, isPressable = true }) =>
+  isPressable ? (
+    <TouchableOpacity onPress={onPress}>
+      <Image
+        style={[
+          {
+            width: 16,
+            height: 15,
+          },
+          style,
+        ]}
+        source={likeIcon}
+      />
+    </TouchableOpacity>
+  ) : (
     <Image
-      style={{
-        width: 16,
-        height: 15,
-      }}
+      style={[
+        {
+          width: 16,
+          height: 15,
+        },
+        style,
+      ]}
       source={likeIcon}
     />
-  </TouchableOpacity>
-);
+  );
 
 export default Like;

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import { TextInput, Text, StyleSheet, Alert, RenderError } from '#components';
 import { Email, LockPassword } from '#components/icon';
@@ -38,14 +37,6 @@ const SigninInput = ({ values, onChange, onBlur, errors, touched }) => {
       <RenderError touched={touched.password} errors={errors.password} />
     </View>
   );
-};
-
-SigninInput.propTypes = {
-  values: PropTypes.object.isRequired,
-  onChange: PropTypes.func.isRequired,
-  onBlur: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired,
-  touched: PropTypes.object.isRequired,
 };
 
 export default SigninInput;

@@ -1,10 +1,6 @@
 import React, { useEffect } from 'react';
-import { View, ActivityIndicator, ScrollView, Animated } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 import { StyleSheet, Text } from '#components';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
 import { useNavigation } from '@react-navigation/native';
 
 import { useStoreActions, useStoreState } from 'easy-peasy';
@@ -13,17 +9,10 @@ import {
   actionsSetLastChapterIdx,
   actionsLockMovingChapter,
 } from '#store/actions';
-import {
-  selectCurrentCategoryIdx,
-  // selectCurrentChapterIdx,
-} from '#store/selectors';
+import { selectCurrentCategoryIdx } from '#store/selectors';
 
-// import {
-//   widthPercentageToDP as wp,
-//   heightPercentageToDP as hp,
-// } from 'react-native-responsive-screen';
+import { useGetSWR, useAutoLogin } from '#hooks';
 
-import { useGetSWR, useSwipeGesture } from '#hooks';
 import EventModal from '#components/modals/EventModal';
 import CategoryCardContainer from '#components/reader-card/CategoryCardContainer';
 import Reader from './reader/Reader';
@@ -39,6 +28,8 @@ const Main = () => {
   const lockMovingChapter = useStoreActions(actionsLockMovingChapter);
 
   const { data: rootData, isLoading, error } = useGetSWR(`category`);
+
+  useAutoLogin();
 
   useEffect(() => {
     // 카테고리 데이터 없으면 갱신 X
@@ -65,8 +56,6 @@ const Main = () => {
   };
 
   const onPressMenuIcon = () => {
-    console.log('메뉴 아콘');
-    // TODO: drawer 열기
     nav.openDrawer();
   };
 

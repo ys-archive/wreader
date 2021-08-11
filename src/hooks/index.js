@@ -4,6 +4,7 @@ import { useSwipeGesture } from './useSwipeGesture';
 import { useProfileImageLoader } from './useProfileImageLoader';
 import { useSwipeHorizontal } from './useSwipeHorizontal';
 import { useSwipeVertical } from './useSwipeVertical';
+import { useAutoLogin } from './useAutoLogin';
 
 export {
   useImagePicker,
@@ -12,4 +13,5 @@ export {
   useProfileImageLoader,
   useSwipeHorizontal,
   useSwipeVertical,
+  useAutoLogin,
 };

@@ -6,13 +6,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-const Person2 = ({
-  style = {},
-  iconStyle = {},
-  onPress = () => {
-    console.log('Pressed!');
-  },
-}) => (
+const Person2 = ({ style, iconStyle, onPress }) => (
   <TouchableOpacity onPress={onPress} style={style}>
     <Image
       style={[

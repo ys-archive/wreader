@@ -22,6 +22,7 @@ class StorageService {
   static async disableAutoLogin() {
     // await AsyncStorage.setItem('isAutoLogin', false);
     await SecureStore.setItemAsync('isAutoLogin', 'false');
+    await saveSigninInfo('', '');
   }
 
   static async saveSigninInfo(email, password) {

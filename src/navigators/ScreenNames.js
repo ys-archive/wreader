@@ -8,6 +8,7 @@ export const PolicyAndCondition = 'PolicyAndCondition/PolicyAndCondition';
 // user
 export const MyProfileStack = 'MyProfile';
 export const MyProfile = 'MyProfile/MyProfile';
+export const MyProfileEdit = 'MyProfile/MyProfileEdit';
 export const OtherProfile = 'MyProfile/OtherProfile';
 
 // auth/find-password

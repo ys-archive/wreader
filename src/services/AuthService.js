@@ -1,6 +1,5 @@
 import * as axios from './AxiosInstance';
 import md5 from 'md5';
-import { useGetSWR } from '#hooks';
 
 const AGREE_MARKETING = 1;
 const DISAGREE_MARKETING = 2;
