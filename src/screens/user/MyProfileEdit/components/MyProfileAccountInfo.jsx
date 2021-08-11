@@ -20,25 +20,24 @@ const MyProfileAccountInfo = () => {
   const [isEditingUserName, setEditingUserName] = useState(false);
   const toggleEditingUserName = () => setEditingUserName(prv => !prv);
 
-  const [isEditingUserInfo, setEditingUserInfo] = useState(false);
-  const toggleEditingUserInfo = () => setEditingUserInfo(prv => !prv);
-
   const [isEditingPassword, setEditingPassword] = useState(false);
   const toggleEditingPassword = () => setEditingPassword(prv => !prv);
 
   return (
-    <View style={s.root}>
+    <View>
       <MyProfileUserName isEditingUserName={isEditingUserName} />
+
       <Edit2
-        style={{ position: 'absolute', right: -20, top: 2 }}
+        style={{ position: 'absolute', right: -10, top: 0 }}
         onPress={toggleEditingUserName}
       />
 
       <Text isBold style={s.title}>
         ACCOUNT INFO
       </Text>
+      
       <Edit2
-        style={{ position: 'absolute', right: -20, top: 65 }}
+        style={{ position: 'absolute', right: -10, top: 60 }}
         onPress={toggleEditingPassword}
       />
 
@@ -60,12 +59,6 @@ const MyProfileAccountInfo = () => {
 export default MyProfileAccountInfo;
 
 const s = StyleSheet.create({
-  root: {
-    // paddingBottom: 15,
-    // borderBottomWidth: 1,
-    // borderBottomColor: 'black',
-  },
-
   title: {
     marginTop: 45.6,
     fontSize: 21,
@@ -77,23 +70,25 @@ const s = StyleSheet.create({
     minHeight: 1,
     backgroundColor: colors.light.ivory5,
     marginTop: '2%',
-    // marginBottom: '10.8%',
   },
+
   accountInfoSection: {
     marginTop: hp('3.5%'),
   },
+
   emailView: {
     flexDirection: 'row',
   },
   infoPlaceholder: {
     color: colors.light.white,
-    fontSize: 17,
+    fontSize: 15,
   },
   emailText: {
-    marginLeft: wp('12.4%'),
+    marginLeft: wp('14.4%'),
     color: colors.light.white,
-    fontSize: 17,
+    fontSize: 15,
   },
+
   passwordView: {
     flexDirection: 'row',
   },

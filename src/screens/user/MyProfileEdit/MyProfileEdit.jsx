@@ -32,7 +32,7 @@ const s = StyleSheet.create({
   placer: {
     flex: 1,
     height: '100%',
-    marginHorizontal: '9.5%',
+    marginHorizontal: '7.5%',
     ...Platform.select({
       android: {
         marginTop: '7%',

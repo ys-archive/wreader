@@ -1,52 +1,54 @@
-import React, { useEffect } from 'react';
-import { View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Platform } from 'react-native';
+import { StyleSheet, Text, TextInput, RenderError, Button } from '#components';
 import { Alert } from '#components/alert';
+import { Edit2 } from '#components/icon';
+import { colors } from '#constants';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '#navigators/ScreenNames';
-import { StyleSheet, Text, TextInput, Button } from '#components';
+
 import { UserService } from '#services';
+
 import { useStoreState } from 'easy-peasy';
-import {
-  selectUserId,
-  selectPassword,
-  selectUserInfo,
-} from '#store/selectors';
+import { selectUserId, selectPassword, selectUserInfo } from '#store/selectors';
 
 const initialValues = {
-  nickname: '',
   instagramUrl: '',
   facebookUrl: '',
   introduction: '',
 };
 
 const validationSchema = Yup.object({
-  nickname: Yup.string()
-    .min(2, '2자 이상으로 정해주세요!')
-    .required('필수 항목입니다.'),
-
   instagramUrl: Yup.string(),
-
   facebookUrl: Yup.string(),
-
   introduction: Yup.string().max(50, '최대 50자까지 작성 하실 수 있습니다.'),
 });
 
 const MyProfileBasicInfo = () => {
   // TODO: 기본 Profile 정보 불러와 로드하기
-
   const nav = useNavigation();
   const userId = useStoreState(selectUserId);
   const password = useStoreState(selectPassword);
+
   const userInfo = useStoreState(selectUserInfo);
+  const { nick, instagram, facebook, intro } = userInfo;
+
+  const [isEditingUserInfo, setEditingUserInfo] = useState(false);
+  const toggleEditingUserInfo = () => setEditingUserInfo(prv => !prv);
 
   const onSubmit = async values => {
-    const { nickname, instagramUrl, facebookUrl, introduction } = values;
+    const { instagramUrl, facebookUrl, introduction } = values;
     const code = await UserService.PUT_updateUserInfo(
       userId,
       password,
-      nickname,
+      nick,
       instagramUrl,
       facebookUrl,
       introduction,
@@ -76,7 +78,7 @@ const MyProfileBasicInfo = () => {
     onSubmit,
   });
 
-  const { nickname, instagramUrl, facebookUrl, introduction } = values;
+  const { instagramUrl, facebookUrl, introduction } = values;
 
   useEffect(() => {
     console.log(userInfo);
@@ -84,7 +86,6 @@ const MyProfileBasicInfo = () => {
       return;
     }
 
-    setFieldValue('nickname', userInfo.nick || '');
     setFieldValue('instagramUrl', userInfo.instagram || '');
     setFieldValue('facebookUrl', userInfo.facebook || '');
     setFieldValue('introduction', userInfo.intro || '');
@@ -92,84 +93,102 @@ const MyProfileBasicInfo = () => {
 
   return (
     <View style={s.root}>
-      <Text isBold>⁕&nbsp;기본정보</Text>
+      <Text isBold style={s.title}>
+        INFORMATION
+      </Text>
+
+      <Edit2
+        style={{ position: 'absolute', right: -10, top: 0 }}
+        onPress={toggleEditingUserInfo}
+      />
+
+      <View style={s.separator} />
+
       <View style={s.inputSection}>
-        <View style={s.inputView}>
-          <View style={s.inputNamePlacer}>
-            <Text>닉네임</Text>
-          </View>
-          <TextInput
-            style={s.input}
-            value={nickname}
-            onBlur={handleBlur('nickname')}
-            onChangeText={handleChange('nickname')}
-            placeholder="닉네임을 입력하세요(20자 이내)"
-          />
-          {/* {touched.nickname && errors.nickname ? (
-                  <View>
-                    <Text>{errors.nickname}</Text>
-                  </View>
-                ) : null} */}
+        <View style={[s.inputView, { paddingTop: 0 }]}>
+          <Text style={s.infoPlaceholder}>INSTAGRAM</Text>
+          {isEditingUserInfo ? (
+            <>
+              <TextInput
+                style={{ ...s.textInput, ...s.textInputFirst }}
+                value={instagramUrl}
+                onBlur={handleBlur('instagramUrl')}
+                onChangeText={handleChange('instagramUrl')}
+                placeholder="instagram.com/(ID)"
+              />
+              <RenderError
+                touched={touched.instagramUrl}
+                errors={errors.instagramUrl}
+              />
+            </>
+          ) : (
+            <Text style={s.infoText}>{instagram || 'NONE'}</Text>
+          )}
         </View>
 
         <View style={s.inputView}>
-          <View style={s.inputNamePlacer}>
-            <Text>인스타그램</Text>
-          </View>
-          <TextInput
-            style={s.input}
-            value={instagramUrl}
-            onBlur={handleBlur('instagramUrl')}
-            onChangeText={handleChange('instagramUrl')}
-            placeholder="(선택)"
-          />
-          {/* {touched.instagramUrl && errors.instagramUrl ? (
-                  <View>
-                    <Text>{errors.instagramUrl}</Text>
-                  </View>
-                ) : null} */}
+          <Text style={s.infoPlaceholder}>FACEBOOK</Text>
+          {isEditingUserInfo ? (
+            <>
+              <TextInput
+                style={{ ...s.textInput, ...s.textInputSecond }}
+                value={facebookUrl}
+                onBlur={handleBlur('facebookUrl')}
+                onChangeText={handleChange('facebookUrl')}
+                placeholder="facebook.com/(ID)"
+              />
+              <RenderError
+                touched={touched.facebookUrl}
+                errors={errors.facebookUrl}
+              />
+            </>
+          ) : (
+            <Text style={{ ...s.infoText, ...s.infoTextSecond }}>
+              {instagram || 'NONE'}
+            </Text>
+          )}
         </View>
 
         <View style={s.inputView}>
-          <View style={s.inputNamePlacer}>
-            <Text>페이스북</Text>
-          </View>
-          <TextInput
-            style={s.input}
-            value={facebookUrl}
-            onBlur={handleBlur('facebookUrl')}
-            onChangeText={handleChange('facebookUrl')}
-            placeholder="(선택)"
-          />
-          {/* {touched.facebookUrl && errors.facebookUrl ? (
-                <View>
-                  <Text>{errors.facebookUrl}</Text>
-                </View>
-              ) : null} */}
+          <Text style={[s.infoPlaceholder, { alignSelf: 'flex-start' }]}>
+            BIO
+          </Text>
+          {isEditingUserInfo ? (
+            <>
+              <View style={s.introInputs}>
+                <TextInput
+                  style={{ ...s.textInput, ...s.textInputLast }}
+                  value={introduction}
+                  onBlur={handleBlur('introduction')}
+                  onChangeText={handleChange('introduction')}
+                  placeholder="let them know about you"
+                />
+                <TextInput style={s.dummyInput} />
+                <TextInput style={s.dummyInput} />
+              </View>
+              <RenderError
+                touched={touched.introduction}
+                errors={errors.introduction}
+              />
+            </>
+          ) : (
+            <Text style={{ ...s.infoText, ...s.infoTextLast }}>
+              {intro || 'NONE'}
+            </Text>
+          )}
         </View>
-
-        <View style={s.inputView}>
-          <View style={s.inputNamePlacer}>
-            <Text>소개</Text>
-          </View>
-          <TextInput
-            style={s.input}
-            value={introduction}
-            onBlur={handleBlur('introduction')}
-            onChangeText={handleChange('introduction')}
-            placeholder="나를 소개할 문구를 적어주세요 (50자)"
-          />
-          {/* {touched.introduction && errors.introduction ? (
-                  <View>
-                    <Text>{errors.introduction}</Text>
-                  </View>
-                ) : null} */}
-        </View>
-
-        <Button style={s.summitButton} onPress={handleSubmit}>
-          완료
-        </Button>
       </View>
+
+      {isEditingUserInfo && (
+        <Button
+          style={s.button}
+          isBold
+          textStyle={s.buttonText}
+          onPress={handleSubmit}
+        >
+          UPDATE
+        </Button>
+      )}
     </View>
   );
 };
@@ -178,31 +197,109 @@ export default MyProfileBasicInfo;
 
 const s = StyleSheet.create({
   root: {
-    // marginTop: 25,
-    flex: 1,
-    alignItems: 'center',
+    marginTop: hp('4.5%'),
+  },
+  placer: {
+    marginLeft: wp('12.4%'),
+  },
+
+  title: {
+    // marginTop: 45.6,
+    fontSize: 21,
+    color: '#fff',
+    // textSpacing: -0.7
+  },
+  separator: {
+    maxWidth: '55%',
+    minHeight: 1,
+    backgroundColor: colors.light.ivory5,
+    marginTop: '2%',
+    // marginBottom: '10.8%',
+  },
+
+  infoPlaceholder: {
+    color: colors.light.white,
+    fontSize: 15,
+  },
+
+  inputSection: {
+    marginTop: hp('3.7%'),
     justifyContent: 'center',
   },
-  inputSection: {
-    alignItems: 'center',
-  },
+
   inputView: {
-    maxWidth: '90%',
     flexDirection: 'row',
     alignItems: 'center',
+    paddingTop: hp('4%'),
   },
-  inputNamePlacer: {
-    width: '25%',
-  },
-  input: {
-    maxWidth: '70%',
+
+  textInput: {
+    ...Platform.select({
+      android: {
+        marginTop: -10.6,
+      },
+      ios: {
+        marginTop: -4.8,
+      },
+    }),
+    paddingLeft: 5,
+    maxWidth: wp('45%'),
+    minWidth: wp('45%'),
     padding: 0,
+    margin: 0,
   },
-  summitButton: {
-    marginTop: '10%',
-    paddingHorizontal: '40%',
-    paddingVertical: '4%',
-    borderWidth: 1,
-    borderRadius: 15,
+  textInputFirst: {
+    marginLeft: 15,
+  },
+  textInputSecond: {
+    marginLeft: 21,
+  },
+  textInputLast: {
+    // marginLeft: 84,
+    maxWidth: wp('52%'),
+    minWidth: wp('52%'),
+  },
+
+  infoText: {
+    color: colors.light.white,
+    fontSize: 15,
+    marginLeft: 21,
+  },
+  infoTextSecond: {
+    marginLeft: 25,
+  },
+  infoTextLast: {
+    marginLeft: 78,
+  },
+
+  introInputs: {
+    marginLeft: 50,
+  },
+  dummyInput: {
+    paddingTop: hp('3%'),
+    // marginLeft: 18,
+    paddingLeft: 5,
+    maxWidth: wp('52%'),
+    minWidth: wp('52%'),
+    padding: 0,
+    margin: 0,
+  },
+
+  button: {
+    position: 'absolute',
+    right: -25,
+
+    ...Platform.select({
+      ios: {
+        top: 150,
+      },
+      android: {
+        top: 165,
+      },
+    }),
+  },
+  buttonText: {
+    color: colors.light.white,
+    fontSize: 13,
   },
 });

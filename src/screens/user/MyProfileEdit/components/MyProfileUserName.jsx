@@ -111,6 +111,7 @@ export default MyProfileUserName;
 const s = StyleSheet.create({
   root: {
     width: '100%',
+    maxHeight: 21,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -123,15 +124,10 @@ const s = StyleSheet.create({
     fontSize: 21,
     color: '#fff',
   },
-  inputSection: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginLeft: 18,
-  },
+
   textInput: {
-    // marginTop: 8,
-    marginLeft: 20,
+    marginTop: 1,
+    marginLeft: 0,
     paddingLeft: 5,
     maxWidth: '55%',
     minWidth: '55%',
@@ -141,10 +137,10 @@ const s = StyleSheet.create({
   button: {
     position: 'relative',
     right: 0,
-    top: 4,
+    top: 0,
   },
   buttonText: {
     color: colors.light.white,
-    fontSize: 17,
+    fontSize: 15,
   },
 });

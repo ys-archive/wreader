@@ -14,8 +14,8 @@ const Edit2 = ({ style, iconStyle, onPress }) => (
     <Image
       style={[
         {
-          width: 34.4,
-          height: 15.2,
+          width: 43.4,
+          height: 19.2,
         },
         iconStyle,
       ]}

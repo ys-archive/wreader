@@ -186,13 +186,14 @@ const s = StyleSheet.create({
     marginHorizontal: 0,
     paddingLeft: 10,
     paddingBottom: 0,
+    // paddingRight: 0,
     // ...Platform.select({
     //   android: {
     //     marginBottom: 0,
     //   },
     // }),
-    minWidth: '96.7%',
-    maxWidth: '96.7%',
+    minWidth: '101%',
+    maxWidth: '101%',
     fontSize: Platform.OS === 'android' ? 13 : 12,
   },
   dummyInput: {
@@ -200,8 +201,8 @@ const s = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: colors.light.ivory2,
     marginHorizontal: 0,
-    minWidth: '96.7%',
-    maxWidth: '96.7%',
+    minWidth: '101%',
+    maxWidth: '101%',
     padding: 0,
   },
 
