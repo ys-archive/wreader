@@ -14,7 +14,7 @@ import {
 import { colors } from '#constants';
 
 import { TextInput } from '#components';
-import { ViewCount, Like, Reply } from '#components/icon';
+import { Like, Reply } from '#components/icon';
 
 import { makeCategoryBGImagePath, dummyProfile } from '#constants/images';
 
@@ -24,6 +24,8 @@ import {
   selectProfileImageUrl,
   selectIsLoggedIn,
   selectUserId,
+  selectCurrentChapterIdx,
+  selectCurrentCandidateIdx,
 } from '#store/selectors';
 import CommentsModal from '#components/modals/CommentsModal';
 
@@ -33,12 +35,124 @@ const borderRadiusOutside = 20;
 const borderRadiusInside = 17;
 
 const ChapterCard = ({
-  chapterOrder,
+  chapterIdx,
   chapterData,
+  candidateIdx,
   categoryTitle,
   triggerUpdatingLike,
+  isVisibleFromCategory,
 }) => {
   const [isCommentsOpen, setCommentsOpen] = useState(false);
+  const chapterOrder = chapterIdx + 1;
+
+  const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
+  const currentCandidateIdx = useStoreState(selectCurrentCandidateIdx);
+  const isMovingChapterLock = currentCandidateIdx !== 0;
+
+  const isPreviousChapter = currentChapterIdx - 1 === chapterOrder;
+  const isNextChapter = currentChapterIdx + 1 === chapterOrder;
+
+  const predicatedPositionBetweenChapters =
+    !isMovingChapterLock &&
+    (isNextChapter || isVisibleFromCategory
+      ? {
+          position: 'absolute',
+          left: '-5%',
+        }
+      : isPreviousChapter
+      ? {
+          position: 'absolute',
+          right: '-5%',
+        }
+      : {});
+
+  const predicatedScaleBGBetweenChapters =
+    isNextChapter || isPreviousChapter || isVisibleFromCategory
+      ? {
+          width: wp('83.3%') * 0.9,
+          height: hp('81.2%') * 0.9,
+        }
+      : {};
+
+  const predicatedScaleProfileBetweenChapters =
+    isNextChapter || isPreviousChapter || isVisibleFromCategory
+      ? {
+          width: 30 * 0.9,
+          height: 30 * 0.9,
+        }
+      : {};
+
+  const predicatedScaleInsideBGBetweenChapters =
+    isNextChapter || isPreviousChapter || isVisibleFromCategory
+      ? {
+          width: wp('75.6%') * 0.9,
+          height: hp('69.7%') * 0.9,
+        }
+      : {};
+
+  const predicatedScaleBottomSectionBetweenChapters =
+    isNextChapter || isPreviousChapter || isVisibleFromCategory
+      ? {
+          minWidth: wp('75.6%') * 0.9,
+          minHeight: 72.2 * 0.9,
+        }
+      : {};
+
+  // console.log('현재 후보 챕터: ', currentCandidateIdx);
+
+  const candidateOrder = candidateIdx + 1;
+  const isPreviousCandidate = currentCandidateIdx - 1 === candidateOrder;
+  const isNextCandidate = currentCandidateIdx + 1 === candidateOrder;
+
+  const predicatedPositionBetweenCandidates = isNextCandidate
+    ? {
+        position: 'absolute',
+        top: '-5%',
+      }
+    : (candidateOrder - 1 === -1 && isMovingChapterLock) || isPreviousCandidate
+    ? {
+        position: 'absolute',
+        bottom: '-7%',
+      }
+    : {};
+
+  // : isVisibleFromCategory
+  // ? {
+  //     position: 'absolute',
+  //     left: '-5%',
+  //   }
+  // : {};
+  // const predicatedScaleBGBetweenCandidates =
+  //   isNextChapter || isPreviousChapter || isVisibleFromCategory
+  //     ? {
+  //         width: wp('83.3%') * 0.9,
+  //         height: hp('81.2%') * 0.9,
+  //       }
+  //     : {};
+
+  // const predicatedScaleProfileBetweenCandidates =
+  //   isNextChapter || isPreviousChapter || isVisibleFromCategory
+  //     ? {
+  //         width: 30 * 0.9,
+  //         height: 30 * 0.9,
+  //       }
+  //     : {};
+
+  // const predicatedScaleInsideBGBetweenCandidates =
+  //   isNextChapter || isPreviousChapter || isVisibleFromCategory
+  //     ? {
+  //         width: wp('75.6%') * 0.9,
+  //         height: hp('69.7%') * 0.9,
+  //       }
+  //     : {};
+
+  // const predicatedScaleBottomSectionBetweenCandidates =
+  //   isNextChapter || isPreviousChapter || isVisibleFromCategory
+  //     ? {
+  //         minWidth: wp('75.6%') * 0.9,
+  //         minHeight: 72.2 * 0.9,
+  //       }
+  //     : {};
 
   const {
     id: chapterId, // 현재 챕터 Id
@@ -94,15 +208,18 @@ const ChapterCard = ({
   return (
     <View style={s.root}>
       <ImageBackground
-        style={{
-          minWidth: wp('83.3%'),
-          maxWidth: wp('83.3%'),
-          minHeight: hp('81.2%'),
-          maxHeight: hp('81.2%'),
-          borderRadius: borderRadiusOutside,
-          overflow: 'hidden',
-          alignItems: 'center',
-        }}
+        style={[
+          {
+            width: wp('83.3%'),
+            height: hp('81.2%'),
+            borderRadius: borderRadiusOutside,
+            overflow: 'hidden',
+            alignItems: 'center',
+          },
+          predicatedPositionBetweenChapters,
+          predicatedPositionBetweenCandidates,
+          predicatedScaleBGBetweenChapters,
+        ]}
         source={
           chapterCoverImageUri
             ? {
@@ -115,11 +232,14 @@ const ChapterCard = ({
         {/* 프로필 및 작가 이름 */}
         <View style={s.authorSection}>
           <Image
-            style={{
-              width: 30,
-              height: 30,
-              borderRadius: 100,
-            }}
+            style={[
+              {
+                width: 30,
+                height: 30,
+                borderRadius: 100,
+              },
+              predicatedScaleProfileBetweenChapters,
+            ]}
             // source={authorImageUri !== '' ? { uri: authorImageUri } : dummyProfile}
             source={dummyProfile}
           />
@@ -128,12 +248,15 @@ const ChapterCard = ({
           </Text>
         </View>
         <ImageBackground
-          style={{
-            minWidth: wp('75.6%'),
-            minHeight: hp('69.7%'),
-            backgroundColor: colors.light.chapterBGInside,
-            borderRadius: borderRadiusInside,
-          }}
+          style={[
+            {
+              width: wp('75.6%'),
+              height: hp('69.7%'),
+              backgroundColor: colors.light.chapterBGInside,
+              borderRadius: borderRadiusInside,
+            },
+            predicatedScaleInsideBGBetweenChapters,
+          ]}
         >
           {/* 챕터 제목 */}
           <View style={s.titleSection}>
@@ -160,7 +283,12 @@ const ChapterCard = ({
           </View>
 
           {/* 좋아요, 댓글 */}
-          <View style={s.bottomSection}>
+          <View
+            style={[
+              s.bottomSection,
+              predicatedScaleBottomSectionBetweenChapters,
+            ]}
+          >
             <View style={s.bottomInfoPlacer}>
               <View style={s.likeSection}>
                 <Like onPress={onPressLike} />
@@ -217,8 +345,10 @@ export default ChapterCard;
 const s = StyleSheet.create({
   root: {
     minWidth: wp('100%'),
+    // maxWidth: wp('100%'),
     minHeight: hp('100%'),
-    backgroundColor: colors.light.primary,
+    // maxHeight: hp('100%'),
+    backgroundColor: colors.light.primaryTransparent,
     // flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -277,11 +407,11 @@ const s = StyleSheet.create({
     position: 'absolute',
     bottom: '0%',
     minWidth: wp('75.6%'),
+    minHeight: 72.2,
     borderBottomStartRadius: borderRadiusInside,
     borderBottomEndRadius: borderRadiusInside,
     backgroundColor: colors.light.ivory3,
     // minHeight: hp('12.2%'),
-    minHeight: 72.2,
     paddingTop: hp('2.4%'),
     // paddingLeft: wp('5.5%'),
   },

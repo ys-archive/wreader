@@ -46,7 +46,7 @@ export default {
       state.model.currentChapterIdx === state.model.lastChapterIdx,
   ),
 
-  isFirstCandidateIdx: computed(state => state.model.currentCandidateIdx === 0),
+  isFirstCandidate: computed(state => state.model.currentCandidateIdx === 0),
 
   isLastCandidate: computed(
     state =>

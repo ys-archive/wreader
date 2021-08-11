@@ -9,36 +9,47 @@ import { colors } from '#constants';
 import { makeCategoryBGImagePath } from '#constants/images';
 
 import { useStoreState } from 'easy-peasy';
-import { selectCurrentCategoryIdx } from '#store/selectors';
+import {
+  selectCurrentCategoryIdx,
+  selectIsFirstCandidate,
+  // selectIsFirstChapter,
+  selectCurrentChapterIdx,
+} from '#store/selectors';
 
 const CategoryCard = ({ category, categoryIdx }) => {
   const { title, subTitle, imageUri } = category;
 
   const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
-  console.log('현재 카테고리: ', currentCategoryIdx);
 
-  const isPrevious = currentCategoryIdx - 1 === categoryIdx;
-  // if (isPrevious) console.log('isPrevious : ', categoryIdx);
+  const isPreviousCategory = currentCategoryIdx - 1 === categoryIdx;
+  const isNextCategory = currentCategoryIdx + 1 === categoryIdx;
 
-  // const isNext = currentCategoryIdx + 1 === categoryIdx;
-  const isNext = currentCategoryIdx + 1 === categoryIdx;
+  const isFirstCandidate = useStoreState(selectIsFirstCandidate);
+  const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
+  const isVisibleFromChapter = isFirstCandidate && currentChapterIdx === 1;
+  // 현재 후보 idx === 0
 
   // const predicatedOpacity = isNext || isPrevious ? { opacity: 1 } : {};
 
-  const predicatedPosition = isNext
+  const predicatedPosition = isNextCategory
     ? {
         position: 'absolute',
         top: '-5%',
       }
-    : isPrevious
+    : isPreviousCategory
     ? {
         position: 'absolute',
         bottom: '-7%',
       }
+    : isVisibleFromChapter
+    ? {
+        position: 'absolute',
+        right: '-5%',
+      }
     : {};
 
   const predicatedScale =
-    isNext || isPrevious
+    isNextCategory || isPreviousCategory || isVisibleFromChapter
       ? {
           width: wp('83.4%') * 0.9,
           height: hp('78.2%') * 0.9,

@@ -24,9 +24,10 @@ import {
 import { ChapterService } from '#services';
 
 const ChapterCardContainer = ({
-  chapterOrder,
+  chapterIdx,
   categoryData,
   categoryTitle,
+  isVisibleFromCategory,
 }) => {
   const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
   const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
@@ -34,6 +35,8 @@ const ChapterCardContainer = ({
   const setLastCandidateIdx = useStoreActions(actionsSetLastCandidateIdx);
   const userId = useStoreState(selectUserId);
   const isLoggedIn = useStoreState(selectIsLoggedIn);
+
+  const chapterOrder = chapterIdx + 1;
 
   const [chapterData, setChapterData] = useState(null);
   const [isLikeUpdated, updateLike] = useState(false);
@@ -80,22 +83,6 @@ const ChapterCardContainer = ({
     }
   });
 
-  // if (error) {
-  //   return (
-  //     <View>
-  //       <Text>로드 중 에러!</Text>
-  //     </View>
-  //   );
-  // }
-
-  // if (isLoading) {
-  //   return (
-  //     <View>
-  //       <ActivityIndicator size="large" />
-  //     </View>
-  //   );
-  // }
-
   if (!isCategorySelected) {
     return null;
   }
@@ -109,15 +96,20 @@ const ChapterCardContainer = ({
       {/* 챕터 카드 먼저 렌더 */}
       {isRenderingCardSameCategory && (
         <ChapterCard
-          chapterOrder={chapterOrder}
+          chapterIdx={chapterIdx}
           chapterData={categoryData}
           categoryTitle={categoryTitle}
           triggerUpdatingLike={triggerUpdatingLike}
+          // isVisibleFromCategory={isVisibleFromCategory}
         />
       )}
 
       {/* 후보 챕터 카드들 렌더 */}
-      {chapterData.item?.map(candidateChapterData => {
+      {chapterData.item?.map((candidateChapterData, i) => {
+        // if (i === 0) {
+        //   return null;
+        // }
+
         // 현재 후보 챕터가 선택한 카테고리랑 맞는 것만 렌더
         if (
           currentCategoryIdx !==
@@ -129,8 +121,9 @@ const ChapterCardContainer = ({
         return (
           <ChapterCard
             key={candidateChapterData.id}
-            chapterOrder={chapterOrder}
+            chapterIdx={chapterIdx}
             chapterData={candidateChapterData}
+            candidateIdx={i}
             categoryTitle={categoryTitle}
             triggerUpdatingLike={triggerUpdatingLike}
           />
@@ -151,9 +144,11 @@ const s = StyleSheet.create({
   root: {
     // flexDirection: 'column',
     // justifyContent: 'center',
-    // alignItems: 'flex-start',
+    alignItems: 'flex-start',
     flex: 1,
     minWidth: wp('100%'),
+    maxWidth: wp('100%'),
+    
     // height: '100%',
   },
 });
