@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { StyleSheet, Text } from '#components';
-import MyProfilePassword from './MyProfilePassword';
+import { StyleSheet, Text, TextInput } from '#components';
+
 import { useStoreState } from 'easy-peasy';
 import { selectEmail, selectUserInfo } from '#store/selectors';
 import { Edit2 } from '#components/icon';
@@ -11,9 +11,10 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
+import MyProfilePassword from './MyProfilePassword';
+import MyProfileUserName from './MyProfileUserName';
+
 const MyProfileAccountInfo = () => {
-  const userInfo = useStoreState(selectUserInfo);
-  const { nick } = userInfo;
   const email = useStoreState(selectEmail);
 
   const [isEditingUserName, setEditingUserName] = useState(false);
@@ -27,11 +28,7 @@ const MyProfileAccountInfo = () => {
 
   return (
     <View style={s.root}>
-      <View style={s.userNamePlacer}>
-        <Text isBold style={s.userName}>
-          {nick || 'NONE'}
-        </Text>
-      </View>
+      <MyProfileUserName isEditingUserName={isEditingUserName} />
       <Edit2
         style={{ position: 'absolute', right: -20, top: 2 }}
         onPress={toggleEditingUserName}
@@ -68,16 +65,7 @@ const s = StyleSheet.create({
     // borderBottomWidth: 1,
     // borderBottomColor: 'black',
   },
-  userNamePlacer: {
-    flexDirection: 'row',
-    // alignSelf: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  userName: {
-    fontSize: 21,
-    color: '#fff',
-  },
+
   title: {
     marginTop: 45.6,
     fontSize: 21,

@@ -23,8 +23,8 @@ const initialValues = {
 
 const validationSchema = Yup.object({
   password: Yup.string()
-    .max(28, '28 자 이내여야 합니다.')
-    .required('필수 입력 항목입니다.'),
+    .max(28, "user name can't be over than 28 letters")
+    .required('no empty password'),
 });
 
 const MyProfilePassword = ({ isEditingPassword }) => {
@@ -56,13 +56,13 @@ const MyProfilePassword = ({ isEditingPassword }) => {
       );
 
       if (code === 1) {
-        Alert('비밀번호 변경! 다시 로그인 해주세요');
+        Alert('Changing password succeeds, please log in again');
         logoutAfterChangingPassword();
       } else {
-        Alert('비밀번호 변경 실패');
+        Alert('Changing password fails');
       }
     } else {
-      Alert('비밀번호 변경 실패');
+      Alert('Changing password fails');
     }
 
     setFieldValue('password', '');
