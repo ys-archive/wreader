@@ -23,14 +23,14 @@ const Reader = ({ children }) => {
   const { onSwipeUp, onSwipeDown } = useSwipeVertical(forceSwipeVertically);
 
   return (
-    <View>
+    <View style={s.root}>
       <GestureRecognizer
         onSwipeUp={onSwipeUp}
         onSwipeDown={onSwipeDown}
         onSwipeLeft={onSwipeLeft}
         onSwipeRight={onSwipeRight}
         config={swipeConfig}
-        style={s.root}
+        style={s.recognizer}
       >
         <Animated.View style={[getStyle()]}>{children}</Animated.View>
       </GestureRecognizer>
@@ -42,8 +42,14 @@ export default Reader;
 
 const s = StyleSheet.create({
   root: {
-    minWidth: wp('95%'),
-    minHeight: hp('76%'),
+    flex: 1,
+    overflow: 'visible',
+  },
+  recognizer: {
+    minWidth: wp('100%'),
+    maxWidth: wp('100%'),
+    minHeight: hp('100%'),
+    maxHeight: hp('100%'),
     position: 'absolute',
     left: 0,
     top: 0,

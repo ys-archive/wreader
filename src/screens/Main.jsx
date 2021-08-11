@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, ScrollView } from 'react-native';
 import { StyleSheet, Text } from '#components';
 import { useNavigation } from '@react-navigation/native';
 
@@ -88,11 +88,12 @@ const Main = () => {
       <Logo />
       <Sort onPress={onPressSortIcon} />
       <Menu onPress={onPressMenuIcon} />
-      {/* <ScrollView scrollEnabled={false}> */}
+
       {/* <EventModal /> */}
       <Reader>
         <CategoryCardContainer rootData={rootData.item} />
       </Reader>
+      {/* <ScrollView scrollEnabled={false}> */}
       {/* </ScrollView> */}
     </View>
   );
@@ -104,5 +105,6 @@ const s = StyleSheet.create({
   root: {
     justifyContent: 'flex-start',
     flex: 1,
+    // overflow: 'visible',
   },
 });

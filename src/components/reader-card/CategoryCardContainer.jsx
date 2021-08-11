@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { View, Dimensions } from 'react-native';
 import { StyleSheet, Text } from '#components';
 
 import CategoryCard from './CategoryCard';
 import ChapterCardContainer from './ChapterCardContainer';
 
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const useForceUpdate = () => useState()[1];
 
 const renderChaptersJSX = (chapters, categoryTitle, forceUpdate) => {
@@ -31,10 +32,10 @@ const CategoryCardContainer = ({ rootData }) => {
     return null;
   }
 
-  const CategoryCards = rootData.map(category => (
+  const CategoryCards = rootData.map((category, i) => (
     // 현재 카테고리와 이하의 모든 챕터들 은 종 방향 렌더
     <View key={category.id} style={s.root}>
-      <CategoryCard {...category} />
+      <CategoryCard category={category} categoryIdx={i} />
       {renderChaptersJSX(category.chapter, category.title, forceUpdate)}
     </View>
   ));
@@ -55,7 +56,10 @@ export default CategoryCardContainer;
 const s = StyleSheet.create({
   root: {
     flexDirection: 'row',
-    // flex: 1,
+    alignItems: 'center',
+    flex: 1,
+    minHeight: SCREEN_HEIGHT,
+    maxHeight: SCREEN_HEIGHT,
   },
   copyright: {
     flexDirection: 'row',

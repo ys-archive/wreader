@@ -96,7 +96,9 @@ const ChapterCard = ({
       <ImageBackground
         style={{
           minWidth: wp('83.3%'),
+          maxWidth: wp('83.3%'),
           minHeight: hp('81.2%'),
+          maxHeight: hp('81.2%'),
           borderRadius: borderRadiusOutside,
           overflow: 'hidden',
           alignItems: 'center',

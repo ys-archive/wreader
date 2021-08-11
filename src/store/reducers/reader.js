@@ -1,7 +1,4 @@
-import { action, computed, thunk } from 'easy-peasy';
-
-import { Dimensions } from 'react-native';
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
+import { action, computed } from 'easy-peasy';
 
 const displayIdxStatus = state => {
   const { currentCategoryIdx: category, currentChapterIdx: chapter } =
