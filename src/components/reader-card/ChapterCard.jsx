@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   StyleSheet,
   View,
@@ -18,6 +18,8 @@ import { Like, Reply } from '#components/icon';
 
 import { makeCategoryBGImagePath, dummyProfile } from '#constants/images';
 
+import { useUpdateLike } from '../../contexts/chapterDataContext';
+
 import { useStoreState } from 'easy-peasy';
 import {
   selectProfileLocalImagePath,
@@ -36,10 +38,9 @@ const borderRadiusInside = 17;
 
 const ChapterCard = ({
   chapterIdx,
-  chapterData,
+  data,
   candidateIdx,
   categoryTitle,
-  triggerUpdatingLike,
   isVisibleFromCategory,
 }) => {
   const [isCommentsOpen, setCommentsOpen] = useState(false);
@@ -48,6 +49,9 @@ const ChapterCard = ({
   const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
   const currentCandidateIdx = useStoreState(selectCurrentCandidateIdx);
   const isMovingChapterLock = currentCandidateIdx !== 0;
+
+  const updateLike = useUpdateLike();
+  const triggerUpdatingLike = useCallback(() => updateLike(prv => !prv), []);
 
   const isPreviousChapter = currentChapterIdx - 1 === chapterOrder;
   const isNextChapter = currentChapterIdx + 1 === chapterOrder;
@@ -166,7 +170,7 @@ const ChapterCard = ({
     userNick: authorNickName, // -> author
     chapterImg: chapterCoverImageUri, // -> cover
     isLike,
-  } = chapterData;
+  } = data;
 
   // console.log('현재 챕터의 작가 프로필 이미지 path: ', authorImageUri);
 
@@ -178,22 +182,22 @@ const ChapterCard = ({
 
   const onPressLike = async () => {
     if (!isLoggedIn) {
-      Alert('좋아요는 로그인 후에 가능합니다', '닫기');
+      Alert("You can't like before logging in.");
       return;
     }
 
-    console.log(userId, chapterId);
-
-    await triggerUpdatingLike();
+    // console.log(userId, chapterId);
 
     // 이미 좋아요 했음
     if (isLike === 1) {
       await ChapterService.DELETE_unlikeChapter(chapterId, userId);
-      console.log('좋아요 취소');
+      console.log('Unlike');
     } else {
       await ChapterService.POST_likeChapter(chapterId, userId);
-      console.log('좋아요');
+      console.log('like');
     }
+
+    triggerUpdatingLike();
   };
 
   const onPressReply = () => {

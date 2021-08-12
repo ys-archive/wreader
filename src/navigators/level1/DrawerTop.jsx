@@ -26,14 +26,11 @@ import {
 import { actionsLogout } from '#store/actions';
 import { useProfileImageLoader } from '#hooks';
 
-const useForceUpdate = () => useState()[1];
-
 const DrawerTop = props => {
   const { navigation: nav } = props;
   const isLoggedIn = useStoreState(selectIsLoggedIn);
   const userInfo = useStoreState(selectUserInfo);
   const nick = userInfo !== null && userInfo.nick ? userInfo?.nick : 'SIGN IN';
-  const forceUpdate = useForceUpdate();
 
   const logout = useStoreActions(actionsLogout);
   const profileImageUrl = useStoreState(selectProfileImageUrl);

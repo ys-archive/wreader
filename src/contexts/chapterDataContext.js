@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import constate from 'constate';
 
-const useChapterData = () => {
+const useChapterDataContext = () => {
   const [chapterData, setChapterData] = useState(null);
   const [isLikeUpdated, updateLike] = useState(false);
   const [isNewCandidateWritten, update] = useState(false);
@@ -27,7 +27,7 @@ export const [
   useIsNewCandidateWritten,
   useSetNewCandidateWritten,
 ] = constate(
-  useChapterData,
+  useChapterDataContext,
   v => v.chapterData,
   v => v.setChapterData,
   v => v.isLikeUpdated,

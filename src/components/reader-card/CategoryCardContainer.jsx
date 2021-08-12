@@ -8,15 +8,13 @@ import ChapterCardContainer from './ChapterCardContainer';
 import { useStoreState } from 'easy-peasy';
 import { selectCurrentChapterIdx } from '#store/selectors';
 
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
-const useForceUpdate = () => useState()[1];
+import { ChapterDataProvider } from '../../contexts/chapterDataContext';
+import { useForceUpdate } from '../../hooks';
 
-const renderChaptersJSX = (
-  chapters,
-  categoryTitle,
-  forceUpdate,
-  isVisibleFromCategory,
-) => {
+// const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
+
+const renderChaptersJSX = (chapters, categoryTitle, isVisibleFromCategory) => {
+  const forceUpdate = useForceUpdate();
   // 현재 카테고리의 챕터가 없으면 렌더 X
   if (!chapters || !chapters.length) {
     return null;
@@ -39,8 +37,6 @@ const renderChaptersJSX = (
 };
 
 const CategoryCardContainer = ({ rootData }) => {
-  const forceUpdate = useForceUpdate();
-
   const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
   const isVisibleFromCategory = currentChapterIdx === 0;
   // console.log('isVisible from category? ', isVisibleFromCategory);
@@ -59,20 +55,19 @@ const CategoryCardContainer = ({ rootData }) => {
       {renderChaptersJSX(
         category.chapter,
         category.title,
-        forceUpdate,
         isVisibleFromCategory,
       )}
     </View>
   ));
 
   return (
-    <>
+    <ChapterDataProvider>
       {CategoryCards}
       <View style={s.copyright}>
         <Text>{'\u00A9'}&nbsp;</Text>
         <Text>2021 W.READER. ALL rights reserved.</Text>
       </View>
-    </>
+    </ChapterDataProvider>
   );
 };
 

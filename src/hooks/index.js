@@ -5,6 +5,7 @@ import { useProfileImageLoader } from './useProfileImageLoader';
 import { useSwipeHorizontal } from './useSwipeHorizontal';
 import { useSwipeVertical } from './useSwipeVertical';
 import { useAutoLogin } from './useAutoLogin';
+import { useForceUpdate } from './useForceUpdate';
 
 export {
   useImagePicker,
@@ -14,4 +15,5 @@ export {
   useSwipeHorizontal,
   useSwipeVertical,
   useAutoLogin,
+  useForceUpdate,
 };

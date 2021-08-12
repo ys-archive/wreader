@@ -174,7 +174,7 @@ const s = StyleSheet.create({
   root: {
     minWidth: wp('100%'),
     minHeight: hp('100%'),
-    backgroundColor: colors.light.primary,
+    backgroundColor: colors.light.primaryTransparent,
     justifyContent: 'center',
     alignItems: 'center',
   },

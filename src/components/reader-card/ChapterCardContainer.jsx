@@ -13,7 +13,6 @@ import {
   selectCurrentChapterIdx,
   selectIsCategorySelected,
   selectUserId,
-  // selectIsLoggedIn,
 } from '#store/selectors';
 import { actionsSetLastCandidateIdx } from '#store/actions';
 
@@ -23,13 +22,11 @@ import {
 } from 'react-native-responsive-screen';
 import { ChapterService } from '#services';
 import {
-  ChapterDataProvider,
   useChapterData,
   useSetChapterData,
   useIsLikeUpdated,
-  useUpdateLike,
   useIsNewCandidateWritten,
-} from '#contexts/chapterDataContext';
+} from '../../contexts/chapterDataContext';
 
 const ChapterCardContainer = ({
   chapterIdx,
@@ -42,26 +39,17 @@ const ChapterCardContainer = ({
   const isCategorySelected = useStoreState(selectIsCategorySelected);
   const setLastCandidateIdx = useStoreActions(actionsSetLastCandidateIdx);
   const userId = useStoreState(selectUserId);
-  // const isLoggedIn = useStoreState(selectIsLoggedIn);
 
   const chapterOrder = chapterIdx + 1;
 
   const chapterData = useChapterData();
   const setChapterData = useSetChapterData();
-
   const isLikeUpdated = useIsLikeUpdated();
-  const updateLike = useUpdateLike();
-
   const isNewCandidateWritten = useIsNewCandidateWritten();
-
-  const triggerUpdatingLike = useCallback(() => updateLike(prv => !prv), []);
 
   useEffect(() => {
     (async function () {
-      const { data, status } = await ChapterService.GET_getChapter(
-        chapterOrder,
-        userId,
-      );
+      const { data } = await ChapterService.GET_getChapter(chapterIdx, userId);
 
       // console.log(data);
       // console.log(data.item.filter(i => i.isLike === 1).length === 1);
@@ -88,8 +76,8 @@ const ChapterCardContainer = ({
         )?.length + 1;
 
       console.log(
-        `[${chapterOrder}:${currentCategoryIdx}] ${maxLength} / ${
-          chapterData.item.length + 1
+        `[${chapterIdx}:${currentCategoryIdx}] ${maxLength} / ${
+          chapterData.item.length
         }`,
       );
 
@@ -106,47 +94,43 @@ const ChapterCardContainer = ({
     currentCategoryIdx === Math.max(0, categoryData.categoryId - 5);
 
   return (
-    <ChapterDataProvider>
-      <View style={s.root}>
-        {/* 챕터 카드 먼저 렌더 */}
-        {isRenderingCardSameCategory && (
+    <View style={s.root}>
+      {/* 챕터 카드 먼저 렌더 */}
+      {isRenderingCardSameCategory && (
+        <ChapterCard
+          chapterIdx={chapterIdx}
+          data={categoryData}
+          categoryTitle={categoryTitle}
+          isVisibleFromCategory={isVisibleFromCategory}
+        />
+      )}
+
+      {/* 후보 챕터 카드들 렌더 */}
+      {isRenderingCardSameCategory && chapterData.item?.map((candidateChapterData, i) => {
+        // 현재 후보 챕터가 선택한 카테고리랑 맞는 것만 렌더
+        if (
+          currentCategoryIdx !==
+          Math.max(0, candidateChapterData.categoryId - 5)
+        ) {
+          return null;
+        }
+
+        return (
           <ChapterCard
+            key={candidateChapterData.id}
             chapterIdx={chapterIdx}
-            chapterData={categoryData}
+            data={candidateChapterData}
+            candidateIdx={i}
             categoryTitle={categoryTitle}
-            triggerUpdatingLike={triggerUpdatingLike}
-            // isVisibleFromCategory={isVisibleFromCategory}
           />
-        )}
+        );
+      })}
 
-        {/* 후보 챕터 카드들 렌더 */}
-        {chapterData.item?.map((candidateChapterData, i) => {
-          // 현재 후보 챕터가 선택한 카테고리랑 맞는 것만 렌더
-          if (
-            currentCategoryIdx !==
-            Math.max(0, candidateChapterData.categoryId - 5)
-          ) {
-            return null;
-          }
-
-          return (
-            <ChapterCard
-              key={candidateChapterData.id}
-              chapterIdx={chapterIdx}
-              chapterData={candidateChapterData}
-              candidateIdx={i}
-              categoryTitle={categoryTitle}
-              triggerUpdatingLike={triggerUpdatingLike}
-            />
-          );
-        })}
-
-        {/* 마지막 카드는 항상 유저가 쓰는 카드 */}
-        {isRenderingCardSameCategory && (
-          <WriteChapterCard categoryTitle={categoryTitle} />
-        )}
-      </View>
-    </ChapterDataProvider>
+      {/* 마지막 카드는 항상 유저가 쓰는 카드 */}
+      {isRenderingCardSameCategory && (
+        <WriteChapterCard categoryTitle={categoryTitle} />
+      )}
+    </View>
   );
 };
 
@@ -157,7 +141,7 @@ const s = StyleSheet.create({
     // flexDirection: 'column',
     // justifyContent: 'center',
     alignItems: 'flex-start',
-    flex: 1,
+    // flex: 1,
     minWidth: wp('100%'),
     maxWidth: wp('100%'),
 
