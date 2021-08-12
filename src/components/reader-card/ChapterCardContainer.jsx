@@ -76,9 +76,7 @@ const ChapterCardContainer = ({
         )?.length + 1;
 
       console.log(
-        `[${chapterIdx}:${currentCategoryIdx}] ${maxLength} / ${
-          chapterData.item.length
-        }`,
+        `[${chapterIdx}:${currentCategoryIdx}] ${maxLength} / ${chapterData.item.length}`,
       );
 
       setLastCandidateIdx(maxLength);
@@ -106,7 +104,7 @@ const ChapterCardContainer = ({
       )}
 
       {/* 후보 챕터 카드들 렌더 */}
-      {isRenderingCardSameCategory && chapterData.item?.map((candidateChapterData, i) => {
+      {chapterData.item?.map((candidateChapterData, i) => {
         // 현재 후보 챕터가 선택한 카테고리랑 맞는 것만 렌더
         if (
           currentCategoryIdx !==
@@ -128,7 +126,10 @@ const ChapterCardContainer = ({
 
       {/* 마지막 카드는 항상 유저가 쓰는 카드 */}
       {isRenderingCardSameCategory && (
-        <WriteChapterCard categoryTitle={categoryTitle} />
+        <WriteChapterCard
+          categoryTitle={categoryTitle}
+          chapterIdx={chapterIdx}
+        />
       )}
     </View>
   );

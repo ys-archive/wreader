@@ -16,7 +16,9 @@ export const TextInput = props => {
         ...s.root,
         ...props.style,
       }}
-      placeholderTextColor={colors.light.ivory1Transparent}
+      placeholderTextColor={
+        props.placeholderTextColor || colors.light.ivory1Transparent
+      }
       autoCapitalize="none"
     />
   );

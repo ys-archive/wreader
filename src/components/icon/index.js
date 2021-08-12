@@ -1,3 +1,4 @@
+import AddImage from './AddImage';
 import Arrow from './Arrow';
 import Cancel from './Cancel';
 import DrawerCancel from './DrawerCancel';
@@ -24,6 +25,7 @@ import Plus from './Plus';
 import Photo from './Photo';
 
 export {
+  AddImage,
   Arrow,
   Cancel,
   DrawerCancel,
@@ -47,5 +49,5 @@ export {
   Person2,
   Reply,
   Plus,
-  Photo
+  Photo,
 };

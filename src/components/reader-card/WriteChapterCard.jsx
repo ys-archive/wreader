@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Platform, ImageBackground, Text } from 'react-native';
+import { View, Platform, ImageBackground } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { StyleSheet, TextInput, Button } from '#components';
+import { StyleSheet, TextInput, Button, RenderError, Text } from '#components';
 import { AlertWithValue, Alert } from '#components/alert';
 
 import {
@@ -15,7 +15,7 @@ import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '#navigators/ScreenNames';
 
-import { Feather } from 'react-native-vector-icons';
+import AddImage from '../icon/AddImage';
 import { colors } from '#constants';
 
 import { useStoreState, useStoreActions } from 'easy-peasy';
@@ -32,11 +32,14 @@ import { makeCategoryBGImagePath, dummyProfile } from '#constants/images';
 import { useSetNewCandidateWritten } from '#contexts/chapterDataContext';
 
 const initialValues = {
+  title: '',
   sentence1: '',
   sentence2: '',
 };
 
 const validationSchema = Yup.object({
+  title: Yup.string().required('You have to input a title'),
+
   sentence1: Yup.string()
     .max(20)
     .required('반드시 입력하셔야합니다 (20자 내외)'),
@@ -49,7 +52,7 @@ const validationSchema = Yup.object({
 const borderRadiusOutside = 20;
 const borderRadiusInside = 17;
 
-const WriteChapterCard = ({ categoryTitle }) => {
+const WriteChapterCard = ({ categoryTitle, chapterIdx }) => {
   const nav = useNavigation();
   const userId = useStoreState(selectUserId);
 
@@ -89,7 +92,7 @@ const WriteChapterCard = ({ categoryTitle }) => {
       onSubmit,
     });
 
-  const { sentence1, sentence2 } = values;
+  const { title, sentence1, sentence2 } = values;
 
   const onPressCameraIcon = () => {
     console.log('camera icon pressed!');
@@ -106,62 +109,79 @@ const WriteChapterCard = ({ categoryTitle }) => {
   // TODO: POST - Create New Chapter
 
   return (
-    <KeyboardAwareScrollView contentContainerStyle={s.root}>
+    <KeyboardAwareScrollView>
       <ImageBackground
         style={{
-          minWidth: wp('83.3%'),
-          minHeight: hp('81.2%'),
-          borderRadius: borderRadiusOutside,
-          overflow: 'hidden',
+          width: wp('100%'),
+          height: hp('100%'),
           alignItems: 'center',
           justifyContent: 'center',
         }}
         source={makeCategoryBGImagePath(categoryTitle)}
-        // resizeMode="contain"
       >
-        <View style={s.inputView}>
-          <TextInput
-            style={s.input}
-            value={sentence1}
-            onBlur={handleBlur('sentence1')}
-            onChangeText={handleChange('sentence1')}
-            placeholder="챕터 내용을 입력해주세요 (20자이내)"
-          />
-          {touched.sentence1 && errors.sentence1 ? (
-            <View>
-              <Text>{errors.sentence1}</Text>
-            </View>
-          ) : null}
-        </View>
-        <View style={s.inputView}>
-          <TextInput
-            style={s.input}
-            value={sentence2}
-            onBlur={handleBlur('sentence2')}
-            onChangeText={handleChange('sentence2')}
-            placeholder="챕터 내용을 입력해주세요 (20자이내)"
-          />
-          {touched.sentence2 && errors.sentence2 ? (
-            <View>
-              <Text>{errors.sentence2}</Text>
-            </View>
-          ) : null}
-        </View>
-        <View style={s.bottomSection}>
-          <Feather
-            name="camera"
-            size={35}
-            style={s.imageIcon}
-            onPress={onPressCameraIcon}
-          />
-          <Button
-            style={s.summitButton}
-            textStyle={s.summitInsideText}
-            onPress={handleSubmit}
-            isBold
-          >
-            저장하기
-          </Button>
+        <View
+          style={{
+            width: wp('83.3%'),
+            height: hp('81.2%'),
+            borderRadius: borderRadiusOutside,
+            overflow: 'hidden',
+            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            paddingHorizontal: wp('10.4%'),
+          }}
+        >
+          <View>
+            <TextInput
+              style={s.titleInput}
+              value={title}
+              onBlur={handleBlur('title')}
+              onChangeText={handleChange('title')}
+              placeholder={'Title'}
+              placeholderTextColor="rgba(0, 0, 0, 0.2)"
+            />
+          </View>
+
+          <Text isBold style={s.chapterText}>
+            CHAPTER&nbsp;&nbsp;
+            <Text isBold style={s.chapterNumberText}>
+              {chapterIdx + 1}
+            </Text>
+          </Text>
+
+          <View>
+            <TextInput
+              style={s.input}
+              value={sentence1}
+              onBlur={handleBlur('sentence1')}
+              onChangeText={handleChange('sentence1')}
+              placeholder="Write a story for this chapter..."
+              placeholderTextColor="rgba(0, 0, 0, 0.2)"
+            />
+            <RenderError
+              touched={touched.sentence1}
+              errors={errors.sentence1}
+            />
+            <TextInput style={s.input} />
+            <TextInput style={s.input} />
+            <TextInput style={s.input} />
+            <TextInput style={s.input} />
+            <TextInput style={s.input} />
+            <TextInput style={s.input} />
+            <TextInput style={s.input} />
+            <TextInput style={s.input} />
+            <TextInput style={s.input} />
+          </View>
+
+          <View style={s.bottomSection}>
+            <AddImage style={s.imageIcon} onPress={onPressCameraIcon} />
+            <Button
+              style={s.summitButton}
+              textStyle={s.summitInsideText}
+              onPress={handleSubmit}
+              isBold
+            >
+              SAVE
+            </Button>
+          </View>
         </View>
       </ImageBackground>
     </KeyboardAwareScrollView>
@@ -171,43 +191,71 @@ const WriteChapterCard = ({ categoryTitle }) => {
 export default WriteChapterCard;
 
 const s = StyleSheet.create({
-  root: {
-    minWidth: wp('100%'),
-    minHeight: hp('100%'),
-    backgroundColor: colors.light.primaryTransparent,
-    justifyContent: 'center',
-    alignItems: 'center',
+  titleInput: {
+    maxWidth: '50%',
+    minWidth: '50%',
+
+    borderBottomWidth: 1,
+    borderColor: '#000',
+
+    padding: 0,
+    margin: 0,
+    marginTop: '15%',
+    marginBottom: hp('4%'),
+    paddingLeft: 0,
+
+    fontSize: 28,
+    fontWeight: '200',
+    color: 'rgba(0, 0, 0, 0.3)',
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#fff',
-    borderRadius: borderRadiusInside,
-    backgroundColor: '#fff',
-    minWidth: wp('76%'),
-    minHeight: hp('15%'),
+    borderBottomWidth: 0.3,
+    borderColor: '#000',
+    minWidth: '100%',
+    maxWidth: '100%',
+
+    margin: 0,
+    padding: 0,
+    paddingLeft: 0,
+    marginBottom: wp('5%'),
+
+    fontSize: 21,
+    fontWeight: '200',
+    color: 'rgba(0, 0, 0, 0.3)',
+  },
+  chapterText: {
+    fontSize: 17,
+    marginBottom: hp('7%'),
+  },
+  chapterNumberText: {
+    fontSize: 28,
   },
   bottomSection: {
-    minWidth: wp('83%'),
-    marginTop: hp('25%'),
+    maxWidth: '120%',
+    minWidth: '120%',
+
+    // marginTop: hp('50%'),
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    // justifyContent: 'center',
+    // justifyContent: 'space-around',
     alignItems: 'center',
     // backgroundColor: 'rgba(255, 255, 255, 0.6)',
   },
   imageIcon: {
     color: colors.light.ivory1,
-    marginRight: 150,
+    position: 'relative',
+    right: 1,
+    bottom: -7,
+    // marginRight: 150,
   },
   summitButton: {
-    marginHorizontal: 0,
-    borderWidth: 1,
-    borderColor: '#fff',
-    paddingVertical: 10,
-    paddingHorizontal: 3,
-
-    justifyContent: 'center',
-
-    borderRadius: borderRadiusInside,
+    backgroundColor: colors.light.ivory5,
+    paddingVertical: 11,
+    paddingHorizontal: 15,
+    position: 'absolute',
+    right: 35,
+    bottom: -10,
+    borderRadius: borderRadiusInside - 6,
   },
   summitInsideText: {
     fontSize: 16,
