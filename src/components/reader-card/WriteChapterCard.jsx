@@ -25,48 +25,47 @@ import {
   selectCurrentCategoryIdx,
 } from '#store/selectors';
 
-import ChapterService from '#services';
+import { ChapterService } from '../../services';
 
 import { makeCategoryBGImagePath, dummyProfile } from '#constants/images';
 
 import { useSetNewCandidateWritten } from '#contexts/chapterDataContext';
 
 const initialValues = {
-  title: '',
+  // title: '',
   sentence1: '',
   sentence2: '',
   sentence3: '',
   sentence4: '',
-  // sentence5: '',
-  // sentence6: '',
-  // sentence7: '',
-  // sentence8: '',
-  // sentence9: '',
-  // sentence10: '',
-  // sentence11: '',
+  sentence5: '',
+  sentence6: '',
+  sentence7: '',
+  sentence8: '',
+  sentence9: '',
+  sentence10: '',
+  sentence11: '',
 };
 
 const validationSchema = Yup.object({
-  title: Yup.string().required('You have to input a title'),
+  // title: Yup.string().required('You have to input a title'),
 
-  sentence1: Yup.string().min(10).max(20).required('Max is 20'),
-  sentence2: Yup.string().min(10).max(20).required('Max is 20'),
-  sentence3: Yup.string().min(10).max(20).required('Max is 20'),
-  sentence4: Yup.string().min(10).max(20).required('Max is 20'),
-  // sentence5: Yup.string().min(10).max(20).required('Max is 20'),
-  // sentence6: Yup.string().min(10).max(20).required('Max is 20'),
-  // sentence7: Yup.string().min(10).max(20).required('Max is 20'),
-  // sentence8: Yup.string().min(10).max(20).required('Max is 20'),
-  // sentence9: Yup.string().min(10).max(20).required('Max is 20'),
-  // sentence10: Yup.string().min(10).max(20).required('Max is 20'),
-  // sentence11: Yup.string().min(10).max(20).required('Max is 20'),
+  sentence1: Yup.string().min(4).max(20).required('Max is 20'),
+  sentence2: Yup.string().min(0).max(20),
+  sentence3: Yup.string().min(0).max(20),
+  sentence4: Yup.string().min(0).max(20),
+  sentence5: Yup.string().min(0).max(20),
+  sentence6: Yup.string().min(0).max(20),
+  sentence7: Yup.string().min(0).max(20),
+  sentence8: Yup.string().min(0).max(20),
+  sentence9: Yup.string().min(0).max(20),
+  sentence10: Yup.string().min(0).max(20),
+  sentence11: Yup.string().min(0).max(20),
 });
 
 const borderRadiusOutside = 20;
 const borderRadiusInside = 17;
 
 const WriteChapterCard = ({ categoryTitle, chapterIdx }) => {
-  const nav = useNavigation();
   const userId = useStoreState(selectUserId);
 
   const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
@@ -75,16 +74,35 @@ const WriteChapterCard = ({ categoryTitle, chapterIdx }) => {
   const setNewCandidateWritten = useSetNewCandidateWritten();
 
   const onSubmit = async values => {
-    const { sentence1, sentence2, sentence3, sentence4 } = values;
+    const {
+      sentence1,
+      sentence2,
+      sentence3,
+      sentence4,
+      sentence5,
+      sentence6,
+      sentence7,
+      sentence8,
+      sentence9,
+      sentence10,
+      sentence11,
+    } = values;
 
-    // TODO: POST_createChapter
+    console.log('챕터 저장: ', values);
     // TODO: 현재 챕터 가져와 groupIdx 로 쓰기
     // TODO: 현재 선택한 카테고리
     const status = await ChapterService.POST_createChapter(
       userId,
       currentChapterIdx,
-      sentence1.append(sentence2).append(sentence3).append(sentence4),
-      currentCategoryIdx,
+      // sentence1.append(sentence2).append(sentence3).append(sentence4),
+      `${sentence1 || ''}${sentence2 || ''}${sentence3 || ''}${
+        sentence4 || ''
+      }` +
+        `${sentence5 || ''}${sentence6 || ''}${sentence7 || ''}${
+          sentence8 || ''
+        }` +
+        `${sentence9 || ''}${sentence10 || ''}${sentence11 || ''}`,
+      currentCategoryIdx + 5,
     );
 
     if (status === 200) {
@@ -108,7 +126,20 @@ const WriteChapterCard = ({ categoryTitle, chapterIdx }) => {
       onSubmit,
     });
 
-  const { title, sentence1, sentence2, sentence3, sentence4 } = values;
+  const {
+    title,
+    sentence1,
+    sentence2,
+    sentence3,
+    sentence4,
+    sentence5,
+    sentence6,
+    sentence7,
+    sentence8,
+    sentence9,
+    sentence10,
+    sentence11,
+  } = values;
 
   const onPressCameraIcon = () => {
     console.log('camera icon pressed!');
@@ -148,12 +179,12 @@ const WriteChapterCard = ({ categoryTitle, chapterIdx }) => {
           <View>
             <TextInput
               style={s.titleInput}
-              value={title}
-              onBlur={handleBlur('title')}
-              onChangeText={handleChange('title')}
-              placeholder={'Title'}
+              // value={title}
+              // onBlur={handleBlur('title')}
+              // onChangeText={handleChange('title')}
+              // placeholder={'Title'}
               placeholderTextColor="rgba(0, 0, 0, 0.2)"
-              mutliline
+              // mutliline
             />
           </View>
 
@@ -201,13 +232,48 @@ const WriteChapterCard = ({ categoryTitle, chapterIdx }) => {
               // placeholder="Write a story for this chapter..."
               // placeholderTextColor="rgba(0, 0, 0, 0.2)"
             />
-            <TextInput style={s.input} editable={false} />
-            <TextInput style={s.input} editable={false} />
-            <TextInput style={s.input} editable={false} />
-            <TextInput style={s.input} editable={false} />
-            <TextInput style={s.input} editable={false} />
-            <TextInput style={s.input} editable={false} />
-            <TextInput style={s.input} editable={false} />
+            <TextInput
+              style={s.input}
+              value={sentence5}
+              onBlur={handleBlur('sentence5')}
+              onChangeText={handleChange('sentence5')}
+            />
+            <TextInput
+              style={s.input}
+              value={sentence6}
+              onBlur={handleBlur('sentence6')}
+              onChangeText={handleChange('sentence6')}
+            />
+            <TextInput
+              style={s.input}
+              value={sentence7}
+              onBlur={handleBlur('sentence7')}
+              onChangeText={handleChange('sentence7')}
+            />
+            <TextInput
+              style={s.input}
+              value={sentence8}
+              onBlur={handleBlur('sentence8')}
+              onChangeText={handleChange('sentence8')}
+            />
+            <TextInput
+              style={s.input}
+              value={sentence9}
+              onBlur={handleBlur('sentence9')}
+              onChangeText={handleChange('sentence9')}
+            />
+            <TextInput
+              style={s.input}
+              value={sentence10}
+              onBlur={handleBlur('sentence10')}
+              onChangeText={handleChange('sentence10')}
+            />
+            <TextInput
+              style={s.input}
+              value={sentence11}
+              onBlur={handleBlur('sentence11')}
+              onChangeText={handleChange('sentence11')}
+            />
           </View>
 
           <View style={s.bottomSection}>
@@ -291,8 +357,8 @@ const s = StyleSheet.create({
     backgroundColor: colors.light.ivory5,
     paddingVertical: 11,
     paddingHorizontal: 15,
-    position: 'absolute',
-    right: 35,
+    position: 'relative',
+    right: -135,
     bottom: -10,
     borderRadius: borderRadiusInside - 6,
   },
