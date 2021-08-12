@@ -4,12 +4,10 @@ import {
   selectIsFirstChapter,
   selectIsMovingChapterLock,
   selectCurrentCandidateIdx,
-  selectIsCategorySelected,
 } from '#store/selectors';
 import {
   actionsSwipeToLeft,
   actionsSwipeToRight,
-  actionsSetCategorySelectedDelayed,
 } from '#store/actions';
 
 export const useSwipeHorizontal = forceSwipeHorizontally => {

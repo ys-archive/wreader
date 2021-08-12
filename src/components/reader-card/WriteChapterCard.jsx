@@ -35,18 +35,31 @@ const initialValues = {
   title: '',
   sentence1: '',
   sentence2: '',
+  sentence3: '',
+  sentence4: '',
+  // sentence5: '',
+  // sentence6: '',
+  // sentence7: '',
+  // sentence8: '',
+  // sentence9: '',
+  // sentence10: '',
+  // sentence11: '',
 };
 
 const validationSchema = Yup.object({
   title: Yup.string().required('You have to input a title'),
 
-  sentence1: Yup.string()
-    .max(20)
-    .required('반드시 입력하셔야합니다 (20자 내외)'),
-
-  sentence2: Yup.string()
-    .max(20)
-    .required('반드시 입력하셔야합니다 (20자 내외)'),
+  sentence1: Yup.string().min(10).max(20).required('Max is 20'),
+  sentence2: Yup.string().min(10).max(20).required('Max is 20'),
+  sentence3: Yup.string().min(10).max(20).required('Max is 20'),
+  sentence4: Yup.string().min(10).max(20).required('Max is 20'),
+  // sentence5: Yup.string().min(10).max(20).required('Max is 20'),
+  // sentence6: Yup.string().min(10).max(20).required('Max is 20'),
+  // sentence7: Yup.string().min(10).max(20).required('Max is 20'),
+  // sentence8: Yup.string().min(10).max(20).required('Max is 20'),
+  // sentence9: Yup.string().min(10).max(20).required('Max is 20'),
+  // sentence10: Yup.string().min(10).max(20).required('Max is 20'),
+  // sentence11: Yup.string().min(10).max(20).required('Max is 20'),
 });
 
 const borderRadiusOutside = 20;
@@ -62,7 +75,7 @@ const WriteChapterCard = ({ categoryTitle, chapterIdx }) => {
   const setNewCandidateWritten = useSetNewCandidateWritten();
 
   const onSubmit = async values => {
-    const { sentence1, sentence2 } = values;
+    const { sentence1, sentence2, sentence3, sentence4 } = values;
 
     // TODO: POST_createChapter
     // TODO: 현재 챕터 가져와 groupIdx 로 쓰기
@@ -70,14 +83,18 @@ const WriteChapterCard = ({ categoryTitle, chapterIdx }) => {
     const status = await ChapterService.POST_createChapter(
       userId,
       currentChapterIdx,
-      sentence1.append(sentence2),
+      sentence1.append(sentence2).append(sentence3).append(sentence4),
       currentCategoryIdx,
     );
 
     if (status === 200) {
-      AlertWithValue('유저가 쓴 챕터', '닫기', JSON.stringify(values, null, 2));
+      AlertWithValue(
+        'Chapter written!',
+        'Close',
+        JSON.stringify(values, null, 2),
+      );
     } else {
-      Alert('새로운 챕터 저장 실패');
+      Alert('Writing chapter fails');
     }
 
     // TODO: 처리한 카드 기다렸다가 렌더
@@ -88,11 +105,10 @@ const WriteChapterCard = ({ categoryTitle, chapterIdx }) => {
     useFormik({
       initialValues,
       validationSchema,
-      // TODO: 실제 가입 처리
       onSubmit,
     });
 
-  const { title, sentence1, sentence2 } = values;
+  const { title, sentence1, sentence2, sentence3, sentence4 } = values;
 
   const onPressCameraIcon = () => {
     console.log('camera icon pressed!');
@@ -137,6 +153,7 @@ const WriteChapterCard = ({ categoryTitle, chapterIdx }) => {
               onChangeText={handleChange('title')}
               placeholder={'Title'}
               placeholderTextColor="rgba(0, 0, 0, 0.2)"
+              mutliline
             />
           </View>
 
@@ -156,19 +173,41 @@ const WriteChapterCard = ({ categoryTitle, chapterIdx }) => {
               placeholder="Write a story for this chapter..."
               placeholderTextColor="rgba(0, 0, 0, 0.2)"
             />
-            <RenderError
+            {/* <RenderError
               touched={touched.sentence1}
               errors={errors.sentence1}
+            /> */}
+            <TextInput
+              style={s.input}
+              value={sentence2}
+              onBlur={handleBlur('sentence2')}
+              onChangeText={handleChange('sentence2')}
+              // placeholder="Write a story for this chapter..."
+              // placeholderTextColor="rgba(0, 0, 0, 0.2)"
             />
-            <TextInput style={s.input} />
-            <TextInput style={s.input} />
-            <TextInput style={s.input} />
-            <TextInput style={s.input} />
-            <TextInput style={s.input} />
-            <TextInput style={s.input} />
-            <TextInput style={s.input} />
-            <TextInput style={s.input} />
-            <TextInput style={s.input} />
+            <TextInput
+              style={s.input}
+              value={sentence3}
+              onBlur={handleBlur('sentence3')}
+              onChangeText={handleChange('sentence3')}
+              // placeholder="Write a story for this chapter..."
+              // placeholderTextColor="rgba(0, 0, 0, 0.2)"
+            />
+            <TextInput
+              style={s.input}
+              value={sentence4}
+              onBlur={handleBlur('sentence4')}
+              onChangeText={handleChange('sentence4')}
+              // placeholder="Write a story for this chapter..."
+              // placeholderTextColor="rgba(0, 0, 0, 0.2)"
+            />
+            <TextInput style={s.input} editable={false} />
+            <TextInput style={s.input} editable={false} />
+            <TextInput style={s.input} editable={false} />
+            <TextInput style={s.input} editable={false} />
+            <TextInput style={s.input} editable={false} />
+            <TextInput style={s.input} editable={false} />
+            <TextInput style={s.input} editable={false} />
           </View>
 
           <View style={s.bottomSection}>
@@ -217,7 +256,7 @@ const s = StyleSheet.create({
     margin: 0,
     padding: 0,
     paddingLeft: 0,
-    marginBottom: wp('5%'),
+    marginBottom: wp('4%'),
 
     fontSize: 21,
     fontWeight: '200',

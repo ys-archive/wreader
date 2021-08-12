@@ -33,6 +33,7 @@ const ChapterCardContainer = ({
   categoryData,
   categoryTitle,
   isVisibleFromCategory,
+  forceUpdate,
 }) => {
   const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
   const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
@@ -41,6 +42,7 @@ const ChapterCardContainer = ({
   const userId = useStoreState(selectUserId);
 
   const chapterOrder = chapterIdx + 1;
+  // console.log("현재 챕터 : ", chapterOrder);
 
   const chapterData = useChapterData();
   const setChapterData = useSetChapterData();
@@ -49,16 +51,17 @@ const ChapterCardContainer = ({
 
   useEffect(() => {
     (async function () {
-      const { data } = await ChapterService.GET_getChapter(chapterIdx, userId);
-
-      // console.log(data);
-      // console.log(data.item.filter(i => i.isLike === 1).length === 1);
+      const { data } = await ChapterService.GET_getChapter(
+        currentChapterIdx,
+        userId,
+      );
+      console.log(`updated with ${currentChapterIdx}`);
 
       if (data) {
         setChapterData(data);
       }
     })();
-  }, [userId, isLikeUpdated, isNewCandidateWritten]);
+  }, [currentChapterIdx, userId, isLikeUpdated, isNewCandidateWritten]);
 
   useEffect(() => {
     if (!chapterData || !isCategorySelected) {
@@ -104,7 +107,7 @@ const ChapterCardContainer = ({
       )}
 
       {/* 후보 챕터 카드들 렌더 */}
-      {chapterData.item?.map((candidateChapterData, i) => {
+      {isRenderingCardSameCategory && chapterData.item?.map((candidateChapterData, i) => {
         // 현재 후보 챕터가 선택한 카테고리랑 맞는 것만 렌더
         if (
           currentCategoryIdx !==
@@ -141,7 +144,7 @@ const s = StyleSheet.create({
   root: {
     // flexDirection: 'column',
     // justifyContent: 'center',
-    alignItems: 'flex-start',
+    // alignItems: 'flex-start',
     // flex: 1,
     minWidth: wp('100%'),
     maxWidth: wp('100%'),

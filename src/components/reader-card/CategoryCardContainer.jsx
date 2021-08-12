@@ -11,7 +11,7 @@ import { selectCurrentChapterIdx } from '#store/selectors';
 import { ChapterDataProvider } from '../../contexts/chapterDataContext';
 import { useForceUpdate } from '../../hooks';
 
-// const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 const renderChaptersJSX = (chapters, categoryTitle, isVisibleFromCategory) => {
   const forceUpdate = useForceUpdate();
@@ -24,13 +24,14 @@ const renderChaptersJSX = (chapters, categoryTitle, isVisibleFromCategory) => {
     <View
       key={chapter.id}
       onPress={forceUpdate}
-      // style={{ flex: 1, minWidth: SCREEN_WIDTH }}
+      style={{ flex: 1, minWidth: SCREEN_WIDTH }}
     >
       <ChapterCardContainer
         chapterIdx={order} // 0 -> category 이므로 1 부터 시작
         categoryData={chapter}
         categoryTitle={categoryTitle || ''}
         isVisibleFromCategory={isVisibleFromCategory}
+        forceUpdate={forceUpdate}
       />
     </View>
   ));
@@ -79,8 +80,8 @@ const s = StyleSheet.create({
     // justifyContent: 'flex-start',
     // alignItems: 'center',
     // flex: 1,
-    // minHeight: SCREEN_HEIGHT,
-    // maxHeight: SCREEN_HEIGHT,
+    minHeight: SCREEN_HEIGHT,
+    maxHeight: SCREEN_HEIGHT,
     // minWidth: SCREEN_WIDTH,
     // maxWidth: SCREEN_WIDTH,
   },

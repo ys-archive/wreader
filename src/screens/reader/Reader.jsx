@@ -6,7 +6,11 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import { useSwipeGesture, useSwipeHorizontal, useSwipeVertical } from '#hooks';
+import {
+  useSwipeGesture,
+  useSwipeHorizontal,
+  useSwipeVertical,
+} from '../../hooks';
 
 const swipeConfig = {
   velocityThreshold: Platform.select({ ios: 0.4, android: 0.2 }),
