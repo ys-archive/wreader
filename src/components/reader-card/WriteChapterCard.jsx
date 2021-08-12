@@ -25,6 +25,8 @@ import ChapterService from '#services';
 
 import { makeCategoryBGImagePath, dummyProfile } from '#constants/images';
 
+import { useSetNewCandidateWritten } from '#contexts/chapterDataContext';
+
 const initialValues = {
   sentence1: '',
   sentence2: '',
@@ -47,6 +49,8 @@ const WriteChapterCard = ({ categoryTitle }) => {
   const nav = useNavigation();
   const userId = useStoreState(selectUserId);
 
+  const setNewCandidateWritten = useSetNewCandidateWritten();
+
   const onSubmit = async values => {
     const { sentence1, sentence2 } = values;
 
@@ -65,8 +69,9 @@ const WriteChapterCard = ({ categoryTitle }) => {
     } else {
       Alert('새로운 챕터 저장 실패');
     }
+
     // TODO: 처리한 카드 기다렸다가 렌더
-    // RenderCards();
+    setNewCandidateWritten();
   };
 
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
