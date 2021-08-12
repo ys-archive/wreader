@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import constate from 'constate';
 
 const useChapterData = () => {
   const [chapterData, setChapterData] = useState(null);
   const [isLikeUpdated, updateLike] = useState(false);
-  const [isNewCandidateWritten, setNewCandidateWritten] = useState(false);
+  const [isNewCandidateWritten, update] = useState(false);
+
+  const setNewCandidateWritten = useCallback(() => update(prv => !prv), []);
 
   return {
     chapterData,

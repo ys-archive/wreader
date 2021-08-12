@@ -5,7 +5,7 @@ import { StyleSheet, Text } from '#components';
 import ChapterCard from './ChapterCard';
 import WriteChapterCard from './WriteChapterCard';
 
-import { useGetSWR } from '#hooks';
+// import { useGetSWR } from '#hooks';
 
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import {
@@ -13,7 +13,7 @@ import {
   selectCurrentChapterIdx,
   selectIsCategorySelected,
   selectUserId,
-  selectIsLoggedIn,
+  // selectIsLoggedIn,
 } from '#store/selectors';
 import { actionsSetLastCandidateIdx } from '#store/actions';
 
@@ -42,7 +42,7 @@ const ChapterCardContainer = ({
   const isCategorySelected = useStoreState(selectIsCategorySelected);
   const setLastCandidateIdx = useStoreActions(actionsSetLastCandidateIdx);
   const userId = useStoreState(selectUserId);
-  const isLoggedIn = useStoreState(selectIsLoggedIn);
+  // const isLoggedIn = useStoreState(selectIsLoggedIn);
 
   const chapterOrder = chapterIdx + 1;
 
@@ -118,11 +118,9 @@ const ChapterCardContainer = ({
             // isVisibleFromCategory={isVisibleFromCategory}
           />
         )}
+
         {/* 후보 챕터 카드들 렌더 */}
         {chapterData.item?.map((candidateChapterData, i) => {
-          // if (i === 0) {
-          //   return null;
-          // }
           // 현재 후보 챕터가 선택한 카테고리랑 맞는 것만 렌더
           if (
             currentCategoryIdx !==
@@ -130,6 +128,7 @@ const ChapterCardContainer = ({
           ) {
             return null;
           }
+
           return (
             <ChapterCard
               key={candidateChapterData.id}
@@ -141,6 +140,7 @@ const ChapterCardContainer = ({
             />
           );
         })}
+
         {/* 마지막 카드는 항상 유저가 쓰는 카드 */}
         {isRenderingCardSameCategory && (
           <WriteChapterCard categoryTitle={categoryTitle} />

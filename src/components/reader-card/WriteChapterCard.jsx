@@ -19,7 +19,11 @@ import { Feather } from 'react-native-vector-icons';
 import { colors } from '#constants';
 
 import { useStoreState, useStoreActions } from 'easy-peasy';
-import { selectUserId } from '#store/selectors';
+import {
+  selectUserId,
+  selectCurrentChapterIdx,
+  selectCurrentCategoryIdx,
+} from '#store/selectors';
 
 import ChapterService from '#services';
 
@@ -49,6 +53,9 @@ const WriteChapterCard = ({ categoryTitle }) => {
   const nav = useNavigation();
   const userId = useStoreState(selectUserId);
 
+  const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
+  const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
+
   const setNewCandidateWritten = useSetNewCandidateWritten();
 
   const onSubmit = async values => {
@@ -59,9 +66,9 @@ const WriteChapterCard = ({ categoryTitle }) => {
     // TODO: 현재 선택한 카테고리
     const status = await ChapterService.POST_createChapter(
       userId,
-      undefined,
+      currentChapterIdx,
       sentence1.append(sentence2),
-      undefined,
+      currentCategoryIdx,
     );
 
     if (status === 200) {
