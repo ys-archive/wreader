@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-
+import { ChapterDataProvider } from '../contexts/chapterDataContext';
 // import { NavigationScreenOptionsProvider } from '../hooks/useNavigationScreenOptions';
 
 import MainDrawer from './level1/MainDrawer';
@@ -17,10 +17,12 @@ export const NavigationProvider = ({ children }) => {
   }, []);
 
   return (
-    <NavigationContainer>
-      <RootNavigator />
-      {children}
-    </NavigationContainer>
+    <ChapterDataProvider>
+      <NavigationContainer>
+        <RootNavigator />
+        {children}
+      </NavigationContainer>
+    </ChapterDataProvider>
   );
 };
 

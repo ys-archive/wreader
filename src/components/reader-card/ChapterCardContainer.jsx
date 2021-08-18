@@ -1,11 +1,18 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, ActivityIndicator } from 'react-native';
+import {
+  View,
+  ActivityIndicator,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import { StyleSheet, Text } from '#components';
 
-import ChapterCard from './ChapterCard';
-import WriteChapterCard from './WriteChapterCard';
+import { useNavigation } from '@react-navigation/native';
+import * as ScreenNames from '../../navigators/ScreenNames';
 
-// import { useGetSWR } from '#hooks';
+import ChapterCard from './ChapterCard';
+// import WriteChapterCard from './WriteChapterCard';
+
+import { useForceUpdate } from '../../hooks';
 
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import {
@@ -13,6 +20,8 @@ import {
   selectCurrentChapterIdx,
   selectIsCategorySelected,
   selectUserId,
+  selectCurrentCandidateIdx,
+  selectLastCandidateIdx,
 } from '#store/selectors';
 import { actionsSetLastCandidateIdx } from '#store/actions';
 
@@ -26,19 +35,23 @@ import {
   useSetChapterData,
   useIsLikeUpdated,
   useIsNewCandidateWritten,
+  useSetNewCandidateWritten,
 } from '../../contexts/chapterDataContext';
 
 const ChapterCardContainer = ({
   chapterIdx,
   categoryData,
   categoryTitle,
-  isVisibleFromCategory,
-  forceUpdate,
+  // isVisibleFromCategory,
+  // forceUpdate,
 }) => {
+  // const forceUpdate = useForceUpdate();
   const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
   const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
   const isCategorySelected = useStoreState(selectIsCategorySelected);
   const setLastCandidateIdx = useStoreActions(actionsSetLastCandidateIdx);
+  const currentCandidateIdx = useStoreState(selectCurrentCandidateIdx);
+  const lastCandidateIdx = useStoreState(selectLastCandidateIdx);
   const userId = useStoreState(selectUserId);
 
   const chapterOrder = chapterIdx + 1;
@@ -48,6 +61,9 @@ const ChapterCardContainer = ({
   const setChapterData = useSetChapterData();
   const isLikeUpdated = useIsLikeUpdated();
   const isNewCandidateWritten = useIsNewCandidateWritten();
+  const setNewCandidateWritten = useSetNewCandidateWritten();
+
+  const nav = useNavigation();
 
   useEffect(() => {
     (async function () {
@@ -55,7 +71,7 @@ const ChapterCardContainer = ({
         currentChapterIdx,
         userId,
       );
-      console.log(`updated with ${currentChapterIdx}`);
+      // console.log(`updated with ${currentChapterIdx}`);
 
       if (data) {
         setChapterData(data);
@@ -84,6 +100,15 @@ const ChapterCardContainer = ({
 
       setLastCandidateIdx(maxLength);
     }
+
+    // console.log(currentCandidateIdx);
+
+    if (lastCandidateIdx !== 0 && currentCandidateIdx === lastCandidateIdx) {
+      nav.navigate(ScreenNames.MainWriteCard, {
+        categoryTitle,
+        chapterIdx,
+      });
+    }
   });
 
   if (!isCategorySelected) {
@@ -102,38 +127,41 @@ const ChapterCardContainer = ({
           chapterIdx={chapterIdx}
           data={categoryData}
           categoryTitle={categoryTitle}
-          isVisibleFromCategory={isVisibleFromCategory}
+          // isVisibleFromCategory={isVisibleFromCategory}
         />
       )}
 
       {/* 후보 챕터 카드들 렌더 */}
-      {isRenderingCardSameCategory && chapterData.item?.map((candidateChapterData, i) => {
-        // 현재 후보 챕터가 선택한 카테고리랑 맞는 것만 렌더
-        if (
-          currentCategoryIdx !==
-          Math.max(0, candidateChapterData.categoryId - 5)
-        ) {
-          return null;
-        }
+      {isRenderingCardSameCategory &&
+        chapterData.item?.map((candidateChapterData, i) => {
+          // 현재 후보 챕터가 선택한 카테고리랑 맞는 것만 렌더
+          if (
+            currentCategoryIdx !==
+            Math.max(0, candidateChapterData.categoryId - 5)
+          ) {
+            return null;
+          }
 
-        return (
-          <ChapterCard
-            key={candidateChapterData.id}
-            chapterIdx={chapterIdx}
-            data={candidateChapterData}
-            candidateIdx={i}
-            categoryTitle={categoryTitle}
-          />
-        );
-      })}
+          return (
+            <ChapterCard
+              key={candidateChapterData.id}
+              chapterIdx={chapterIdx}
+              data={candidateChapterData}
+              candidateIdx={i}
+              categoryTitle={categoryTitle}
+            />
+          );
+        })}
 
+      {/* <View onPress={forceUpdate}> */}
       {/* 마지막 카드는 항상 유저가 쓰는 카드 */}
-      {isRenderingCardSameCategory && (
-        <WriteChapterCard
-          categoryTitle={categoryTitle}
-          chapterIdx={chapterIdx}
-        />
-      )}
+      {/* {isRenderingCardSameCategory && (
+          <WriteChapterCard
+            categoryTitle={categoryTitle}
+            chapterIdx={chapterIdx}
+          />
+        )} */}
+      {/* </View> */}
     </View>
   );
 };
@@ -144,11 +172,11 @@ const s = StyleSheet.create({
   root: {
     // flexDirection: 'column',
     // justifyContent: 'center',
-    // alignItems: 'flex-start',
-    // flex: 1,
-    minWidth: wp('100%'),
+    alignItems: 'flex-start',
+    flex: 1,
+    width: wp('100%'),
     maxWidth: wp('100%'),
-
+    // overflow: 'visible',
     // height: '100%',
   },
 });

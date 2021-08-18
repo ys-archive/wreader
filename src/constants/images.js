@@ -46,6 +46,8 @@ export const upArrow = require('!images/up-arrow.png');
 export const downArrow = require('!images/down-arrow.png');
 
 export const makeCategoryBGImagePath = title => {
+  if (!title) return '';
+  
   const id = title.toLowerCase().trim();
   if (id === 'romance') {
     return romanceCategoryBG;

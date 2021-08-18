@@ -14,7 +14,7 @@ import { selectCurrentCategoryIdx } from '#store/selectors';
 import { useGetSWR, useAutoLogin } from '#hooks';
 
 import EventModal from '#components/modals/EventModal';
-import CategoryCardContainer from '#components/reader-card/CategoryCardContainer';
+import CategoryCardContainer from '../components/reader-card/CategoryCardContainer';
 import Reader from './reader/Reader';
 
 import { Logo, Sort, Menu } from '#components/icon';
@@ -103,8 +103,8 @@ export default Main;
 
 const s = StyleSheet.create({
   root: {
-    justifyContent: 'flex-start',
-    flex: 1,
+    // justifyContent: 'flex-start',
+    // flex: 1,
     // overflow: 'visible',
   },
 });

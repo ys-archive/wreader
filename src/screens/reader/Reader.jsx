@@ -46,15 +46,22 @@ export default Reader;
 
 const s = StyleSheet.create({
   root: {
-    flex: 1,
-    overflow: 'visible',
+    // flex: 1,
+    // overflow: 'visible',
   },
   recognizer: {
-    minWidth: wp('100%'),
-    maxWidth: wp('100%'),
-    minHeight: hp('100%'),
-    maxHeight: hp('100%'),
+    // minWidth: wp('100%'),
+    // // maxWidth: wp('100%'),
+    // minHeight: hp('100%'),
+    // // maxHeight: hp('100%'),
+    // position: 'absolute',
+    // left: 0,
+    // top: 0,
+    // backgroundColor: 'rgba(255,255,255, 0.7)',
+    minWidth: wp('95%'),
+    minHeight: hp('76%'),
     position: 'absolute',
+    // zIndex: 10,
     left: 0,
     top: 0,
     backgroundColor: 'rgba(255,255,255, 0.7)',

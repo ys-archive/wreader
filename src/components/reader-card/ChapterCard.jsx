@@ -41,7 +41,7 @@ const ChapterCard = ({
   data,
   candidateIdx,
   categoryTitle,
-  isVisibleFromCategory,
+  // isVisibleFromCategory,
 }) => {
   const [isCommentsOpen, setCommentsOpen] = useState(false);
   const chapterOrder = chapterIdx + 1;
@@ -58,7 +58,7 @@ const ChapterCard = ({
 
   const predicatedPositionBetweenChapters =
     !isMovingChapterLock &&
-    (isNextChapter || isVisibleFromCategory
+    (isNextChapter //|| isVisibleFromCategory
       ? {
           position: 'absolute',
           left: '-5%',
@@ -71,7 +71,7 @@ const ChapterCard = ({
       : {});
 
   const predicatedScaleBGBetweenChapters =
-    isNextChapter || isPreviousChapter || isVisibleFromCategory
+    isNextChapter || isPreviousChapter // || isVisibleFromCategory
       ? {
           width: wp('83.3%') * 0.9,
           height: hp('81.2%') * 0.9,
@@ -79,7 +79,7 @@ const ChapterCard = ({
       : {};
 
   const predicatedScaleProfileBetweenChapters =
-    isNextChapter || isPreviousChapter || isVisibleFromCategory
+    isNextChapter || isPreviousChapter // || isVisibleFromCategory
       ? {
           width: 30 * 0.9,
           height: 30 * 0.9,
@@ -87,7 +87,7 @@ const ChapterCard = ({
       : {};
 
   const predicatedScaleInsideBGBetweenChapters =
-    isNextChapter || isPreviousChapter || isVisibleFromCategory
+    isNextChapter || isPreviousChapter // || isVisibleFromCategory
       ? {
           width: wp('75.6%') * 0.9,
           height: hp('69.7%') * 0.9,
@@ -95,7 +95,7 @@ const ChapterCard = ({
       : {};
 
   const predicatedScaleBottomSectionBetweenChapters =
-    isNextChapter || isPreviousChapter || isVisibleFromCategory
+    isNextChapter || isPreviousChapter //|| isVisibleFromCategory
       ? {
           minWidth: wp('75.6%') * 0.9,
           minHeight: 72.2 * 0.9,
@@ -349,9 +349,9 @@ export default ChapterCard;
 const s = StyleSheet.create({
   root: {
     minWidth: wp('100%'),
-    // maxWidth: wp('100%'),
+    maxWidth: wp('100%'),
     minHeight: hp('100%'),
-    // maxHeight: hp('100%'),
+    maxHeight: hp('100%'),
     backgroundColor: colors.light.primaryTransparent,
     // flex: 1,
     justifyContent: 'center',

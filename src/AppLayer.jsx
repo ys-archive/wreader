@@ -4,8 +4,8 @@ import AppLoading from 'expo-app-loading';
 import * as SplashScreen from 'expo-splash-screen';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { loadFontsAsync } from './constants/fonts';
-import { ReduxProvider } from '#store';
-import { NavigationProvider } from '#navigators';
+import { ReduxProvider } from './store';
+import { NavigationProvider } from './navigators';
 import { enableScreens } from 'react-native-screens';
 enableScreens(true);
 
