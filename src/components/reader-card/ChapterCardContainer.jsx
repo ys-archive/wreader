@@ -35,7 +35,6 @@ import {
   useSetChapterData,
   useIsLikeUpdated,
   useIsNewCandidateWritten,
-  useSetNewCandidateWritten,
 } from '../../contexts/chapterDataContext';
 
 const ChapterCardContainer = ({
@@ -61,7 +60,6 @@ const ChapterCardContainer = ({
   const setChapterData = useSetChapterData();
   const isLikeUpdated = useIsLikeUpdated();
   const isNewCandidateWritten = useIsNewCandidateWritten();
-  const setNewCandidateWritten = useSetNewCandidateWritten();
 
   const nav = useNavigation();
 

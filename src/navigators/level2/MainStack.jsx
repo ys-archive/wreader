@@ -3,8 +3,8 @@ import * as ScreenNames from '../ScreenNames';
 import { createStackNavigator } from '@react-navigation/stack';
 import Main from '../../screens/Main';
 import WriteChapterCard from '../../components/reader-card/WriteChapterCard';
-import CategoryCard from '../../components/reader-card/CategoryCard';
-import ChapterCard from '../../components/reader-card/ChapterCard';
+// import CategoryCard from '../../components/reader-card/CategoryCard';
+// import ChapterCard from '../../components/reader-card/ChapterCard';
 
 const Stack = createStackNavigator();
 

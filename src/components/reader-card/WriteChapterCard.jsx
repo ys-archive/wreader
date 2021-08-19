@@ -1,19 +1,12 @@
-import React, { useState } from 'react';
+import React, { useCallback } from 'react';
 import { View, Platform, ImageBackground } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { StyleSheet, TextInput, Button, RenderError, Text } from '#components';
-import { AlertWithValue, Alert } from '#components/alert';
 
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-
-// import { useNavigation } from '@react-navigation/native';
-import * as ScreenNames from '#navigators/ScreenNames';
 
 import AddImage from '../icon/AddImage';
 import { colors } from '#constants';
@@ -25,116 +18,48 @@ import {
   selectCurrentCategoryIdx,
 } from '#store/selectors';
 
-import { ChapterService } from '../../services';
-
 import { makeCategoryBGImagePath } from '#constants/images';
 import { useSetNewCandidateWritten } from '../../contexts/chapterDataContext';
-
-const initialValues = {
-  // title: '',
-  sentence1: '',
-  sentence2: '',
-  sentence3: '',
-  sentence4: '',
-  sentence5: '',
-  sentence6: '',
-  sentence7: '',
-  sentence8: '',
-  sentence9: '',
-  sentence10: '',
-  sentence11: '',
-};
-
-const validationSchema = Yup.object({
-  // title: Yup.string().required('You have to input a title'),
-
-  sentence1: Yup.string()
-    .min(4)
-    .required('Min is 4')
-    .max(20)
-    .required('Max is 20'),
-
-  sentence2: Yup.string().min(0).max(20),
-  sentence3: Yup.string().min(0).max(20),
-  sentence4: Yup.string().min(0).max(20),
-  sentence5: Yup.string().min(0).max(20),
-  sentence6: Yup.string().min(0).max(20),
-  sentence7: Yup.string().min(0).max(20),
-  sentence8: Yup.string().min(0).max(20),
-  sentence9: Yup.string().min(0).max(20),
-  sentence10: Yup.string().min(0).max(20),
-});
+import { useWriteChapterCardForm } from './useWriteChapterCardForm';
 
 const borderRadiusOutside = 20;
 const borderRadiusInside = 17;
 
-const WriteChapterCard = ({ navigation }) => {
-  const { categoryTitle, chapterIdx } = navigation;
-  const userId = useStoreState(selectUserId);
+const WriteChapterCard = ({ route }) => {
+  const { categoryTitle, chapterIdx } = route.params;
 
+  const userId = useStoreState(selectUserId);
   const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
   const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
-
   const setNewCandidateWritten = useSetNewCandidateWritten();
 
-  // const forceUpdate = useForceUpdate();
-
-  const onSubmit = async values => {
-    const {
-      sentence1,
-      sentence2,
-      sentence3,
-      sentence4,
-      sentence5,
-      sentence6,
-      sentence7,
-      sentence8,
-      sentence9,
-      sentence10,
-    } = values;
-
-    console.log('챕터 저장: ', values);
-    // TODO: 현재 챕터 가져와 groupIdx 로 쓰기
-    // TODO: 현재 선택한 카테고리
-    const status = await ChapterService.POST_createChapter(
-      userId,
-      currentChapterIdx,
-      // sentence1.append(sentence2).append(sentence3).append(sentence4),
-      `${sentence1 || ''}${sentence2 || ''}${sentence3 || ''}${
-        sentence4 || ''
-      }` +
-        `${sentence5 || ''}${sentence6 || ''}${sentence7 || ''}${
-          sentence8 || ''
-        }` +
-        `${sentence9 || ''}${sentence10 || ''}`,
-      currentCategoryIdx + 5,
-    );
-
-    if (status === 200) {
-      AlertWithValue(
-        'Chapter written!',
-        'Close',
-        JSON.stringify(values, null, 2),
-      );
-    } else {
-      Alert('Writing chapter fails');
-    }
-
-    setTimeout(() => {
-      setNewCandidateWritten();
-      navigation.navigate(ScreenNames.Main);
-    }, 2000);
-    // TODO: 처리한 카드 기다렸다가 렌더
-  };
-
-  const [newCardBgUri, setNewCardBgUri] = useState(undefined);
+  // const [newCardBgUri, setNewCardBgUri] = useState(undefined);
+  const afterFormSubmitted = useCallback(
+    nav => {
+      setTimeout(() => {
+        nav?.goBack();
+        setNewCandidateWritten();
+      }, 3000);
+    },
+    [setNewCandidateWritten],
+  );
 
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
-    useFormik({
-      initialValues,
-      validationSchema,
-      onSubmit,
-    });
+    useWriteChapterCardForm(
+      userId,
+      currentCategoryIdx,
+      currentChapterIdx,
+      afterFormSubmitted,
+    );
+
+  const onPressCameraIcon = () => {
+    console.log('camera icon pressed!');
+  };
+
+  // TODO: 1. Image Picker 를 통해서 이미지 선택
+  // TODO: 2. 선택한 이미지 업로드
+  // TODO: 2-success. alert(성공), 선택한 이미지로 바로 프로필 이미지 변경
+  // TODO: 2-fail. alert(실패), 상태 초기화
 
   const {
     title,
@@ -149,15 +74,6 @@ const WriteChapterCard = ({ navigation }) => {
     sentence9,
     sentence10,
   } = values;
-
-  const onPressCameraIcon = () => {
-    console.log('camera icon pressed!');
-  };
-
-  // TODO: 1. Image Picker 를 통해서 이미지 선택
-  // TODO: 2. 선택한 이미지 업로드
-  // TODO: 2-success. alert(성공), 선택한 이미지로 바로 프로필 이미지 변경
-  // TODO: 2-fail. alert(실패), 상태 초기화
 
   return (
     <View

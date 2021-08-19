@@ -29,7 +29,6 @@ export const selectCurrentCandidateIdx = state =>
   state.reader.model.currentCandidateIdx;
 export const selectLastCandidateIdx = state =>
   state.reader.model.lastCandidateIdx;
-export const selectLastCandidate = state => state.reader.model.lastCandidate;
 
 export const selectIsFirstCategory = state => state.reader.isFirstCategory;
 export const selectIsLastCategory = state => state.reader.isLastCategory;
