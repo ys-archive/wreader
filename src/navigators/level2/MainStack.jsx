@@ -2,7 +2,7 @@ import React from 'react';
 import * as ScreenNames from '../ScreenNames';
 import { createStackNavigator } from '@react-navigation/stack';
 import Main from '../../screens/Main';
-import WriteChapterCard from '../../components/reader-card/WriteChapterCard';
+import WriteChapterCard from '../../components/reader-card/write-chapter/WriteChapterCard';
 // import CategoryCard from '../../components/reader-card/CategoryCard';
 // import ChapterCard from '../../components/reader-card/ChapterCard';
 

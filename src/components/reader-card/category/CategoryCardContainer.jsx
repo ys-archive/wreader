@@ -3,13 +3,12 @@ import { View, Dimensions, Platform } from 'react-native';
 import { StyleSheet, Text } from '#components';
 
 import CategoryCard from './CategoryCard';
-import ChapterCardContainer from './ChapterCardContainer';
+import ChapterCardContainer from '../chapter/ChapterCardContainer';
 
 import { useStoreState } from 'easy-peasy';
 import { selectCurrentChapterIdx } from '#store/selectors';
 
-
-import { useForceUpdate } from '../../hooks';
+import { useForceUpdate } from '../../../hooks';
 // const useForceUpdate = useState(false)[1];
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');

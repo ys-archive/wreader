@@ -18,7 +18,7 @@ import { Like, Reply } from '#components/icon';
 
 import { makeCategoryBGImagePath, dummyProfile } from '#constants/images';
 
-import { useUpdateLike } from '../../contexts/chapterDataContext';
+import { useUpdateLike } from '../../../contexts/chapterDataContext';
 
 import { useStoreState } from 'easy-peasy';
 import {

@@ -1,7 +1,8 @@
 import { AlertWithValue } from '#components';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { ChapterService } from '../../services';
+import { ChapterService } from '../../../services';
+
 const initialValues = {
   // title: '',
   sentence1: '',
@@ -61,7 +62,7 @@ export const useWriteChapterCardForm = (
       afterFormSubmitted();
     } else {
       Alert('Writing chapter fails');
-    }
+    } ``
   };
 
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
