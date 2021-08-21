@@ -24,12 +24,12 @@ export const useSwipeVertical = forceSwipeVertically => {
   const currentCandidateIdx = useStoreState(selectCurrentCandidateIdx);
 
   const onSwipeUp = state => {
-    if (isLastCandidate && isCategorySelected) {
-      console.log(
-        '현재 카테고리가 선택되어, 챕터 간 이동만 가능 (후보 챕터도 없음)',
-      );
-      return;
-    }
+    // if (lastCandidateIdx === 0 && isCategorySelected) {
+    //   console.log(
+    //     '현재 카테고리가 선택되어, 챕터 간 이동만 가능 (후보 챕터도 없음)',
+    //   );
+    //   return;
+    // }
 
     if (isLastCategory) {
       console.log('마지막 카테고리 도달');
@@ -47,7 +47,10 @@ export const useSwipeVertical = forceSwipeVertically => {
     forceSwipeVertically('up');
     swipeToUp();
 
-    if (currentCandidateIdx + 1 === lastCandidateIdx) {
+    if (
+      lastCandidateIdx !== 0 &&
+      currentCandidateIdx + 1 === lastCandidateIdx
+    ) {
       setTimeout(() => {
         console.log('새 카드 작성 후 위치 복귀');
         forceSwipeVertically('down');

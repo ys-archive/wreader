@@ -186,7 +186,7 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
       console.log('like');
     }
 
-    updateLike();
+    setTimeout(() => updateLike(), 1500);
   };
 
   const onPressReply = () => {
@@ -333,6 +333,7 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
   );
 };
 
+// export default React.memo(ChapterCard);
 export default ChapterCard;
 
 const s = StyleSheet.create({

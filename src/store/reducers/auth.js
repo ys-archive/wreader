@@ -11,6 +11,12 @@ const model = {
     intro: '',
     marketingAgree: 0,
     nick: '',
+    img: {
+      id: 0,
+      userId: '',
+      path: '',
+      createAt: '',
+    },
   },
 };
 
@@ -60,6 +66,21 @@ export default {
   }),
 
   setUserInfo: action((state, payload) => {
-    state.model.info = payload;
+    console.log(' setUserInfo() : ', payload);
+    state.model.info = {
+      nick: payload.nick ?? '',
+      instagram: payload.instagram ?? '',
+      facebook: payload.facebook ?? '',
+      intro: payload.intro ?? '',
+      marketingAgree: payload.marketingAgree,
+      img: payload.img
+        ? {
+            id: payload.img.id ?? 0,
+            userId: payload.img.userId ?? '',
+            path: payload.img.path ?? '',
+            createAt: payload.img.createAt ?? undefined,
+          }
+        : null,
+    };
   }),
 };

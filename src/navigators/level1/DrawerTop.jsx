@@ -13,7 +13,6 @@ import {
   // DrawerItem,
 } from '@react-navigation/drawer';
 import { StyleSheet, Text } from '#components';
-import { Ionicons } from '@expo/vector-icons';
 import * as ScreenNames from '../ScreenNames';
 
 import { useStoreActions, useStoreState } from 'easy-peasy';

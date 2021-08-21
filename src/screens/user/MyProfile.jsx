@@ -37,14 +37,17 @@ const MyProfile = () => {
     nav.navigate(ScreenNames.MyProfileEdit);
   };
 
+  const [defaultUri, setDefaultUri] = useState('');
+  useProfileImageLoader(setDefaultUri);
+
   const userInfo = useStoreState(selectUserInfo);
+  console.log(userInfo);
+  if (!userInfo) return null;
+
   const { intro, facebook, instagram, nick } = userInfo;
   // const nick = userInfo !== null && userInfo.nick ? userInfo?.nick : 'SIGN IN';
 
-  const [defaultUri, setDefaultUri] = useState('');
-
   // 프로필 이미지 로드
-  useProfileImageLoader(setDefaultUri);
 
   return (
     <SafeAreaView style={s.root}>

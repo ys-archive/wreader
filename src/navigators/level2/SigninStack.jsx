@@ -14,7 +14,7 @@ const Stack = createStackNavigator();
 
 const SigninStack = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName={ScreenNames.Signin}>
       <Stack.Screen
         name={ScreenNames.Signin}
         component={Signin}
