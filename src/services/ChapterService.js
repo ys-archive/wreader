@@ -10,6 +10,7 @@ class ChapterService {
         userId,
       })
       .catch(console.error);
+    console.log(data);
     return status;
   }
 
