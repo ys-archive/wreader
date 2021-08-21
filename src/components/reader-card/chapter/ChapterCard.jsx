@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { StyleSheet, View, ImageBackground, Image } from 'react-native';
 import { Text, Alert, Button } from '#components';
 import {
@@ -25,6 +25,9 @@ import {
 } from '#store/selectors';
 import CommentsModal from '#components/modals/CommentsModal';
 
+import { useChapterCardExposer_Chapter } from './useChapterCardExposer_Chapter';
+import { useChapterCardExposer_Category } from './useChapterCardExposer_Category';
+
 import { ChapterService } from '../../../services';
 
 const borderRadiusOutside = 20;
@@ -32,7 +35,6 @@ const borderRadiusInside = 17;
 
 const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
   const [isCommentsOpen, setCommentsOpen] = useState(false);
-  const chapterOrder = chapterIdx + 1;
 
   const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
   const currentCandidateIdx = useStoreState(selectCurrentCandidateIdx);
@@ -40,115 +42,31 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
 
   const [_, updateLike] = useLikeUpdate();
 
-  const isPreviousChapter = currentChapterIdx - 1 === chapterOrder;
-  const isNextChapter = currentChapterIdx + 1 === chapterOrder;
-
-  const predicatedPositionBetweenChapters =
-    !isMovingChapterLock &&
-    (isNextChapter //|| isVisibleFromCategory
-      ? {
-          position: 'absolute',
-          left: '-5%',
-        }
-      : isPreviousChapter
-      ? {
-          position: 'absolute',
-          right: '-5%',
-        }
-      : {});
-
-  const predicatedScaleBGBetweenChapters =
-    isNextChapter || isPreviousChapter // || isVisibleFromCategory
-      ? {
-          width: wp('83.3%') * 0.9,
-          height: hp('81.2%') * 0.9,
-        }
-      : {};
-
-  const predicatedScaleProfileBetweenChapters =
-    isNextChapter || isPreviousChapter // || isVisibleFromCategory
-      ? {
-          width: 30 * 0.9,
-          height: 30 * 0.9,
-        }
-      : {};
-
-  const predicatedScaleInsideBGBetweenChapters =
-    isNextChapter || isPreviousChapter // || isVisibleFromCategory
-      ? {
-          width: wp('75.6%') * 0.9,
-          height: hp('69.7%') * 0.9,
-        }
-      : {};
-
-  const predicatedScaleBottomSectionBetweenChapters =
-    isNextChapter || isPreviousChapter //|| isVisibleFromCategory
-      ? {
-          minWidth: wp('75.6%') * 0.9,
-          minHeight: 72.2 * 0.9,
-        }
-      : {};
-
-  // console.log('현재 후보 챕터: ', currentCandidateIdx);
+  const chapterOrder = chapterIdx + 1;
+  const {
+    predicatedPositionBetweenChapters,
+    predicatedScaleBGBetweenChapters,
+    predicatedScaleProfileBetweenChapters,
+    predicatedScaleInsideBGBetweenChapters,
+    predicatedScaleBottomSectionBetweenChapters,
+  } = useChapterCardExposer_Chapter(
+    isMovingChapterLock,
+    currentChapterIdx + 1 === chapterOrder,
+    currentChapterIdx - 1 === chapterOrder,
+  );
 
   const candidateOrder = candidateIdx + 1;
-  const isPreviousCandidate = currentCandidateIdx - 1 === candidateOrder;
-  const isNextCandidate = currentCandidateIdx + 1 === candidateOrder;
-
-  const predicatedPositionBetweenCandidates = isNextCandidate
-    ? {
-        position: 'absolute',
-        top: '-5%',
-      }
-    : (candidateOrder - 1 === -1 && isMovingChapterLock) || isPreviousCandidate
-    ? {
-        position: 'absolute',
-        bottom: '-7%',
-      }
-    : {};
-
-  // : isVisibleFromCategory
-  // ? {
-  //     position: 'absolute',
-  //     left: '-5%',
-  //   }
-  // : {};
-  // const predicatedScaleBGBetweenCandidates =
-  //   isNextChapter || isPreviousChapter || isVisibleFromCategory
-  //     ? {
-  //         width: wp('83.3%') * 0.9,
-  //         height: hp('81.2%') * 0.9,
-  //       }
-  //     : {};
-
-  // const predicatedScaleProfileBetweenCandidates =
-  //   isNextChapter || isPreviousChapter || isVisibleFromCategory
-  //     ? {
-  //         width: 30 * 0.9,
-  //         height: 30 * 0.9,
-  //       }
-  //     : {};
-
-  // const predicatedScaleInsideBGBetweenCandidates =
-  //   isNextChapter || isPreviousChapter || isVisibleFromCategory
-  //     ? {
-  //         width: wp('75.6%') * 0.9,
-  //         height: hp('69.7%') * 0.9,
-  //       }
-  //     : {};
-
-  // const predicatedScaleBottomSectionBetweenCandidates =
-  //   isNextChapter || isPreviousChapter || isVisibleFromCategory
-  //     ? {
-  //         minWidth: wp('75.6%') * 0.9,
-  //         minHeight: 72.2 * 0.9,
-  //       }
-  //     : {};
+  const { predicatedPositionBetweenCandidates } =
+    useChapterCardExposer_Category(
+      currentCandidateIdx + 1 === candidateOrder,
+      currentCandidateIdx - 1 === candidateOrder,
+      candidateIdx,
+      isMovingChapterLock,
+    );
 
   const {
     id: chapterId, // 현재 챕터 Id
     categoryId,
-    __, // -> like
     content,
     replyCount, // -> reply
     like_count: likeCount, // -> like
@@ -167,7 +85,7 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
   const myProfileLocalImagePath = useStoreState(selectProfileLocalImagePath);
   const myProfileImageUrl = useStoreState(selectProfileImageUrl);
 
-  const onPressLike = async () => {
+  const onPressLike = useCallback(async () => {
     if (!isLoggedIn) {
       Alert("You can't like before logging in.");
       return;
@@ -187,7 +105,7 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
     }
 
     setTimeout(() => updateLike(), 1500);
-  };
+  }, [userId, chapterId]);
 
   const onPressReply = () => {
     setCommentsOpen(prv => !prv);

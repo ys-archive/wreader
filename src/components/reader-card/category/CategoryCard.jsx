@@ -14,46 +14,21 @@ import {
   selectIsFirstCandidate,
   selectCurrentChapterIdx,
 } from '#store/selectors';
+import { useCategoryCardExposer_Category } from './useCategoryCardExposer_Category';
 
 const CategoryCard = ({ category, categoryIdx }) => {
   const { title, subTitle, imageUri } = category;
 
   const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
-
-  const isPreviousCategory = currentCategoryIdx - 1 === categoryIdx;
-  const isNextCategory = currentCategoryIdx + 1 === categoryIdx;
-
   const isFirstCandidate = useStoreState(selectIsFirstCandidate);
   const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
-  const isVisibleFromChapter = isFirstCandidate && currentChapterIdx === 1;
-  // 현재 후보 idx === 0
 
-  // const predicatedOpacity = isNext || isPrevious ? { opacity: 1 } : {};
-
-  const predicatedPosition = isNextCategory
-    ? {
-        position: 'absolute',
-        top: '-5%',
-      }
-    : isPreviousCategory
-    ? {
-        position: 'absolute',
-        bottom: '-7%',
-      }
-    : isVisibleFromChapter
-    ? {
-        position: 'absolute',
-        right: '-5%',
-      }
-    : {};
-
-  const predicatedScale =
-    isNextCategory || isPreviousCategory || isVisibleFromChapter
-      ? {
-          width: wp('83.4%') * 0.9,
-          height: hp('78.2%') * 0.9,
-        }
-      : {};
+  const { predicatedPosition, predicatedScale } =
+    useCategoryCardExposer_Category(
+      currentCategoryIdx + 1 === categoryIdx,
+      currentCategoryIdx - 1 === categoryIdx,
+      isFirstCandidate && currentChapterIdx === 1,
+    );
 
   return (
     <View style={s.root}>
