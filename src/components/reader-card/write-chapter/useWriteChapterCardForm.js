@@ -54,15 +54,10 @@ export const useWriteChapterCardForm = (
     );
 
     if (status === 200) {
-      // AlertWithValue(
-      //   'Chapter written!',
-      //   'Close',
-      //   JSON.stringify(values, null, 2),
-      // );
       afterFormSubmitted();
     } else {
       Alert('Writing chapter fails');
-    } ``
+    }
   };
 
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =

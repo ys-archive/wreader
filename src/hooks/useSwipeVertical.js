@@ -6,7 +6,7 @@ import {
   selectIsLastCandidate,
   selectLastCandidateIdx,
   selectIsMovingCategoryLock,
-  selectCurrentCandidateIdx
+  selectCurrentCandidateIdx,
 } from '#store/selectors';
 import { actionsSwipeToUp, actionsSwipeToDown } from '#store/actions';
 
@@ -22,7 +22,6 @@ export const useSwipeVertical = forceSwipeVertically => {
   const lastCandidateIdx = useStoreState(selectLastCandidateIdx);
   const isLastCandidate = useStoreState(selectIsLastCandidate);
   const currentCandidateIdx = useStoreState(selectCurrentCandidateIdx);
-
 
   const onSwipeUp = state => {
     if (isLastCandidate && isCategorySelected) {
@@ -47,6 +46,14 @@ export const useSwipeVertical = forceSwipeVertically => {
 
     forceSwipeVertically('up');
     swipeToUp();
+
+    if (currentCandidateIdx + 1 === lastCandidateIdx) {
+      setTimeout(() => {
+        console.log('새 카드 작성 후 위치 복귀');
+        forceSwipeVertically('down');
+        swipeToDown();
+      }, 1000);
+    }
   };
 
   const onSwipeDown = state => {

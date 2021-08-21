@@ -16,6 +16,8 @@ export const useOpenWriteCard = (categoryTitle, chapterIdx) => {
   const nav = useNavigation();
 
   useEffect(() => {
+    // 스와이프 후 현재 후보 인덱스가 마지막이면
+    // WriteCard 열기
     if (lastCandidateIdx !== 0 && currentCandidateIdx === lastCandidateIdx) {
       nav.navigate(ScreenNames.MainWriteCard, {
         categoryTitle,

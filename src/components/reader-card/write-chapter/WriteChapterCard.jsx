@@ -19,8 +19,9 @@ import {
 } from '#store/selectors';
 
 import { makeCategoryBGImagePath } from '#constants/images';
-import { useSetNewCandidateWritten } from '../../../contexts/chapterDataContext';
+import { useWriteNewCard } from '../../../contexts/chapterDataContext';
 import { useWriteChapterCardForm } from './useWriteChapterCardForm';
+import { useNavigation } from '@react-navigation/native';
 
 const borderRadiusOutside = 20;
 const borderRadiusInside = 17;
@@ -31,18 +32,15 @@ const WriteChapterCard = ({ route }) => {
   const userId = useStoreState(selectUserId);
   const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
   const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
-  const setNewCandidateWritten = useSetNewCandidateWritten();
+  const [_, setNewCandidateWritten] = useWriteNewCard();
+
+  const nav = useNavigation();
 
   // const [newCardBgUri, setNewCardBgUri] = useState(undefined);
-  const afterFormSubmitted = useCallback(
-    nav => {
-      setTimeout(() => {
-        nav?.goBack();
-        setNewCandidateWritten();
-      }, 3000);
-    },
-    [setNewCandidateWritten],
-  );
+  const afterFormSubmitted = useCallback(() => {
+    nav?.goBack();
+    setNewCandidateWritten();
+  }, []);
 
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
     useWriteChapterCardForm(
@@ -62,7 +60,7 @@ const WriteChapterCard = ({ route }) => {
   // TODO: 2-fail. alert(실패), 상태 초기화
 
   const {
-    title,
+    // title,
     sentence1,
     sentence2,
     sentence3,
@@ -115,12 +113,14 @@ const WriteChapterCard = ({ route }) => {
             placeholder={'Title'}
             placeholderTextColor="rgba(0, 0, 0, 0.2)"
           />
+
           <Text isBold style={s.chapterText}>
             CHAPTER&nbsp;&nbsp;
             <Text isBold style={s.chapterNumberText}>
               {chapterIdx + 1}
             </Text>
           </Text>
+
           <View style={s.textInputSection}>
             <TextInput
               style={s.input}
@@ -190,6 +190,7 @@ const WriteChapterCard = ({ route }) => {
               onChangeText={handleChange('sentence10')}
             />
           </View>
+
           <View style={s.bottomSection}>
             <AddImage style={s.imageIcon} onPress={onPressCameraIcon} />
             <Button

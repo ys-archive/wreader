@@ -5,8 +5,6 @@ import {
   selectCurrentCategoryIdx,
   selectCurrentChapterIdx,
   selectIsCategorySelected,
-  selectCurrentCandidateIdx,
-  selectLastCandidateIdx,
 } from '#store/selectors';
 import { actionsSetLastCandidateIdx } from '#store/actions';
 
@@ -17,10 +15,8 @@ export const useUpdateLastCandidateIdx = chapterIdx => {
   const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
   const isCategorySelected = useStoreState(selectIsCategorySelected);
   const setLastCandidateIdx = useStoreActions(actionsSetLastCandidateIdx);
-  const currentCandidateIdx = useStoreState(selectCurrentCandidateIdx);
-  const lastCandidateIdx = useStoreState(selectLastCandidateIdx);
 
-  const chapterData = useChapterData();
+  const [chapterData] = useChapterData();
 
   useEffect(() => {
     if (!chapterData || !isCategorySelected) {
@@ -37,10 +33,11 @@ export const useUpdateLastCandidateIdx = chapterIdx => {
           chapter => chapter.categoryId - 5 === currentCategoryIdx,
         )?.length + 1;
 
-      console.log(
-        `[${chapterIdx}:${currentCategoryIdx}] ${maxLength} / ${chapterData.item.length}`,
-      );
+      // console.log(
+      //   `[${chapterIdx}:${currentCategoryIdx}] ${maxLength} / ${chapterData.item.length}`,
+      // );
 
+      // 현재 챕터의 마지막 후보 카드 idx 업데이트 (제한)
       setLastCandidateIdx(maxLength);
     }
   }, [

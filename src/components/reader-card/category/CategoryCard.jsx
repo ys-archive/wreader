@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { View, ImageBackground } from 'react-native';
 import { StyleSheet, Text } from '#components';
 import {
@@ -12,7 +12,6 @@ import { useStoreState } from 'easy-peasy';
 import {
   selectCurrentCategoryIdx,
   selectIsFirstCandidate,
-  // selectIsFirstChapter,
   selectCurrentChapterIdx,
 } from '#store/selectors';
 
@@ -66,7 +65,6 @@ const CategoryCard = ({ category, categoryIdx }) => {
             borderRadius: 20,
             overflow: 'hidden',
           },
-          // predicatedOpacity,
           predicatedPosition,
           predicatedScale,
         ]}

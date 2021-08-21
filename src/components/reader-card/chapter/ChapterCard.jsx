@@ -1,11 +1,5 @@
-import React, { useState, useCallback } from 'react';
-import {
-  StyleSheet,
-  View,
-  ImageBackground,
-  Image,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, ImageBackground, Image } from 'react-native';
 import { Text, Alert, Button } from '#components';
 import {
   widthPercentageToDP as wp,
@@ -18,7 +12,7 @@ import { Like, Reply } from '#components/icon';
 
 import { makeCategoryBGImagePath, dummyProfile } from '#constants/images';
 
-import { useUpdateLike } from '../../../contexts/chapterDataContext';
+import { useLikeUpdate } from '../../../contexts/chapterDataContext';
 
 import { useStoreState } from 'easy-peasy';
 import {
@@ -36,13 +30,7 @@ import { ChapterService } from '#services';
 const borderRadiusOutside = 20;
 const borderRadiusInside = 17;
 
-const ChapterCard = ({
-  chapterIdx,
-  data,
-  candidateIdx,
-  categoryTitle,
-  // isVisibleFromCategory,
-}) => {
+const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
   const [isCommentsOpen, setCommentsOpen] = useState(false);
   const chapterOrder = chapterIdx + 1;
 
@@ -50,8 +38,7 @@ const ChapterCard = ({
   const currentCandidateIdx = useStoreState(selectCurrentCandidateIdx);
   const isMovingChapterLock = currentCandidateIdx !== 0;
 
-  const updateLike = useUpdateLike();
-  const triggerUpdatingLike = useCallback(() => updateLike(prv => !prv), []);
+  const [_, updateLike] = useLikeUpdate();
 
   const isPreviousChapter = currentChapterIdx - 1 === chapterOrder;
   const isNextChapter = currentChapterIdx + 1 === chapterOrder;
@@ -161,7 +148,7 @@ const ChapterCard = ({
   const {
     id: chapterId, // 현재 챕터 Id
     categoryId,
-    _, // -> like
+    __, // -> like
     content,
     replyCount, // -> reply
     like_count: likeCount, // -> like
@@ -197,7 +184,7 @@ const ChapterCard = ({
       console.log('like');
     }
 
-    triggerUpdatingLike();
+    updateLike();
   };
 
   const onPressReply = () => {
