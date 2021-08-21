@@ -25,7 +25,7 @@ import {
 } from '#store/selectors';
 import CommentsModal from '#components/modals/CommentsModal';
 
-import { ChapterService } from '#services';
+import { ChapterService } from '../../../services';
 
 const borderRadiusOutside = 20;
 const borderRadiusInside = 17;
@@ -173,13 +173,15 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
       return;
     }
 
-    // console.log(userId, chapterId);
+    console.log('userId: ', userId, ', chapterId: ', chapterId);
 
     // 이미 좋아요 했음
     if (isLike === 1) {
       await ChapterService.DELETE_unlikeChapter(chapterId, userId);
       console.log('Unlike');
-    } else {
+    }
+
+    if (isLike === 0) {
       await ChapterService.POST_likeChapter(chapterId, userId);
       console.log('like');
     }

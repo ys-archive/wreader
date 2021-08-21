@@ -21,7 +21,7 @@ class ChapterService {
     return { data, status };
   }
 
-  static async PUT_updateChater(chapterId, content) {
+  static async PUT_updateChapter(chapterId, content) {
     const { status } = await axios.instance
       .put(`chapter/${chapterId}`, {
         content,
@@ -30,9 +30,9 @@ class ChapterService {
     return status;
   }
 
-  static async DELETE_deleteChapter(chapterId) {
+  static async DELETE_deleteChapter(chapterId, userId) {
     const { status } = await axios.instance
-      .delete(`chapter/${chapterId}`)
+      .delete(`chapter/${chapterId}/like`, { userId })
       .catch(console.error);
     return status;
   }
