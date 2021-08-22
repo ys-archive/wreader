@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { StyleSheet, View, ImageBackground, Image } from 'react-native';
 import { Text, Alert, Button } from '#components';
 import {
@@ -13,7 +13,6 @@ import { Like, Reply } from '#components/icon';
 import { makeCategoryBGImagePath, dummyProfile } from '#constants/images';
 
 import { useLikeUpdate } from '../../../../contexts/chapterDataContext';
-
 import { useStoreState } from 'easy-peasy';
 import {
   selectProfileLocalImagePath,
@@ -23,7 +22,6 @@ import {
   selectCurrentChapterIdx,
   selectCurrentCandidateIdx,
 } from '#store/selectors';
-// import CommentsModal from '#components/modals/CommentsModal';
 
 import { useChapterCardExposer_Chapter } from './useChapterCardExposer_Chapter';
 import { useChapterCardExposer_Category } from './useChapterCardExposer_Category';
@@ -250,7 +248,6 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
   );
 };
 
-// export default React.memo(ChapterCard);
 export default ChapterCard;
 
 const s = StyleSheet.create({
