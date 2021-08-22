@@ -109,7 +109,10 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
     setTimeout(() => updateLike(), 1500);
   }, [userId, chapterId]);
 
-  const onPressReply = () => nav.navigate(ScreenNames.MainComments);
+  const onPressReply = () =>
+    nav.navigate(ScreenNames.MainComments, {
+      chapterId,
+    });
 
   const onPressPostReply = () => {};
 
@@ -213,7 +216,7 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
               </View>
             </View>
 
-            <View style={s.bottomReplyPlacer}>
+            <View style={s.bottomReplyPlacer} onPress={onPressReply}>
               <Image
                 style={{
                   width: 24,
@@ -236,7 +239,8 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
               <Button
                 isBold
                 textStyle={s.replyPostText}
-                onPress={onPressPostReply}
+                onPress={() => {}}
+                // onPress={onPressReply}
               >
                 Post
               </Button>

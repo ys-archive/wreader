@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   View,
   SafeAreaView,
@@ -15,7 +15,7 @@ import {
 
 import { useNavigation } from '@react-navigation/native';
 // import * as ScreenNames from '../../navigators/ScreenNames';
-import { colors } from '../../constants';
+import { colors } from '../../../constants';
 import { dummyProfile } from '#constants/images';
 
 import { useStoreState } from 'easy-peasy';
@@ -23,27 +23,47 @@ import {
   selectUserId,
   selectProfileLocalImagePath,
   selectProfileImageUrl,
-} from '../../store/selectors';
+} from '../../../store/selectors';
+import { CommentsService } from '../../../services';
 
 import { useCommentsLogic } from './useCommentsLogic';
-import CommentItem_Me from './CommentItem_Me';
-import CommentItem_Other from './CommentItem_Other';
+import CommentItem_Me from '../comment-item/CommentItem_Me';
+import CommentItem_Other from '../comment-item/CommentItem_Other';
 
-import { data } from './Comments_DummyData';
+// import { data } from '../Comments_DummyData';
+import { useCommentForm } from './useCommentForm';
 
 const Comments = ({ route }) => {
   const nav = useNavigation();
   const myProfileLocalImagePath = useStoreState(selectProfileLocalImagePath);
   const myProfileImageUrl = useStoreState(selectProfileImageUrl);
   const userId = useStoreState(selectUserId);
-  // const data = useCommentsLogic(route, userId);
+
+  console.log('route (Comments): ', route);
+  const { chapterId } = route.params;
+
+  const [newComment, setNewComment] = useState('');
+  console.log(newComment);
+
+  const data = useCommentsLogic(chapterId, userId);
+  console.log(data);
+
+  const postNewComment = async () => {
+    console.log(chapterId, newComment, userId);
+    const status = await CommentsService.POST_createComment(
+      chapterId,
+      newComment,
+      userId,
+    );
+    console.log(status);
+  };
+
+  // const { contents } = values;
 
   const onCloseComment = () => {
     nav.goBack();
     console.log('댓글 닫기');
   };
-
-  const onPressPostReply = () => {};
 
   const renderComments = comments => {
     const { id, user_id: otherId, reply, userImg, usreNick } = comments.item;
@@ -79,11 +99,12 @@ const Comments = ({ route }) => {
       {/* 댓글들 */}
       <FlatList
         style={s.contentsSection}
-        data={data}
+        data={data.item}
         renderItem={renderComments}
         keyExtractor={item => item.id}
       />
 
+      {/* 새 댓글 섹션 */}
       <View style={s.writeCommentSection}>
         <Image
           style={{
@@ -101,10 +122,13 @@ const Comments = ({ route }) => {
         />
         <TextInput
           style={s.replyTextInput}
+          value={newComment}
+          // onBlur={handleBlur('contents')}
+          onChangeText={text => setNewComment(text)}
           placeholder="Add a comment ..."
           placeholderTextColor={colors.light.text2}
         />
-        <Button isBold textStyle={s.replyPostText} onPress={onPressPostReply}>
+        <Button isBold textStyle={s.replyPostText} onPress={postNewComment}>
           Post
         </Button>
       </View>
@@ -158,15 +182,16 @@ const s = StyleSheet.create({
     margin: 0,
     marginLeft: 10,
     paddingLeft: 3,
-    minWidth: wp('64.8%'),
-    maxWidth: wp('64.8%'),
+    minWidth: wp('62.8%'),
+    maxWidth: wp('62.8%'),
     borderColor: colors.light.ivory1,
   },
   replyPostText: {
-    position: 'relative',
-    right: 50,
-    top: 20,
+    // position: 'relative',
+    // right: 50,
+    // top: 20,
     fontSize: 12,
     color: colors.light.ivory1,
+    // zIndex: 50,
   },
 });

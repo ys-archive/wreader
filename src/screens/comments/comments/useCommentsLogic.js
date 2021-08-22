@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { CommentsService } from '../../services';
+import { CommentsService } from '../../../services';
 
-export const useCommentsLogic = ({ chapterId }, userId) => {
+export const useCommentsLogic = (chapterId, userId) => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
