@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useMemo } from 'react';
 import { View, SafeAreaView, FlatList } from 'react-native';
 import { StyleSheet, Text } from '#components';
 import { Cancel } from '#components/icon';
@@ -15,37 +15,66 @@ import { useStoreState } from 'easy-peasy';
 import { selectUserId } from '../../store/selectors';
 
 import { useCommentsLogic } from './useCommentsLogic';
+import CommentItem_Me from './CommentItem_Me';
+import CommentItem_Other from './CommentItem_Other';
+
+import { data } from './Comments_DummyData';
 
 const Comments = ({ route }) => {
   const nav = useNavigation();
   const userId = useStoreState(selectUserId);
-  const data = useCommentsLogic(route, userId);
+  // const data = useCommentsLogic(route, userId);
 
   const onCloseComment = () => {
     nav.goBack();
     console.log('댓글 닫기');
   };
 
-  const renderComments = useCallback(
-    () =>
-      ({ comment }) => {
-        const { id, user_id: otherId, reply } = comment;
+  // const renderComments = useMemo(
+  //   () =>
+  //     ({ comment }) => {
+  //       console.log(comment);
+  //       const { id, user_id: otherId, reply } = comment;
+  //       const { userImg, usreNick } = comment;
+  //       return (
+  //         <CommentItem_Other
+  //           key={id}
+  //           profileImage={userImg}
+  //           userName={usreNick}
+  //           contents={reply}
+  //         />
+  //       );
+  //       // if (otherId === userId) {
+  //       //   return <CommentItem_Me key={id} contents={reply} />;
+  //       // } else {
+  //       //   const { userImg, usreNick } = comment;
+  //       //   return (
+  //       //     <CommentItem_Other
+  //       //       key={id}
+  //       //       profileImage={userImg}
+  //       //       userName={usreNick}
+  //       //       contents={reply}
+  //       //     />
+  //       //   );
+  //       // }
+  //     },
+  //   [],
+  // );
 
-        if (otherId === userId) {
-          return <CommentItem_Me key={id} contents={reply} />;
-        } else {
-          const { userImg, usreNick } = comment;
-          return (
-            <CommentItem_Other
-              key={id}
-              profileImage={userImg}
-              userName={usreNick}
-              contents={reply}
-            />
-          );
-        }
-      },
-    [userId, data],
+  const renderComments = useMemo(
+    () => comments => {
+      console.log(comments.item);
+      const { id, reply, userImg, usreNick } = comments.item;
+      return (
+        <CommentItem_Other
+          key={id}
+          profileImage={userImg}
+          userName={usreNick}
+          contents={reply}
+        />
+      );
+    },
+    [],
   );
 
   return (
@@ -63,7 +92,7 @@ const Comments = ({ route }) => {
       />
 
       <FlatList
-        style={s.contentesSection}
+        style={s.contentsSection}
         data={data}
         renderItem={renderComments}
         keyExtractor={item => item.id}
@@ -88,5 +117,7 @@ const s = StyleSheet.create({
     marginTop: '3.1%',
     color: colors.light.ivory4,
   },
-  contentsSection: {},
+  contentsSection: {
+    flex: 1,
+  },
 });

@@ -111,15 +111,9 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
     setTimeout(() => updateLike(), 1500);
   }, [userId, chapterId]);
 
-  const onPressReply = () => {
-    // setCommentsOpen(prv => !prv);
-    nav.navigate(ScreenNames.MainComments);
-    console.log('댓글 열림 : ');
-  };
+  const onPressReply = () => nav.navigate(ScreenNames.MainComments);
 
-  const onPressPostReply = () => {
-    console.log('댓글 쓰기');
-  };
+  const onPressPostReply = () => {};
 
   return (
     <View style={s.root}>

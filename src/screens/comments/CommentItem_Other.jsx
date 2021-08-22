@@ -1,11 +1,12 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Image } from 'react-native';
 import { StyleSheet, Text } from '#components';
-import { Like, Unlike } from '../../components/icon';
+// import { Like, Unlike } from '../../components/icon';
 
 const CommentItem_Other = ({ profileImage, userName, contents }) => {
+  console.log(profileImage, userName, contents);
   return (
-    <View>
+    <View style={s.root}>
       <Image source={{ uri: profileImage }}></Image>
       <Text>{userName}</Text>
       <Text>{contents}</Text>
@@ -15,4 +16,8 @@ const CommentItem_Other = ({ profileImage, userName, contents }) => {
 
 export default CommentItem_Other;
 
-const s = StyleSheet.create({});
+const s = StyleSheet.create({
+  root: {
+    flex: 1,
+  },
+});

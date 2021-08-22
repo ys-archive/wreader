@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { StyleSheet, Text } from '#components';
-import { Like, Unlike } from '../../components/icon';
+// import { Like, Unlike } from '../../components/icon';
 
 const CommentItem_Me = ({ contents }) => {
   return (

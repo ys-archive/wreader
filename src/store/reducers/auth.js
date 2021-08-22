@@ -66,7 +66,7 @@ export default {
   }),
 
   setUserInfo: action((state, payload) => {
-    console.log(' setUserInfo() : ', payload);
+    // console.log('setUserInfo() : ', payload);
     state.model.info = {
       nick: payload.nick ?? '',
       instagram: payload.instagram ?? '',
