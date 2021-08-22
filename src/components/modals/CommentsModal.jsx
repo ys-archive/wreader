@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { View, Modal } from 'react-native';
+import React from 'react';
+import { View, Modal, SafeAreaView } from 'react-native';
 import { StyleSheet, LocalImage, Button, Text } from '../';
 import {
   widthPercentageToDP as wp,
@@ -13,7 +13,6 @@ const CommentsModal = ({
   commentsCount,
   commentsData,
 }) => {
-  
   const onCloseModal = () => {
     setCommentsOpen(false);
   };
@@ -25,7 +24,7 @@ const CommentsModal = ({
       visible={isCommentsOpen}
       onRequestClose={() => setCommentsOpen(false)}
     >
-      <View style={s.root}>
+      <SafeAreaView style={s.root}>
         <View style={s.inside}>
           <View style={s.topSection}>
             <Text isBold style={s.commentsCountPlaceholderText}>
@@ -47,7 +46,7 @@ const CommentsModal = ({
             // commentsData && commentsData?
           }
         </View>
-      </View>
+      </SafeAreaView>
     </Modal>
   );
 };

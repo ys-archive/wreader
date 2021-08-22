@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { useNavigation } from '@react-navigation/native';
-import * as ScreenNames from '../../../navigators/ScreenNames';
+import * as ScreenNames from '#navigators/ScreenNames';
 
 import { useStoreState } from 'easy-peasy';
 import {

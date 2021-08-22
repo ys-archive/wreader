@@ -23,6 +23,7 @@ import Person from './Person';
 import Reply from './Reply';
 import Plus from './Plus';
 import Photo from './Photo';
+import Unlike from './Unlike';
 
 export {
   AddImage,
@@ -50,4 +51,5 @@ export {
   Reply,
   Plus,
   Photo,
+  Unlike
 };

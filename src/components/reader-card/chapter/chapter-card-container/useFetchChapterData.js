@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { ChapterService } from '../../../services';
+import { ChapterService } from '#services';
 
 import { useStoreState } from 'easy-peasy';
 import { selectCurrentChapterIdx, selectUserId } from '#store/selectors';
@@ -8,7 +8,7 @@ import {
   useChapterData,
   useLikeUpdate,
   useWriteNewCard,
-} from '../../../contexts/chapterDataContext';
+} from '#contexts/chapterDataContext';
 
 export const useFetchChapterData = () => {
   const currentChapterIdx = useStoreState(selectCurrentChapterIdx);

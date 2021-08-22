@@ -8,7 +8,7 @@ import {
 } from '#store/selectors';
 import { actionsSetLastCandidateIdx } from '#store/actions';
 
-import { useChapterData } from '../../../contexts/chapterDataContext';
+import { useChapterData } from '../../../../contexts/chapterDataContext';
 
 export const useUpdateLastCandidateIdx = chapterIdx => {
   const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);

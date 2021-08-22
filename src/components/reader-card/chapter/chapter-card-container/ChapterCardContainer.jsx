@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { StyleSheet } from '#components';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
-import ChapterCard from './ChapterCard';
+import ChapterCard from '../chapter-card/ChapterCard';
 
 import { useStoreState } from 'easy-peasy';
 import {
@@ -11,7 +11,7 @@ import {
   selectIsCategorySelected,
 } from '#store/selectors';
 
-import { useChapterData } from '../../../contexts/chapterDataContext';
+import { useChapterData } from '../../../../contexts/chapterDataContext';
 
 import { useFetchChapterData } from './useFetchChapterData';
 import { useUpdateLastCandidateIdx } from './useUpdateLastCandidateIdx';

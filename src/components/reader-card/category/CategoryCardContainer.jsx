@@ -3,7 +3,7 @@ import { View, Dimensions } from 'react-native';
 import { StyleSheet, Text } from '#components';
 
 import CategoryCard from './CategoryCard';
-import ChapterCardContainer from '../chapter/ChapterCardContainer';
+import ChapterCardContainer from '../chapter/chapter-card-container/ChapterCardContainer';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 

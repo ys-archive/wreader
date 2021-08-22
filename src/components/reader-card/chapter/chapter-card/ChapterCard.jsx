@@ -12,7 +12,7 @@ import { Like, Reply } from '#components/icon';
 
 import { makeCategoryBGImagePath, dummyProfile } from '#constants/images';
 
-import { useLikeUpdate } from '../../../contexts/chapterDataContext';
+import { useLikeUpdate } from '../../../../contexts/chapterDataContext';
 
 import { useStoreState } from 'easy-peasy';
 import {
@@ -23,18 +23,20 @@ import {
   selectCurrentChapterIdx,
   selectCurrentCandidateIdx,
 } from '#store/selectors';
-import CommentsModal from '#components/modals/CommentsModal';
+// import CommentsModal from '#components/modals/CommentsModal';
 
 import { useChapterCardExposer_Chapter } from './useChapterCardExposer_Chapter';
 import { useChapterCardExposer_Category } from './useChapterCardExposer_Category';
 
-import { ChapterService } from '../../../services';
+import { ChapterService } from '../../../../services';
+import * as ScreenNames from '../../../../navigators/ScreenNames';
+import { useNavigation } from '@react-navigation/native';
 
 const borderRadiusOutside = 20;
 const borderRadiusInside = 17;
 
 const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
-  const [isCommentsOpen, setCommentsOpen] = useState(false);
+  const nav = useNavigation();
 
   const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
   const currentCandidateIdx = useStoreState(selectCurrentCandidateIdx);
@@ -42,6 +44,7 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
 
   const [_, updateLike] = useLikeUpdate();
 
+  // 챕터간 이전/다음 노출을 위한 스타일링 hook
   const chapterOrder = chapterIdx + 1;
   const {
     predicatedPositionBetweenChapters,
@@ -55,6 +58,7 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
     currentChapterIdx - 1 === chapterOrder,
   );
 
+  // 챕터 내 후보간 이전/다음 노출을 위한 스타일링 hook
   const candidateOrder = candidateIdx + 1;
   const { predicatedPositionBetweenCandidates } =
     useChapterCardExposer_Category(
@@ -108,8 +112,9 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
   }, [userId, chapterId]);
 
   const onPressReply = () => {
-    setCommentsOpen(prv => !prv);
-    console.log('댓글 열림 : ', isCommentsOpen);
+    // setCommentsOpen(prv => !prv);
+    nav.navigate(ScreenNames.MainComments);
+    console.log('댓글 열림 : ');
   };
 
   const onPressPostReply = () => {
@@ -208,10 +213,10 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
 
               <View style={s.replySection}>
                 <Reply onPress={onPressReply} />
-                <CommentsModal
+                {/* <CommentsModal
                   setCommentsOpen={setCommentsOpen}
                   isCommentsOpen={isCommentsOpen}
-                />
+                /> */}
                 <Text style={s.replyText}>{replyCount}</Text>
               </View>
             </View>

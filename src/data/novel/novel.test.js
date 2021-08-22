@@ -1,1 +1,0 @@
-describe('novel test suite', () => {});
