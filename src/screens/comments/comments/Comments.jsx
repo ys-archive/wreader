@@ -5,6 +5,7 @@ import {
   KeyboardAvoidingView,
   FlatList,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import { StyleSheet, Text, TextInput, Button } from '#components';
 import { Cancel } from '#components/icon';
@@ -43,10 +44,19 @@ const Comments = ({ route }) => {
   const { chapterId } = route.params;
 
   const [newComment, setNewComment] = useState('');
-  console.log(newComment);
+  const [isNewCommentWritten, u1] = useState(false);
+  const onWriteNewComment = () => u1(prv => !prv);
 
-  const data = useCommentsLogic(chapterId, userId);
-  console.log(data);
+  const data = useCommentsLogic(chapterId, isNewCommentWritten);
+  console.log(data.item);
+
+  if (!data) {
+    return (
+      <View>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
 
   const postNewComment = async () => {
     console.log(chapterId, newComment, userId);
@@ -55,7 +65,11 @@ const Comments = ({ route }) => {
       newComment,
       userId,
     );
+    if (status === 200) {
+      onWriteNewComment();
+    }
     console.log(status);
+    setNewComment('');
   };
 
   // const { contents } = values;
@@ -67,7 +81,8 @@ const Comments = ({ route }) => {
 
   const renderComments = comments => {
     const { id, user_id: otherId, reply, userImg, usreNick } = comments.item;
-    if (otherId === userId) {
+
+    if (+otherId === userId) {
       return <CommentItem_Me key={id} contents={reply} />;
     } else {
       return (
@@ -187,9 +202,9 @@ const s = StyleSheet.create({
     borderColor: colors.light.ivory1,
   },
   replyPostText: {
-    // position: 'relative',
+    position: 'relative',
     // right: 50,
-    // top: 20,
+    top: 20,
     fontSize: 12,
     color: colors.light.ivory1,
     // zIndex: 50,
