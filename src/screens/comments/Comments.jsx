@@ -77,14 +77,12 @@ const Comments = ({ route }) => {
       />
 
       {/* 댓글들 */}
-      <View style={s.contentsPlacer}>
-        <FlatList
-          style={s.contentsSection}
-          data={data}
-          renderItem={renderComments}
-          keyExtractor={item => item.id}
-        />
-      </View>
+      <FlatList
+        style={s.contentsSection}
+        data={data}
+        renderItem={renderComments}
+        keyExtractor={item => item.id}
+      />
 
       <View style={s.writeCommentSection}>
         <Image
@@ -130,20 +128,19 @@ const s = StyleSheet.create({
     marginTop: hp('3.1%'),
     color: colors.light.ivory4,
   },
-  contentsPlacer: {
-    height: hp('100%'),
-  },
+  //   // height: hp('100%'),
+  // },
   contentsSection: {
     flex: 0,
+    marginTop: hp('5.7%'),
     marginHorizontal: '9.7%',
-    height: hp('100%'),
-    marginTop: hp('4.6%'),
+    height: hp('90%'),
   },
   writeCommentSection: {
     flexDirection: 'row',
 
-    position: 'absolute',
-    bottom: 0,
+    // position: 'absolute',
+    // bottom: 0,
 
     backgroundColor: colors.light.ivory5,
 
