@@ -11,13 +11,14 @@ import {
 } from '#store/actions';
 import { selectCurrentCategoryIdx } from '#store/selectors';
 
-import { useGetSWR, useAutoLogin } from '#hooks';
+import { useGetSWR, useAutoLogin } from '../hooks';
 
 import EventModal from '#components/modals/EventModal';
 import CategoryCardContainer from '../components/reader-card/category/CategoryCardContainer';
 import Reader from './reader/Reader';
 
 import { Logo, Sort, Menu } from '#components/icon';
+import { useLikeUpdate } from '#contexts/chapterDataContext';
 
 const Main = () => {
   const nav = useNavigation();
@@ -48,7 +49,7 @@ const Main = () => {
     // 마지막 카테고리 & 챕터 갯수 갱신
     setLastCategoryIdx(totalCategoryCount);
     setLastChapterIdx(totalChapterCount);
-  });
+  }, [currentCategoryIdx, rootData]);
 
   const onPressSortIcon = () => {
     console.log('정렬 아이콘');

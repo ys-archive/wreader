@@ -107,7 +107,7 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
     }
 
     setTimeout(() => updateLike(), 1500);
-  }, [userId, chapterId]);
+  }, [isLoggedIn, userId, chapterId]);
 
   const onPressReply = () =>
     nav.navigate(ScreenNames.MainComments, {

@@ -1,8 +1,7 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   SafeAreaView,
-  KeyboardAvoidingView,
   FlatList,
   Image,
   ActivityIndicator,
@@ -16,6 +15,7 @@ import {
 
 import { useNavigation } from '@react-navigation/native';
 // import * as ScreenNames from '../../navigators/ScreenNames';
+
 import { colors } from '../../../constants';
 import { dummyProfile } from '#constants/images';
 
@@ -31,24 +31,20 @@ import { useCommentsLogic } from './useCommentsLogic';
 import CommentItem_Me from '../comment-item/CommentItem_Me';
 import CommentItem_Other from '../comment-item/CommentItem_Other';
 
-// import { data } from '../Comments_DummyData';
-import { useCommentForm } from './useCommentForm';
-
 const Comments = ({ route }) => {
   const nav = useNavigation();
   const myProfileLocalImagePath = useStoreState(selectProfileLocalImagePath);
   const myProfileImageUrl = useStoreState(selectProfileImageUrl);
   const userId = useStoreState(selectUserId);
 
-  console.log('route (Comments): ', route);
   const { chapterId } = route.params;
 
   const [newComment, setNewComment] = useState('');
   const [isNewCommentWritten, u1] = useState(false);
+
   const onWriteNewComment = () => u1(prv => !prv);
 
   const data = useCommentsLogic(chapterId, isNewCommentWritten);
-  console.log(data.item);
 
   if (!data) {
     return (
@@ -59,25 +55,22 @@ const Comments = ({ route }) => {
   }
 
   const postNewComment = async () => {
-    console.log(chapterId, newComment, userId);
     const status = await CommentsService.POST_createComment(
       chapterId,
       newComment,
       userId,
     );
+
     if (status === 200) {
+      // 성공했으니깐 다시 fetch
       onWriteNewComment();
     }
-    console.log(status);
+
+    // 새 댓글 입력 후 입력창 비우기
     setNewComment('');
   };
 
-  // const { contents } = values;
-
-  const onCloseComment = () => {
-    nav.goBack();
-    console.log('댓글 닫기');
-  };
+  const onCloseComment = () => nav.goBack();
 
   const renderComments = comments => {
     const { id, user_id: otherId, reply, userImg, usreNick } = comments.item;
@@ -104,6 +97,7 @@ const Comments = ({ route }) => {
           COMMENTS
         </Text>
       </View>
+
       {/* 뒤로 가기 */}
       <Cancel
         onPress={onCloseComment}
@@ -135,14 +129,15 @@ const Comments = ({ route }) => {
               : dummyProfile
           }
         />
+
         <TextInput
           style={s.replyTextInput}
           value={newComment}
-          // onBlur={handleBlur('contents')}
           onChangeText={text => setNewComment(text)}
           placeholder="Add a comment ..."
           placeholderTextColor={colors.light.text2}
         />
+
         <Button isBold textStyle={s.replyPostText} onPress={postNewComment}>
           Post
         </Button>
