@@ -16,7 +16,7 @@ const SigninAutoLogin = () => {
 
   useEffect(() => {
     (async () => {
-      console.log(SecureStore);
+      // console.log(SecureStore);
       const isAutoLogin = await SecureStore.getItemAsync('isAutoLogin');
       console.log('isAutoLogin: ', isAutoLogin);
       setAutoLogin(isAutoLogin === 'true' ? true : false);

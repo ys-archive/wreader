@@ -10,7 +10,7 @@ const Me = ({
   style = {},
   iconStyle = {},
   onPress = () => {
-    console.log('Pressed!');
+    // console.log('Pressed!');
   },
 }) => (
   <TouchableOpacity onPress={onPress} style={style}>

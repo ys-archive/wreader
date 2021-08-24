@@ -9,8 +9,6 @@ export const useImagePicker = (
   widthRatio = 4,
   heightRatio = 3,
 ) => {
-  const [imageUri, setImageUri] = useState(null);
-
   useEffect(() => {
     (async function requestMediaLibraryPermission() {
       if (
@@ -39,24 +37,14 @@ export const useImagePicker = (
     });
 
     if (!result.cancelled) {
-      console.log(result);
       const { uri } = result;
-
-      if (uploadLocalImagePath && typeof uploadLocalImagePath === 'function') {
-        await uploadLocalImagePath(uri);
-        setImageUri(uri);
-      }
-
-      if (uploadImageFile && typeof uploadImageFile === 'function') {
-        const response = await fetch(uri);
-        const blob = await response.blob();
-        await uploadImageFile(blob);
-      }
+      // console.log('result: ', uri);
+      // await uploadLocalImagePath(uri);
+      const response = await fetch(uri);
+      const blob = await response.blob();
+      await uploadImageFile(blob);
     }
   };
 
-  return {
-    pickImage,
-    imageUri,
-  };
+  return pickImage;
 };

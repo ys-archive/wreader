@@ -48,7 +48,7 @@ export const useWriteChapterCardForm = (
     const sentences = Object.values(values).reduce(
       (prv, cur) => `${prv}${cur}`,
     );
-    console.log(sentences);
+    // console.log(sentences);
     const status = await ChapterService.POST_createChapter(
       userId,
       currentChapterIdx,

@@ -8,9 +8,9 @@ import { useGetSWR } from '#hooks';
 class UserService {
   static async POST_registerUserProfilePhoto(userId, path) {
     console.log(`register User Profile Photo @ ${path}`);
-    const { data, status } = await instance
-      .post(`user/img/${userId}`, { path })
-      .catch(console.error);
+    const { data, status } = await instance.post(`user/img/${userId}`, {
+      path,
+    });
     const { code } = data;
     return code;
   }

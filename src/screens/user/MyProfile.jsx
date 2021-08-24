@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, SafeAreaView, Image } from 'react-native';
 // import { KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
 import { StyleSheet, Text } from '#components';
@@ -21,10 +21,10 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-import { useProfileImageLoader } from '#hooks';
+import { useProfileImageLoader } from '../../hooks';
 
 import { useStoreState } from 'easy-peasy';
-import { selectUserInfo } from '#store/selectors';
+import { selectUserInfo, selectProfileImageUrl } from '../../store/selectors';
 
 const MyProfile = () => {
   const nav = useNavigation();
@@ -37,18 +37,14 @@ const MyProfile = () => {
     nav.navigate(ScreenNames.MyProfileEdit);
   };
 
-  const [defaultUri, setDefaultUri] = useState('');
-  useProfileImageLoader(setDefaultUri);
+  useProfileImageLoader();
 
+  const uri = useStoreState(selectProfileImageUrl);
   const userInfo = useStoreState(selectUserInfo);
-  console.log(userInfo);
+  // console.log(userInfo);
   if (!userInfo) return null;
 
   const { intro, facebook, instagram, nick } = userInfo;
-  // const nick = userInfo !== null && userInfo.nick ? userInfo?.nick : 'SIGN IN';
-
-  // 프로필 이미지 로드
-
   return (
     <SafeAreaView style={s.root}>
       <View style={s.placer}>
@@ -56,14 +52,14 @@ const MyProfile = () => {
         <Edit2 onPress={onPressEditIcon} style={{ zIndex: 50 }} />
         <View style={s.filler} />
         <View style={s.topSection}>
-          {defaultUri ? (
+          {uri ? (
             <Image
               style={{
-                maxWidth: wp('55.6%'),
-                maxHeight: 230,
+                width: wp('55.6%'),
+                height: 230,
                 borderRadius: 200,
               }}
-              source={{ uri: defaultUri }}
+              source={{ uri }}
             />
           ) : (
             // <Person iconStyle={{ width: wp('55.6%'), height: 230, borderRadius: 50 }} />

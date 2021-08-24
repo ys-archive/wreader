@@ -74,7 +74,7 @@ const SigninForms = () => {
 
       if ((await SecureStore.getItemAsync('isAutoLogin')) === 'true') {
         await StorageService.saveSigninInfo(email, password);
-        console.log('Auto Login + 데이터 등록됨: ', email, password);
+        // console.log('Auto Login + 데이터 등록됨: ', email, password);
       }
 
       nav.navigate(ScreenNames.Main);

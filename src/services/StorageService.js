@@ -7,7 +7,7 @@ class StorageService {
     // const isAutoLogin = await AsyncStorage.getItem('isAutoLogin');
 
     const isAutoLogin = await SecureStore.getItemAsync('isAutoLogin');
-    console.log('isAutoLogin: ', isAutoLogin === 'false' ? 'true' : 'false');
+    // console.log('isAutoLogin: ', isAutoLogin === 'false' ? 'true' : 'false');
     await SecureStore.setItemAsync(
       'isAutoLogin',
       isAutoLogin === 'false' ? 'true' : 'false',

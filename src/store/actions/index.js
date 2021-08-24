@@ -75,3 +75,4 @@ export const actionsSetProfileLocalImagePath = actions =>
   actions.image.setProfileLocalImagePath;
 export const actionsSetProfileImageUrl = actions =>
   actions.image.setProfileImageUrl;
+export const actionsCompleteUpload = actions => actions.image.completeUpload;

@@ -7,7 +7,6 @@ import { Text } from './RN-components/Text';
 import { RenderError } from './RenderError';
 import { RemoteImage } from './RN-components/RemoteImage';
 import { LocalImage } from './RN-components/LocalImage';
-import { ImagePicker } from './RN-components/ImagePicker';
 import { Alert } from './alert/Alert';
 import { AlertWithValue } from './alert/AlertWithValue';
 
@@ -21,7 +20,6 @@ export {
   RenderError,
   RemoteImage,
   LocalImage,
-  ImagePicker,
   Alert,
   AlertWithValue,
 };

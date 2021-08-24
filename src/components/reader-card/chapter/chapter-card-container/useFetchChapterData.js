@@ -26,7 +26,6 @@ export const useFetchChapterData = () => {
       );
 
       if (data) {
-        console.log(data);
         setChapterData(data);
       }
     }

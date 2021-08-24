@@ -44,6 +44,7 @@ const s = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    height: '100%',
     backgroundColor: colors.light.background,
   },
 });

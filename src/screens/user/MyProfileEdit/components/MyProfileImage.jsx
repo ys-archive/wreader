@@ -6,13 +6,14 @@ import { StyleSheet } from '#components';
 import { Photo } from '#components/icon';
 import { colors } from '#constants';
 
-import { useImagePicker, useProfileImageLoader } from '#hooks';
+import { useImagePicker, useProfileImageLoader } from '../../../../hooks';
 
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import {
+  actionsCompleteUpload,
   actionsSetProfileImageUrl,
-  actionsSetProfileLocalImagePath,
-} from '#store/actions';
+  // actionsSetProfileLocalImagePath,
+} from '../../../../store/actions';
 
 import {
   widthPercentageToDP as wp,
@@ -20,58 +21,61 @@ import {
 } from 'react-native-responsive-screen';
 
 import { selectUserId } from '#store/selectors';
-import { UserService } from '#services';
+import { UserService } from '../../../../services';
 import {
-  uploadLocalImagePath,
+  // uploadLocalImagePath,
   uploadImageFile,
 } from './ProfileImageFunctionalities';
+import { selectProfileImageUrl } from '../../../../store/selectors';
 
 const uploadDirName = 'profileImage';
 
 const MyProfileImage = () => {
   const userId = useStoreState(selectUserId);
 
-  const [isUploaded, completeUpload] = useState(false);
-  const [defaultUri, setDefaultUri] = useState('');
   const setProfileImageUrl = useStoreActions(actionsSetProfileImageUrl);
-  const setProfileLocalImagePath = useStoreActions(
-    actionsSetProfileLocalImagePath,
-  );
+  const completeUpload = useStoreActions(actionsCompleteUpload);
+  const uri = useStoreState(selectProfileImageUrl);
+  // const setProfileLocalImagePath = useStoreActions(
+  //   actionsSetProfileLocalImagePath,
+  // );
 
   // 프로필 이미지 로드
-  useProfileImageLoader(setDefaultUri);
+  useProfileImageLoader();
 
-  const { pickImage, imageUri: uploadedImageUri } = useImagePicker(
-    // 로컬 이미지 uri 저장 콜백
+  const pickImage = useImagePicker(
     async uri => {
-      setProfileLocalImagePath(await uploadLocalImagePath(uploadDirName, uri));
+      // 로컬 이미지 uri 저장 콜백
+      // setProfileLocalImagePath(await uploadLocalImagePath(uploadDirName, uri));
     },
-    // 이미지 download url 저장 콜백
     async blob => {
+      // 이미지 download url 저장 콜백
       // 이미지 원본 먼저 업로드
       const downloadUrl = await uploadImageFile(uploadDirName, blob);
 
       // 이미지 원본을 스토리지 저장 후 post 로 유저 정보로 전송
       await UserService.POST_registerUserProfilePhoto(userId, downloadUrl);
       setProfileImageUrl(downloadUrl);
+      completeUpload();
     },
-    16,
-    9,
   );
 
   const pickNewProfileImage = async () => {
     // Image Picker 를 통해서 이미지 선택
     await pickImage();
-    completeUpload(true);
   };
+
+  // console.log('default Url ( edit image): ', defaultProfileImgUri);
 
   return (
     <View style={s.root}>
-      {defaultUri ? (
+      {uri ? (
         <Image
-          // style={{ width: wp('80%'), height: hp('35%'), borderRadius: 200 }}
-          style={{ width: wp('33.3%'), height: hp('15%'), borderRadius: 200 }}
-          source={{ uri: !isUploaded ? defaultUri : uploadedImageUri }}
+          // style={{ width: wp('55%'), height: hp('25%'), borderRadius: 200 }}
+          style={{ width: wp('30%'), height: hp('15%'), borderRadius: 200 }}
+          source={{
+            uri,
+          }}
         />
       ) : (
         <View

@@ -63,7 +63,7 @@ const Signup2Form = ({ route }) => {
 
   const checkNickNameValid = async () => {
     const code = await AuthService.GET_CheckUserNickExists(nickname);
-    console.log(code);
+
     if (code === 1) {
       Alert('Available user name');
     }

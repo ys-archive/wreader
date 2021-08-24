@@ -18,7 +18,8 @@ import CategoryCardContainer from '../components/reader-card/category/CategoryCa
 import Reader from './reader/Reader';
 
 import { Logo, Sort, Menu } from '#components/icon';
-import { useLikeUpdate } from '#contexts/chapterDataContext';
+// import { useLikeUpdate } from '#contexts/chapterDataContext';
+// import { ChapterDataProvider } from '../contexts/chapterDataContext';
 
 const Main = () => {
   const nav = useNavigation();
@@ -89,8 +90,7 @@ const Main = () => {
       <Logo />
       <Sort onPress={onPressSortIcon} />
       <Menu onPress={onPressMenuIcon} />
-
-      {/* <EventModal /> */}
+      <EventModal />
       <Reader>
         <CategoryCardContainer rootData={rootData.item} />
       </Reader>

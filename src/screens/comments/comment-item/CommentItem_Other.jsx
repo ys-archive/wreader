@@ -9,7 +9,7 @@ import {
 } from 'react-native-responsive-screen';
 
 const CommentItem_Other = ({ profileImage, userName, contents }) => {
-  console.log(profileImage, userName, contents);
+  // console.log(profileImage, userName, contents);
   return (
     <View style={s.root}>
       <View style={s.profile}>

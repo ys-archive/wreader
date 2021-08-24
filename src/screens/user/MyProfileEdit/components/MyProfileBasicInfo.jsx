@@ -81,7 +81,7 @@ const MyProfileBasicInfo = () => {
   const { instagramUrl, facebookUrl, introduction } = values;
 
   useEffect(() => {
-    console.log(userInfo);
+    // console.log(userInfo);
     if (!userInfo) {
       return;
     }
@@ -144,7 +144,7 @@ const MyProfileBasicInfo = () => {
             </>
           ) : (
             <Text style={{ ...s.infoText, ...s.infoTextSecond }}>
-              {instagram || 'NONE'}
+              {facebookUrl || 'NONE'}
             </Text>
           )}
         </View>

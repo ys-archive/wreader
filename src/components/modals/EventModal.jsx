@@ -12,11 +12,11 @@ import { actionsIgnoreEventModalFor1day } from '#store/actions';
 const EventModal = ({ eventImageUrl }) => {
   const [modalVisible, setModalVisible] = useState(true);
 
-  const ignoreEventModalFor1day = useStoreActions(actionsIgnoreEventModalFor1day);
+  // const ignoreEventModalFor1day = useStoreActions(actionsIgnoreEventModalFor1day);
 
   const onCloseModalFor1day = () => {
     // TODO: 하루간 보지 않기 세부 구현
-    ignoreEventModalFor1day();
+    // ignoreEventModalFor1day();
     setModalVisible(false);
   };
 

@@ -45,19 +45,10 @@ export const selectIsCategorySelected = state =>
 export const selectIsCandidateSelected = state =>
   state.reader.model.isCandidateSelected;
 
-export const selectSwipeThresholdHorizontal = state =>
-  state.reader.model.swipeThresholdHorizontal;
-export const selectSwipeThresholdVertical = state =>
-  state.reader.model.swipeThresholdVertical;
-
-export const selectHasOnRight = state => state.reader.model.hasOnRight;
-export const selectHasOnLeft = state => state.reader.model.hasOnLeft;
-export const selectHasOnUp = state => state.reader.model.hasOnUp;
-export const selectHasOnDown = state => state.reader.model.hasOnDown;
 
 // persistence
-export const selectIsAutoLogin = state => state.persistence.model.isAutoLogin;
-export const selectIsDueDateOver = state => stat.persistence.isDueDateOver;
+// export const selectIsAutoLogin = state => state.persistence.model.isAutoLogin;
+// export const selectIsDueDateOver = state => stat.persistence.isDueDateOver;
 
 // preference
 
@@ -66,3 +57,4 @@ export const selectIsDueDateOver = state => stat.persistence.isDueDateOver;
 export const selectProfileLocalImagePath = state =>
   state.image.model.profileLocalImagePath;
 export const selectProfileImageUrl = state => state.image.model.profileImageUrl;
+export const selectIsImageUploaded = state => state.image.model.isImageUploaded;

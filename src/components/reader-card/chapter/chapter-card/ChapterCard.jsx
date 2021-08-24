@@ -93,28 +93,20 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
       return;
     }
 
-    console.log('userId: ', userId, ', chapterId: ', chapterId);
-
     // 이미 좋아요 했음
     if (isLike === 1) {
       await ChapterService.DELETE_unlikeChapter(chapterId, userId);
-      console.log('Unlike');
-    }
-
-    if (isLike === 0) {
+    } else {
       await ChapterService.POST_likeChapter(chapterId, userId);
-      console.log('like');
     }
 
-    setTimeout(() => updateLike(), 1500);
+    updateLike();
   }, [isLoggedIn, userId, chapterId]);
 
   const onPressReply = () =>
     nav.navigate(ScreenNames.MainComments, {
       chapterId,
     });
-
-  const onPressPostReply = () => {};
 
   return (
     <View style={s.root}>
@@ -208,10 +200,6 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
 
               <View style={s.replySection}>
                 <Reply onPress={onPressReply} />
-                {/* <CommentsModal
-                  setCommentsOpen={setCommentsOpen}
-                  isCommentsOpen={isCommentsOpen}
-                /> */}
                 <Text style={s.replyText}>{replyCount}</Text>
               </View>
             </View>
@@ -236,12 +224,7 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
                 placeholder="Add a comment ..."
                 placeholderTextColor={colors.light.text2}
               />
-              <Button
-                isBold
-                textStyle={s.replyPostText}
-                onPress={() => {}}
-                // onPress={onPressReply}
-              >
+              <Button isBold textStyle={s.replyPostText} onPress={() => {}}>
                 Post
               </Button>
             </View>
@@ -261,7 +244,6 @@ const s = StyleSheet.create({
     minHeight: hp('100%'),
     maxHeight: hp('100%'),
     backgroundColor: colors.light.primaryTransparent,
-    // flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },

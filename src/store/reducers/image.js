@@ -3,14 +3,16 @@ import { action } from 'easy-peasy';
 const model = {
   profileLocalImagePath: '',
   profileImageUrl: '',
+  isImageUploaded: false,
 };
 
 export default {
   model,
 
   reset: action(state => {
-    state.image.model.profileLocalImagePath = '';
-    state.image.mosdel.profileImageUrl = '';
+    state.model.profileLocalImagePath = '';
+    state.model.profileImageUrl = '';
+    state.model.isImageUploaded = false;
   }),
 
   setProfileLocalIamgePath: action((state, payload) => {
@@ -20,7 +22,7 @@ export default {
       );
     }
 
-    state.image.model.profileLocalImagePath = payload;
+    state.model.profileLocalImagePath = payload;
   }),
 
   setProfileImageUrl: action((state, payload) => {
@@ -28,6 +30,10 @@ export default {
       throw new Error('setProfileImageUrl 는 반드시 string 이어야 합니다.');
     }
 
-    state.image.model.profileImageUrl = payload;
+    state.model.profileImageUrl = payload;
   }),
+
+  completeUpload: action(state => {
+    state.model.isImageUploaded = !state.model.isImageUploaded;
+  })
 };

@@ -20,7 +20,7 @@ import {
   selectIsLoggedIn,
   selectUserInfo,
   selectProfileImageUrl,
-  selectProfileLocalImagePath,
+  // selectProfileLocalImagePath,
 } from '#store/selectors';
 import { actionsLogout } from '#store/actions';
 import { useProfileImageLoader } from '#hooks';
@@ -29,15 +29,15 @@ const DrawerTop = props => {
   const { navigation: nav } = props;
   const isLoggedIn = useStoreState(selectIsLoggedIn);
   const userInfo = useStoreState(selectUserInfo);
+
   const nick = userInfo !== null && userInfo.nick ? userInfo?.nick : 'SIGN IN';
 
   const logout = useStoreActions(actionsLogout);
   const profileImageUrl = useStoreState(selectProfileImageUrl);
-  const profileLocalImagePath = useStoreState(selectProfileLocalImagePath);
+  // const profileLocalImagePath = useStoreState(selectProfileLocalImagePath);
 
-  // const [defaultUri, setDefaultUri] = useState('');
   // 프로필 이미지 로드
-  // useProfileImageLoader(setDefaultUri);
+  useProfileImageLoader();
 
   const onPressProfileImage = () => {
     isLoggedIn
@@ -46,7 +46,6 @@ const DrawerTop = props => {
   };
 
   const onPressUserName = () => {
-    console.log('user name clicked!');
     if (nick === 'SIGN IN') {
       nav.navigate(ScreenNames.SigninStack);
     }
@@ -64,11 +63,11 @@ const DrawerTop = props => {
           />
 
           {/* 프로필 아이콘 or 프로필 이미지 */}
-          {profileImageUrl || profileLocalImagePath ? (
+          {profileImageUrl ? (
             <TouchableOpacity onPress={onPressProfileImage}>
               <Image
                 style={{ width: 45, height: 45, borderRadius: 50 }}
-                source={{ uri: profileImageUrl || profileLocalImagePath }}
+                source={{ uri: profileImageUrl }}
               />
             </TouchableOpacity>
           ) : (
