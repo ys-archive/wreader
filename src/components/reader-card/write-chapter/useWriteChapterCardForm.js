@@ -1,6 +1,10 @@
-import { AlertWithValue } from '#components';
+// import { AlertWithValue } from '#components';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+
+import { useStoreState } from 'easy-peasy';
+import { selectWriteCardImageUrl } from '../../../store/selectors';
+
 import { ChapterService } from '../../../services';
 
 const initialValues = {
@@ -44,16 +48,18 @@ export const useWriteChapterCardForm = (
   currentChapterIdx,
   afterFormSubmitted,
 ) => {
+  const writeCardImageUrl = useStoreState(selectWriteCardImageUrl);
+
   const onSubmit = async values => {
     const sentences = Object.values(values).reduce(
       (prv, cur) => `${prv}${cur}`,
     );
-    // console.log(sentences);
     const status = await ChapterService.POST_createChapter(
       userId,
       currentChapterIdx,
       sentences,
       currentCategoryIdx + 5,
+      // TODO: writeCardImageUrl
     );
 
     if (status === 200) {

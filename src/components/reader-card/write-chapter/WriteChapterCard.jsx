@@ -1,7 +1,7 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { View, Platform, ImageBackground } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { StyleSheet, TextInput, Button, RenderError, Text } from '#components';
+import { StyleSheet, TextInput, Text } from '#components';
 
 import {
   widthPercentageToDP as wp,
@@ -11,78 +11,50 @@ import {
 import AddImage from '../../icon/AddImage';
 import { colors } from '#constants';
 
-import { useStoreState } from 'easy-peasy';
-import {
-  selectUserId,
-  selectCurrentChapterIdx,
-  selectCurrentCategoryIdx,
-} from '#store/selectors';
-
 import { makeCategoryBGImagePath } from '#constants/images';
-import { useWriteNewCard } from '../../../contexts/chapterDataContext';
-import { useWriteChapterCardForm } from './useWriteChapterCardForm';
-import { useNavigation } from '@react-navigation/native';
+
+import { useImagePicker } from '../../../hooks';
+import { useStoreActions, useStoreState } from 'easy-peasy';
+import { selectWriteCardImageUrl } from '../../../store/selectors';
+import {
+  actionsCompleteUploadWriteCardImage,
+  actionsSetWriteCardImageUrl,
+} from '../../../store/actions';
+
+import uuid from 'react-native-uuid';
+import WriteCardForm from './WriteCardForm';
 
 const borderRadiusOutside = 20;
-const borderRadiusInside = 17;
+const uploadDirName = `writeCardImage-${uuid.v4()}`;
 
 const WriteChapterCard = ({ route }) => {
   const { categoryTitle, chapterIdx } = route.params;
 
-  const userId = useStoreState(selectUserId);
-  const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
-  const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
-  const [_, setNewCandidateWritten] = useWriteNewCard();
+  const setWriteCardImageUrl = useStoreActions(actionsSetWriteCardImageUrl);
+  const completeUploadWriteCardImage = useStoreActions(
+    actionsCompleteUploadWriteCardImage,
+  );
 
-  const nav = useNavigation();
+  const pickImage = useImagePicker(
+    async uri => {
+      // 로컬 이미지 uri 저장 콜백
+      // setProfileLocalImagePath(await uploadLocalImagePath(uploadDirName, uri));
+    },
+    async blob => {
+      // 이미지 원본 먼저 업로드
+      const downloadUrl = await uploadImageFile(uploadDirName, blob);
+      setWriteCardImageUrl(downloadUrl);
+      completeUploadWriteCardImage();
+    },
+    9,
+    21,
+  );
 
-  // const [newCardBgUri, setNewCardBgUri] = useState(undefined);
-  const afterFormSubmitted = useCallback(() => {
-    nav?.goBack();
-    setNewCandidateWritten();
-  }, []);
+  const writeCardImageUrl = useStoreState(selectWriteCardImageUrl);
 
-  const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
-    useWriteChapterCardForm(
-      userId,
-      currentCategoryIdx,
-      currentChapterIdx,
-      afterFormSubmitted,
-    );
-
-  const onPressCameraIcon = () => {
-    console.log('camera icon pressed!');
-  };
-
-  // TODO: 1. Image Picker 를 통해서 이미지 선택
-  // TODO: 2. 선택한 이미지 업로드
-  // TODO: 2-success. alert(성공), 선택한 이미지로 바로 프로필 이미지 변경
-  // TODO: 2-fail. alert(실패), 상태 초기화
-
-  const {
-    // title,
-    sentence1,
-    sentence2,
-    sentence3,
-    sentence4,
-    sentence5,
-    sentence6,
-    sentence7,
-    sentence8,
-    sentence9,
-    sentence10,
-  } = values;
+  const onPickCardImage = async () => await pickImage();
 
   return (
-    // <View
-    //   style={{
-    //     minWidth: wp('100%'),
-    //     maxWidth: wp('100%'),
-    //     minHeight: hp('100%'),
-    //     maxHeight: hp('100%'),
-    //     flex: 1,
-    //   }}
-    // >
     <KeyboardAwareScrollView>
       <ImageBackground
         style={{
@@ -93,7 +65,11 @@ const WriteChapterCard = ({ route }) => {
           backgroundColor:
             Platform.OS === 'android' ? 'rgba(255, 255, 255, 0.2)' : '',
         }}
-        source={makeCategoryBGImagePath(categoryTitle)}
+        source={
+          !writeCardImageUrl
+            ? makeCategoryBGImagePath(categoryTitle)
+            : { uri: writeCardImageUrl }
+        }
       >
         <View
           style={{
@@ -121,91 +97,12 @@ const WriteChapterCard = ({ route }) => {
             </Text>
           </Text>
 
-          <View style={s.textInputSection}>
-            <TextInput
-              style={s.input}
-              value={sentence1}
-              onBlur={handleBlur('sentence1')}
-              onChangeText={handleChange('sentence1')}
-              placeholder="Write a story for this chapter..."
-              placeholderTextColor="rgba(0, 0, 0, 0.2)"
-            />
-            <RenderError
-              touched={touched.sentence1}
-              errors={errors.sentence1}
-              color="rgba(0, 0, 0, 0.5)"
-            />
-            <TextInput
-              style={s.input}
-              value={sentence2}
-              onBlur={handleBlur('sentence2')}
-              onChangeText={handleChange('sentence2')}
-            />
-            <TextInput
-              style={s.input}
-              value={sentence3}
-              onBlur={handleBlur('sentence3')}
-              onChangeText={handleChange('sentence3')}
-            />
-            <TextInput
-              style={s.input}
-              value={sentence4}
-              onBlur={handleBlur('sentence4')}
-              onChangeText={handleChange('sentence4')}
-            />
-            <TextInput
-              style={s.input}
-              value={sentence5}
-              onBlur={handleBlur('sentence5')}
-              onChangeText={handleChange('sentence5')}
-            />
-            <TextInput
-              style={s.input}
-              value={sentence6}
-              onBlur={handleBlur('sentence6')}
-              onChangeText={handleChange('sentence6')}
-            />
-            <TextInput
-              style={s.input}
-              value={sentence7}
-              onBlur={handleBlur('sentence7')}
-              onChangeText={handleChange('sentence7')}
-            />
-            <TextInput
-              style={s.input}
-              value={sentence8}
-              onBlur={handleBlur('sentence8')}
-              onChangeText={handleChange('sentence8')}
-            />
-            <TextInput
-              style={s.input}
-              value={sentence9}
-              onBlur={handleBlur('sentence9')}
-              onChangeText={handleChange('sentence9')}
-            />
-            <TextInput
-              style={s.input}
-              value={sentence10}
-              onBlur={handleBlur('sentence10')}
-              onChangeText={handleChange('sentence10')}
-            />
-          </View>
-
-          <View style={s.bottomSection}>
-            <AddImage style={s.imageIcon} onPress={onPressCameraIcon} />
-            <Button
-              style={s.summitButton}
-              textStyle={s.summitInsideText}
-              onPress={handleSubmit}
-              isBold
-            >
-              SAVE
-            </Button>
-          </View>
+          <WriteCardForm>
+            <AddImage style={s.imageIcon} onPress={onPickCardImage} />
+          </WriteCardForm>
         </View>
       </ImageBackground>
     </KeyboardAwareScrollView>
-    // </View>
   );
 };
 
@@ -229,25 +126,7 @@ const s = StyleSheet.create({
     fontWeight: '200',
     color: 'rgba(0, 0, 0, 0.3)',
   },
-  textInputSection: {
-    minHeight: Platform.OS === 'ios' ? wp('110%') : wp('90%'),
-    maxHeight: Platform.OS === 'ios' ? wp('110%') : wp('90%'),
-  },
-  input: {
-    borderBottomWidth: 0.3,
-    borderColor: '#000',
-    minWidth: '100%',
-    maxWidth: '100%',
 
-    margin: 0,
-    padding: 0,
-    paddingLeft: 0,
-    marginBottom: Platform.OS === 'ios' ? wp('4%') : wp('1.8%'),
-
-    fontSize: 21,
-    fontWeight: '200',
-    color: 'rgba(0, 0, 0, 0.3)',
-  },
   chapterText: {
     fontSize: 17,
     marginBottom: hp('7%'),
@@ -255,35 +134,12 @@ const s = StyleSheet.create({
   chapterNumberText: {
     fontSize: 28,
   },
-  bottomSection: {
-    maxWidth: '120%',
-    minWidth: '120%',
 
-    // marginTop: hp('50%'),
-    flexDirection: 'row',
-    // justifyContent: 'center',
-    // justifyContent: 'space-around',
-    alignItems: 'center',
-    // backgroundColor: 'rgba(255, 255, 255, 0.6)',
-  },
   imageIcon: {
     color: colors.light.ivory1,
     position: 'relative',
     right: 1,
     bottom: -7,
     // marginRight: 150,
-  },
-  summitButton: {
-    backgroundColor: colors.light.ivory5,
-    paddingVertical: 11,
-    paddingHorizontal: 15,
-    position: 'relative',
-    right: -135,
-    bottom: -10,
-    borderRadius: borderRadiusInside - 6,
-  },
-  summitInsideText: {
-    fontSize: 16,
-    color: colors.light.ivory1,
   },
 });
