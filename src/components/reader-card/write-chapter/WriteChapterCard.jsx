@@ -24,6 +24,8 @@ import {
 import uuid from 'react-native-uuid';
 import WriteCardForm from './WriteCardForm';
 
+import { ImageService } from '../../../services';
+
 const borderRadiusOutside = 20;
 const uploadDirName = `writeCardImage-${uuid.v4()}`;
 
@@ -42,7 +44,7 @@ const WriteChapterCard = ({ route }) => {
     },
     async blob => {
       // 이미지 원본 먼저 업로드
-      const downloadUrl = await uploadImageFile(uploadDirName, blob);
+      const downloadUrl = await ImageService.uploadImageFile(uploadDirName, blob);
       setWriteCardImageUrl(downloadUrl);
       completeUploadWriteCardImage();
     },

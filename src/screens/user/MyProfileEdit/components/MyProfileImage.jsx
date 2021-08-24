@@ -22,10 +22,7 @@ import {
 
 import { selectUserId } from '#store/selectors';
 import { UserService } from '../../../../services';
-import {
-  // uploadLocalImagePath,
-  uploadImageFile,
-} from './ProfileImageFunctionalities';
+import { ImageService } from '../../../../services';
 import { selectProfileImageUrl } from '../../../../store/selectors';
 
 const uploadDirName = 'profileImage';
@@ -52,7 +49,10 @@ const MyProfileImage = () => {
     },
     async blob => {
       // 이미지 원본 먼저 업로드
-      const downloadUrl = await uploadImageFile(uploadDirName, blob);
+      const downloadUrl = await ImageService.uploadImageFile(
+        uploadDirName,
+        blob,
+      );
 
       // 이미지 원본을 스토리지 저장 후 post 로 유저 정보로 전송
       await UserService.POST_registerUserProfilePhoto(userId, downloadUrl);
