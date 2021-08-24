@@ -3,7 +3,10 @@ import { action } from 'easy-peasy';
 const model = {
   profileLocalImagePath: '',
   profileImageUrl: '',
-  isImageUploaded: false,
+  isProfileImageUploaded: false,
+
+  writeCardImageUrl: '',
+  isWriteCardImageUploaded: false,
 };
 
 export default {
@@ -12,7 +15,10 @@ export default {
   reset: action(state => {
     state.model.profileLocalImagePath = '';
     state.model.profileImageUrl = '';
-    state.model.isImageUploaded = false;
+    state.model.isProfileImageUploaded = false;
+
+    state.model.writeCardImageUrl = '';
+    state.model.isWriteCardImageUploaded = false;
   }),
 
   setProfileLocalIamgePath: action((state, payload) => {
@@ -33,7 +39,19 @@ export default {
     state.model.profileImageUrl = payload;
   }),
 
-  completeUpload: action(state => {
-    state.model.isImageUploaded = !state.model.isImageUploaded;
+  completeUploadProfileImage: action(state => {
+    state.model.isProfileImageUploaded = !state.model.isProfileImageUploaded;
+  }),
+
+  setWriteCardImageUrl: action((state, payload) => {
+    if (typeof payload !== 'string') {
+      throw new Error('setWriteCardImageUrl 는 반드시 string 이어야 합니다.');
+    }
+
+    state.model.writeCardImageUrl = payload;
+  }),
+
+  completeUploadWriteCardImage: action(state => {
+    state.model.isWriteCardImageUploaded = !state.model.isWriteCardImageUploaded;
   })
 };

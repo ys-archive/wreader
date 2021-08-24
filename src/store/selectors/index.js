@@ -57,4 +57,6 @@ export const selectIsCandidateSelected = state =>
 export const selectProfileLocalImagePath = state =>
   state.image.model.profileLocalImagePath;
 export const selectProfileImageUrl = state => state.image.model.profileImageUrl;
-export const selectIsImageUploaded = state => state.image.model.isImageUploaded;
+export const selectIsProfileImageUploaded = state => state.image.model.isProfileImageUploaded;
+export const selectWriteCardImageUrl = state => state.image.model.writeCardImageUrl;
+export const selectIsWriteCardImageUploaded = state => state.image.model.isWriteCardImageUploaded;

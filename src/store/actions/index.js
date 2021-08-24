@@ -75,4 +75,10 @@ export const actionsSetProfileLocalImagePath = actions =>
   actions.image.setProfileLocalImagePath;
 export const actionsSetProfileImageUrl = actions =>
   actions.image.setProfileImageUrl;
-export const actionsCompleteUpload = actions => actions.image.completeUpload;
+export const actionsCompleteUploadProfileImage = actions =>
+  actions.image.completeUploadProfileImage;
+  
+export const actionsSetWriteCardImageUrl = actions =>
+  actions.image.setWriteCardImageUrl;
+export const actionsCompleteUploadWriteCardImage = actions =>
+  actions.image.actionsCompleteUploadWriteCardImage;
