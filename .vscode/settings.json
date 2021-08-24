@@ -10,5 +10,6 @@
         "Dev Env": {
             "baseUrl": ""
         }
-    }
+    },
+    "git.ignoreLimitWarning": true
 }
