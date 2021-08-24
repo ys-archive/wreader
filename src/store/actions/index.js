@@ -81,4 +81,4 @@ export const actionsCompleteUploadProfileImage = actions =>
 export const actionsSetWriteCardImageUrl = actions =>
   actions.image.setWriteCardImageUrl;
 export const actionsCompleteUploadWriteCardImage = actions =>
-  actions.image.actionsCompleteUploadWriteCardImage;
+  actions.image.completeUploadWriteCardImage;

@@ -59,7 +59,7 @@ export const useWriteChapterCardForm = (
       currentChapterIdx,
       sentences,
       currentCategoryIdx + 5,
-      // TODO: writeCardImageUrl
+      writeCardImageUrl,
     );
 
     if (status === 200) {
