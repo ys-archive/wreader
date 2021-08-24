@@ -39,10 +39,16 @@ export const useImagePicker = (
     if (!result.cancelled) {
       const { uri } = result;
       // console.log('result: ', uri);
-      // await uploadLocalImagePath(uri);
-      const response = await fetch(uri);
-      const blob = await response.blob();
-      await uploadImageFile(blob);
+
+      if (uploadLocalImagePath && typeof uploadLocalImagePath === 'function') {
+        await uploadLocalImagePath(uri);
+      }
+
+      if (uploadImageFile && typeof uploadImageFile === 'function') {
+        const response = await fetch(uri);
+        const blob = await response.blob();
+        await uploadImageFile(blob);
+      }
     }
   };
 

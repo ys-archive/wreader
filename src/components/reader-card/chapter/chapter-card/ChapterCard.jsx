@@ -29,6 +29,7 @@ import { useChapterCardExposer_Category } from './useChapterCardExposer_Category
 import { ChapterService } from '../../../../services';
 import * as ScreenNames from '../../../../navigators/ScreenNames';
 import { useNavigation } from '@react-navigation/native';
+import { useCommentsCount } from './useCommentsCount';
 
 const borderRadiusOutside = 20;
 const borderRadiusInside = 17;
@@ -68,16 +69,18 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
 
   const {
     id: chapterId, // 현재 챕터 Id
-    categoryId,
+    // categoryId,
     content,
     replyCount, // -> reply
     like_count: likeCount, // -> like
-    group_index: groupIdx, // candiate 붙이는 용도 (검사값)
+    // group_index: groupIdx, // candiate 붙이는 용도 (검사값)
     userImg: authorImageUri, // -> author
     userNick: authorNickName, // -> author
     chapterImg: chapterCoverImageUri, // -> cover
     isLike,
   } = data;
+
+  // const commentsCount = useCommentsCount(chapterId);
 
   // console.log('현재 챕터의 작가 프로필 이미지 path: ', authorImageUri);
 

@@ -10,7 +10,7 @@ import { useImagePicker, useProfileImageLoader } from '../../../../hooks';
 
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import {
-  actionsCompleteUpload,
+  actionsCompleteUploadProfileImage,
   actionsSetProfileImageUrl,
   // actionsSetProfileLocalImagePath,
 } from '../../../../store/actions';
@@ -34,7 +34,9 @@ const MyProfileImage = () => {
   const userId = useStoreState(selectUserId);
 
   const setProfileImageUrl = useStoreActions(actionsSetProfileImageUrl);
-  const completeUpload = useStoreActions(actionsCompleteUpload);
+  const completeUploadProfileImage = useStoreActions(
+    actionsCompleteUploadProfileImage,
+  );
   const uri = useStoreState(selectProfileImageUrl);
   // const setProfileLocalImagePath = useStoreActions(
   //   actionsSetProfileLocalImagePath,
@@ -49,23 +51,17 @@ const MyProfileImage = () => {
       // setProfileLocalImagePath(await uploadLocalImagePath(uploadDirName, uri));
     },
     async blob => {
-      // 이미지 download url 저장 콜백
       // 이미지 원본 먼저 업로드
       const downloadUrl = await uploadImageFile(uploadDirName, blob);
 
       // 이미지 원본을 스토리지 저장 후 post 로 유저 정보로 전송
       await UserService.POST_registerUserProfilePhoto(userId, downloadUrl);
       setProfileImageUrl(downloadUrl);
-      completeUpload();
+      completeUploadProfileImage();
     },
   );
 
-  const pickNewProfileImage = async () => {
-    // Image Picker 를 통해서 이미지 선택
-    await pickImage();
-  };
-
-  // console.log('default Url ( edit image): ', defaultProfileImgUri);
+  const pickNewProfileImage = async () => await pickImage();
 
   return (
     <View style={s.root}>

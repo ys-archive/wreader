@@ -3,12 +3,12 @@ import firebase from 'firebase';
 import * as FileSystem from 'expo-file-system';
 
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import { selectIsImageUploaded } from '../store/selectors';
+import { selectIsProfileImageUploaded } from '../store/selectors';
 import { actionsSetProfileImageUrl } from '../store/actions';
 
 export const useProfileImageLoader = () => {
   const setProfileImageUrl = useStoreActions(actionsSetProfileImageUrl);
-  const isImageUploaded = useStoreState(selectIsImageUploaded);
+  const isImageUploaded = useStoreState(selectIsProfileImageUploaded);
 
   useEffect(() => {
     async function loadProfileImage() {

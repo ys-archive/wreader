@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { SafeAreaView, View, TouchableOpacity, Image } from 'react-native';
 import { Alert, RequireLoginAlert } from '#components/alert';
 import { colors } from '#constants';
 import { Cancel, Arrow, Person2 } from '#components/icon';
 import {
-  widthPercentageToDP as wp,
+  // widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {
@@ -23,7 +23,8 @@ import {
   // selectProfileLocalImagePath,
 } from '#store/selectors';
 import { actionsLogout } from '#store/actions';
-import { useProfileImageLoader } from '#hooks';
+
+import { useProfileImageLoader } from '../../hooks';
 
 const DrawerTop = props => {
   const { navigation: nav } = props;
