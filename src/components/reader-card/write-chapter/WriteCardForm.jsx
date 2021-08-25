@@ -106,7 +106,7 @@ const WriteCardForm = ({ children }) => {
           }}
           onKeyPress={({ nativeEvent }) => {
             if (nativeEvent.key === 'Backspace') {
-              if (sentence2.length === 1) {
+              if (sentence2.length === 0) {
                 textInputRef1.current.focus();
               }
             }
@@ -127,7 +127,7 @@ const WriteCardForm = ({ children }) => {
           }}
           onKeyPress={({ nativeEvent }) => {
             if (nativeEvent.key === 'Backspace') {
-              if (sentence3.length === 1) {
+              if (sentence3.length === 0) {
                 textInputRef2.current.focus();
               }
             }
@@ -148,7 +148,7 @@ const WriteCardForm = ({ children }) => {
           }}
           onKeyPress={({ nativeEvent }) => {
             if (nativeEvent.key === 'Backspace') {
-              if (sentence4.length === 1) {
+              if (sentence4.length === 0) {
                 textInputRef3.current.focus();
               }
             }
@@ -169,7 +169,7 @@ const WriteCardForm = ({ children }) => {
           }}
           onKeyPress={({ nativeEvent }) => {
             if (nativeEvent.key === 'Backspace') {
-              if (sentence5.length === 1) {
+              if (sentence5.length === 0) {
                 textInputRef4.current.focus();
               }
             }
@@ -184,7 +184,7 @@ const WriteCardForm = ({ children }) => {
           onChangeText={handleChange('sentence6')}
           onKeyPress={({ nativeEvent }) => {
             if (nativeEvent.key === 'Backspace') {
-              if (sentence6.length === 1) {
+              if (sentence6.length === 0) {
                 textInputRef5.current.focus();
               }
             }

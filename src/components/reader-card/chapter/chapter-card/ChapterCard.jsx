@@ -147,6 +147,8 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
             {authorNickName || 'Jessica Momo'}
           </Text>
         </View>
+
+        {/* 챕터 내부 */}
         <ImageBackground
           style={[
             {
@@ -160,7 +162,6 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
         >
           {/* 챕터 제목 */}
           <View style={s.titleSection}>
-            {/* TODO: API 수정 요청 */}
             <Text isBold style={s.title}>
               THE FIRST HEART
             </Text>
@@ -209,9 +210,9 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
                   borderRadius: 100,
                 }}
                 source={
-                  myProfileLocalImagePath !== ''
+                  myProfileLocalImagePath && myProfileLocalImagePath !== ''
                     ? { uri: myProfileLocalImagePath }
-                    : myProfileImageUrl !== ''
+                    : myProfileImageUrl && myProfileImageUrl !== ''
                     ? { uri: myProfileImageUrl }
                     : dummyProfile
                 }
