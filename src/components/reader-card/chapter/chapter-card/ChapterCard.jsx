@@ -29,7 +29,6 @@ import { useChapterCardExposer_Category } from './useChapterCardExposer_Category
 import { ChapterService } from '../../../../services';
 import * as ScreenNames from '../../../../navigators/ScreenNames';
 import { useNavigation } from '@react-navigation/native';
-import { useCommentsCount } from './useCommentsCount';
 
 const borderRadiusOutside = 20;
 const borderRadiusInside = 17;
@@ -70,19 +69,16 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
   const {
     id: chapterId, // 현재 챕터 Id
     // categoryId,
+    // userId: otherUserId,
     content,
     replyCount, // -> reply
     like_count: likeCount, // -> like
     // group_index: groupIdx, // candiate 붙이는 용도 (검사값)
-    userImg: authorImageUri, // -> author
+    chapterImg, // -> cover image url
+    userImg, // author profile image url
     userNick: authorNickName, // -> author
-    chapterImg: chapterCoverImageUri, // -> cover
     isLike,
   } = data;
-
-  // const commentsCount = useCommentsCount(chapterId);
-
-  // console.log('현재 챕터의 작가 프로필 이미지 path: ', authorImageUri);
 
   const isLoggedIn = useStoreState(selectIsLoggedIn);
   const userId = useStoreState(selectUserId);
@@ -111,6 +107,11 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
       chapterId,
     });
 
+  const coverUri =
+    chapterImg && chapterImg !== ''
+      ? { uri: chapterImg }
+      : makeCategoryBGImagePath(categoryTitle);
+
   return (
     <View style={s.root}>
       <ImageBackground
@@ -126,13 +127,7 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
           predicatedPositionBetweenCandidates,
           predicatedScaleBGBetweenChapters,
         ]}
-        source={
-          chapterCoverImageUri
-            ? {
-                uri: chapterCoverImageUri,
-              }
-            : makeCategoryBGImagePath(categoryTitle)
-        }
+        source={coverUri}
         // resizeMode="contain"
       >
         {/* 프로필 및 작가 이름 */}
@@ -146,8 +141,7 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
               },
               predicatedScaleProfileBetweenChapters,
             ]}
-            // source={authorImageUri !== '' ? { uri: authorImageUri } : dummyProfile}
-            source={dummyProfile}
+            source={userImg && userImg !== '' ? { uri: userImg } : dummyProfile}
           />
           <Text isBold style={s.authorNameText}>
             {authorNickName || 'Jessica Momo'}

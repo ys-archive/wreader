@@ -15,11 +15,11 @@ const initialValues = {
   sentence4: '',
   sentence5: '',
   sentence6: '',
-  sentence7: '',
-  sentence8: '',
-  sentence9: '',
-  sentence10: '',
-  sentence11: '',
+  // sentence7: '',
+  // sentence8: '',
+  // sentence9: '',
+  // sentence10: '',
+  // sentence11: '',
 };
 
 const validationSchema = Yup.object({
@@ -36,10 +36,10 @@ const validationSchema = Yup.object({
   sentence4: Yup.string().min(0).max(20),
   sentence5: Yup.string().min(0).max(20),
   sentence6: Yup.string().min(0).max(20),
-  sentence7: Yup.string().min(0).max(20),
-  sentence8: Yup.string().min(0).max(20),
-  sentence9: Yup.string().min(0).max(20),
-  sentence10: Yup.string().min(0).max(20),
+  // sentence7: Yup.string().min(0).max(20),
+  // sentence8: Yup.string().min(0).max(20),
+  // sentence9: Yup.string().min(0).max(20),
+  // sentence10: Yup.string().min(0).max(20),
 });
 
 export const useWriteChapterCardForm = (

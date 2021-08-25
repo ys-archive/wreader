@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { View, Platform } from 'react-native';
 import { StyleSheet, TextInput, Button, RenderError } from '#components';
 
@@ -31,6 +31,13 @@ const WriteCardForm = ({ children }) => {
 
   const nav = useNavigation();
 
+  const textInputRef1 = useRef(null);
+  const textInputRef2 = useRef(null);
+  const textInputRef3 = useRef(null);
+  const textInputRef4 = useRef(null);
+  const textInputRef5 = useRef(null);
+  const textInputRef6 = useRef(null);
+
   const afterFormSubmitted = useCallback(() => {
     nav?.goBack();
     setNewCandidateWritten();
@@ -52,10 +59,10 @@ const WriteCardForm = ({ children }) => {
     sentence4,
     sentence5,
     sentence6,
-    sentence7,
-    sentence8,
-    sentence9,
-    sentence10,
+    // sentence7,
+    // sentence8,
+    // sentence9,
+    // sentence10,
   } = values;
 
   return (
@@ -63,9 +70,18 @@ const WriteCardForm = ({ children }) => {
       <View style={s.textInputSection}>
         <TextInput
           style={s.input}
+          ref={textInputRef1}
+          maxLength={20}
+          autoFocus
           value={sentence1}
           onBlur={handleBlur('sentence1')}
-          onChangeText={handleChange('sentence1')}
+          onChangeText={e => {
+            handleChange('sentence1')(e);
+
+            if (e && e.length === 20) {
+              textInputRef2.current.focus();
+            }
+          }}
           placeholder="Write a story for this chapter..."
           placeholderTextColor="rgba(0, 0, 0, 0.2)"
         />
@@ -74,38 +90,107 @@ const WriteCardForm = ({ children }) => {
           errors={errors.sentence1}
           color="rgba(0, 0, 0, 0.5)"
         />
-        
+
         <TextInput
           style={s.input}
+          ref={textInputRef2}
+          maxLength={20}
           value={sentence2}
           onBlur={handleBlur('sentence2')}
-          onChangeText={handleChange('sentence2')}
+          onChangeText={e => {
+            handleChange('sentence2')(e);
+
+            if (e && e.length === 20) {
+              textInputRef3.current.focus();
+            }
+          }}
+          onKeyPress={({ nativeEvent }) => {
+            if (nativeEvent.key === 'Backspace') {
+              if (sentence2.length === 1) {
+                textInputRef1.current.focus();
+              }
+            }
+          }}
         />
         <TextInput
           style={s.input}
+          ref={textInputRef3}
+          maxLength={20}
           value={sentence3}
           onBlur={handleBlur('sentence3')}
-          onChangeText={handleChange('sentence3')}
+          onChangeText={e => {
+            handleChange('sentence3')(e);
+
+            if (e && e.length === 20) {
+              textInputRef4.current.focus();
+            }
+          }}
+          onKeyPress={({ nativeEvent }) => {
+            if (nativeEvent.key === 'Backspace') {
+              if (sentence3.length === 1) {
+                textInputRef2.current.focus();
+              }
+            }
+          }}
         />
         <TextInput
           style={s.input}
+          ref={textInputRef4}
+          maxLength={20}
           value={sentence4}
           onBlur={handleBlur('sentence4')}
-          onChangeText={handleChange('sentence4')}
+          onChangeText={e => {
+            handleChange('sentence4')(e);
+
+            if (e && e.length === 20) {
+              textInputRef5.current.focus();
+            }
+          }}
+          onKeyPress={({ nativeEvent }) => {
+            if (nativeEvent.key === 'Backspace') {
+              if (sentence4.length === 1) {
+                textInputRef3.current.focus();
+              }
+            }
+          }}
         />
         <TextInput
           style={s.input}
+          ref={textInputRef5}
+          maxLength={20}
           value={sentence5}
           onBlur={handleBlur('sentence5')}
-          onChangeText={handleChange('sentence5')}
+          onChangeText={e => {
+            handleChange('sentence5')(e);
+
+            if (e && e.length === 20) {
+              textInputRef6.current.focus();
+            }
+          }}
+          onKeyPress={({ nativeEvent }) => {
+            if (nativeEvent.key === 'Backspace') {
+              if (sentence5.length === 1) {
+                textInputRef4.current.focus();
+              }
+            }
+          }}
         />
         <TextInput
           style={s.input}
+          ref={textInputRef6}
+          maxLength={20}
           value={sentence6}
           onBlur={handleBlur('sentence6')}
           onChangeText={handleChange('sentence6')}
+          onKeyPress={({ nativeEvent }) => {
+            if (nativeEvent.key === 'Backspace') {
+              if (sentence6.length === 1) {
+                textInputRef5.current.focus();
+              }
+            }
+          }}
         />
-        <TextInput
+        {/* <TextInput
           style={s.input}
           value={sentence7}
           onBlur={handleBlur('sentence7')}
@@ -128,7 +213,7 @@ const WriteCardForm = ({ children }) => {
           value={sentence10}
           onBlur={handleBlur('sentence10')}
           onChangeText={handleChange('sentence10')}
-        />
+        /> */}
       </View>
 
       <View style={s.bottomSection}>

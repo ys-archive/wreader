@@ -8,10 +8,11 @@ import {
 } from 'react-native-responsive-screen';
 import { colors } from '#constants';
 
-export const TextInput = props => {
+export const TextInput = React.forwardRef((props, ref) => {
   return (
     <OrigTextInput
       {...props}
+      ref={ref || null}
       style={{
         ...s.root,
         ...props.style,
@@ -22,7 +23,7 @@ export const TextInput = props => {
       autoCapitalize="none"
     />
   );
-};
+});
 
 const s = StyleSheet.create({
   root: {

@@ -1,7 +1,7 @@
 import { instance } from './AxiosInstance';
-import { BASE_URL } from '@env';
+// import { BASE_URL } from '@env';
 import md5 from 'md5';
-import { useGetSWR } from '#hooks';
+// import { useGetSWR } from '../hooks/useGetSWR';
 
 // https://app.gitbook.com/@wreader/s/wreader/untitled
 
@@ -19,16 +19,14 @@ class UserService {
     const { data, status } = await instance
       .get(`user/${userId}`)
       .catch(console.error);
-    const { code, item } = data;
-    return { code, item };
+      return { data, status };
   }
 
   static async POST_dropUser(userId) {
     const { data, status } = await instance
       .post(`user/drop/${userId}`)
       .catch(console.error);
-    const { code } = data;
-    return code;
+    return { data, user };
   }
 
   // static async PUT_updateUserPassword(userId, password) {
