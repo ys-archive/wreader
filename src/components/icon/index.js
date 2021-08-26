@@ -1,4 +1,5 @@
 import AddImage from './AddImage';
+import AddStory from './AddStory';
 import Arrow from './Arrow';
 import Cancel from './Cancel';
 import DrawerCancel from './DrawerCancel';
@@ -27,6 +28,7 @@ import Unlike from './Unlike';
 
 export {
   AddImage,
+  AddStory,
   Arrow,
   Cancel,
   DrawerCancel,
@@ -51,5 +53,5 @@ export {
   Reply,
   Plus,
   Photo,
-  Unlike
+  Unlike,
 };

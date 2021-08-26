@@ -8,7 +8,7 @@ import {
 import { colors } from '#constants';
 
 import { TextInput } from '#components';
-import { Like, Reply } from '#components/icon';
+import { Like, Reply, AddStory } from '#components/icon';
 
 import { makeCategoryBGImagePath, dummyProfile } from '#constants/images';
 
@@ -107,6 +107,12 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
       chapterId,
     });
 
+  const goWriteCardDirectly = () =>
+    nav.navigate(ScreenNames.MainWriteCard, {
+      categoryTitle,
+      chapterIdx,
+    });
+
   const coverUri =
     chapterImg && chapterImg !== ''
       ? { uri: chapterImg }
@@ -182,6 +188,11 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
           <View style={s.contentSection}>
             <Text style={s.contentText}>&nbsp;{content ?? ''}</Text>
           </View>
+
+          <AddStory
+            style={{ position: 'absolute', right: '5%', bottom: '19%' }}
+            onPress={goWriteCardDirectly}
+          />
 
           {/* 좋아요, 댓글 */}
           <View

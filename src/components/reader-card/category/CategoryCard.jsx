@@ -1,11 +1,13 @@
 import React from 'react';
 import { View, ImageBackground } from 'react-native';
 import { StyleSheet, Text } from '#components';
+import AddStory from '../../icon/AddStory';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import { colors } from '#constants';
+
 import { makeCategoryBGImagePath } from '#constants/images';
 
 import { useStoreState } from 'easy-peasy';
@@ -16,8 +18,12 @@ import {
 } from '#store/selectors';
 import { useCategoryCardExposer_Category } from './useCategoryCardExposer_Category';
 
+import { useNavigation } from '@react-navigation/native';
+import * as ScreenNames from '../../../navigators/ScreenNames';
+
 const CategoryCard = ({ category, categoryIdx }) => {
   const { title, subTitle, imageUri } = category;
+  const nav = useNavigation();
 
   const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
   const isFirstCandidate = useStoreState(selectIsFirstCandidate);
@@ -29,6 +35,11 @@ const CategoryCard = ({ category, categoryIdx }) => {
       currentCategoryIdx - 1 === categoryIdx,
       isFirstCandidate && currentChapterIdx === 1,
     );
+
+  const goWriteCard = () => {
+    console.log('New Write Card');
+    // nav.navigate(ScreenNames.MainWriteCard);
+  };
 
   return (
     <View style={s.root}>
@@ -56,6 +67,8 @@ const CategoryCard = ({ category, categoryIdx }) => {
         <View style={s.cardSubTitleView}>
           <Text style={s.subTitle}>{subTitle}</Text>
         </View>
+
+        <AddStory onPress={goWriteCard} />
       </ImageBackground>
     </View>
   );
