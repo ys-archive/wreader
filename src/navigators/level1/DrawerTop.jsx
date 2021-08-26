@@ -22,7 +22,7 @@ import {
   selectProfileImageUrl,
   // selectProfileLocalImagePath,
 } from '#store/selectors';
-import { actionsLogout } from '#store/actions';
+import { actionsLogout, actionsResetImage } from '#store/actions';
 
 import { useProfileImageLoader } from '../../hooks';
 
@@ -30,11 +30,12 @@ const DrawerTop = props => {
   const { navigation: nav } = props;
   const isLoggedIn = useStoreState(selectIsLoggedIn);
   const userInfo = useStoreState(selectUserInfo);
+  const profileImageUrl = useStoreState(selectProfileImageUrl);
 
   const nick = userInfo !== null && userInfo.nick ? userInfo?.nick : 'SIGN IN';
 
   const logout = useStoreActions(actionsLogout);
-  const profileImageUrl = useStoreState(selectProfileImageUrl);
+  const resetImage = useStoreActions(actionsResetImage);
   // const profileLocalImagePath = useStoreState(selectProfileLocalImagePath);
 
   // 프로필 이미지 로드
@@ -50,6 +51,13 @@ const DrawerTop = props => {
     if (nick === 'SIGN IN') {
       nav.navigate(ScreenNames.SigninStack);
     }
+  };
+
+  const onLogout = () => {
+    Alert('로그아웃 되었습니다');
+    resetImage();
+    logout();
+    nav.closeDrawer();
   };
 
   return (
@@ -165,14 +173,7 @@ const DrawerTop = props => {
             // ) : (
             // 로그인 되어있으면 -> 로그아웃 실행
             <>
-              <TouchableOpacity
-                style={s.drawerItem}
-                onPress={() => {
-                  Alert('로그아웃 되었습니다');
-                  logout();
-                  nav.closeDrawer();
-                }}
-              >
+              <TouchableOpacity style={s.drawerItem} onPress={onLogout}>
                 <Text isBold style={s.drawerItemText}>
                   LOGOUT
                 </Text>

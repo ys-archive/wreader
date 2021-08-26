@@ -180,7 +180,7 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
 
           {/* 챕터 내용 */}
           <View style={s.contentSection}>
-            <Text style={s.contentText}>&nbsp;&nbsp;{content ?? ''}</Text>
+            <Text style={s.contentText}>&nbsp;{content ?? ''}</Text>
           </View>
 
           {/* 좋아요, 댓글 */}
@@ -292,7 +292,8 @@ const s = StyleSheet.create({
     marginTop: hp('6.1%'),
   },
   contentText: {
-    fontSize: 15,
+    fontSize: 20,
+    lineHeight: 35,
   },
   bottomSection: {
     // flexDirection: 'row',

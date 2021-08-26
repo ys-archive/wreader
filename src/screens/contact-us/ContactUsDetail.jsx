@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { View, Platform } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { AlertWithValue } from '#components/alert';
@@ -7,6 +7,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '#navigators/ScreenNames';
+
 import { colors } from '#constants';
 import { StyleSheet, Text, TextInput, Button } from '#components';
 import {
@@ -16,17 +17,29 @@ import {
 
 const initialValues = {
   title: '',
-  contents: '',
+  sentence1: '',
+  sentence2: '',
+  sentence3: '',
+  sentence4: '',
 };
 
 const validationSchema = Yup.object({
   title: Yup.string(),
 
-  contents: Yup.string(),
+  sentence1: Yup.string().min(0).max(20),
+  sentence2: Yup.string().min(0).max(20),
+  sentence3: Yup.string().min(0).max(20),
+  sentence4: Yup.string().min(0).max(20),
 });
 
 const ContactUsDetail = () => {
   const nav = useNavigation();
+
+  const textInputRef1 = useRef(null);
+  const textInputRef2 = useRef(null);
+  const textInputRef3 = useRef(null);
+  const textInputRef4 = useRef(null);
+
   const onSubmit = async values => {
     AlertWithValue('문의 등록', '닫기', JSON.stringify(values, null, 2));
     // TODO: POST - 새로운 Contact Us 생성
@@ -40,80 +53,138 @@ const ContactUsDetail = () => {
       onSubmit,
     });
 
-  const { title, contents } = values;
+  const { title, sentence1, sentence2, sentence3, sentence4 } = values;
 
   return (
-    <KeyboardAwareScrollView contentContainerStyle={s.root}>
-      <View style={s.placer}>
-        <Text isBold style={s.title}>
-          CONTACT US
-        </Text>
-
-        <View style={s.separator} />
-
-        <View
-          style={[
-            s.titleSection,
-            { width: wp('84.7%'), minHeight: hp('6.2%') },
-          ]}
-        >
-          <Text isBold style={s.subtitle}>
-            TELL US MORE
+    <KeyboardAwareScrollView>
+      <View style={s.root}>
+        <View style={s.placer}>
+          <Text isBold style={s.title}>
+            CONTACT US
           </Text>
-        </View>
-
-        <View style={s.descriptionView}>
-          <Text style={s.descriptionText}>
-            If there’s any inquiries about W.REASDER , let us know it. We are
-            going to reply you as soon as possible. Thank you.
-          </Text>
-        </View>
-
-        <Text isBold style={s.underTitle}>
-          THEME
-        </Text>
-
-        <View style={[s.inputView, { marginBottom: 48 }]}>
-          <TextInput
-            style={s.input}
-            value={title}
-            onBlur={handleBlur('title')}
-            onChangeText={handleChange('title')}
-            placeholder="Write down a theme of your inquery"
-          />
-          <RenderError touched={touched.title} errors={errors.title} />
-        </View>
-
-        <Text isBold style={s.underTitle}>
-          CONTENTS
-        </Text>
-
-        <View style={s.inputView}>
-          <TextInput
-            style={s.input}
-            value={contents}
-            onBlur={handleBlur('contents')}
-            onChangeText={handleChange('contents')}
-            placeholder="Write down contents of your inquery"
-          />
-          <TextInput style={s.dummyInput} />
-          <TextInput style={s.dummyInput} />
-          <TextInput style={s.dummyInput} />
-          <TextInput style={s.dummyInput} />
-          <RenderError touched={touched.contents} errors={errors.contents} />
-        </View>
-        <View>
-          {/* <Button style={s.summitButton} onPress={handleSubmit}>
-            보내기
-          </Button> */}
-          <Button
-            style={s.summitButton}
-            textStyle={s.summitText}
-            isBold
-            onPress={handleSubmit}
+          <View style={s.separator} />
+          <View
+            style={[
+              s.titleSection,
+              { width: wp('84.7%'), minHeight: hp('6.2%') },
+            ]}
           >
-            SEND
-          </Button>
+            <Text isBold style={s.subtitle}>
+              TELL US MORE
+            </Text>
+          </View>
+          <View style={s.descriptionView}>
+            <Text style={s.descriptionText}>
+              If there’s any inquiries about W.REASDER , let us know it. We are
+              going to reply you as soon as possible. Thank you.
+            </Text>
+          </View>
+          <Text isBold style={s.underTitle}>
+            THEME
+          </Text>
+          <View style={[s.inputView, { marginBottom: 48 }]}>
+            <TextInput
+              style={s.input}
+              value={title}
+              onBlur={handleBlur('title')}
+              onChangeText={handleChange('title')}
+              placeholder="Write down a theme of your inquery"
+            />
+            <RenderError touched={touched.title} errors={errors.title} />
+          </View>
+          <Text isBold style={s.underTitle}>
+            sentence
+          </Text>
+          <View style={s.inputView}>
+            <TextInput
+              style={s.input}
+              ref={textInputRef1}
+              value={sentence1}
+              maxLength={20}
+              onBlur={handleBlur('sentence1')}
+              onChangeText={e => {
+                handleChange('sentence1')(e);
+                if (e && e.length === 20) {
+                  textInputRef2.current.focus();
+                }
+              }}
+              placeholder="Write down sentence of your inquery"
+            />
+            <RenderError
+              touched={touched.sentence1}
+              errors={errors.sentence1}
+            />
+            <TextInput
+              style={s.input}
+              ref={textInputRef2}
+              value={sentence2}
+              maxLength={20}
+              onBlur={handleBlur('sentence2')}
+              onChangeText={handleChange('sentence2')}
+              onChangeText={e => {
+                handleChange('sentence2')(e);
+                if (e && e.length === 20) {
+                  textInputRef3.current.focus();
+                }
+              }}
+              onKeyPress={({ nativeEvent }) => {
+                if (nativeEvent.key === 'Backspace') {
+                  if (sentence2.length === 0) {
+                    textInputRef1.current.focus();
+                  }
+                }
+              }}
+            />
+            <TextInput
+              style={s.input}
+              ref={textInputRef3}
+              value={sentence3}
+              maxLength={20}
+              onBlur={handleBlur('sentence3')}
+              onChangeText={handleChange('sentence3')}
+              onChangeText={e => {
+                handleChange('sentence3')(e);
+                if (e && e.length === 20) {
+                  textInputRef4.current.focus();
+                }
+              }}
+              onKeyPress={({ nativeEvent }) => {
+                if (nativeEvent.key === 'Backspace') {
+                  if (sentence3.length === 0) {
+                    textInputRef2.current.focus();
+                  }
+                }
+              }}
+            />
+            <TextInput
+              style={s.input}
+              ref={textInputRef4}
+              value={sentence4}
+              maxLength={20}
+              onBlur={handleBlur('sentence4')}
+              onChangeText={handleChange('sentence4')}
+              onKeyPress={({ nativeEvent }) => {
+                if (nativeEvent.key === 'Backspace') {
+                  if (sentence4.length === 0) {
+                    textInputRef3.current.focus();
+                  }
+                }
+              }}
+            />
+          </View>
+          <View>
+            {/* <Button style={s.summitButton} onPress={handleSubmit}>
+              보내기
+            </Button> */}
+            <Button
+              style={s.summitButton}
+              textStyle={s.summitText}
+              isBold
+              onPress={handleSubmit}
+            >
+              SEND
+            </Button>
+          </View>
         </View>
       </View>
     </KeyboardAwareScrollView>
@@ -176,7 +247,7 @@ const s = StyleSheet.create({
   // titleView: {
   //   marginTop: '15%',
   // },
-  // contentsView: {
+  // sentenceView: {
   //   marginTop: '15%',
   // },
 
@@ -185,7 +256,9 @@ const s = StyleSheet.create({
     borderColor: colors.light.ivory2,
     marginHorizontal: 0,
     paddingLeft: 10,
-    paddingBottom: 0,
+    fontSize: 18,
+    padding: 0,
+    marginVertical: 10,
     // paddingRight: 0,
     // ...Platform.select({
     //   android: {
@@ -196,15 +269,15 @@ const s = StyleSheet.create({
     maxWidth: '101%',
     fontSize: Platform.OS === 'android' ? 13 : 12,
   },
-  dummyInput: {
-    // margin: 0,
-    borderBottomWidth: 1,
-    borderColor: colors.light.ivory2,
-    marginHorizontal: 0,
-    minWidth: '101%',
-    maxWidth: '101%',
-    padding: 0,
-  },
+  // dummyInput: {
+  //   // margin: 0,
+  //   borderBottomWidth: 1,
+  //   borderColor: colors.light.ivory2,
+  //   marginHorizontal: 0,
+  //   minWidth: '101%',
+  //   maxWidth: '101%',
+  //   padding: 0,
+  // },
 
   summitButton: {
     maxWidth: 305,
