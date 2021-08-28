@@ -15,7 +15,7 @@ const CandidateNextCardContainer = ({ prvChapterIdx, categoryTitle }) => {
   if (nextData.length === 0) return null;
 
   return (
-    <>
+    <View>
       {/* 현재 카드 렌더 */}
       {nextData.map((nxt, i) => {
         return (
@@ -29,7 +29,7 @@ const CandidateNextCardContainer = ({ prvChapterIdx, categoryTitle }) => {
         );
       })}
       {/* 새로운 write next card 카드 추가 */}
-    </>
+    </View>
   );
 };
 

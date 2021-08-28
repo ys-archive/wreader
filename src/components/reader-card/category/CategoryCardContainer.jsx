@@ -52,17 +52,9 @@ export default CategoryCardContainer;
 const s = StyleSheet.create({
   root: {
     flexDirection: 'row',
-    // justifyContent: 'flex-start',
     flex: 1,
-    minHeight: SCREEN_HEIGHT,
-    maxHeight: SCREEN_HEIGHT,
-    // ...Platform.select({
-    //   ios: {
-    //     minWidth: SCREEN_WIDTH,
-    //     maxWidth: SCREEN_WIDTH,
-    //   },
-    //   android: {},
-    // }),
+    // minHeight: SCREEN_HEIGHT,
+    // maxHeight: SCREEN_HEIGHT,
   },
   copyright: {
     flexDirection: 'row',

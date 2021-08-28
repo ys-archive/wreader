@@ -1,7 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
 import { StyleSheet } from '#components';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 import ChapterCard from '../chapter-card/ChapterCard';
 import CandidateCardContainer from '../candidate/CandidateCardContainer';
@@ -9,7 +8,6 @@ import CandidateCardContainer from '../candidate/CandidateCardContainer';
 import { useStoreState } from 'easy-peasy';
 import {
   selectCurrentCategoryIdx,
-  selectCurrentChapterIdx,
   selectIsCategorySelected,
 } from '#store/selectors';
 
@@ -18,7 +16,6 @@ import { useUpdateLastCandidateIdx } from './useUpdateLastCandidateIdx';
 
 const ChapterCardContainer = ({ chapterIdx, categoryData, categoryTitle }) => {
   const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
-  const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
   const isCategorySelected = useStoreState(selectIsCategorySelected);
 
   useFetchChapterData();
@@ -29,13 +26,6 @@ const ChapterCardContainer = ({ chapterIdx, categoryData, categoryTitle }) => {
   // 현재 카테고리에 맞는 챕터인지 확인
   if (currentCategoryIdx !== Math.max(0, categoryData.categoryId - 5))
     return null;
-
-  console.log(
-    'current chapter idx ',
-    currentChapterIdx,
-    ', chapter idx: ',
-    chapterIdx,
-  );
 
   const FirstCard = (
     <ChapterCard
@@ -52,12 +42,6 @@ const ChapterCardContainer = ({ chapterIdx, categoryData, categoryTitle }) => {
         chapterIdx={chapterIdx}
         categoryTitle={categoryTitle}
       />
-      {/* {currentChapterIdx - 1 === chapterIdx && (
-        <CandidateCardContainer
-          chapterIdx={chapterIdx}
-          categoryTitle={categoryTitle}
-        />
-      )} */}
     </View>
   );
 };
@@ -66,9 +50,9 @@ export default ChapterCardContainer;
 
 const s = StyleSheet.create({
   root: {
-    alignItems: 'flex-start',
-    flex: 1,
-    width: wp('100%'),
-    maxWidth: wp('100%'),
+    // alignItems: 'flex-start',
+    // flex: 1,
+    // width: wp('100%'),
+    // maxWidth: wp('100%'),
   },
 });

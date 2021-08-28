@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, View } from 'react-native';
+import { Dimensions, View, TouchableWithoutFeedback } from 'react-native';
 import { StyleSheet } from '#components';
 
 import { useStoreState } from 'easy-peasy';
@@ -16,6 +16,7 @@ import {
 
 import ChapterCard from '../chapter-card/ChapterCard';
 import CandidateNextContainer from '../candidate-next/CandidateNextCardContainer';
+import { useForceUpdate } from '../../../../hooks/useForceUpdate';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
@@ -23,6 +24,7 @@ const CandidateCardContainer = ({ chapterIdx, categoryTitle }) => {
   const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
   const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
   const [chapterData] = useChapterData();
+  const forceUpdate = useForceUpdate();
   // TODO: update last candidate next idx
 
   // 새로운 후보 챕터로 시작하는 다음 챕터
