@@ -90,7 +90,7 @@ const Main = () => {
       <Logo />
       <Sort onPress={onPressSortIcon} />
       <Menu onPress={onPressMenuIcon} />
-      <EventModal />
+      {/* <EventModal /> */}
       <Reader>
         <CategoryCardContainer rootData={rootData.item} />
       </Reader>

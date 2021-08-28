@@ -35,10 +35,10 @@ export const useSwipeHorizontal = forceSwipeHorizontally => {
       return;
     }
 
-    if (currentCandidateIdx !== 0) {
-      console.log('현재 후보 챕터 선택 중입니다.');
-      return;
-    }
+    // if (currentCandidateIdx !== 0) {
+    //   console.log('현재 후보 챕터 선택 중입니다.');
+    //   return;
+    // }
 
     forceSwipeHorizontally('left');
     swipeToLeft();
@@ -55,10 +55,10 @@ export const useSwipeHorizontal = forceSwipeHorizontally => {
       return;
     }
 
-    if (currentCandidateIdx !== 0) {
-      console.log('현재 후보 챕터 선택 중입니다.');
-      return;
-    }
+    // if (currentCandidateIdx !== 0) {
+    //   console.log('현재 후보 챕터 선택 중입니다.');
+    //   return;
+    // }
 
     forceSwipeHorizontally('right');
     swipeToRight();

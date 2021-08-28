@@ -29,18 +29,15 @@ export const useFetchNextData = prvChapterIdx => {
 
       if (data.item.length === 0) return;
 
-      if (nextData.length > 0) {
-        // console.log(nextData[nextData.length - 1]);
-
-        if (_.isEqual(nextData[nextData.length - 1], data.item[0])) {
-          return;
-        }
-      }
+      if (
+        nextData.length > 0 &&
+        _.isEqual(nextData[nextData.length - 1], data.item[0])
+      )
+        return;
 
       // console.log('previous chapter id : ', fetchChapterIdx);
 
       setNextData(prv => {
-        console.log('prv: ', prv);
         if (prv.length > 1) {
           const filtered = prv.filter(
             prvItem =>
@@ -48,21 +45,11 @@ export const useFetchNextData = prvChapterIdx => {
                 .length === 0,
           );
 
-          const newData = [...prv, ...filtered];
-          // console.log('filtered data: ', newData);
-          // console.log(
-          //   '--------------------------------------------------------',
-          // );
-          return newData;
+          return [...prv, ...filtered];
         } else {
           return data.item;
         }
       });
-
-      // console.log(
-      //   nextData,
-      //   '  --------------------------------------------------------',
-      // );
 
       await fetchNextData(data.item.id);
     }
