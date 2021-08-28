@@ -8,9 +8,10 @@ export const useChapterCardExposer_Category = (
     ? {
         position: 'absolute',
         top: '-5%',
-      } 
+      }
     : (candidateIdx === -1 && isMovingChapterLock) || isPreviousCandidate
-    ? {
+    ? // candidateIdx === -1 || isPreviousCandidate
+      {
         position: 'absolute',
         bottom: '-7%',
       }

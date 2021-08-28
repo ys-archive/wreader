@@ -22,10 +22,8 @@ const model = {
   currentCandidateIdx: 0,
   lastCandidateIdx: 0,
 
-  hasOnRight: false,
-  hasOnLeft: false,
-  hasOnUp: false,
-  hasOnDown: false,
+  currentCandidateNextIdx: 0,
+  lastCandidateNextIdx: 0,
 };
 
 export default {
@@ -52,6 +50,16 @@ export default {
     state =>
       state.model.lastCandidateIdx === 0 ||
       state.model.currentCandidateIdx === state.model.lastCandidateIdx,
+  ),
+
+  isFirstCandidateNext: computed(
+    state => state.model.currentCandidateNextIdx === 0,
+  ),
+
+  isLastCandidateNext: computed(
+    state =>
+      state.model.lastCandidateNextIdx === 0 ||
+      state.model.currentCandidateNextIdx === state.model.lastCandidateNextIdx,
   ),
 
   // action
@@ -119,6 +127,13 @@ export default {
 
     const lastCandidateIdx = payload;
     state.model.lastCandidateIdx = lastCandidateIdx;
+  }),
+
+  setLastCandidateNextIdx: action((state, payload) => {
+    if (typeof payload !== 'number')
+      throw new Error(
+        'setLastCandidateNextIdx() :: 마지막 후보 인덱스는 반드시 number 이어야 합니다.',
+      )
   }),
 
   // 리셋
@@ -226,37 +241,5 @@ export default {
     }
 
     displayIdxStatus(state);
-  }),
-
-  setHasOnRight: action((state, payload) => {
-    if (typeof payload !== 'boolean') {
-      throw new Error('setHasOnRight:: payload must be boolean');
-    }
-
-    state.model.hasOnRight = payload;
-  }),
-
-  setHasOnLeft: action((state, payload) => {
-    if (typeof payload !== 'boolean') {
-      throw new Error('setHasOnLeft:: payload must be boolean');
-    }
-
-    state.model.hasOnLeft = payload;
-  }),
-
-  setHasOnUp: action((state, payload) => {
-    if (typeof payload !== 'boolean') {
-      throw new Error('setHasOnUp:: payload must be boolean');
-    }
-
-    state.model.hasOnUp = payload;
-  }),
-
-  setHasOnDown: action((state, payload) => {
-    if (typeof payload !== 'boolean') {
-      throw new Error('setHasOnDown:: payload must be boolean');
-    }
-
-    state.model.hasOnDown = payload;
   }),
 };

@@ -30,6 +30,11 @@ export const selectCurrentCandidateIdx = state =>
 export const selectLastCandidateIdx = state =>
   state.reader.model.lastCandidateIdx;
 
+export const selectCurrentCandidateNextIdx = state =>
+  state.reader.model.currentCandidateNextIdx;
+export const selectLastCandidateNextIdx = state =>
+  state.reader.model.lastCandidateNextIdx;
+
 export const selectIsFirstCategory = state => state.reader.isFirstCategory;
 export const selectIsLastCategory = state => state.reader.isLastCategory;
 
@@ -45,7 +50,6 @@ export const selectIsCategorySelected = state =>
 export const selectIsCandidateSelected = state =>
   state.reader.model.isCandidateSelected;
 
-
 // persistence
 // export const selectIsAutoLogin = state => state.persistence.model.isAutoLogin;
 // export const selectIsDueDateOver = state => stat.persistence.isDueDateOver;
@@ -57,6 +61,9 @@ export const selectIsCandidateSelected = state =>
 export const selectProfileLocalImagePath = state =>
   state.image.model.profileLocalImagePath;
 export const selectProfileImageUrl = state => state.image.model.profileImageUrl;
-export const selectIsProfileImageUploaded = state => state.image.model.isProfileImageUploaded;
-export const selectWriteCardImageUrl = state => state.image.model.writeCardImageUrl;
-export const selectIsWriteCardImageUploaded = state => state.image.model.isWriteCardImageUploaded;
+export const selectIsProfileImageUploaded = state =>
+  state.image.model.isProfileImageUploaded;
+export const selectWriteCardImageUrl = state =>
+  state.image.model.writeCardImageUrl;
+export const selectIsWriteCardImageUploaded = state =>
+  state.image.model.isWriteCardImageUploaded;

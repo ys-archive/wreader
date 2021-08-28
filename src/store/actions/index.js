@@ -32,6 +32,8 @@ export const actionsSetLastChapterIdx = actions =>
   actions.reader.setLastChapterIdx;
 export const actionsSetLastCandidateIdx = actions =>
   actions.reader.setLastCandidateIdx;
+export const actionsSetLastCandidateNextIdx = actions =>
+  actions.reader.setLastCandidateNextIdx;
 
 export const actionsMoveTo = actions => actions.reader.moveTo;
 export const actionsMoveToCategory = actions => actions.reader.moveToCategory;
@@ -43,11 +45,6 @@ export const actionsSwipeToLeft = actions => actions.reader.swipeToLeft;
 export const actionsSwipeToRight = actions => actions.reader.swipeToRight;
 export const actionsSwipeToUp = actions => actions.reader.swipeToUp;
 export const actionsSwipeToDown = actions => actions.reader.swipeToDown;
-
-export const actionsHasOnRight = actions => actions.reader.setHasOnRight;
-export const actionsHasOnLeft = actions => actions.reader.setHasOnLeft;
-export const actionsHasOnUp = actions => actions.reader.setHasOnUp;
-export const actionsHasOnDown = actions => actions.reader.setHasOnDown;
 
 // TODO: App preference 추가
 
@@ -77,7 +74,7 @@ export const actionsSetProfileImageUrl = actions =>
   actions.image.setProfileImageUrl;
 export const actionsCompleteUploadProfileImage = actions =>
   actions.image.completeUploadProfileImage;
-  
+
 export const actionsSetWriteCardImageUrl = actions =>
   actions.image.setWriteCardImageUrl;
 export const actionsCompleteUploadWriteCardImage = actions =>

@@ -46,7 +46,7 @@ export const useWriteChapterCardForm = (
   userId,
   currentCategoryIdx,
   currentChapterIdx,
-  afterFormSubmitted,
+  afterFormSubmitted, 
 ) => {
   const writeCardImageUrl = useStoreState(selectWriteCardImageUrl);
 

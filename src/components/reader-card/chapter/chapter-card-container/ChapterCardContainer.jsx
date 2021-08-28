@@ -4,6 +4,7 @@ import { StyleSheet } from '#components';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 import ChapterCard from '../chapter-card/ChapterCard';
+import CandidateCardContainer from '../candidate/CandidateCardContainer';
 
 import { useStoreState } from 'easy-peasy';
 import {
@@ -11,20 +12,15 @@ import {
   selectIsCategorySelected,
 } from '#store/selectors';
 
-import { useChapterData } from '../../../../contexts/chapterDataContext';
-
 import { useFetchChapterData } from './useFetchChapterData';
 import { useUpdateLastCandidateIdx } from './useUpdateLastCandidateIdx';
-import { useOpenWriteCard } from './useOpenWriteCard';
 
 const ChapterCardContainer = ({ chapterIdx, categoryData, categoryTitle }) => {
   const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
   const isCategorySelected = useStoreState(selectIsCategorySelected);
-  const [chapterData] = useChapterData();
 
   useFetchChapterData();
   useUpdateLastCandidateIdx(chapterIdx);
-  useOpenWriteCard(categoryTitle, chapterIdx);
 
   if (!isCategorySelected) return null;
 
@@ -40,26 +36,13 @@ const ChapterCardContainer = ({ chapterIdx, categoryData, categoryTitle }) => {
     />
   );
 
-  const Candidates = chapterData.item?.map((candidateChapterData, i) => {
-    // 현재 후보 챕터가 선택한 카테고리랑 맞는 것만 렌더
-    if (currentCategoryIdx !== Math.max(0, candidateChapterData.categoryId - 5))
-      return null;
-
-    return (
-      <ChapterCard
-        key={candidateChapterData.id}
-        chapterIdx={chapterIdx}
-        data={candidateChapterData}
-        candidateIdx={i}
-        categoryTitle={categoryTitle}
-      />
-    );
-  });
-
   return (
     <View style={s.root}>
       {FirstCard}
-      {Candidates}
+      <CandidateCardContainer
+        chapterIdx={chapterIdx}
+        categoryTitle={categoryTitle}
+      />
     </View>
   );
 };

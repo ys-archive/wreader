@@ -10,7 +10,7 @@ export const useChapterCardExposer_Chapter = (
 ) => {
   const predicatedPositionBetweenChapters =
     !isMovingChapterLock &&
-    (isNextChapter //|| isVisibleFromCategory
+    isNextChapter //|| isVisibleFromCategory
       ? {
           position: 'absolute',
           left: '-5%',
@@ -20,7 +20,7 @@ export const useChapterCardExposer_Chapter = (
           position: 'absolute',
           right: '-5%',
         }
-      : {});
+      : {};
 
   const predicatedScaleBGBetweenChapters =
     isNextChapter || isPreviousChapter // || isVisibleFromCategory

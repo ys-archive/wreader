@@ -5,10 +5,7 @@ import {
   selectIsMovingChapterLock,
   selectCurrentCandidateIdx,
 } from '#store/selectors';
-import {
-  actionsSwipeToLeft,
-  actionsSwipeToRight,
-} from '#store/actions';
+import { actionsSwipeToLeft, actionsSwipeToRight } from '#store/actions';
 
 export const useSwipeHorizontal = forceSwipeHorizontally => {
   const swipeToLeft = useStoreActions(actionsSwipeToLeft);
