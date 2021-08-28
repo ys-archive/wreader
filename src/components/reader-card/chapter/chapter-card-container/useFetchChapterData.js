@@ -8,7 +8,7 @@ import {
   useChapterData,
   useLikeUpdate,
   useWriteNewCard,
-} from '#contexts/chapterDataContext';
+} from '../../../../contexts/chapterDataContext';
 
 export const useFetchChapterData = () => {
   const currentChapterIdx = useStoreState(selectCurrentChapterIdx);

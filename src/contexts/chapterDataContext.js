@@ -10,6 +10,8 @@ const useChapterDataContext = () => {
   const [isNewCandidateWritten, u2] = useState(false);
   const writeNewCard = useCallback(() => u2(prv => !prv), []);
 
+  const [nextData, setNextData] = useState(null);
+
   return {
     chapterData,
     setChapterData,
@@ -17,6 +19,8 @@ const useChapterDataContext = () => {
     updateLike,
     isNewCandidateWritten,
     writeNewCard,
+    nextData,
+    setNextData,
   };
 };
 
@@ -30,4 +34,5 @@ export const [
   v => [v.chapterData, v.setChapterData],
   v => [v.isLikeUpdated, v.updateLike],
   v => [v.isNewCandidateWritten, v.writeNewCard],
+  v => [v.nextData, v.setNextData],
 );
