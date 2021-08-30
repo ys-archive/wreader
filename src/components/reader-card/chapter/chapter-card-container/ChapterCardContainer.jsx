@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { StyleSheet } from '#components';
 
@@ -8,14 +8,21 @@ import CandidateCardContainer from '../candidate/CandidateCardContainer';
 import { useStoreState } from 'easy-peasy';
 import {
   selectCurrentCategoryIdx,
+  selectCurrentCandidateNextIdx,
   selectIsCategorySelected,
 } from '#store/selectors';
 
 import { useFetchChapterData } from './useFetchChapterData';
 import { useUpdateLastCandidateIdx } from './useUpdateLastCandidateIdx';
 
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+
 const ChapterCardContainer = ({ chapterIdx, categoryData, categoryTitle }) => {
   const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
+  const currentCandidateNextIdx = useStoreState(selectCurrentCandidateNextIdx);
   const isCategorySelected = useStoreState(selectIsCategorySelected);
 
   useFetchChapterData();
@@ -51,8 +58,8 @@ export default ChapterCardContainer;
 const s = StyleSheet.create({
   root: {
     // alignItems: 'flex-start',
-    // flex: 1,
-    // width: wp('100%'),
-    // maxWidth: wp('100%'),
+    flex: 1,
+    width: '100%',
+    maxWidth: '100%',
   },
 });

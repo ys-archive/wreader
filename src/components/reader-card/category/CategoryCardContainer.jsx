@@ -47,7 +47,7 @@ const CategoryCardContainer = ({ rootData }) => {
   );
 };
 
-export default CategoryCardContainer;
+export default React.memo(CategoryCardContainer);
 
 const s = StyleSheet.create({
   root: {

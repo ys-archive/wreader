@@ -244,7 +244,7 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
   );
 };
 
-export default ChapterCard;
+export default React.memo(ChapterCard);
 
 const s = StyleSheet.create({
   root: {
@@ -252,6 +252,7 @@ const s = StyleSheet.create({
     maxWidth: wp('100%'),
     minHeight: hp('100%'),
     maxHeight: hp('100%'),
+    // flex: 1,
     backgroundColor: colors.light.primaryTransparent,
     justifyContent: 'center',
     alignItems: 'center',

@@ -1,38 +1,91 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Dimensions } from 'react-native';
 import { StyleSheet, Text } from '#components';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import { colors } from '#constants';
 
 import { useFetchNextData } from './useFetchNextData';
 import { useNextData } from '../../../../contexts/nextDataContext';
 import ChapterCard from '../chapter-card/ChapterCard';
 
-const CandidateNextCardContainer = ({ prvChapterIdx, categoryTitle }) => {
-  useFetchNextData(prvChapterIdx);
+import { useStoreState, useStoreActions } from 'easy-peasy';
+import {
+  selectCurrentCandidateIdx,
+  selectCurrentCandidateNextIdx,
+  selectUserId,
+} from '../../../../store/selectors';
+import { actionsSetLastCandidateNextIdx } from '../../../../store/actions';
+import { ChapterService } from '../../../../services';
 
-  const [nextData] = useNextData();
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-  // 재귀 렌더 끝
-  if (nextData.length === 0) return null;
+const CandidateNextCardContainer = ({
+  prvChapterIdx,
+  categoryTitle,
+  order,
+  prvGroupId,
+  setPrvGroupId,
+}) => {
+  const currentCandidateIdx = useStoreState(selectCurrentCandidateIdx);
+  const currentCandidateNextIdx = useStoreState(selectCurrentCandidateNextIdx);
+  const userId = useStoreState(selectUserId);
+
+  const [nextData, setNextData] = useState(undefined);
+
+  const final = prvGroupId === undefined ? prvChapterIdx : prvGroupId;
+
+  useEffect(() => {
+    async function fetchNextData() {
+      const { data } = await ChapterService.GET_getChapter(final, userId);
+      // console.log(final, '로 fetch 함');
+
+      if (data.item.length === 0) return;
+
+      setNextData(prv => {
+        if (prv) {
+          return [...prv, ...data.item];
+        } else {
+          return data.item;
+        }
+      });
+      setPrvGroupId(data.item[order].id);
+    }
+
+    if (currentCandidateIdx < 1) return;
+    if (currentCandidateNextIdx < 1) return;
+    fetchNextData();
+  }, [userId, order, currentCandidateIdx, prvChapterIdx, prvGroupId]);
+
+  console.log(nextData);
+  console.log('----------------------------------------------------');
 
   return (
-    <View>
-      {/* 현재 카드 렌더 */}
-      {nextData.map((nxt, i) => {
-        return (
+    <>
+      {nextData &&
+        nextData.length &&
+        nextData.map((next, i) => (
           <ChapterCard
             key={i}
-            chpaterIdx={prvChapterIdx + 1}
-            data={nxt}
-            candidateIdx={prvChapterIdx + 1}
+            chpaterIdx={order}
+            data={next}
+            candidateIdx={order}
             categoryTitle={categoryTitle}
           />
-        );
-      })}
-      {/* 새로운 write next card 카드 추가 */}
-    </View>
+        ))}
+    </>
   );
 };
 
 export default CandidateNextCardContainer;
 
-const styles = StyleSheet.create({});
+const s = StyleSheet.create({
+  root: {
+    flexDirection: 'row',
+    flex: 1,
+    // minWidth: SCREEN_WIDTH,
+    // maxWidth: SCREEN_WIDTH,
+  },
+});

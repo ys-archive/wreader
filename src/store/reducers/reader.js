@@ -5,6 +5,10 @@ const displayIdxStatus = state => {
     state.model;
   console.log('category: ', category);
   console.log('chapter: ', chapter);
+  const { currentCandidateIdx: candidate, currentCandidateNextIdx: next } =
+    state.model;
+  console.log('candidate: ', candidate);
+  console.log('next: ', next);
   console.log('-------------------------------');
 };
 
@@ -24,6 +28,7 @@ const model = {
 
   currentCandidateNextIdx: 0,
   lastCandidateNextIdx: 0,
+  isCandidateNextSelected: false,
 };
 
 export default {
@@ -63,7 +68,6 @@ export default {
   ),
 
   // action
-
   lockMovingChapter: action((state, payload) => {
     if (typeof payload !== 'boolean')
       throw new Error(
@@ -133,7 +137,13 @@ export default {
     if (typeof payload !== 'number')
       throw new Error(
         'setLastCandidateNextIdx() :: 마지막 후보 인덱스는 반드시 number 이어야 합니다.',
-      )
+      );
+
+    state.model.lastCandidateNextIdx = payload;
+  }),
+
+  setIsCandidateNextSelected: action((state, payload) => {
+    state.model.isCandidateNextSelected = payload;
   }),
 
   // 리셋
@@ -202,7 +212,15 @@ export default {
       state.model.isCategorySelected = true;
     }
 
-    state.model.currentChapterIdx += 1;
+    if (state.model.currentCandidateIdx === 0) {
+      state.model.currentChapterIdx += 1;
+    } else {
+      if (!state.model.isCandidateNextSelected) {
+        state.model.isCandidateNextSelected = true;
+      }
+      state.model.currentCandidateNextIdx += 1;
+    }
+
     displayIdxStatus(state);
   }),
 
@@ -212,8 +230,15 @@ export default {
       state.model.isCategorySelected = false;
     }
 
-    // TODO: 마지막 뷰어에서 뒤로 이동할때는 같은 장르내에서 전 챕터로 이동이 되도록 해주세요~
-    state.model.currentChapterIdx -= 1;
+    if (state.model.currentCandidateNextIdx === 1) {
+      state.model.isCandidateNextSelected = false;
+    }
+
+    if (state.model.currentCandidateIdx === 0) {
+      state.model.currentChapterIdx -= 1;
+    } else {
+      state.model.currentCandidateNextIdx -= 1;
+    }
 
     displayIdxStatus(state);
   }),
@@ -223,7 +248,8 @@ export default {
     if (state.model.isCategorySelected) {
       state.model.currentCandidateIdx += 1;
     } else {
-      state.model.currentCategoryIdx += 1;
+      if (!state.model.isCandidateNextSelected)
+        state.model.currentCategoryIdx += 1;
     }
 
     displayIdxStatus(state);
@@ -232,12 +258,10 @@ export default {
   // 아래로 스와이프: 카테고리 - 1, 챕터 변화 X -> 이전 카테고리로 이동
   swipeToDown: action((state, payload) => {
     if (state.model.isCategorySelected) {
-      // if (!state.model.hasCandidateChapter) {
-      //   state.model.currentCategoryIdx -= 1;
-      // }
       state.model.currentCandidateIdx -= 1;
     } else {
-      state.model.currentCategoryIdx -= 1;
+      if (!state.model.isCandidateNextSelected)
+        state.model.currentCategoryIdx -= 1;
     }
 
     displayIdxStatus(state);

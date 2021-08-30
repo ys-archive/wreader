@@ -44,6 +44,11 @@ export const selectIsLastChapter = state => state.reader.isLastChapter;
 export const selectIsFirstCandidate = state => state.reader.isFirstCandidate;
 export const selectIsLastCandidate = state => state.reader.isLastCandidate;
 
+export const selectIsFirstCandidateNext = state =>
+  state.reader.isFirstCandidateNext;
+export const selectIsLastCandidateNext = state =>
+  state.reader.isLastCandidateNext;
+
 export const selectIsCategorySelected = state =>
   state.reader.model.isCategorySelected;
 

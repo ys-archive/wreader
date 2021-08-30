@@ -1,10 +1,15 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as _ from 'lodash';
 
 import { ChapterService } from '#services';
 
-import { useStoreState } from 'easy-peasy';
-import { selectUserId } from '#store/selectors';
+import { useStoreState, useStoreActions } from 'easy-peasy';
+import {
+  selectUserId,
+  selectCurrentCandidateNextIdx,
+  selectCurrentCandidateIdx,
+} from '#store/selectors';
+import { actionsSetLastCandidateNextIdx } from '../../../../store/actions';
 import {
   useNextData,
   useNextLikeUpdate,
@@ -13,49 +18,57 @@ import {
 
 export const useFetchNextData = prvChapterIdx => {
   const userId = useStoreState(selectUserId);
-  const [nextData, setNextData] = useNextData();
+  // const setLastCandidateNextIdx = useStoreActions(
+  //   actionsSetLastCandidateNextIdx,
+  // );
+
+  const currentCandidateNextIdx = useStoreState(selectCurrentCandidateNextIdx);
+  // const currentCandidateIdx = useStoreState(selectCurrentCandidateIdx);
+
+  // let length = useRef(0).current;
+  // const [_, setNextData] = useNextData();
+  const [nextData, setNextData] = useState([]);
 
   const [isLikeUpdated] = useNextLikeUpdate();
   const [isNewNextWritten] = useNextWriteCard();
 
   useEffect(() => {
-    async function fetchNextData(fetchChapterIdx) {
-      if (!fetchChapterIdx) return;
-
+    async function fetchNextData() {
       const { data } = await ChapterService.GET_getChapter(
-        fetchChapterIdx,
+        prvChapterIdx,
         userId,
       );
 
       if (data.item.length === 0) return;
 
-      if (
-        nextData.length > 0 &&
-        _.isEqual(nextData[nextData.length - 1], data.item[0])
-      )
-        return;
-
-      // console.log('previous chapter id : ', fetchChapterIdx);
-
       setNextData(prv => {
         if (prv.length > 1) {
-          const filtered = prv.filter(
-            prvItem =>
-              data.item.filter(dataItem => !_.isEqual(prvItem, dataItem))
-                .length === 0,
-          );
+          // const filtered = prv.filter(
+          //   prvItem =>
+          //     data.item.filter(dataItem => !_.isEqual(prvItem, dataItem))
+          //       .length === 0,
+          // );
 
-          return [...prv, ...filtered];
+          // const filtered = data.item.filter(
+          //   dataItem =>
+          //     prv.filter(prvItem => !_.isEqual(prvItem, dataItem)).length === 0,
+          // );
+          const nextData = [...prv, ...data.item];
+          return nextData;
         } else {
           return data.item;
         }
       });
 
-      await fetchNextData(data.item.id);
+      // setNextData(data.item[0]);
+
+      // ++length;
+      // setLastCandidateNextIdx(length);
+      fetchNextData(+data.item[0].id);
     }
 
-    fetchNextData(+prvChapterIdx);
-  }, [userId, isLikeUpdated, isNewNextWritten]);
+    fetchNextData();
+  }, [isLikeUpdated, isNewNextWritten, currentCandidateNextIdx]);
 
-  // candidate 선택 후에, 각 swipe horizontal 마다 fetch
+  return nextData;
 };

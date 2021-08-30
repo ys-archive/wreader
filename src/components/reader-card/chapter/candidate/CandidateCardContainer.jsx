@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
+import * as _ from 'lodash';
 import { Dimensions, View, TouchableWithoutFeedback } from 'react-native';
 import { StyleSheet } from '#components';
 
@@ -6,6 +7,9 @@ import { useStoreState } from 'easy-peasy';
 import {
   selectCurrentCategoryIdx,
   selectCurrentChapterIdx,
+  selectCurrentCandidateIdx,
+  selectCurrentCandidateNextIdx,
+  selectUserId,
 } from '#store/selectors';
 
 import { useOpenWriteCard } from './useOpenWriteCard';
@@ -13,21 +17,27 @@ import {
   useChapterData,
   useNextData,
 } from '../../../../contexts/chapterDataContext';
+// import { useForceUpdate } from '../../../../hooks';
+
+import { useFetchNextData } from '../candidate-next/useFetchNextData';
+import { useFetchChapterData } from '../chapter-card-container/useFetchChapterData';
 
 import ChapterCard from '../chapter-card/ChapterCard';
-import CandidateNextContainer from '../candidate-next/CandidateNextCardContainer';
-import { useForceUpdate } from '../../../../hooks/useForceUpdate';
+import { ChapterService } from '../../../../services';
+import CandidateNextCardContainer from '../candidate-next/CandidateNextCardContainer';
+// import CandidateNextCardContainer from '../candidate-next/CandidateNextCardContainer';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 const CandidateCardContainer = ({ chapterIdx, categoryTitle }) => {
   const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
   const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
+  const currentCandidateIdx = useStoreState(selectCurrentCandidateIdx);
+  const [prvGroupId, setPrvGroupId] = useState(undefined);
+  
   const [chapterData] = useChapterData();
-  const forceUpdate = useForceUpdate();
-  // TODO: update last candidate next idx
 
-  // 새로운 후보 챕터로 시작하는 다음 챕터
+  useFetchChapterData();
 
   // 새로운 후보 챕터
   useOpenWriteCard(categoryTitle, chapterIdx);
@@ -49,17 +59,22 @@ const CandidateCardContainer = ({ chapterIdx, categoryTitle }) => {
       );
 
       return (
-        <View style={s.root} key={candidateData.id}>
+        <View style={s.root} key={i}>
           {FirstCard}
-          <CandidateNextContainer
-            prvChapterIdx={+candidateData.id}
-            categoryTitle={categoryTitle}
-          />
+          {currentCandidateIdx - 1 === i && (
+            <CandidateNextCardContainer
+              prvChapterIdx={candidateData.id}
+              categoryTitle={categoryTitle}
+              order={i}
+              prvGroupId={prvGroupId}
+              setPrvGroupId={setPrvGroupId}
+            />
+          )}
         </View>
       );
     });
 
-  return Candidates;
+  return <View>{Candidates}</View>;
 };
 
 export default CandidateCardContainer;
@@ -67,8 +82,9 @@ export default CandidateCardContainer;
 const s = StyleSheet.create({
   root: {
     flexDirection: 'row',
-    flex: 1,
-    minHeight: SCREEN_HEIGHT,
-    maxHeight: SCREEN_HEIGHT,
+    // flex: 1,
+    // minHeight: '100%',
+    // maxHeight: '100%',
+    // overflow: 'visible',
   },
 });
