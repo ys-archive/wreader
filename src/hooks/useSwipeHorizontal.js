@@ -34,7 +34,7 @@ export const useSwipeHorizontal = forceSwipeHorizontally => {
 
   // const currentCandidateIdx = useStoreState(selectCurrentCandidateIdx);
 
-  // const [_, forceUpdate] = useForceUpdate();
+  const [_, forceUpdate] = useForceUpdate();
 
   const onSwipeLeft = state => {
     if (isMovingChapterLock) {
@@ -60,7 +60,7 @@ export const useSwipeHorizontal = forceSwipeHorizontally => {
 
     forceSwipeHorizontally('left');
     swipeToLeft();
-    // forceUpdate();
+    forceUpdate();
   };
 
   const onSwipeRight = state => {
@@ -86,7 +86,7 @@ export const useSwipeHorizontal = forceSwipeHorizontally => {
 
     forceSwipeHorizontally('right');
     swipeToRight();
-    // forceUpdate();
+    forceUpdate();
   };
 
   return {

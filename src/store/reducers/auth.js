@@ -1,6 +1,7 @@
 import { action, computed } from 'easy-peasy';
 
-const model = {
+export default {
+  // model
   isLoggedIn: false,
   userId: 0,
   email: '',
@@ -18,21 +19,18 @@ const model = {
       createAt: '',
     },
   },
-};
 
-export default {
-  model,
-
+  // actions
   login: action(state => {
-    state.model.isLoggedIn = true;
+    state.isLoggedIn = true;
   }),
 
   logout: action(state => {
-    state.model.isLoggedIn = false;
-    state.model.userId = 0;
-    state.model.email = '';
-    state.model.password = '';
-    state.model.info = null;
+    state.isLoggedIn = false;
+    state.userId = 0;
+    state.email = '';
+    state.password = '';
+    state.info = null;
   }),
 
   setUserId: action((state, payload) => {
@@ -46,7 +44,7 @@ export default {
       throw new Error(`userId can't be 0 below`);
     }
 
-    state.model.userId = payload;
+    state.userId = payload;
   }),
 
   setEmail: action((state, payload) => {
@@ -54,7 +52,7 @@ export default {
       throw new Error('setEmail() 의 payload 는 string 이어야 합니다.');
     }
 
-    state.model.email = payload;
+    state.email = payload;
   }),
 
   setPassword: action((state, payload) => {
@@ -62,12 +60,12 @@ export default {
       throw new Error('setEmail() 의 payload 는 string 이어야 합니다.');
     }
 
-    state.model.password = payload;
+    state.password = payload;
   }),
 
   setUserInfo: action((state, payload) => {
     // console.log('setUserInfo() : ', payload);
-    state.model.info = {
+    state.info = {
       nick: payload.nick ?? '',
       instagram: payload.instagram ?? '',
       facebook: payload.facebook ?? '',

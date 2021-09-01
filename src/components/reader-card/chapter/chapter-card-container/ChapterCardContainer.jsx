@@ -58,8 +58,8 @@ export default ChapterCardContainer;
 const s = StyleSheet.create({
   root: {
     // alignItems: 'flex-start',
-    flex: 1,
-    width: '100%',
-    maxWidth: '100%',
+    // flex: 1,
+    // width: '100%',
+    // maxWidth: '100%',
   },
 });

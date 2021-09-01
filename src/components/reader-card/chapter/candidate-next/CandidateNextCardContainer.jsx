@@ -23,44 +23,17 @@ import { ChapterService } from '../../../../services';
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 const CandidateNextCardContainer = ({
-  prvChapterIdx,
+  // prvChapterIdx,
   categoryTitle,
   order,
-  prvGroupId,
-  setPrvGroupId,
+  nextData,
 }) => {
-  const currentCandidateIdx = useStoreState(selectCurrentCandidateIdx);
-  const currentCandidateNextIdx = useStoreState(selectCurrentCandidateNextIdx);
-  const userId = useStoreState(selectUserId);
+  // const currentCandidateIdx = useStoreState(selectCurrentCandidateIdx);
+  // const currentCandidateNextIdx = useStoreState(selectCurrentCandidateNextIdx);
+  // const userId = useStoreState(selectUserId);
 
-  const [nextData, setNextData] = useState(undefined);
-
-  const final = prvGroupId === undefined ? prvChapterIdx : prvGroupId;
-
-  useEffect(() => {
-    async function fetchNextData() {
-      const { data } = await ChapterService.GET_getChapter(final, userId);
-      // console.log(final, '로 fetch 함');
-
-      if (data.item.length === 0) return;
-
-      setNextData(prv => {
-        if (prv) {
-          return [...prv, ...data.item];
-        } else {
-          return data.item;
-        }
-      });
-      setPrvGroupId(data.item[order].id);
-    }
-
-    if (currentCandidateIdx < 1) return;
-    if (currentCandidateNextIdx < 1) return;
-    fetchNextData();
-  }, [userId, order, currentCandidateIdx, prvChapterIdx, prvGroupId]);
-
-  console.log(nextData);
-  console.log('----------------------------------------------------');
+  // console.log(nextData);
+  // console.log('----------------------------------------------------');
 
   return (
     <>
@@ -84,7 +57,7 @@ export default CandidateNextCardContainer;
 const s = StyleSheet.create({
   root: {
     flexDirection: 'row',
-    flex: 1,
+    // flex: 1,
     // minWidth: SCREEN_WIDTH,
     // maxWidth: SCREEN_WIDTH,
   },

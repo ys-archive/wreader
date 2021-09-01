@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { Animated, Dimensions } from 'react-native';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
-const SWIPE_OUT_DURATION = 300;
+const SWIPE_OUT_DURATION = 450;
 
 const swipeAmount = {
   x: 0,
@@ -10,7 +10,7 @@ const swipeAmount = {
 };
 
 export const useSwipeGesture = () => {
-  const position = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current;
+  let position = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current;
 
   const forceSwipeVertically = dir => {
     const isUp = dir === 'up';
@@ -42,6 +42,7 @@ export const useSwipeGesture = () => {
   const getStyle = () => {
     const { x: translateX, y: translateY } = position;
     return {
+      // flex: 1,
       transform: [{ translateX }, { translateY }],
     };
   };

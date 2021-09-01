@@ -79,3 +79,7 @@ export const actionsSetWriteCardImageUrl = actions =>
   actions.image.setWriteCardImageUrl;
 export const actionsCompleteUploadWriteCardImage = actions =>
   actions.image.completeUploadWriteCardImage;
+
+import { actions as actData } from '../reducers/data';
+
+export { actData };

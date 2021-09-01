@@ -1,9 +1,9 @@
 // auth
-export const selectIsLoggedIn = state => state.auth.model.isLoggedIn;
-export const selectUserId = state => state.auth.model.userId;
-export const selectEmail = state => state.auth.model.email;
-export const selectPassword = state => state.auth.model.password;
-export const selectUserInfo = state => state.auth.model.info;
+export const selectIsLoggedIn = state => state.auth.isLoggedIn;
+export const selectUserId = state => state.auth.userId;
+export const selectEmail = state => state.auth.email;
+export const selectPassword = state => state.auth.password;
+export const selectUserInfo = state => state.auth.info;
 
 // reader
 
@@ -72,3 +72,7 @@ export const selectWriteCardImageUrl = state =>
   state.image.model.writeCardImageUrl;
 export const selectIsWriteCardImageUploaded = state =>
   state.image.model.isWriteCardImageUploaded;
+
+import { selectors as selData } from '../reducers/data';
+
+export { selData };

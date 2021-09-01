@@ -5,6 +5,8 @@ import { StyleSheet, Text } from '#components';
 import CategoryCard from './CategoryCard';
 import ChapterCardContainer from '../chapter/chapter-card-container/ChapterCardContainer';
 
+// import { useForceUpdate } from '../../../hooks/useForceUpdate';
+
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 const renderChapters = (chapters, categoryTitle) => {
@@ -23,6 +25,7 @@ const renderChapters = (chapters, categoryTitle) => {
 };
 
 const CategoryCardContainer = ({ rootData }) => {
+  // const [updated, _] = useForceUpdate();
   // 현재 카테고리 정보가 없으면 렌더 X
   if (!rootData || !rootData.length) {
     return null;
@@ -47,12 +50,14 @@ const CategoryCardContainer = ({ rootData }) => {
   );
 };
 
-export default React.memo(CategoryCardContainer);
+export default CategoryCardContainer;
 
 const s = StyleSheet.create({
   root: {
     flexDirection: 'row',
     flex: 1,
+    justifyContent: 'flex-start',
+    minWidth: '100%',
     // minHeight: SCREEN_HEIGHT,
     // maxHeight: SCREEN_HEIGHT,
   },
