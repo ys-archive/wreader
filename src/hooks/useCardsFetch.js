@@ -1,51 +1,98 @@
-import { useGetSWR } from './useGetSWR';
+import { useEffect, useState } from 'react';
+// import { useGetSWR } from './useGetSWR';
+import * as _ from 'lodash';
 
-import { useStoreActions } from 'easy-peasy';
+import { useStoreState, useStoreActions } from 'easy-peasy';
+import { selAuth, selData } from '../store/selectors';
 import { actData } from '../store/actions';
+
+import ChapterService from '../services/ChapterService';
 
 const initStates = () => {
   const addCategory = useStoreActions(actData.actAddCategory);
+  const addChapter = useStoreActions(actData.actAddChapter);
+  const chapters = useStoreState(selData.selChapters);
   const populateChapter = useStoreActions(actData.actPopulateChapter);
+  const userId = useStoreState(selAuth.selUserId);
 
   return {
     addCategory,
     addChapter,
-    addCandidate,
-    populateChapter
+    chapters,
+    populateChapter,
+    userId,
   };
 };
 
+async function asyncForEach(arr, callback) {
+  const len = arr.length;
+  for (let i = 0; i < len; ++i) {
+    await callback(arr[i], i, arr);
+  }
+}
+
 export const useCardsFetch = () => {
   // state 가져오기
-  const { addCategory, populateChapter } = initStates();
-  const { data, error } = useGetSWR('category');
+  const {
+    addCategory,
+    addChapter,
+    chapters: g,
+    populateChapter,
+    userId,
+  } = initStates();
 
-  if (error) {
-      console.error(error);
-      return;
-  }
+  //   const [chapter, setChapter] = useState([]);
 
-  // 카테고리 데이터 forward
-  const categories = data.item;
+  //   const addChapter = newChapter =>
+  //     setChapter(prv => {
+  //       if (!prv) return [newChapter];
 
-  if (!categories || categories.length === 0) return;
+  //       const hasFound = prv?.findIndex(ch => _.isEqual(ch.deck, payload.deck));
 
-  categories.foreach(feedCategories);
+  //       if (hasFound === -1) {
+  //         return [...prv, newChapter];
+  //       }
+  //     });
 
-  const feedCategories = category => {
-      // chapters 는 재귀-순회해서 모든 챕터들을 fetch
-    const { chapter: chapters, ...rest } = category;
+  useEffect(() => {
+    async function fetch() {
+      const { data } = await ChapterService.GET_getCategory();
 
-    addCategory(rest);
+      if (!data || !data.item || !data.item.length) return;
 
-    if (!chapters || chapters.length === 0)
-        continue;
+      const categories = Object.values(
+        JSON.parse(JSON.stringify(data.item)),
+      ).map(item => {
+        delete item.chapter;
+        return item;
+      });
+      categories.forEach(category => addCategory(category));
 
-    chapters.foreach(feedChapters);
-  };
+      const chapters = Object.values(data.item)
+        .map(i => i.chapter)
+        .filter(i => i.length > 0);
 
-  const feedChapters = chapter => {
-    const { group_index: prvChapterId } = chapter;
-    populateChapter(prvChapterId);
-  };
+      console.log('length: ', chapters.length);
+
+      await asyncForEach(chapters, async deck => {
+        if (deck.length === 0) return;
+
+        addChapter({ deck });
+        await fetchRecursively(deck, userId, addChapter);
+      });
+    }
+
+    fetch();
+  }, [addChapter]);
+};
+
+const fetchRecursively = async (arr, userId, addChapter) => {
+  await asyncForEach(arr, async item => {
+    const { data } = await ChapterService.GET_getChapter(+item.id, userId);
+
+    if (data.item.length === 0) return;
+
+    addChapter({ deck: data.item });
+    await fetchRecursively(data.item, userId, addChapter);
+  });
 };

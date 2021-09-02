@@ -73,6 +73,7 @@ export const selectWriteCardImageUrl = state =>
 export const selectIsWriteCardImageUploaded = state =>
   state.image.model.isWriteCardImageUploaded;
 
+import { selectors as selAuth } from '../reducers/auth';
 import { selectors as selData } from '../reducers/data';
 
-export { selData };
+export { selAuth, selData };

@@ -28,6 +28,13 @@ class ChapterService {
     return { data, status };
   }
 
+  static async GET_getCategory() {
+    const { data, status } = await axios.instance
+      .get('category')
+      .catch(console.error);
+    return { data, status };
+  }
+
   static async PUT_updateChapter(chapterId, content) {
     const { status } = await axios.instance
       .put(`chapter/${chapterId}`, {

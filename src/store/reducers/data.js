@@ -1,17 +1,29 @@
 import { action, computed, thunk } from 'easy-peasy';
-import { ChapterService } from '../../services';
+import ChapterService from '../../services/ChapterService';
+import * as _ from 'lodash';
 
 export default {
   categories: [],
   chapters: [],
+  chapterHeadNum: 0,
   // candidates: [],
 
   addCategory: action((state, payload) => {
-    state.categories.push(payload);
+    const hasFound = state.categories.findIndex(cat => _.isEqual(cat, payload));
+
+    if (hasFound === -1) {
+      state.categories.push(payload);
+    }
   }),
 
   addChapter: action((state, payload) => {
-    state.chapters.push(payload);
+    const hasFound = state.chapters.findIndex(ch =>
+      _.isEqual(ch.deck, payload.deck),
+    );
+
+    if (hasFound === -1) {
+      state.chapters.push(payload);
+    }
   }),
 
   // addCandidate: action((state, payload) => {
@@ -23,25 +35,29 @@ export default {
       const prvChapterId = payload;
       const { userId } = getStoreState().auth;
 
+      // console.log(`fetch info: prv id (${prvChapterId}) <<- ${userId}`);
+      // console.log('--------------------------------');
       const { data } = await ChapterService.GET_getChapter(
         prvChapterId,
         userId,
       );
 
-      if (!data || data.item.length === 0)
-        return;
+      if (!data || !data.item || data.item.length === 0) return;
+
+      // console.log(data.item);
 
       const chapters = data.item;
-      chapters.foreach(feedChapterRecursively);
+      // actions.addChapter({ [getState().chapterHeadNum]: chapters });
+      // chapters.forEach(chapter => {
+      //   // console.log('chapter ---> ', chapter);
 
-      const feedChapterRecursively = chapter => {
-        actions.addChapter(chapter);
+      //   if (!chapter.group_index) return;
 
-        if (!chapter.group_index)
-          continue;
+      //   // actions.populateChapter(chapter.group_index);
+      // });
 
-        actions.populateChapter(chapter.group_index);
-      };
+      console.log(getState().chapters);
+      console.log('--------------------------------');
     },
   ),
 };

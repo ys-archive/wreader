@@ -80,6 +80,7 @@ export const actionsSetWriteCardImageUrl = actions =>
 export const actionsCompleteUploadWriteCardImage = actions =>
   actions.image.completeUploadWriteCardImage;
 
+import { actions as actAuth } from '../reducers/auth';
 import { actions as actData } from '../reducers/data';
 
-export { actData };
+export { actAuth, actData };

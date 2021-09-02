@@ -1,4 +1,4 @@
-import { action, computed } from 'easy-peasy';
+import { action } from 'easy-peasy';
 
 export default {
   // model
@@ -81,4 +81,21 @@ export default {
         : null,
     };
   }),
+};
+
+export const selectors = {
+  selIsLoggedIn: state => state.auth.isLoggedIn,
+  selUserId: state => state.auth.userId,
+  selEmail: state => state.auth.email,
+  selPassword: state => state.auth.password,
+  selInfo: state => state.auth.info,
+};
+
+export const actions = {
+  actLogin: actions => actions.auth.login,
+  actLogout: actions => actions.auth.logout,
+  actSetUserId: actions => actions.auth.setUserId,
+  actSetEmail: actions => actions.auth.setEmail,
+  actSetPassword: actions => actions.auth.setPassword,
+  actSetUserInfo: actions => actions.auth.setUserInfo,
 };
