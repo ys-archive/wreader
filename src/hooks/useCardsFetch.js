@@ -9,11 +9,13 @@ import ChapterService from '../services/ChapterService';
 const initStates = () => {
   const addCategory = useStoreActions(actData.actAddCategory);
   const addChapter = useStoreActions(actData.actAddChapter);
+  const addChapterChild = useStoreActions(actData.actAddChapterChild);
   const userId = useStoreState(selAuth.selUserId);
 
   return {
     addCategory,
     addChapter,
+    addChapterChild,
     userId,
   };
 };
@@ -27,7 +29,7 @@ async function asyncForEach(arr, callback) {
 
 export const useCardsFetch = () => {
   // state 가져오기
-  const { addCategory, addChapter, userId } = initStates();
+  const { addCategory, addChapter, addChapterChild, userId } = initStates();
 
   React.useEffect(() => {
     async function fetch() {
@@ -58,7 +60,7 @@ export const useCardsFetch = () => {
         // temp.push({ deck });
         addChapter({ deck });
         // 이후의 chapterId 로 재귀적으로 fetch
-        await fetchRecursively(deck, userId, addChapter, temp);
+        await fetchRecursively(deck, userId, addChapterChild, temp);
         // addChapter(temp);
       });
     }
@@ -67,14 +69,17 @@ export const useCardsFetch = () => {
   }, []);
 };
 
-const fetchRecursively = async (arr, userId, addChapter, temp) => {
+const fetchRecursively = async (arr, userId, addChapterChild, temp) => {
   await asyncForEach(arr, async item => {
     const { data } = await ChapterService.GET_getChapter(+item.id, userId);
 
     if (data.item.length === 0) return;
 
-    addChapter({ deck: data.item });
+    data.item.forEach(data => {
+      addChapterChild({ deck: data });
+    });
+    
     // temp.push({ deck: data.item });
-    await fetchRecursively(data.item, userId, addChapter, temp);
+    await fetchRecursively(data.item, userId, addChapterChild, temp);
   });
 };
