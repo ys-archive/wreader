@@ -17,7 +17,7 @@ import * as ScreenNames from '#navigators/ScreenNames';
 import { UserService } from '#services';
 
 import { useStoreState } from 'easy-peasy';
-import { selectUserId, selectPassword, selectUserInfo } from '#store/selectors';
+import { selAuth } from '../../../../store/selectors';
 
 const initialValues = {
   instagramUrl: '',
@@ -34,10 +34,10 @@ const validationSchema = Yup.object({
 const MyProfileBasicInfo = () => {
   // TODO: 기본 Profile 정보 불러와 로드하기
   const nav = useNavigation();
-  const userId = useStoreState(selectUserId);
-  const password = useStoreState(selectPassword);
-
-  const userInfo = useStoreState(selectUserInfo);
+  const userId = useStoreState(selAuth.userId);
+  const password = useStoreState(selAuth.password);
+  const userInfo = useStoreState(selAuth.info);
+  
   const { nick, instagram, facebook, intro } = userInfo;
 
   const [isEditingUserInfo, setEditingUserInfo] = useState(false);

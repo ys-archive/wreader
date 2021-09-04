@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { Alert } from '#components/alert';
 
 import { useStoreActions } from 'easy-peasy';
+import { actAuth } from '../../../../../store/actions';
 import {
   actionsLogin,
   actionsSetEmail,
@@ -42,11 +43,12 @@ const validationSchema = Yup.object({
 });
 
 const SigninForms = () => {
-  const login = useStoreActions(actionsLogin);
-  const setEmail = useStoreActions(actionsSetEmail);
-  const setPassword = useStoreActions(actionsSetPassword);
-  const setUserId = useStoreActions(actionsSetUserId);
-  const setUserInfo = useStoreActions(actionsSetUserInfo);
+  const login = useStoreActions(actAuth.login);
+  const setEmail = useStoreActions(actAuth.setEmail);
+  const setPassword = useStoreActions(actAuth.setPassword);
+  const setUserId = useStoreActions(actAuth.setUserId);
+  const setInfo = useStoreActions(actAuth.setInfo);
+
   const nav = useNavigation();
 
   const onSubmit = async values => {
@@ -69,7 +71,7 @@ const SigninForms = () => {
       setEmail(email);
       setPassword(password);
       setUserId(item.id);
-      setUserInfo(item);
+      setInfo(item);
       Alert('로그인 성공');
 
       if ((await SecureStore.getItemAsync('isAutoLogin')) === 'true') {

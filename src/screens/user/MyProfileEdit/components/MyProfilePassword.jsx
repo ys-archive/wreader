@@ -1,21 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, KeyboardAvoidingView, Platform } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Alert } from '#components/alert';
 import { TextInput, Text, Button, RenderError } from '#components';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { UserService } from '#services';
-import { useStoreState, useStoreActions } from 'easy-peasy';
-import { selectUserId } from '#store/selectors';
-import { actionsLogout } from '#store/actions';
-import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '#navigators/ScreenNames';
 import { colors } from '#constants';
-import * as SecureStore from 'expo-secure-store';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { useNavigation } from '@react-navigation/native';
+
+import { UserService } from '#services';
+
+import { useStoreState, useStoreActions } from 'easy-peasy';
+
+import { selAuth } from '../../../../store/selectors';
+import { actAuth } from '../../../../store/actions';
+
+import * as SecureStore from 'expo-secure-store';
 
 const initialValues = {
   password: '',
@@ -29,8 +34,8 @@ const validationSchema = Yup.object({
 
 const MyProfilePassword = ({ isEditingPassword }) => {
   const nav = useNavigation();
-  const userId = useStoreState(selectUserId);
-  const logoutAfterChangingPassword = useStoreActions(actionsLogout);
+  const userId = useStoreState(selAuth.userId);
+  const logoutAfterChangingPassword = useStoreActions(actAuth.logout);
 
   const [currentPasswordLength, setCurrentPasswordLength] = useState(0);
 

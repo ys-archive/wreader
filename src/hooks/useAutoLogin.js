@@ -1,23 +1,17 @@
 import { useEffect } from 'react';
 import { Alert } from '#components/alert';
 import { useStoreActions } from 'easy-peasy';
-import {
-  actionsLogin,
-  actionsSetEmail,
-  actionsSetUserId,
-  actionsSetUserInfo,
-  actionsSetPassword,
-} from '#store/actions';
+import { actAuth } from '../store/actions';
 
 import * as SecureStore from 'expo-secure-store';
 import AuthService from '../services/AuthService';
 
 export const useAutoLogin = () => {
-  const login = useStoreActions(actionsLogin);
-  const setEmail = useStoreActions(actionsSetEmail);
-  const setPassword = useStoreActions(actionsSetPassword);
-  const setUserId = useStoreActions(actionsSetUserId);
-  const setUserInfo = useStoreActions(actionsSetUserInfo);
+  const login = useStoreActions(actAuth.login);
+  const setEmail = useStoreActions(actAuth.setEmail);
+  const setPassword = useStoreActions(actAuth.setPassword);
+  const setUserId = useStoreActions(actAuth.setUserId);
+  const setInfo = useStoreActions(actAuth.setInfo);
 
   useEffect(() => {
     (async () => {
@@ -40,7 +34,7 @@ export const useAutoLogin = () => {
         setEmail(email);
         setPassword(password);
         setUserId(item.id);
-        setUserInfo(item);
+        setInfo(item);
 
         // Alert('자동 로그인 성공');
 

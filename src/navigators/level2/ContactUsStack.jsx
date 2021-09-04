@@ -19,7 +19,7 @@ const ContactUsStack = () => {
       <Stack.Screen
         name={ScreenNames.ContactUs}
         component={ContactUs}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'SUPPORT',
           headerTitleStyle: {
             color: '#fff',
@@ -52,7 +52,7 @@ const ContactUsStack = () => {
       <Stack.Screen
         name={ScreenNames.ContactUsDetail}
         component={ContactUsDetail}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           title: 'SUPPORT',
           headerTitleStyle: {
             color: '#fff',

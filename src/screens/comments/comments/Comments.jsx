@@ -14,17 +14,12 @@ import {
 } from 'react-native-responsive-screen';
 
 import { useNavigation } from '@react-navigation/native';
-// import * as ScreenNames from '../../navigators/ScreenNames';
 
 import { colors } from '../../../constants';
 import { dummyProfile } from '#constants/images';
 
 import { useStoreState } from 'easy-peasy';
-import {
-  selectUserId,
-  selectProfileLocalImagePath,
-  selectProfileImageUrl,
-} from '../../../store/selectors';
+import { selAuth, selImage } from '../../../store/selectors';
 import { CommentsService } from '../../../services';
 
 import { useCommentsLogic } from './useCommentsLogic';
@@ -33,15 +28,15 @@ import CommentItem_Other from '../comment-item/CommentItem_Other';
 
 const Comments = ({ route }) => {
   const nav = useNavigation();
-  const myProfileLocalImagePath = useStoreState(selectProfileLocalImagePath);
-  const myProfileImageUrl = useStoreState(selectProfileImageUrl);
-  const userId = useStoreState(selectUserId);
+
+  const profileUrl = useStoreState(selImage.profile);
+  const userId = useStoreState(selAuth.userId);
 
   const { chapterId } = route.params;
 
   const [newComment, setNewComment] = useState('');
+  
   const [isNewCommentWritten, u1] = useState(false);
-
   const onWriteNewComment = () => u1(prv => !prv);
 
   const data = useCommentsLogic(chapterId, isNewCommentWritten);
@@ -124,8 +119,8 @@ const Comments = ({ route }) => {
           source={
             myProfileLocalImagePath !== ''
               ? { uri: myProfileLocalImagePath }
-              : myProfileImageUrl !== ''
-              ? { uri: myProfileImageUrl }
+              : profileUrl !== ''
+              ? { uri: profileUrl }
               : dummyProfile
           }
         />

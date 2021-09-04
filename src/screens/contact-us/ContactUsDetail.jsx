@@ -6,7 +6,6 @@ import { RenderError } from '#components';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
-import * as ScreenNames from '#navigators/ScreenNames';
 
 import { colors } from '#constants';
 import { StyleSheet, Text, TextInput, Button } from '#components';
@@ -173,9 +172,6 @@ const ContactUsDetail = () => {
             />
           </View>
           <View>
-            {/* <Button style={s.summitButton} onPress={handleSubmit}>
-              보내기
-            </Button> */}
             <Button
               style={s.summitButton}
               textStyle={s.summitText}

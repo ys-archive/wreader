@@ -7,10 +7,10 @@ import { actData } from '../store/actions';
 import ChapterService from '../services/ChapterService';
 
 const initStates = () => {
-  const addCategory = useStoreActions(actData.actAddCategory);
-  const addChapter = useStoreActions(actData.actAddChapter);
-  const addChapterChild = useStoreActions(actData.actAddChapterChild);
-  const userId = useStoreState(selAuth.selUserId);
+  const addCategory = useStoreActions(actData.addCategory);
+  const addChapter = useStoreActions(actData.addChapter);
+  const addChapterChild = useStoreActions(actData.addChapterChild);
+  const userId = useStoreState(selAuth.userId);
 
   return {
     addCategory,
@@ -77,7 +77,9 @@ const fetchRecursively = async (arr, userId, addChapterChild, temp) => {
 
     if (data.item.length === 1) {
       addChapterChild({ deck: data.item[0] });
-    } else {
+    }
+
+    if (data.item.length > 1) {
       data.item.forEach(data => {
         addChapterChild({ deck: data });
       });

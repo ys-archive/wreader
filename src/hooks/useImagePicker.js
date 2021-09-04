@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Platform } from 'react-native';
 import { Alert } from '#components/alert';
 import * as ImagePicker from 'expo-image-picker';

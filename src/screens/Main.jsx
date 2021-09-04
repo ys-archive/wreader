@@ -24,8 +24,8 @@ import { selData } from '../store/selectors';
 import { actData } from '../store/actions';
 
 const getStates = () => {
-  const categories = useStoreState(selData.selCategories);
-  const chapters = useStoreState(selData.selChapters);
+  const categories = useStoreState(selData.categories);
+  const chapters = useStoreState(selData.chapters);
 
   return {
     categories,

@@ -1,8 +1,6 @@
 import React from 'react';
-import { View } from 'react-native';
-import { Text } from '#components';
 import { useStoreState } from 'easy-peasy';
-import { selectIsLoggedIn } from '#store/selectors';
+import { selAuth } from '../../store/selectors';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -11,7 +9,6 @@ import {
 import * as ScreenNames from '../ScreenNames';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
-// import HeaderLeftGoBackHome from '../header/HeaderLeftGoBackHome';
 import DrawerTop from './DrawerTop';
 
 import MainStack from '../level2/MainStack';
@@ -20,13 +17,10 @@ import SigninStack from '../level2/SigninStack';
 import PolicyAndConditionStack from '../level2/PolicyAndConditionStack';
 import MyProfileStack from '../level2/MyProfileStack';
 
-import { colors } from '#constants';
-
 const Drawer = createDrawerNavigator();
 
 const MainDrawer = () => {
-  // const mainDrawerScreenOptions = useMainDrawerScreenOptions();
-  const isLoggedIn = useStoreState(selectIsLoggedIn);
+  const isLoggedIn = useStoreState(selAuth.isLoggedIn);
 
   return (
     <Drawer.Navigator
@@ -39,15 +33,19 @@ const MainDrawer = () => {
         name={ScreenNames.MyProfileStack}
         component={MyProfileStack}
       />
+
       <Drawer.Screen name={ScreenNames.MainStack} component={MainStack} />
+
       <Drawer.Screen
         name={ScreenNames.ContactUsStack}
         component={ContactUsStack}
       />
+
       <Drawer.Screen
         name={ScreenNames.PolicyAndConditionStack}
         component={PolicyAndConditionStack}
       />
+
       {!isLoggedIn && (
         <Drawer.Screen name={ScreenNames.SigninStack} component={SigninStack} />
       )}

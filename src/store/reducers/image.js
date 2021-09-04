@@ -1,57 +1,61 @@
 import { action } from 'easy-peasy';
 
-const model = {
-  profileLocalImagePath: '',
-  profileImageUrl: '',
-  isProfileImageUploaded: false,
-
-  writeCardImageUrl: '',
-  isWriteCardImageUploaded: false,
-};
-
 export default {
-  model,
+  // model,
+  profile: '',
+  isProfileUploaded: false,
 
+  card: '',
+  isCardUploaded: false,
+
+  // actions
   reset: action(state => {
-    state.model.profileLocalImagePath = '';
-    state.model.profileImageUrl = '';
-    state.model.isProfileImageUploaded = false;
+    state.profile = '';
+    state.isProfileUploaded = false;
 
-    state.model.writeCardImageUrl = '';
-    state.model.isWriteCardImageUploaded = false;
+    state.card = '';
+    state.isCardUploaded = false;
   }),
 
-  setProfileLocalIamgePath: action((state, payload) => {
-    if (typeof payload !== 'string') {
-      throw new Error(
-        'setProfileLocalImagePath 는 반드시 string 이어야 합니다.',
-      );
-    }
-
-    state.model.profileLocalImagePath = payload;
-  }),
-
-  setProfileImageUrl: action((state, payload) => {
+  setProfile: action((state, payload) => {
     if (typeof payload !== 'string') {
       throw new Error('setProfileImageUrl 는 반드시 string 이어야 합니다.');
     }
 
-    state.model.profileImageUrl = payload;
+    state.profile = payload;
   }),
 
-  completeUploadProfileImage: action(state => {
-    state.model.isProfileImageUploaded = !state.model.isProfileImageUploaded;
+  completeUploadingProfile: action(state => {
+    state.isProfileUploaded = !state.isProfileUploaded;
   }),
 
-  setWriteCardImageUrl: action((state, payload) => {
+  setCard: action((state, payload) => {
     if (typeof payload !== 'string') {
       throw new Error('setWriteCardImageUrl 는 반드시 string 이어야 합니다.');
     }
 
-    state.model.writeCardImageUrl = payload;
+    state.card = payload;
   }),
 
-  completeUploadWriteCardImage: action(state => {
-    state.model.isWriteCardImageUploaded = !state.model.isWriteCardImageUploaded;
-  })
+  completeUploadingCard: action(state => {
+    state.isCardUploaded = !state.isCardUploaded;
+  }),
+};
+
+export const selectors = {
+  profile: state => state.image.profile,
+  isProfileUploaded: state => state.image.isProfileUploaded,
+
+  card: state => state.image.card,
+  isCardUploaded: state => state.image.isCardUploaded,
+};
+
+export const actions = {
+  reset: actions => actions.image.reset,
+
+  setProfile: actions => actions.image.setProfile,
+  completeUploadingProfile: actions => actions.image.completeUploadingProfile,
+
+  setCard: actions => actions.image.setCard,
+  completeUploadingCard: actions => actions.image.completeUploadingCard,
 };

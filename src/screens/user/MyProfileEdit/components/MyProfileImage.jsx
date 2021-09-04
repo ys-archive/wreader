@@ -5,39 +5,30 @@ import { StyleSheet } from '#components';
 
 import { Photo } from '#components/icon';
 import { colors } from '#constants';
-
-import { useImagePicker, useProfileImageLoader } from '../../../../hooks';
-
-import { useStoreState, useStoreActions } from 'easy-peasy';
-import {
-  actionsCompleteUploadProfileImage,
-  actionsSetProfileImageUrl,
-  // actionsSetProfileLocalImagePath,
-} from '../../../../store/actions';
-
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-import { selectUserId } from '#store/selectors';
+import { useImagePicker, useProfileImageLoader } from '../../../../hooks';
+
+import { useStoreState, useStoreActions } from 'easy-peasy';
+import { actImage } from '../../../../store/actions';
+import { selAuth, selImage } from '../../../../store/selectors';
+
 import { UserService } from '../../../../services';
 import { ImageService } from '../../../../services';
-import { selectProfileImageUrl } from '../../../../store/selectors';
 
 const uploadDirName = 'profileImage';
 
 const MyProfileImage = () => {
-  const userId = useStoreState(selectUserId);
+  const userId = useStoreState(selAuth.userId);
 
-  const setProfileImageUrl = useStoreActions(actionsSetProfileImageUrl);
+  const setProfileImageUrl = useStoreActions(actImage.setProfile);
   const completeUploadProfileImage = useStoreActions(
-    actionsCompleteUploadProfileImage,
+    actImage.completeUploadingProfile,
   );
-  const uri = useStoreState(selectProfileImageUrl);
-  // const setProfileLocalImagePath = useStoreActions(
-  //   actionsSetProfileLocalImagePath,
-  // );
+  const uri = useStoreState(selImage.profile);
 
   // 프로필 이미지 로드
   useProfileImageLoader();

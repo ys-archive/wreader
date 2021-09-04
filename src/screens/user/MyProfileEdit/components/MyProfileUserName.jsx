@@ -2,20 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, KeyboardAvoidingView, Platform } from 'react-native';
 import { Alert } from '#components/alert';
 import { TextInput, Text, Button, RenderError } from '#components';
+import { colors } from '#constants';
+
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+
 import { UserService } from '#services';
+
 import { useStoreState } from 'easy-peasy';
-import { selectUserId, selectUserInfo } from '#store/selectors';
+import { selAuth } from '../../../../store/selectors';
 
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '#navigators/ScreenNames';
-import { colors } from '#constants';
+
 import * as SecureStore from 'expo-secure-store';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
 
 const initialValues = {
   username: '',
@@ -29,8 +29,9 @@ const validationSchema = Yup.object({
 
 const MyProfileUserName = ({ isEditingUserName }) => {
   const nav = useNavigation();
-  const userId = useStoreState(selectUserId);
-  const userInfo = useStoreState(selectUserInfo);
+
+  const userId = useStoreState(selAuth.userId);
+  const userInfo = useStoreState(selAuth.info);
 
   const { nick, instagram, facebook, intro } = userInfo;
 

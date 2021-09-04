@@ -4,6 +4,7 @@ import { StyleSheet, Text, TextInput } from '#components';
 
 import { useStoreState } from 'easy-peasy';
 import { selectEmail, selectUserInfo } from '#store/selectors';
+import { selAuth } from '../../../../store/selectors';
 import { Edit2 } from '#components/icon';
 import { colors } from '#constants';
 import {
@@ -15,7 +16,7 @@ import MyProfilePassword from './MyProfilePassword';
 import MyProfileUserName from './MyProfileUserName';
 
 const MyProfileAccountInfo = () => {
-  const email = useStoreState(selectEmail);
+  const email = useStoreState(selAuth.email);
 
   const [isEditingUserName, setEditingUserName] = useState(false);
   const toggleEditingUserName = () => setEditingUserName(prv => !prv);
@@ -35,7 +36,7 @@ const MyProfileAccountInfo = () => {
       <Text isBold style={s.title}>
         ACCOUNT INFO
       </Text>
-      
+
       <Edit2
         style={{ position: 'absolute', right: -10, top: 60 }}
         onPress={toggleEditingPassword}

@@ -60,12 +60,12 @@ export default {
 };
 
 export const selectors = {
-  selCategories: state => state.data.categories,
-  selChapters: state => state.data.chapters,
+  categories: state => state.data.categories,
+  chapters: state => state.data.chapters,
 };
 
 export const actions = {
-  actAddCategory: actions => actions.data.addCategory,
-  actAddChapter: actions => actions.data.addChapter,
-  actAddChapterChild: actions => actions.data.addChapterChild,
+  addCategory: actions => actions.data.addCategory,
+  addChapter: actions => actions.data.addChapter,
+  addChapterChild: actions => actions.data.addChapterChild,
 };

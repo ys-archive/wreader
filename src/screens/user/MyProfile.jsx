@@ -24,7 +24,7 @@ import {
 import { useProfileImageLoader } from '../../hooks';
 
 import { useStoreState } from 'easy-peasy';
-import { selectUserInfo, selectProfileImageUrl } from '../../store/selectors';
+import { selAuth, selImage } from '../../store/selectors';
 
 const MyProfile = () => {
   const nav = useNavigation();
@@ -39,9 +39,9 @@ const MyProfile = () => {
 
   useProfileImageLoader();
 
-  const uri = useStoreState(selectProfileImageUrl);
-  const userInfo = useStoreState(selectUserInfo);
-  // console.log(userInfo);
+  const uri = useStoreState(selImage.profile);
+  const userInfo = useStoreState(selAuth.info);
+
   if (!userInfo) return null;
 
   const { intro, facebook, instagram, nick } = userInfo;

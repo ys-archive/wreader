@@ -6,19 +6,7 @@ export default {
   userId: 0,
   email: '',
   password: '',
-  info: {
-    instagram: '',
-    facebook: '',
-    intro: '',
-    marketingAgree: 0,
-    nick: '',
-    img: {
-      id: 0,
-      userId: '',
-      path: '',
-      createAt: '',
-    },
-  },
+  info: null,
 
   // actions
   login: action(state => {
@@ -63,7 +51,7 @@ export default {
     state.password = payload;
   }),
 
-  setUserInfo: action((state, payload) => {
+  setInfo: action((state, payload) => {
     // console.log('setUserInfo() : ', payload);
     state.info = {
       nick: payload.nick ?? '',
@@ -84,18 +72,18 @@ export default {
 };
 
 export const selectors = {
-  selIsLoggedIn: state => state.auth.isLoggedIn,
-  selUserId: state => state.auth.userId,
-  selEmail: state => state.auth.email,
-  selPassword: state => state.auth.password,
-  selInfo: state => state.auth.info,
+  isLoggedIn: state => state.auth.isLoggedIn,
+  userId: state => state.auth.userId,
+  email: state => state.auth.email,
+  password: state => state.auth.password,
+  info: state => state.auth.info,
 };
 
 export const actions = {
-  actLogin: actions => actions.auth.login,
-  actLogout: actions => actions.auth.logout,
-  actSetUserId: actions => actions.auth.setUserId,
-  actSetEmail: actions => actions.auth.setEmail,
-  actSetPassword: actions => actions.auth.setPassword,
-  actSetUserInfo: actions => actions.auth.setUserInfo,
+  login: actions => actions.auth.login,
+  logout: actions => actions.auth.logout,
+  setUserId: actions => actions.auth.setUserId,
+  setEmail: actions => actions.auth.setEmail,
+  setPassword: actions => actions.auth.setPassword,
+  setInfo: actions => actions.auth.setInfo,
 };

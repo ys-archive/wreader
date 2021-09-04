@@ -16,27 +16,35 @@ import { StyleSheet, Text } from '#components';
 import * as ScreenNames from '../ScreenNames';
 
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import {
-  selectIsLoggedIn,
-  selectUserInfo,
-  selectProfileImageUrl,
-  // selectProfileLocalImagePath,
-} from '#store/selectors';
-import { actionsLogout, actionsResetImage } from '#store/actions';
+import { actAuth, actImage } from '../../store/actions';
+import { selImage, selAuth } from '../../store/selectors';
 
 import { useProfileImageLoader } from '../../hooks';
 
+const initStates = () => {
+  const isLoggedIn = useStoreState(selAuth.isLoggedIn);
+  const userInfo = useStoreState(selAuth.info);
+  const profileImageUrl = useStoreState(selImage.profile);
+
+  const nick = userInfo?.nick || 'SIGN IN';
+
+  const logout = useStoreActions(actAuth.logout);
+  const resetImage = useStoreActions(actImage.reset);
+
+  return {
+    isLoggedIn,
+    userInfo,
+    profileImageUrl,
+    nick,
+    logout,
+    resetImage,
+  };
+};
+
 const DrawerTop = props => {
   const { navigation: nav } = props;
-  const isLoggedIn = useStoreState(selectIsLoggedIn);
-  const userInfo = useStoreState(selectUserInfo);
-  const profileImageUrl = useStoreState(selectProfileImageUrl);
-
-  const nick = userInfo !== null && userInfo.nick ? userInfo?.nick : 'SIGN IN';
-
-  const logout = useStoreActions(actionsLogout);
-  const resetImage = useStoreActions(actionsResetImage);
-  // const profileLocalImagePath = useStoreState(selectProfileLocalImagePath);
+  const { isLoggedIn, userInfo, profileImageUrl, nick, logout, resetImage } =
+    initStates();
 
   // 프로필 이미지 로드
   useProfileImageLoader();

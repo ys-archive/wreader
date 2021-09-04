@@ -3,17 +3,17 @@ import firebase from 'firebase';
 import * as FileSystem from 'expo-file-system';
 
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import { selectIsProfileImageUploaded } from '../store/selectors';
-import { actionsSetProfileImageUrl } from '../store/actions';
+import { selImage } from '../store/selectors';
+import { actImage } from '../store/actions';
 
 export const useProfileImageLoader = () => {
-  const setProfileImageUrl = useStoreActions(actionsSetProfileImageUrl);
-  const isImageUploaded = useStoreState(selectIsProfileImageUploaded);
+  const setProfile = useStoreActions(actImage.setProfile);
+  const isProfileUploaded = useStoreState(selImage.isProfileUploaded);
 
   useEffect(() => {
     async function loadProfileImage() {
       const ref = firebase.storage().ref().child('profileImage');
-      setProfileImageUrl(await ref.getDownloadURL());
+      setProfile(await ref.getDownloadURL());
     }
 
     loadProfileImage();
@@ -43,5 +43,5 @@ export const useProfileImageLoader = () => {
     //     }
     //   });
     // })();
-  }, [setProfileImageUrl, isImageUploaded]);
+  }, [setProfile, isProfileUploaded]);
 };
