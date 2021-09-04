@@ -39,23 +39,23 @@ export default {
     // undefined
     if (!comparer) return;
 
-    let pos = undefined;
-
-    state.chapters.forEach((chapter, i) => {
-      if (chapter.length === 0) return;
-
-      chapter.forEach((ch, j) => {
-        if (+ch.deck.id === comparer) {
-          pos = { i, j };
+    const findRecursively = arr => {
+      arr.forEach(item => {
+        if (+item.deck.id === comparer) {
+          item.child.push({ deck: payload.deck, child: [] });
           return;
         }
+
+        if (item.child.length > 0) {
+          findRecursively(item.child);
+        }
       });
+    };
+
+    state.chapters.forEach(chapter => {
+      if (chapter.length === 0) return;
+      findRecursively(chapter);
     });
-
-    if (!pos) return;
-
-    const { i, j } = pos;
-    state.chapters[i][j].child.push(payload.deck);
   }),
 };
 

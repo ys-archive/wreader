@@ -75,10 +75,14 @@ const fetchRecursively = async (arr, userId, addChapterChild, temp) => {
 
     if (data.item.length === 0) return;
 
-    data.item.forEach(data => {
-      addChapterChild({ deck: data });
-    });
-    
+    if (data.item.length === 1) {
+      addChapterChild({ deck: data.item[0] });
+    } else {
+      data.item.forEach(data => {
+        addChapterChild({ deck: data });
+      });
+    }
+
     // temp.push({ deck: data.item });
     await fetchRecursively(data.item, userId, addChapterChild, temp);
   });
