@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 export default {
   categories: [],
   chapters: [],
+  isLoaded: false,
 
   addCategory: action((state, payload) => {
     const hasFound = state.categories.findIndex(cat => _.isEqual(cat, payload));
@@ -57,15 +58,21 @@ export default {
       findRecursively(chapter);
     });
   }),
+
+  setLoaded: action((state, payload) => {
+    state.isLoaded = payload;
+  }),
 };
 
 export const selectors = {
   categories: state => state.data.categories,
   chapters: state => state.data.chapters,
+  isLoaded: state => state.data.isLoaded
 };
 
 export const actions = {
   addCategory: actions => actions.data.addCategory,
   addChapter: actions => actions.data.addChapter,
   addChapterChild: actions => actions.data.addChapterChild,
+  setLoaded: actions => actions.data.setLoaded,
 };

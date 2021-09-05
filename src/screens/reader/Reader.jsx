@@ -21,18 +21,18 @@ const Reader = ({ children }) => {
   const { forceSwipeVertically, forceSwipeHorizontally, getStyle } =
     useSwipeGesture();
 
-  const { onSwipeLeft, onSwipeRight } = useSwipeHorizontal(
-    forceSwipeHorizontally,
-  );
-  const { onSwipeUp, onSwipeDown } = useSwipeVertical(forceSwipeVertically);
+  // const { onSwipeLeft, onSwipeRight } = useSwipeHorizontal(
+  //   forceSwipeHorizontally,
+  // );
+  // const { onSwipeUp, onSwipeDown } = useSwipeVertical(forceSwipeVertically);
 
   return (
     <View style={s.root}>
       <GestureRecognizer
-        onSwipeUp={onSwipeUp}
-        onSwipeDown={onSwipeDown}
-        onSwipeLeft={onSwipeLeft}
-        onSwipeRight={onSwipeRight}
+        // onSwipeUp={onSwipeUp}
+        // onSwipeDown={onSwipeDown}
+        // onSwipeLeft={onSwipeLeft}
+        // onSwipeRight={onSwipeRight}
         config={swipeConfig}
         style={s.recognizer}
       >

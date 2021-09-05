@@ -3,7 +3,7 @@ import { Coordinates } from './swiper.coords';
 
 export default {
   categoryIdx: 0,
-  depth: 0,
+  depth: 3,
   coords: new Coordinates(0, 0, 0),
 };
 

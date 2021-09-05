@@ -21,20 +21,16 @@ import { useCategoryCardExposer_Category } from './useCategoryCardExposer_Catego
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '../../../navigators/ScreenNames';
 
-const CategoryCard = ({ category, categoryIdx }) => {
-  const { title, subTitle, imageUri } = category;
+const CategoryCard = ({ data }) => {
   const nav = useNavigation();
+  const { title, subTitle, imageUri } = data;
 
-  const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
-  const isFirstCandidate = useStoreState(selectIsFirstCandidate);
-  const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
-
-  const { predicatedPosition, predicatedScale } =
-    useCategoryCardExposer_Category(
-      currentCategoryIdx + 1 === categoryIdx,
-      currentCategoryIdx - 1 === categoryIdx,
-      isFirstCandidate && currentChapterIdx === 1,
-    );
+  // const { predicatedPosition, predicatedScale } =
+  //   useCategoryCardExposer_Category(
+  //     currentCategoryIdx + 1 === categoryIdx,
+  //     currentCategoryIdx - 1 === categoryIdx,
+  //     isFirstCandidate && currentChapterIdx === 1,
+  //   );
 
   const goWriteCard = () => {
     console.log('New Write Card');
@@ -51,8 +47,8 @@ const CategoryCard = ({ category, categoryIdx }) => {
             borderRadius: 20,
             overflow: 'hidden',
           },
-          predicatedPosition,
-          predicatedScale,
+          // predicatedPosition,
+          // predicatedScale,
         ]}
         source={makeCategoryBGImagePath(title)}
         // source={{ uri: bgImgUri }}

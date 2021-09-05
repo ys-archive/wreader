@@ -1,76 +1,55 @@
 import React, { useEffect } from 'react';
 import { View, ActivityIndicator, ScrollView } from 'react-native';
 import { StyleSheet, Text } from '#components';
+import { Logo, Sort, Menu } from '#components/icon';
+
 import { useNavigation } from '@react-navigation/native';
 
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import {
-  actionsSetLastCategoryIdx,
-  actionsSetLastChapterIdx,
-  actionsLockMovingChapter,
-} from '#store/actions';
-import { selectCurrentCategoryIdx } from '#store/selectors';
+import { selData, selSwiper } from '../store/selectors';
+import { actData } from '../store/actions';
 
 import { useGetSWR, useAutoLogin } from '../hooks';
 
 import EventModal from '#components/modals/EventModal';
-import CategoryCardContainer from '../components/reader-card/category/CategoryCardContainer';
 import Reader from './reader/Reader';
+import CategoryCard from '../components/reader-card/category/CategoryCard';
+import ChapterCard from '../components/reader-card/chapter/chapter-card/ChapterCard';
 
-import { Logo, Sort, Menu } from '#components/icon';
 import { useCardsFetch } from '../hooks/useCardsFetch';
-
-import { selData } from '../store/selectors';
-import { actData } from '../store/actions';
 
 const getStates = () => {
   const categories = useStoreState(selData.categories);
   const chapters = useStoreState(selData.chapters);
+  const isLoaded = useStoreState(selData.isLoaded);
+
+  const categoryIdx = useStoreState(selSwiper.categoryIdx);
+  const depth = useStoreState(selSwiper.depth);
+  const coords = useStoreState(selSwiper.coords);
 
   return {
     categories,
     chapters,
+    isLoaded,
+    categoryIdx,
+    depth,
+    coords,
   };
 };
 
 const Main = () => {
   const nav = useNavigation();
 
-  const { categories, chapters } = getStates();
-
-  // console.log(`categories ----> ${categories}`);
-  // console.log(`chapters ----> ${chapters}`);
-
-  // const setLastCategoryIdx = useStoreActions(actionsSetLastCategoryIdx);
-  // const setLastChapterIdx = useStoreActions(actionsSetLastChapterIdx);
-  // const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
-
-  // const lockMovingChapter = useStoreActions(actionsLockMovingChapter);
-
-  // const { data: rootData, isLoading, error } = useGetSWR(`category`);
-
-  // useAutoLogin();
-
-  // useEffect(() => {
-  //   // 카테고리 데이터 없으면 갱신 X
-  //   if (!rootData) {
-  //     return;
-  //   }
-
-  //   // 현재 총 카테고리 갯수
-  //   const totalCategoryCount = rootData.item.length;
-  //   // 현재 카테고리의 총 챕터 갯수
-  //   const totalChapterCount = rootData.item[currentCategoryIdx].chapter.length;
-
-  //   // 현재 챕터가 0 개이면 종 방향 이동 잠금
-  //   lockMovingChapter(totalChapterCount <= 0);
-
-  //   // 마지막 카테고리 & 챕터 갯수 갱신
-  //   setLastCategoryIdx(totalCategoryCount);
-  //   setLastChapterIdx(totalChapterCount);
-  // }, [currentCategoryIdx, rootData]);
-
   useCardsFetch();
+
+  const { categories, chapters, isLoaded, categoryIdx, depth, coords } =
+    getStates();
+
+  if (!isLoaded) return null;
+
+  // if (!categories) return null;
+  // if (!chapters) return null;
+  // if (!coords) return null;
 
   const onPressSortIcon = () => {
     console.log('정렬 아이콘');
@@ -81,29 +60,60 @@ const Main = () => {
     nav.openDrawer();
   };
 
-  // if (error) {
-  //   return (
-  //     <View>
-  //       <Text>로드 중 에러!</Text>
-  //     </View>
-  //   );
-  // }
+  let Card = null;
+  // const { x, y, z } = coords;
 
-  // if (isLoading) {
-  //   return (
-  //     <View>
-  //       <ActivityIndicator size="large" />
-  //     </View>
-  //   );
-  // }
+  switch (depth) {
+    case 0:
+      {
+        // console.log(categories[categoryIdx]);
 
-  // if (!rootData || !rootData.item) {
-  //   return (
-  //     <View>
-  //       <Text>get category 의 데이터가 없습니다!</Text>
-  //     </View>
-  //   );
-  // }
+        Card = <CategoryCard data={categories[categoryIdx]} />;
+      }
+      break;
+
+    case 1:
+      {
+        // console.log(chapters[categoryIdx][coords.x].deck);
+
+        Card = (
+          <ChapterCard
+            data={chapters[categoryIdx][coords.x].deck}
+            categoryTitle={categories[categoryIdx].title}
+          />
+        );
+      }
+      break;
+
+    case 2:
+      {
+        // console.log(chapters[categoryIdx][coords.x].child[coords.y]);
+        Card = (
+          <ChapterCard
+            data={chapters[categoryIdx][coords.x].child[coords.y].deck}
+            categoryTitle={categories[categoryIdx].title}
+          />
+        );
+      }
+      break;
+
+    case 3:
+      {
+        Card = (
+          <ChapterCard
+            data={
+              chapters[categoryIdx][coords.x].child[coords.y].child[coords.z]
+                .deck
+            }
+            categoryTitle={categories[categoryIdx].title}
+          />
+        );
+      }
+      break;
+
+    default:
+      break;
+  }
 
   return (
     <View style={s.root}>
@@ -111,11 +121,7 @@ const Main = () => {
       <Sort onPress={onPressSortIcon} />
       <Menu onPress={onPressMenuIcon} />
       {/* <EventModal /> */}
-      {/* <Reader> */}
-      {/* <CategoryCardContainer rootData={rootData.item} /> */}
-      {/* </Reader> */}
-      {/* <ScrollView scrollEnabled={false}> */}
-      {/* </ScrollView> */}
+      <Reader>{Card}</Reader>
     </View>
   );
 };

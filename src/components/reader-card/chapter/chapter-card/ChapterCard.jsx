@@ -14,17 +14,10 @@ import { makeCategoryBGImagePath, dummyProfile } from '#constants/images';
 
 import { useLikeUpdate } from '../../../../contexts/chapterDataContext';
 import { useStoreState } from 'easy-peasy';
-import {
-  selectProfileLocalImagePath,
-  selectProfileImageUrl,
-  selectIsLoggedIn,
-  selectUserId,
-  selectCurrentChapterIdx,
-  selectCurrentCandidateIdx,
-} from '#store/selectors';
+import { selAuth, selImage, selSwiper } from '../../../../store/selectors';
 
-import { useChapterCardExposer_Chapter } from './useChapterCardExposer_Chapter';
-import { useChapterCardExposer_Category } from './useChapterCardExposer_Category';
+// import { useChapterCardExposer_Chapter } from './useChapterCardExposer_Chapter';
+// import { useChapterCardExposer_Category } from './useChapterCardExposer_Category';
 
 import { ChapterService } from '../../../../services';
 import * as ScreenNames from '../../../../navigators/ScreenNames';
@@ -33,38 +26,46 @@ import { useNavigation } from '@react-navigation/native';
 const borderRadiusOutside = 20;
 const borderRadiusInside = 17;
 
-const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
+const initStates = () => {
+  const isLoggedIn = useStoreState(selAuth.isLoggedIn);
+  const userId = useStoreState(selAuth.userId);
+
+  const profile = useStoreState(selImage.profile);
+
+  return {
+    isLoggedIn,
+    userId,
+    profile,
+  };
+};
+
+// const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
+const ChapterCard = ({ data, categoryTitle }) => {
   const nav = useNavigation();
 
-  const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
-  const currentCandidateIdx = useStoreState(selectCurrentCandidateIdx);
-  const isMovingChapterLock = currentCandidateIdx !== 0;
-
-  const [_, updateLike] = useLikeUpdate();
-
   // 챕터간 이전/다음 노출을 위한 스타일링 hook
-  const chapterOrder = chapterIdx + 1;
-  const {
-    predicatedPositionBetweenChapters,
-    predicatedScaleBGBetweenChapters,
-    predicatedScaleProfileBetweenChapters,
-    predicatedScaleInsideBGBetweenChapters,
-    predicatedScaleBottomSectionBetweenChapters,
-  } = useChapterCardExposer_Chapter(
-    isMovingChapterLock,
-    currentChapterIdx + 1 === chapterOrder,
-    currentChapterIdx - 1 === chapterOrder,
-  );
+  // const chapterOrder = chapterIdx + 1;
+  // const {
+  //   predicatedPositionBetweenChapters,
+  //   predicatedScaleBGBetweenChapters,
+  //   predicatedScaleProfileBetweenChapters,
+  //   predicatedScaleInsideBGBetweenChapters,
+  //   predicatedScaleBottomSectionBetweenChapters,
+  // } = useChapterCardExposer_Chapter(
+  //   isMovingChapterLock,
+  //   currentChapterIdx + 1 === chapterOrder,
+  //   currentChapterIdx - 1 === chapterOrder,
+  // );
 
-  // 챕터 내 후보간 이전/다음 노출을 위한 스타일링 hook
-  const candidateOrder = candidateIdx + 1;
-  const { predicatedPositionBetweenCandidates } =
-    useChapterCardExposer_Category(
-      currentCandidateIdx + 1 === candidateOrder,
-      currentCandidateIdx - 1 === candidateOrder,
-      candidateIdx,
-      isMovingChapterLock,
-    );
+  // // 챕터 내 후보간 이전/다음 노출을 위한 스타일링 hook
+  // const candidateOrder = candidateIdx + 1;
+  // const { predicatedPositionBetweenCandidates } =
+  //   useChapterCardExposer_Category(
+  //     currentCandidateIdx + 1 === candidateOrder,
+  //     currentCandidateIdx - 1 === candidateOrder,
+  //     candidateIdx,
+  //     isMovingChapterLock,
+  //   );
 
   const {
     id: chapterId, // 현재 챕터 Id
@@ -80,43 +81,37 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
     isLike,
   } = data;
 
-  const isLoggedIn = useStoreState(selectIsLoggedIn);
-  const userId = useStoreState(selectUserId);
+  const onPressLike = () => {};
+  // const onPressLike = useCallback(async () => {
+  // if (!isLoggedIn) {
+  //   Alert("You can't like before logging in.");
+  //   return;
+  // }
 
-  const myProfileLocalImagePath = useStoreState(selectProfileLocalImagePath);
-  const myProfileImageUrl = useStoreState(selectProfileImageUrl);
+  // 이미 좋아요 했음
+  // if (isLike === 1) {
+  //   await ChapterService.DELETE_unlikeChapter(chapterId, userId);
+  // } else {
+  //   await ChapterService.POST_likeChapter(chapterId, userId);
+  // }
 
-  const onPressLike = useCallback(async () => {
-    if (!isLoggedIn) {
-      Alert("You can't like before logging in.");
-      return;
-    }
+  // updateLike();
+  // }, [isLoggedIn, userId, chapterId]);
 
-    // 이미 좋아요 했음
-    if (isLike === 1) {
-      await ChapterService.DELETE_unlikeChapter(chapterId, userId);
-    } else {
-      await ChapterService.POST_likeChapter(chapterId, userId);
-    }
+  const onPressReply = () => {};
+  // nav.navigate(ScreenNames.MainComments, {
+  //   chapterId,
+  // });
 
-    updateLike();
-  }, [isLoggedIn, userId, chapterId]);
+  const goWriteCardDirectly = () => {};
+  // nav.navigate(ScreenNames.MainWriteCard, {
+  //   categoryTitle,
+  //   chapterIdx,
+  // });
 
-  const onPressReply = () =>
-    nav.navigate(ScreenNames.MainComments, {
-      chapterId,
-    });
-
-  const goWriteCardDirectly = () =>
-    nav.navigate(ScreenNames.MainWriteCard, {
-      categoryTitle,
-      chapterIdx,
-    });
-
-  const coverUri =
-    chapterImg && chapterImg !== ''
-      ? { uri: chapterImg }
-      : makeCategoryBGImagePath(categoryTitle);
+  const coverUri = chapterImg
+    ? { uri: chapterImg }
+    : makeCategoryBGImagePath(categoryTitle);
 
   return (
     <View style={s.root}>
@@ -129,9 +124,9 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
             overflow: 'hidden',
             alignItems: 'center',
           },
-          predicatedPositionBetweenChapters,
-          predicatedPositionBetweenCandidates,
-          predicatedScaleBGBetweenChapters,
+          // predicatedPositionBetweenChapters,
+          // predicatedPositionBetweenCandidates,
+          // predicatedScaleBGBetweenChapters,
         ]}
         source={coverUri}
         // resizeMode="contain"
@@ -145,7 +140,7 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
                 height: 30,
                 borderRadius: 100,
               },
-              predicatedScaleProfileBetweenChapters,
+              // predicatedScaleProfileBetweenChapters,
             ]}
             source={userImg && userImg !== '' ? { uri: userImg } : dummyProfile}
           />
@@ -163,7 +158,7 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
               backgroundColor: colors.light.chapterBGInside,
               borderRadius: borderRadiusInside,
             },
-            predicatedScaleInsideBGBetweenChapters,
+            // predicatedScaleInsideBGBetweenChapters,
           ]}
         >
           {/* 챕터 제목 */}
@@ -179,9 +174,9 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
             <Text isBold style={s.chapterOrderPlaceholder}>
               CHAPTER
             </Text>
-            <Text isBold style={s.chapterOrderText}>
+            {/* <Text isBold style={s.chapterOrderText}>
               {chapterOrder}
-            </Text>
+            </Text> */}
           </View>
 
           {/* 챕터 내용 */}
@@ -198,7 +193,7 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
           <View
             style={[
               s.bottomSection,
-              predicatedScaleBottomSectionBetweenChapters,
+              // predicatedScaleBottomSectionBetweenChapters,
             ]}
           >
             <View style={s.bottomInfoPlacer}>
@@ -221,11 +216,8 @@ const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
                   borderRadius: 100,
                 }}
                 source={
-                  myProfileLocalImagePath && myProfileLocalImagePath !== ''
-                    ? { uri: myProfileLocalImagePath }
-                    : myProfileImageUrl && myProfileImageUrl !== ''
-                    ? { uri: myProfileImageUrl }
-                    : dummyProfile
+                  dummyProfile
+                  // myProfileImageUrl ? { uri: myProfileImageUrl } : dummyProfile
                 }
               />
               <TextInput
