@@ -55,6 +55,14 @@ export const useSwipeRight = forceSwipeHorizontally => {
 
       case DEPTH_NAME.NEXT:
         return state => {
+          if (coords.d3 === 0) {
+            decreaseDepth();
+          }
+
+          if (coords.d3 > 0) {
+            decreaseCoords('d3');
+          }
+
           shared();
         };
 

@@ -32,8 +32,13 @@ export const useSwipeUp = forceSwipeVertically => {
     switch (depth) {
       case DEPTH_NAME.CATEGORY:
         return state => {
-          if (maxCoords.d0 !== 0 && coords.d0 === maxCoords.d0 - 1) {
-            console.log('마지막 카테고리라 아랫 카드가 없음');
+          if (coords.d0 === maxCoords.d0 - 1) {
+            if (maxCoords.d0 !== 0) {
+              console.log('마지막 카테고리!, 이전 카드로 돌아감!');
+              decreaseCoords('d0');
+            } else {
+              console.log('마지막 카테고리!, 첫 카테고리라 이전으로 돌아가진 않음');
+            }
             return;
           }
 
@@ -44,22 +49,13 @@ export const useSwipeUp = forceSwipeVertically => {
 
       case DEPTH_NAME.CHAPTER:
         return state => {
-          // 현재 카테고리의
-          // 현재 챕터의
-          // 유저 챕터
-          if (!chapters[coords.d0][coords.d1].child[coords.d2]) {
-            console.log(
-              '해당 챕터의 유저 챕터가 존재 하지 않음. 새로운 카드 작성',
-            );
-            // todo: 새 카드 작성
+          // 현재 카테고리의 현재 챕터의 유저 챕터
+          if (!chapters[coords.d0][coords.d1].child[coords.d2].length === 0) {
             return;
           }
 
           increaseDepth();
           setMaxCoords({ d2: chapters });
-          // if (depth === 1) {
-          //   // increaseCoords('d2');
-          // }
 
           shared();
         };
@@ -67,7 +63,10 @@ export const useSwipeUp = forceSwipeVertically => {
       case DEPTH_NAME.USER_CHAPTER:
         return state => {
           if (maxCoords.d2 !== 0 && coords.d2 === maxCoords.d2 - 1) {
-            console.log('마지막 유저 챕터, 아랫 카드가 없음');
+            console.log(
+              '해당 챕터의 유저 챕터가 존재 하지 않음. 새로운 카드 작성',
+            );
+            // todo: 새 카드 작성
             return;
           }
 
