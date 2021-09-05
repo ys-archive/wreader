@@ -29,37 +29,37 @@ const initStates = () => {
 const CardsRenderer = () => {
   useCardsFetch();
 
-  const { categories, chapters, isLoaded, depth, coords } =
-    initStates();
+  const { categories, chapters, isLoaded, depth, coords } = initStates();
 
   if (!isLoaded) return null;
 
-  const { x, y, z } = coords;
+  const { d0, d1, d2, d3 } = coords;
+  console.log(d0, d1, d2, d3);
 
   let CardJSX = undefined;
-  const curCategory = categories[coords.d0];
-  const curChapter = chapters[coords.d0];
+  const curCategory = categories[d0];
+  const curChapter = chapters[d0];
 
   if (depth === 0) {
     CardJSX = <CategoryCard data={curCategory} />;
   } else if (depth === 1) {
     CardJSX = (
       <ChapterCard
-        data={curChapter[x].deck}
+        data={curChapter[d1].deck}
         categoryTitle={curCategory.title}
       />
     );
   } else if (depth === 2) {
     CardJSX = (
       <ChapterCard
-        data={curChapter[x].child[y].deck}
+        data={curChapter[d1].child[d2].deck}
         categoryTitle={curCategory.title}
       />
     );
   } else if (depth === 3) {
     CardJSX = (
       <ChapterCard
-        data={curChapter[x].child[y].child[z].deck}
+        data={curChapter[d1].child[d2].child[d3].deck}
         categoryTitle={curCategory.title}
       />
     );

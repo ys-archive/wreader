@@ -1,31 +1,56 @@
-import { useStoreState, useStoreActions } from 'easy-peasy';
-import { selData, selSwiper } from '../store/selectors';
-import { actSwiper } from '../store/actions';
 import { DEPTH_NAME } from '../store/reducers/swiper.depth';
 import { useSwipeStates } from './useSwipeStates';
 
 export const useSwipeRight = forceSwipeHorizontally => {
-  const states = useSwipeStates();
-  if (!states.isLoaded) return null;
+  const {
+    categories,
+    chapters,
+    isLoaded,
+
+    depth,
+    coords,
+    maxCoords,
+
+    setDepth,
+    increaseDepth,
+    decreaseDepth,
+
+    setCoords,
+    setMaxCoords,
+    increaseCoords,
+    decreaseCoords,
+  }  = useSwipeStates();
+  if (!isLoaded) return null;
 
   return () => {
     const shared = () => {
+      console.log('swipe to right');
       forceSwipeHorizontally('right');
       // swipeToRight();
     };
 
-    switch (states.depth) {
+    switch (depth) {
       case DEPTH_NAME.CATEGORY:
-        return undefined; // 카테고리 렌더에서는, 오른쪽 스와이프 X
+        return state => {
+          console.log('카테고리에서 우측 스와이프는 허용되지 않음.');
+        };
 
       case DEPTH_NAME.CHAPTER:
         return state => {
+          if (coords.d1 === 0) {
+            decreaseDepth();
+          }
+
+          if (coords.d1 > 0) {
+            decreaseCoords('d1');
+          }
+
           shared();
         };
 
       case DEPTH_NAME.USER_CHAPTER:
         return state => {
-          shared();
+          console.log('유저 챕터에서 우측 스와이프는 허용되지 않음.');
         };
 
       case DEPTH_NAME.NEXT:

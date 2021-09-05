@@ -99,7 +99,7 @@ export const useCardsFetch = () => {
     states.setMaxCoords({ d2: states.chapters });
     states.setMaxCoords({ d3: states.chapters });
 
-    console.log(states.maxCoords);
+    console.log('max coords: ', states.maxCoords);
   }, [states.isLoaded]);
 };
 

@@ -22,8 +22,8 @@ export const useSwipeStates = () => {
 
   const setCoords = useStoreActions(actSwiper.setCoords);
   const setMaxCoords = useStoreActions(actSwiper.setMaxCoords);
-  const incrementCoords = useStoreActions(actSwiper.incrementCoords);
-  const decrementCoords = useStoreActions(actSwiper.decrementCoords);
+  const increaseCoords = useStoreActions(actSwiper.increaseCoords);
+  const decreaseCoords = useStoreActions(actSwiper.decreaseCoords);
 
   return {
     categories,
@@ -40,7 +40,7 @@ export const useSwipeStates = () => {
 
     setCoords,
     setMaxCoords,
-    incrementCoords,
-    decrementCoords,
+    increaseCoords,
+    decreaseCoords,
   };
 };

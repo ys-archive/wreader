@@ -5,29 +5,58 @@ import { DEPTH_NAME } from '../store/reducers/swiper.depth';
 import { useSwipeStates } from './useSwipeStates';
 
 export const useSwipeLeft = forceSwipeHorizontally => {
-  const states = useSwipeStates();
-  if (!states.isLoaded) return null;
+  const {
+    categories,
+    chapters,
+    isLoaded,
+
+    depth,
+    coords,
+    maxCoords,
+
+    setDepth,
+    increaseDepth,
+    decreaseDepth,
+
+    setCoords,
+    setMaxCoords,
+    increaseCoords,
+    decreaseCoords,
+  } = useSwipeStates();
+  if (!isLoaded) return null;
 
   return () => {
     const shared = () => {
+      console.log('swipe to left');
       forceSwipeHorizontally('left');
       // swipeToLeft();
     };
 
-    switch (states.depth) {
+    switch (depth) {
       case DEPTH_NAME.CATEGORY:
-        const { coords, chapters } = states;
         return state => {
-          if (!chapters[coords.d1]) {
+          // 현재 카테고리의
+          // 챕터
+          if (!chapters[coords.d0][coords.d1]) {
             console.log('해당 카테고리의 챕터가 존재하지 않음');
             return;
           }
+
+          increaseDepth();
+          setMaxCoords({ d1: chapters });
 
           shared();
         };
 
       case DEPTH_NAME.CHAPTER:
         return state => {
+          if (coords.d1 === maxCoords.d1 - 1) {
+            console.log('마지막 챕터!');
+            return;
+          }
+
+          increaseCoords('d1');
+
           shared();
         };
 

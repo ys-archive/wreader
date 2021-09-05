@@ -19,9 +19,6 @@ export default {
     decrement: action(state => {
       --state.val;
     }),
-
-    // isFirst: computed(state => state.depth.val === DEPTH_NAME.FIRST),
-    // isLast: computed(state => state.depth.val === DEPTH_NAME.MAX),
   },
 
   coords: {
@@ -40,17 +37,51 @@ export default {
     }),
 
     increment: action((state, payload) => {
-      if ('d0' === payload) state.val.setD0(state.val.d0 + 1);
-      if ('d1' === payload) state.val.setD1(state.val.d1 + 1);
-      if ('d2' === payload) state.val.setD2(state.val.d2 + 1);
-      if ('d3' === payload) state.val.setD3(state.val.d3 + 1);
+      if ('d0' === payload) {
+        state.val = new Coordinates({ ...state.val, d0: state.val.d0 + 1 });
+        return;
+      }
+
+      if ('d1' === payload) {
+        state.val = new Coordinates({ ...state.val, d1: state.val.d1 + 1 });
+        return;
+      }
+
+      if ('d2' === payload) {
+        state.val = new Coordinates({ ...state.val, d2: state.val.d2 + 1 });
+        return;
+      }
+
+      if ('d3' === payload) {
+        state.val = new Coordinates({ ...state.val, d3: state.val.d3 + 1 });
+        return;
+      }
+
+      console.log('cur coords: ', state.val);
     }),
 
     decrement: action((state, payload) => {
-      if ('d0' === payload) state.val.setD0(state.val.d0 - 1);
-      if ('d1' === payload) state.val.setD1(state.val.d1 - 1);
-      if ('d2' === payload) state.val.setD2(state.val.d2 - 1);
-      if ('d3' === payload) state.val.setD3(state.val.d3 - 1);
+      if ('d0' === payload) {
+        state.val = new Coordinates({ ...state.val, d0: state.val.d0 - 1 });
+        return;
+      }
+
+      if ('d1' === payload) {
+        state.val = new Coordinates({ ...state.val, d1: state.val.d1 - 1 });
+        return;
+      }
+
+      if ('d2' === payload) {
+        state.val = new Coordinates({ ...state.val, d2: state.val.d2 - 1 });
+        return;
+      }
+
+      if ('d3' === payload) {
+        state.val = new Coordinates({ ...state.val, d3: state.val.d3 - 1 });
+        return;
+      }
+
+      console.log('cur coords: ', state.val);
     }),
 
     set: action((state, payload) => {
@@ -97,8 +128,8 @@ export const actions = {
   decreaseDepth: actions => actions.swiper.depth.decrement,
 
   setCoords: actions => actions.swiper.coords.set,
-  incrementCoords: actions => actions.swiper.coords.increment,
-  decrementCoords: actions => actions.swiper.coords.decrement,
+  increaseCoords: actions => actions.swiper.coords.increment,
+  decreaseCoords: actions => actions.swiper.coords.decrement,
 
   initCoords: actions => actions.swiper.coords.init,
   setMaxCoords: actions => actions.swiper.coords.setMax,

@@ -2,36 +2,59 @@ import { DEPTH_NAME } from '../store/reducers/swiper.depth';
 import { useSwipeStates } from './useSwipeStates';
 
 export const useSwipeDown = forceSwipeVertically => {
-  const states = useSwipeStates();
-  if (!states.isLoaded) return null;
+  const {
+    categories,
+    chapters,
+    isLoaded,
+
+    depth,
+    coords,
+    maxCoords,
+
+    setDepth,
+    increaseDepth,
+    decreaseDepth,
+
+    setCoords,
+    setMaxCoords,
+    increaseCoords,
+    decreaseCoords,
+  } = useSwipeStates();
+  if (!isLoaded) return null;
 
   return () => {
     const shared = () => {
+      console.log('swipe to down');
       forceSwipeVertically('down');
       // swipeToDown();
     };
 
-    switch (states.depth) {
+    switch (depth) {
       case DEPTH_NAME.CATEGORY:
-        const { coords, decrementCoords } = states;
         return state => {
           if (coords.d0 === 0) {
             console.log('첫 카테고리에서 윗 카드가 없음');
             return;
           }
 
-          decrementCoords('d0');
+          decreaseCoords('d0');
 
           shared();
         };
 
       case DEPTH_NAME.CHAPTER:
         return state => {
-          shared();
+          console.log('챕터에서는 하방 스와이프는 허용되지 않음');
         };
 
       case DEPTH_NAME.USER_CHAPTER:
         return state => {
+          if (coords.d2 === 0) {
+            decreaseDepth();
+            return;
+          }
+
+          decreaseCoords('d2');
           shared();
         };
 
