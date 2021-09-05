@@ -3,38 +3,36 @@ import { selData, selSwiper } from '../store/selectors';
 import { actSwiper } from '../store/actions';
 
 export const useSwipeStates = () => {
+  // selectors
+  // - data
+  const categories = useStoreState(selData.categories);
+  const chapters = useStoreState(selData.chapters);
+  const isLoaded = useStoreState(selData.isLoaded);
+
+  // - swiper
   const depth = useStoreState(selSwiper.depth);
-  const categoryIdx = useStoreState(selSwiper.category);
   const coords = useStoreState(selSwiper.coords);
   const maxCoords = useStoreState(selSwiper.maxCoords);
 
-  const isFirstCategory = useStoreState(selSwiper.isFirstCategory);
-  const isLastCategory = useStoreState(selSwiper.isLastCategory);
-
-  const setCategoryIdx = useStoreActions(actSwiper.setCategory);
-  const increaseCategoryIdx = useStoreActions(actSwiper.increaseCategory);
-  const decreaseCategoryIdx = useStoreActions(actSwiper.decreaseCategory);
-
+  // actions
+  // - swiper
   const setDepth = useStoreActions(actSwiper.setDepth);
   const increaseDepth = useStoreActions(actSwiper.increaseDepth);
   const decreaseDepth = useStoreActions(actSwiper.decreaseDepth);
 
   const setCoords = useStoreActions(actSwiper.setCoords);
-
   const setMaxCoords = useStoreActions(actSwiper.setMaxCoords);
+  const incrementCoords = useStoreActions(actSwiper.incrementCoords);
+  const decrementCoords = useStoreActions(actSwiper.decrementCoords);
 
   return {
+    categories,
+    chapters,
+    isLoaded,
+
     depth,
-    categoryIdx,
     coords,
     maxCoords,
-
-    isFirstCategory,
-    isLastCategory,
-
-    setCategoryIdx,
-    increaseCategoryIdx,
-    decreaseCategoryIdx,
 
     setDepth,
     increaseDepth,
@@ -42,5 +40,7 @@ export const useSwipeStates = () => {
 
     setCoords,
     setMaxCoords,
+    incrementCoords,
+    decrementCoords,
   };
 };

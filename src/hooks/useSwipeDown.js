@@ -3,6 +3,7 @@ import { useSwipeStates } from './useSwipeStates';
 
 export const useSwipeDown = forceSwipeVertically => {
   const states = useSwipeStates();
+  if (!states.isLoaded) return null;
 
   return () => {
     const shared = () => {
@@ -10,13 +11,16 @@ export const useSwipeDown = forceSwipeVertically => {
       // swipeToDown();
     };
 
-    switch (depth) {
+    switch (states.depth) {
       case DEPTH_NAME.CATEGORY:
-        const { isFirstCategory, decreaseCategoryIdx } = states;
+        const { coords, decrementCoords } = states;
         return state => {
-          if (isFirstCategory) return; // 첫 카테고리에서 윗 카드가 없음
+          if (coords.d0 === 0) {
+            console.log('첫 카테고리에서 윗 카드가 없음');
+            return;
+          }
 
-          decreaseCategoryIdx();
+          decrementCoords('d0');
 
           shared();
         };

@@ -1,3 +1,4 @@
+import { TabRouter } from '@react-navigation/routers';
 import { action, computed } from 'easy-peasy';
 import { Coordinates, MaxCoordinates } from './swiper.coords';
 import { DEPTH_NAME } from './swiper.depth';
@@ -8,19 +9,19 @@ export default {
     val: DEPTH_NAME.CATEGORY,
 
     set: action((state, payload) => {
-      state.depth.val = payload;
+      state.val = payload;
     }),
 
     increment: action(state => {
-      ++state.depth.val;
+      ++state.val;
     }),
 
     decrement: action(state => {
-      --state.depth.val;
+      --state.val;
     }),
 
-    isFirst: computed(state => state.depth.val === DEPTH_NAME.FIRST),
-    isLast: computed(state => state.depth.val === DEPTH_NAME.MAX),
+    // isFirst: computed(state => state.depth.val === DEPTH_NAME.FIRST),
+    // isLast: computed(state => state.depth.val === DEPTH_NAME.MAX),
   },
 
   coords: {
@@ -38,51 +39,46 @@ export default {
       d3: 0,
     }),
 
-    categories: undefined,
-    chapters: undefined,
-
-    init: action((state, payload) => {
-      state.coords.categories = payload.categories;
-      state.coords.chapters = payload.chapters;
-    }),
-
     increment: action((state, payload) => {
-      if ('d0' === payload) state.coords.val.setD0(state.coords.val.d0 + 1);
-      if ('d1' === payload) state.coords.val.setD1(state.coords.val.d1 + 1);
-      if ('d2' === payload) state.coords.val.setD2(state.coords.val.d2 + 1);
-      if ('d3' === payload) state.coords.val.setD3(state.coords.val.d3 + 1);
+      if ('d0' === payload) state.val.setD0(state.val.d0 + 1);
+      if ('d1' === payload) state.val.setD1(state.val.d1 + 1);
+      if ('d2' === payload) state.val.setD2(state.val.d2 + 1);
+      if ('d3' === payload) state.val.setD3(state.val.d3 + 1);
     }),
 
     decrement: action((state, payload) => {
-      if ('d0' === payload) state.coords.val.setD0(state.coords.val.d0 - 1);
-      if ('d1' === payload) state.coords.val.setD1(state.coords.val.d1 - 1);
-      if ('d2' === payload) state.coords.val.setD2(state.coords.val.d2 - 1);
-      if ('d3' === payload) state.coords.val.setD3(state.coords.val.d3 - 1);
+      if ('d0' === payload) state.val.setD0(state.val.d0 - 1);
+      if ('d1' === payload) state.val.setD1(state.val.d1 - 1);
+      if ('d2' === payload) state.val.setD2(state.val.d2 - 1);
+      if ('d3' === payload) state.val.setD3(state.val.d3 - 1);
     }),
 
-    set: actions((state, payload) => {
-      state.coords.val = new Coordinates(payload);
+    set: action((state, payload) => {
+      state.val = new Coordinates(payload);
     }),
 
     setMax: action((state, payload) => {
-      const { d0, d1, d2, d3 } = state.coords.val;
+      const { d0, d1, d2, d3 } = state.val;
 
-      if ('d0' === payload) {
-        state.coords.max.setD0(state.coords.categories.length);
+      if ('d0' in payload) {
+        const categories = payload.d0;
+        state.max.setD0(categories.length);
       }
 
-      if ('d1' === payload) {
-        state.coords.max.setD1(state.coords.chapters[d0].length);
+      if ('d1' in payload) {
+        const chapters = payload.d1;
+        state.max.setD1(chapters[d0].length);
       }
 
-      if ('d2' === payload) {
-        state.coords.max.setD2(state.coords.chapters[d0][d1].child.length);
+      if ('d2' in payload) {
+        const chapters = payload.d2;
+        // console.log(chapters);
+        state.max.setD2(chapters[d0][d1].child.length);
       }
 
-      if ('d3' === payload) {
-        state.coords.max.setD3(
-          state.coords.chapters[d0][d1].child[d2].child.length,
-        );
+      if ('d3' in payload) {
+        const chapters = payload.d3;
+        state.max.setD3(chapters[d0][d1].child[d2].child.length);
       }
     }),
   },

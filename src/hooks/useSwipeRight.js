@@ -6,18 +6,17 @@ import { useSwipeStates } from './useSwipeStates';
 
 export const useSwipeRight = forceSwipeHorizontally => {
   const states = useSwipeStates();
+  if (!states.isLoaded) return null;
+
   return () => {
     const shared = () => {
       forceSwipeHorizontally('right');
       // swipeToRight();
     };
 
-    switch (depth) {
+    switch (states.depth) {
       case DEPTH_NAME.CATEGORY:
         return undefined; // 카테고리 렌더에서는, 오른쪽 스와이프 X
-      // return state => {
-      //   shared();
-      // };
 
       case DEPTH_NAME.CHAPTER:
         return state => {

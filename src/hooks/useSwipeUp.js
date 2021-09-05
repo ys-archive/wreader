@@ -3,6 +3,7 @@ import { useSwipeStates } from './useSwipeStates';
 
 export const useSwipeUp = forceSwipeVertically => {
   const states = useSwipeStates();
+  if (!states.isLoaded) return null;
 
   return () => {
     const shared = () => {
@@ -10,14 +11,17 @@ export const useSwipeUp = forceSwipeVertically => {
       // swipeToUp();
     };
 
-    switch (depth) {
+    switch (states.depth) {
       case DEPTH_NAME.CATEGORY:
-        const { isLastCategory, increaseCategoryIdx } = states;
+        const { coords, maxCoords, incrementCoords } = states;
         return state => {
-          if (isLastCategory) return;
+          if (maxCoords.d0 !== 0 && coords.d0 === maxCoords.d0) {
+            console.log('마지막 카테고리라 아랫 카드가 없음');
+            return;
+          }
 
-          increaseCategoryIdx();
-          
+          incrementCoords('d0');
+
           shared();
         };
 

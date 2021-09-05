@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useStoreState, useStoreActions } from 'easy-peasy';
-import { selData, selAuth } from '../store/selectors';
+import { selData, selAuth, selSwiper } from '../store/selectors';
 import { actData, actSwiper } from '../store/actions';
 
 import ChapterService from '../services/ChapterService';
@@ -11,6 +11,8 @@ const initStates = () => {
   const userId = useStoreState(selAuth.userId);
 
   const chapters = useStoreState(selData.chapters);
+  const isLoaded = useStoreState(selData.isLoaded);
+  const maxCoords = useStoreState(selSwiper.maxCoords);
 
   // actions
   // - data
@@ -26,6 +28,8 @@ const initStates = () => {
   return {
     userId,
     chapters,
+    isLoaded,
+    maxCoords,
 
     addCategory,
     addChapter,
@@ -63,6 +67,7 @@ export const useCardsFetch = () => {
       });
 
       // 카테고리 값 업데이트
+      states.setMaxCoords({ d0: categories });
       categories.forEach(category => states.addCategory(category));
 
       // 챕터 데이터 정제 및 저장
@@ -81,19 +86,21 @@ export const useCardsFetch = () => {
         // 이후의 chapterId 로 재귀적으로 fetch
         await fetchRecursively(deck, states.userId, states.addChapterChild);
       });
-
-      states.initCoords(categories, chapters);
-
-      states.setMaxCoords('d0');
-      states.setMaxCoords('d1');
-      states.setMaxCoords('d2');
-      states.setMaxCoords('d3');
-
       states.setLoaded(true);
     }
 
     fetch();
   }, []);
+
+  React.useEffect(() => {
+    if (!states.isLoaded) return;
+
+    states.setMaxCoords({ d1: states.chapters });
+    states.setMaxCoords({ d2: states.chapters });
+    states.setMaxCoords({ d3: states.chapters });
+
+    console.log(states.maxCoords);
+  }, [states.isLoaded]);
 };
 
 const fetchRecursively = async (arr, userId, addChapterChild) => {

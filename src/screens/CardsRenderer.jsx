@@ -14,7 +14,6 @@ const initStates = () => {
   const chapters = useStoreState(selData.chapters);
   const isLoaded = useStoreState(selData.isLoaded);
 
-  const categoryIdx = useStoreState(selSwiper.category);
   const depth = useStoreState(selSwiper.depth);
   const coords = useStoreState(selSwiper.coords);
 
@@ -22,7 +21,6 @@ const initStates = () => {
     categories,
     chapters,
     isLoaded,
-    categoryIdx,
     depth,
     coords,
   };
@@ -31,7 +29,7 @@ const initStates = () => {
 const CardsRenderer = () => {
   useCardsFetch();
 
-  const { categories, chapters, isLoaded, categoryIdx, depth, coords } =
+  const { categories, chapters, isLoaded, depth, coords } =
     initStates();
 
   if (!isLoaded) return null;
@@ -39,8 +37,8 @@ const CardsRenderer = () => {
   const { x, y, z } = coords;
 
   let CardJSX = undefined;
-  const curCategory = categories[categoryIdx];
-  const curChapter = chapters[categoryIdx];
+  const curCategory = categories[coords.d0];
+  const curChapter = chapters[coords.d0];
 
   if (depth === 0) {
     CardJSX = <CategoryCard data={curCategory} />;

@@ -31,14 +31,15 @@ const Reader = ({ children }) => {
   return (
     <View style={s.root}>
       <GestureRecognizer
-        onSwipeLeft={swipeLeft}
-        onSwipeRight={swipeRight}
-        onSwipeUp={swipeUp}
-        onSwipeDown={swipeDown}
+        onSwipeLeft={state => swipeLeft()(state)}
+        onSwipeRight={state => swipeRight()(state)}
+        onSwipeUp={state => swipeUp()(state)}
+        onSwipeDown={state => swipeDown()(state)}
         config={swipeConfig}
         style={s.recognizer}
       >
-        <Animated.View style={[getStyle()]}>{children}</Animated.View>
+        {children}
+        {/* <Animated.View style={[getStyle()]}>{children}</Animated.View> */}
       </GestureRecognizer>
     </View>
   );
