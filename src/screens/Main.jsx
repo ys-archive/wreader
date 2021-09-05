@@ -13,6 +13,7 @@ import CardsRenderer from './CardsRenderer';
 
 const Main = () => {
   const nav = useNavigation();
+  useAutoLogin();
 
   const onPressSortIcon = () => {
     console.log('정렬 아이콘');

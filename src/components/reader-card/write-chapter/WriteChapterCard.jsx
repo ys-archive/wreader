@@ -15,11 +15,8 @@ import { makeCategoryBGImagePath } from '#constants/images';
 
 import { useImagePicker } from '../../../hooks';
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import { selectWriteCardImageUrl } from '../../../store/selectors';
-import {
-  actionsCompleteUploadWriteCardImage,
-  actionsSetWriteCardImageUrl,
-} from '../../../store/actions';
+import { selImage, selSwiper } from '../../../store/selectors';
+import { actImage } from '../../../store/actions';
 
 import uuid from 'react-native-uuid';
 import WriteCardForm from './WriteCardForm';
@@ -30,11 +27,12 @@ const borderRadiusOutside = 20;
 const uploadDirName = `writeCardImage-${uuid.v4()}`;
 
 const WriteChapterCard = ({ route }) => {
-  const { categoryTitle, chapterIdx } = route.params;
+  const { categoryTitle, chapterId, categoryId } = route.params;
 
-  const setWriteCardImageUrl = useStoreActions(actionsSetWriteCardImageUrl);
-  const completeUploadWriteCardImage = useStoreActions(
-    actionsCompleteUploadWriteCardImage,
+  const coords = useStoreState(selSwiper.coords);
+  const setCardImageUrl = useStoreActions(actImage.setCard);
+  const completeUploadCardImage = useStoreActions(
+    actImage.completeUploadingCard,
   );
 
   const pickImage = useImagePicker(
@@ -44,15 +42,18 @@ const WriteChapterCard = ({ route }) => {
     },
     async blob => {
       // 이미지 원본 먼저 업로드
-      const downloadUrl = await ImageService.uploadImageFile(uploadDirName, blob);
-      setWriteCardImageUrl(downloadUrl);
-      completeUploadWriteCardImage();
+      const downloadUrl = await ImageService.uploadImageFile(
+        uploadDirName,
+        blob,
+      );
+      setCardImageUrl(downloadUrl);
+      completeUploadCardImage();
     },
     9,
     21,
   );
 
-  const writeCardImageUrl = useStoreState(selectWriteCardImageUrl);
+  const cardImageUrl = useStoreState(selImage.card);
 
   const onPickCardImage = async () => await pickImage();
 
@@ -68,9 +69,9 @@ const WriteChapterCard = ({ route }) => {
             Platform.OS === 'android' ? 'rgba(255, 255, 255, 0.2)' : '',
         }}
         source={
-          !writeCardImageUrl
+          !cardImageUrl
             ? makeCategoryBGImagePath(categoryTitle)
-            : { uri: writeCardImageUrl }
+            : { uri: cardImageUrl }
         }
       >
         <View
@@ -95,11 +96,11 @@ const WriteChapterCard = ({ route }) => {
           <Text isBold style={s.chapterText}>
             CHAPTER&nbsp;&nbsp;
             <Text isBold style={s.chapterNumberText}>
-              {chapterIdx + 1}
+              {coords.d2}
             </Text>
           </Text>
 
-          <WriteCardForm>
+          <WriteCardForm chapterId={chapterId} categoryId={categoryId}>
             <AddImage style={s.imageIcon} onPress={onPickCardImage} />
           </WriteCardForm>
         </View>

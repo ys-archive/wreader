@@ -26,7 +26,6 @@ export const useSwipeDown = forceSwipeVertically => {
     const shared = () => {
       console.log('swipe to down');
       forceSwipeVertically('down');
-      // swipeToDown();
     };
 
     switch (depth) {
@@ -60,30 +59,11 @@ export const useSwipeDown = forceSwipeVertically => {
 
       case DEPTH_NAME.NEXT:
         return state => {
-          shared();
+          console.log('유저 다음 카드에서는 아래로 스와이프 금지');
         };
 
       default:
         throw new Error('depth 는 0~3 사이만 가능 depth: ', depth);
     }
-    // if (currentCandidateIdx <= 0 && isCategorySelected) {
-    //   console.log(
-    //     '현재 카테고리가 선택되어, 챕터 간 이동만 가능 (후보 챕터도 없음)',
-    //   );
-    //   return;
-    // }
-
-    // if (currentCandidateIdx <= 0 && isFirstCategory) {
-    //   console.log('첫 카테고리 도달');
-    //   return;
-    // }
-
-    // if (isMovingCategoryLock) {
-    //   console.log('카테고리 이동이 잠겼습니다.');
-    //   return;
-    // }
-
-    // console.log('currentCandidateIdx: ', currentCandidateIdx);
-    // console.log('lastCandidateIdx: ', lastCandidateIdx);
   };
 };

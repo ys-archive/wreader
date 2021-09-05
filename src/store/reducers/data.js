@@ -7,6 +7,12 @@ export default {
   chapters: [],
   isLoaded: false,
 
+  reset: action((state, payload) => {
+    state.categories = [];
+    state.chapters = [];
+    state.isLoaded = false;
+  }),
+
   addCategory: action((state, payload) => {
     const hasFound = state.categories.findIndex(cat => _.isEqual(cat, payload));
 
@@ -67,10 +73,11 @@ export default {
 export const selectors = {
   categories: state => state.data.categories,
   chapters: state => state.data.chapters,
-  isLoaded: state => state.data.isLoaded
+  isLoaded: state => state.data.isLoaded,
 };
 
 export const actions = {
+  reset: actions => actions.data.reset,
   addCategory: actions => actions.data.addCategory,
   addChapter: actions => actions.data.addChapter,
   addChapterChild: actions => actions.data.addChapterChild,

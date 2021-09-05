@@ -6,6 +6,8 @@ import { actData, actSwiper } from '../store/actions';
 
 import ChapterService from '../services/ChapterService';
 
+import { useWriteNewCard } from '../contexts/chapterDataContext';
+
 const initStates = () => {
   // selectors
   const userId = useStoreState(selAuth.userId);
@@ -16,6 +18,7 @@ const initStates = () => {
 
   // actions
   // - data
+  const reset = useStoreActions(actData.reset);
   const addCategory = useStoreActions(actData.addCategory);
   const addChapter = useStoreActions(actData.addChapter);
   const addChapterChild = useStoreActions(actData.addChapterChild);
@@ -31,6 +34,7 @@ const initStates = () => {
     isLoaded,
     maxCoords,
 
+    reset,
     addCategory,
     addChapter,
     addChapterChild,
@@ -50,10 +54,12 @@ async function asyncForEach(arr, callback) {
 
 export const useCardsFetch = () => {
   // state 가져오기
+  const [isNewNextWritten] = useWriteNewCard();
   const states = initStates();
 
   React.useEffect(() => {
     async function fetch() {
+      states.reset();
       const { data } = await ChapterService.GET_getCategory();
 
       if (!data.item.length) return;
@@ -90,7 +96,7 @@ export const useCardsFetch = () => {
     }
 
     fetch();
-  }, []);
+  }, [isNewNextWritten]);
 
   React.useEffect(() => {
     if (!states.isLoaded) return;

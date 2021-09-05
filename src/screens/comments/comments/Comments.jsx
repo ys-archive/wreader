@@ -35,7 +35,7 @@ const Comments = ({ route }) => {
   const { chapterId } = route.params;
 
   const [newComment, setNewComment] = useState('');
-  
+
   const [isNewCommentWritten, u1] = useState(false);
   const onWriteNewComment = () => u1(prv => !prv);
 
@@ -55,6 +55,8 @@ const Comments = ({ route }) => {
       newComment,
       userId,
     );
+
+    console.log('comment fetch result: ', status);
 
     if (status === 200) {
       // 성공했으니깐 다시 fetch
@@ -116,13 +118,7 @@ const Comments = ({ route }) => {
             height: 40,
             borderRadius: 100,
           }}
-          source={
-            myProfileLocalImagePath !== ''
-              ? { uri: myProfileLocalImagePath }
-              : profileUrl !== ''
-              ? { uri: profileUrl }
-              : dummyProfile
-          }
+          source={profileUrl ? { uri: profileUrl } : dummyProfile}
         />
 
         <TextInput

@@ -9,10 +9,12 @@ export default {
   isCardUploaded: false,
 
   // actions
-  reset: action(state => {
+  resetProfile: action(state => {
     state.profile = '';
     state.isProfileUploaded = false;
+  }),
 
+  resetCard: action(state => {
     state.card = '';
     state.isCardUploaded = false;
   }),
@@ -51,7 +53,8 @@ export const selectors = {
 };
 
 export const actions = {
-  reset: actions => actions.image.reset,
+  resetProfile: actions => actions.image.resetProfile,
+  resetCard: actions => actions.image.resetCard,
 
   setProfile: actions => actions.image.setProfile,
   completeUploadingProfile: actions => actions.image.completeUploadingProfile,

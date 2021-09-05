@@ -8,11 +8,19 @@ class ChapterService {
     categoryId,
     imgPath = '',
   ) {
+    console.log(
+      'creating chapter: ',
+      groupIndex,
+      content,
+      categoryId,
+      userId,
+      imgPath,
+    );
     const { data, status } = await axios.instance
       .post('chapter', {
         groupIndex,
         content,
-        categoryId,
+        categoryId: categoryId + 5,
         userId,
         imgPath,
       })

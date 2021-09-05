@@ -29,7 +29,7 @@ const initStates = () => {
   const nick = userInfo?.nick || 'SIGN IN';
 
   const logout = useStoreActions(actAuth.logout);
-  const resetImage = useStoreActions(actImage.reset);
+  const resetProfile = useStoreActions(actImage.resetProfile);
 
   return {
     isLoggedIn,
@@ -37,13 +37,13 @@ const initStates = () => {
     profileImageUrl,
     nick,
     logout,
-    resetImage,
+    resetProfile,
   };
 };
 
 const DrawerTop = props => {
   const { navigation: nav } = props;
-  const { isLoggedIn, userInfo, profileImageUrl, nick, logout, resetImage } =
+  const { isLoggedIn, userInfo, profileImageUrl, nick, logout, resetProfile } =
     initStates();
 
   // 프로필 이미지 로드
@@ -63,7 +63,7 @@ const DrawerTop = props => {
 
   const onLogout = () => {
     Alert('로그아웃 되었습니다');
-    resetImage();
+    resetProfile();
     logout();
     nav.closeDrawer();
   };

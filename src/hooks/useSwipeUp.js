@@ -1,5 +1,7 @@
 import { DEPTH_NAME } from '../store/reducers/swiper.depth';
 import { useSwipeStates } from './useSwipeStates';
+import { useNavigation } from '@react-navigation/native';
+import * as ScreenNames from '../navigators/ScreenNames';
 
 export const useSwipeUp = forceSwipeVertically => {
   const {
@@ -20,13 +22,13 @@ export const useSwipeUp = forceSwipeVertically => {
     increaseCoords,
     decreaseCoords,
   } = useSwipeStates();
+  const nav = useNavigation();
   if (!isLoaded) return null;
 
   return () => {
     const shared = () => {
       console.log('swipe to up');
       forceSwipeVertically('up');
-      // swipeToUp();
     };
 
     switch (depth) {
@@ -37,7 +39,9 @@ export const useSwipeUp = forceSwipeVertically => {
               console.log('마지막 카테고리!, 이전 카드로 돌아감!');
               decreaseCoords('d0');
             } else {
-              console.log('마지막 카테고리!, 첫 카테고리라 이전으로 돌아가진 않음');
+              console.log(
+                '마지막 카테고리!, 첫 카테고리라 이전으로 돌아가진 않음',
+              );
             }
             return;
           }
@@ -50,7 +54,12 @@ export const useSwipeUp = forceSwipeVertically => {
       case DEPTH_NAME.CHAPTER:
         return state => {
           // 현재 카테고리의 현재 챕터의 유저 챕터
-          if (!chapters[coords.d0][coords.d1].child[coords.d2].length === 0) {
+          if (chapters[coords.d0][coords.d1].child.length === 0) {
+            nav.navigate(ScreenNames.MainWriteCard, {
+              categoryTitle: categories[coords.d0].title,
+              categoryId: coords.d0,
+              chapterId: +chapters[coords.d0][coords.d1].deck.id,
+            });
             return;
           }
 
@@ -67,6 +76,12 @@ export const useSwipeUp = forceSwipeVertically => {
               '해당 챕터의 유저 챕터가 존재 하지 않음. 새로운 카드 작성',
             );
             // todo: 새 카드 작성
+            nav.navigate(ScreenNames.MainWriteCard, {
+              categoryTitle: categories[coords.d0].title,
+              categoryId: coords.d0,
+              chapterId:
+                +chapters[coords.d0][coords.d1].deck.id,
+            });
             return;
           }
 
@@ -77,31 +92,12 @@ export const useSwipeUp = forceSwipeVertically => {
 
       case DEPTH_NAME.NEXT:
         return state => {
-          shared();
+          console.log('유저 다음 카드에서는 위로 스와이프 금지');
         };
 
       default:
         throw new Error('depth 는 0~3 사이만 가능 depth: ', depth);
     }
-    // if (lastCandidateIdx === 0 && isCategorySelected) {
-    //   console.log(
-    //     '현재 카테고리가 선택되어, 챕터 간 이동만 가능 (후보 챕터도 없음)',
-    //   );
-    //   return;
-    // }
-
-    // if (isLastCategory) {
-    //   console.log('마지막 카테고리 도달');
-    //   return;
-    // }
-
-    // if (isMovingCategoryLock) {
-    //   console.log('카테고리 이동이 잠겼습니다.');
-    //   return;
-    // }
-
-    // console.log('currentCandidateIdx: ', currentCandidateIdx);
-    // console.log('lastCandidateIdx: ', lastCandidateIdx);
 
     // if (
     //   lastCandidateIdx !== 0 &&

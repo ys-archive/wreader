@@ -15,7 +15,7 @@ import { makeCategoryBGImagePath, dummyProfile } from '#constants/images';
 import { useLikeUpdate } from '../../../../contexts/chapterDataContext';
 import { useStoreState } from 'easy-peasy';
 import { selAuth, selImage, selSwiper } from '../../../../store/selectors';
-
+  
 // import { useChapterCardExposer_Chapter } from './useChapterCardExposer_Chapter';
 // import { useChapterCardExposer_Category } from './useChapterCardExposer_Category';
 
@@ -69,7 +69,7 @@ const ChapterCard = ({ data, categoryTitle }) => {
 
   const {
     id: chapterId, // 현재 챕터 Id
-    // categoryId,
+    categoryId,
     // userId: otherUserId,
     content,
     replyCount, // -> reply
@@ -98,16 +98,19 @@ const ChapterCard = ({ data, categoryTitle }) => {
   // updateLike();
   // }, [isLoggedIn, userId, chapterId]);
 
-  const onPressReply = () => {};
-  // nav.navigate(ScreenNames.MainComments, {
-  //   chapterId,
-  // });
+  const onPressReply = () => {
+    nav.navigate(ScreenNames.MainComments, {
+      chapterId,
+    });
+  };
 
-  const goWriteCardDirectly = () => {};
-  // nav.navigate(ScreenNames.MainWriteCard, {
-  //   categoryTitle,
-  //   chapterIdx,
-  // });
+  const goWriteCardDirectly = () => {
+    nav.navigate(ScreenNames.MainWriteCard, {
+      categoryTitle,
+      chapterId,
+      categoryId,
+    });
+  };
 
   const coverUri = chapterImg
     ? { uri: chapterImg }

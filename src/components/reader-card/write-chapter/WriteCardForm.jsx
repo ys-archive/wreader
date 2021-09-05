@@ -9,11 +9,8 @@ import {
 import { colors } from '#constants';
 
 import { useStoreState } from 'easy-peasy';
-import {
-  selectUserId,
-  selectCurrentChapterIdx,
-  selectCurrentCategoryIdx,
-} from '#store/selectors';
+
+import { selAuth, selSwiper } from '../../../store/selectors';
 
 import { useWriteNewCard } from '../../../contexts/chapterDataContext';
 import { useWriteChapterCardForm } from './useWriteChapterCardForm';
@@ -22,11 +19,10 @@ import { useNavigation } from '@react-navigation/native';
 
 const borderRadiusInside = 17;
 
-const WriteCardForm = ({ children }) => {
-  const userId = useStoreState(selectUserId);
+const WriteCardForm = ({ chapterId, categoryId, children }) => {
+  const userId = useStoreState(selAuth.userId);
+  // const coords = useStoreState(selSwiper.coords);
 
-  const currentCategoryIdx = useStoreState(selectCurrentCategoryIdx);
-  const currentChapterIdx = useStoreState(selectCurrentChapterIdx);
   const [_, setNewCandidateWritten] = useWriteNewCard();
 
   const nav = useNavigation();
@@ -44,12 +40,7 @@ const WriteCardForm = ({ children }) => {
   }, []);
 
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
-    useWriteChapterCardForm(
-      userId,
-      currentCategoryIdx,
-      currentChapterIdx,
-      afterFormSubmitted,
-    );
+    useWriteChapterCardForm(userId, categoryId, chapterId, afterFormSubmitted);
 
   const {
     // title,
