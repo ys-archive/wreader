@@ -8,8 +8,10 @@ import {
 } from 'react-native-responsive-screen';
 import {
   useSwipeGesture,
-  useSwipeHorizontal,
-  useSwipeVertical,
+  useSwipeLeft,
+  useSwipeRight,
+  useSwipeUp,
+  useSwipeDown,
 } from '../../hooks';
 
 const swipeConfig = {
@@ -21,18 +23,18 @@ const Reader = ({ children }) => {
   const { forceSwipeVertically, forceSwipeHorizontally, getStyle } =
     useSwipeGesture();
 
-  // const { onSwipeLeft, onSwipeRight } = useSwipeHorizontal(
-  //   forceSwipeHorizontally,
-  // );
-  // const { onSwipeUp, onSwipeDown } = useSwipeVertical(forceSwipeVertically);
+  const swipeLeft = useSwipeLeft(forceSwipeHorizontally);
+  const swipeRight = useSwipeRight(forceSwipeHorizontally);
+  const swipeUp = useSwipeUp(forceSwipeVertically);
+  const swipeDown = useSwipeDown(forceSwipeVertically);
 
   return (
     <View style={s.root}>
       <GestureRecognizer
-        // onSwipeUp={onSwipeUp}
-        // onSwipeDown={onSwipeDown}
-        // onSwipeLeft={onSwipeLeft}
-        // onSwipeRight={onSwipeRight}
+        onSwipeLeft={swipeLeft}
+        onSwipeRight={swipeRight}
+        onSwipeUp={swipeUp}
+        onSwipeDown={swipeDown}
         config={swipeConfig}
         style={s.recognizer}
       >

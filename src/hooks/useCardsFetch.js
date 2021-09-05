@@ -1,24 +1,39 @@
 import React from 'react';
 
 import { useStoreState, useStoreActions } from 'easy-peasy';
-import { selAuth } from '../store/selectors';
-import { actData } from '../store/actions';
+import { selData, selAuth } from '../store/selectors';
+import { actData, actSwiper } from '../store/actions';
 
 import ChapterService from '../services/ChapterService';
 
 const initStates = () => {
+  // selectors
+  const userId = useStoreState(selAuth.userId);
+
+  const chapters = useStoreState(selData.chapters);
+
+  // actions
+  // - data
   const addCategory = useStoreActions(actData.addCategory);
   const addChapter = useStoreActions(actData.addChapter);
   const addChapterChild = useStoreActions(actData.addChapterChild);
   const setLoaded = useStoreActions(actData.setLoaded);
-  const userId = useStoreState(selAuth.userId);
+
+  // - swiper
+  const initCoords = useStoreActions(actSwiper.initCoords);
+  const setMaxCoords = useStoreActions(actSwiper.setMaxCoords);
 
   return {
+    userId,
+    chapters,
+
     addCategory,
     addChapter,
     addChapterChild,
     setLoaded,
-    userId,
+
+    initCoords,
+    setMaxCoords,
   };
 };
 
@@ -31,8 +46,7 @@ async function asyncForEach(arr, callback) {
 
 export const useCardsFetch = () => {
   // state 가져오기
-  const { addCategory, addChapter, addChapterChild, setLoaded, userId } =
-    initStates();
+  const states = initStates();
 
   React.useEffect(() => {
     async function fetch() {
@@ -48,26 +62,34 @@ export const useCardsFetch = () => {
         return item;
       });
 
-      categories.forEach(category => addCategory(category));
+      // 카테고리 값 업데이트
+      categories.forEach(category => states.addCategory(category));
 
       // 챕터 데이터 정제 및 저장
       const chapters = Object.values(data.item)
         .map(i => i.chapter)
         .filter(i => i.length > 0);
 
-      // console.log('length: ', chapters.length);
+      if (!chapters || chapters.length === 0) return;
 
       // group_index 0 부터 저장
       await asyncForEach(chapters, async deck => {
         if (deck.length === 0) return;
 
         // temp.push({ deck });
-        addChapter({ deck });
+        states.addChapter({ deck });
         // 이후의 chapterId 로 재귀적으로 fetch
-        await fetchRecursively(deck, userId, addChapterChild);
+        await fetchRecursively(deck, states.userId, states.addChapterChild);
       });
 
-      setLoaded(true);
+      states.initCoords(categories, chapters);
+
+      states.setMaxCoords('d0');
+      states.setMaxCoords('d1');
+      states.setMaxCoords('d2');
+      states.setMaxCoords('d3');
+
+      states.setLoaded(true);
     }
 
     fetch();

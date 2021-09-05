@@ -14,7 +14,7 @@ const initStates = () => {
   const chapters = useStoreState(selData.chapters);
   const isLoaded = useStoreState(selData.isLoaded);
 
-  const categoryIdx = useStoreState(selSwiper.categoryIdx);
+  const categoryIdx = useStoreState(selSwiper.category);
   const depth = useStoreState(selSwiper.depth);
   const coords = useStoreState(selSwiper.coords);
 
@@ -36,36 +36,33 @@ const CardsRenderer = () => {
 
   if (!isLoaded) return null;
 
-  let CardJSX = null;
   const { x, y, z } = coords;
 
+  let CardJSX = undefined;
+  const curCategory = categories[categoryIdx];
+  const curChapter = chapters[categoryIdx];
+
   if (depth === 0) {
-    CardJSX = <CategoryCard data={categories[categoryIdx]} />;
-  }
-
-  if (depth === 1) {
+    CardJSX = <CategoryCard data={curCategory} />;
+  } else if (depth === 1) {
     CardJSX = (
       <ChapterCard
-        data={chapters[categoryIdx][x].deck}
-        categoryTitle={categories[categoryIdx].title}
+        data={curChapter[x].deck}
+        categoryTitle={curCategory.title}
       />
     );
-  }
-
-  if (depth === 2) {
+  } else if (depth === 2) {
     CardJSX = (
       <ChapterCard
-        data={chapters[categoryIdx][x].child[y].deck}
-        categoryTitle={categories[categoryIdx].title}
+        data={curChapter[x].child[y].deck}
+        categoryTitle={curCategory.title}
       />
     );
-  }
-
-  if (depth === 3) {
+  } else if (depth === 3) {
     CardJSX = (
       <ChapterCard
-        data={chapters[categoryIdx][x].child[y].child[z].deck}
-        categoryTitle={categories[categoryIdx].title}
+        data={curChapter[x].child[y].child[z].deck}
+        categoryTitle={curCategory.title}
       />
     );
   }
