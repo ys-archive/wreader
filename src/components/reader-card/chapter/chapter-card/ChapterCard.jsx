@@ -15,7 +15,7 @@ import { makeCategoryBGImagePath, dummyProfile } from '#constants/images';
 import { useLikeUpdate } from '../../../../contexts/chapterDataContext';
 import { useStoreState } from 'easy-peasy';
 import { selAuth, selImage, selSwiper } from '../../../../store/selectors';
-  
+
 // import { useChapterCardExposer_Chapter } from './useChapterCardExposer_Chapter';
 // import { useChapterCardExposer_Category } from './useChapterCardExposer_Category';
 
@@ -29,19 +29,23 @@ const borderRadiusInside = 17;
 const initStates = () => {
   const isLoggedIn = useStoreState(selAuth.isLoggedIn);
   const userId = useStoreState(selAuth.userId);
-
   const profile = useStoreState(selImage.profile);
+  const coords = useStoreState(selSwiper.coords);
 
   return {
     isLoggedIn,
     userId,
     profile,
+    coords,
   };
 };
 
 // const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
 const ChapterCard = ({ data, categoryTitle }) => {
   const nav = useNavigation();
+  const { isLoggedIn, userId, profile, coords } = initStates();
+  const { d1 } = coords;
+  const [_, updateLike] = useLikeUpdate();
 
   // 챕터간 이전/다음 노출을 위한 스타일링 hook
   // const chapterOrder = chapterIdx + 1;
@@ -66,7 +70,6 @@ const ChapterCard = ({ data, categoryTitle }) => {
   //     candidateIdx,
   //     isMovingChapterLock,
   //   );
-
   const {
     id: chapterId, // 현재 챕터 Id
     categoryId,
@@ -80,23 +83,30 @@ const ChapterCard = ({ data, categoryTitle }) => {
     userNick: authorNickName, // -> author
     isLike,
   } = data;
+  console.log(
+    '----------------------------------------------------------------------',
+  );
+  console.log('userId: ', userId);
+  console.log(data);
+  console.log(
+    '----------------------------------------------------------------------',
+  );
 
-  const onPressLike = () => {};
-  // const onPressLike = useCallback(async () => {
-  // if (!isLoggedIn) {
-  //   Alert("You can't like before logging in.");
-  //   return;
-  // }
+  const onPressLike = useCallback(async () => {
+    if (!isLoggedIn) {
+      Alert("You can't like before logging in.");
+      return;
+    }
 
-  // 이미 좋아요 했음
-  // if (isLike === 1) {
-  //   await ChapterService.DELETE_unlikeChapter(chapterId, userId);
-  // } else {
-  //   await ChapterService.POST_likeChapter(chapterId, userId);
-  // }
+    // 이미 좋아요 했음
+    if (isLike === 1) {
+      await ChapterService.DELETE_unlikeChapter(chapterId, userId);
+    } else {
+      await ChapterService.POST_likeChapter(chapterId, userId);
+    }
 
-  // updateLike();
-  // }, [isLoggedIn, userId, chapterId]);
+    updateLike();
+  }, [isLoggedIn, userId, chapterId]);
 
   const onPressReply = () => {
     nav.navigate(ScreenNames.MainComments, {
@@ -145,7 +155,7 @@ const ChapterCard = ({ data, categoryTitle }) => {
               },
               // predicatedScaleProfileBetweenChapters,
             ]}
-            source={userImg && userImg !== '' ? { uri: userImg } : dummyProfile}
+            source={userImg ? { uri: userImg } : dummyProfile}
           />
           <Text isBold style={s.authorNameText}>
             {authorNickName || 'Jessica Momo'}
@@ -177,9 +187,9 @@ const ChapterCard = ({ data, categoryTitle }) => {
             <Text isBold style={s.chapterOrderPlaceholder}>
               CHAPTER
             </Text>
-            {/* <Text isBold style={s.chapterOrderText}>
-              {chapterOrder}
-            </Text> */}
+            <Text isBold style={s.chapterOrderText}>
+              {d1 + 1}
+            </Text>
           </View>
 
           {/* 챕터 내용 */}
@@ -218,10 +228,7 @@ const ChapterCard = ({ data, categoryTitle }) => {
                   height: 24,
                   borderRadius: 100,
                 }}
-                source={
-                  dummyProfile
-                  // myProfileImageUrl ? { uri: myProfileImageUrl } : dummyProfile
-                }
+                source={profile ? { uri: profile } : dummyProfile}
               />
               <TextInput
                 style={s.replyTextInput}

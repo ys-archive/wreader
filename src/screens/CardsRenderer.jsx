@@ -34,7 +34,7 @@ const CardsRenderer = () => {
   if (!isLoaded) return null;
 
   const { d0, d1, d2, d3 } = coords;
-  console.log(d0, d1, d2, d3);
+  console.log(`    coords---> d0:${d0} | d1:${d1} | d2:${d2} | d3:${d3}`);
 
   let CardJSX = undefined;
   const curCategory = categories[d0];

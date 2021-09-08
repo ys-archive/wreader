@@ -6,7 +6,7 @@ import { actData, actSwiper } from '../store/actions';
 
 import ChapterService from '../services/ChapterService';
 
-import { useWriteNewCard } from '../contexts/chapterDataContext';
+import { useWriteNewCard, useLikeUpdate } from '../contexts/chapterDataContext';
 
 const initStates = () => {
   // selectors
@@ -55,6 +55,7 @@ async function asyncForEach(arr, callback) {
 export const useCardsFetch = () => {
   // state 가져오기
   const [isNewNextWritten] = useWriteNewCard();
+  const [isLikeUpdated] = useLikeUpdate();
   const states = initStates();
 
   React.useEffect(() => {
@@ -87,16 +88,18 @@ export const useCardsFetch = () => {
       await asyncForEach(chapters, async deck => {
         if (deck.length === 0) return;
 
-        // temp.push({ deck });
         states.addChapter({ deck });
+
         // 이후의 chapterId 로 재귀적으로 fetch
         await fetchRecursively(deck, states.userId, states.addChapterChild);
       });
+
+      // 로딩 끝
       states.setLoaded(true);
     }
 
     fetch();
-  }, [isNewNextWritten]);
+  }, [isNewNextWritten, isLikeUpdated]);
 
   React.useEffect(() => {
     if (!states.isLoaded) return;
@@ -105,13 +108,14 @@ export const useCardsFetch = () => {
     states.setMaxCoords({ d2: states.chapters });
     states.setMaxCoords({ d3: states.chapters });
 
-    console.log('max coords: ', states.maxCoords);
+    const { d0, d1, d2, d3 } = states.maxCoords;
+    console.log(`max coords---> d0:${d0} | d1:${d1} | d2:${d2} | d3:${d3}`);
   }, [states.isLoaded]);
 };
 
 const fetchRecursively = async (arr, userId, addChapterChild) => {
   await asyncForEach(arr, async item => {
-    const { data } = await ChapterService.GET_getChapter(+item.id, userId);
+    const { data } = await ChapterService.GET_getChapter(+item.id, +userId);
 
     switch (data.item.length) {
       case 0:
