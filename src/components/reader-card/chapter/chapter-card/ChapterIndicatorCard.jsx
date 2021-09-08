@@ -1,11 +1,5 @@
 import React, { useCallback } from 'react';
-import {
-  StyleSheet,
-  View,
-  ImageBackground,
-  Image,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import { StyleSheet, View, ImageBackground, Image } from 'react-native';
 import { Text, Alert, Button, TextInput } from '#components';
 import { Like, Reply, AddStory } from '#components/icon';
 import {
@@ -16,104 +10,42 @@ import {
 import { colors } from '#constants';
 import { makeCategoryBGImagePath, dummyProfile } from '#constants/images';
 
-import { useLikeUpdate } from '../../../../contexts/chapterDataContext';
 import { useStoreState } from 'easy-peasy';
-import { selAuth, selImage, selSwiper } from '../../../../store/selectors';
-
-import { ChapterService } from '../../../../services';
-import * as ScreenNames from '../../../../navigators/ScreenNames';
-import { useNavigation } from '@react-navigation/native';
+import {
+  selAuth,
+  selData,
+  selImage,
+  selSwiper,
+} from '../../../../store/selectors';
 
 const borderRadiusOutside = 20;
 const borderRadiusInside = 17;
 
 const initStates = () => {
-  const isLoggedIn = useStoreState(selAuth.isLoggedIn);
-  const userId = useStoreState(selAuth.userId);
-  const profile = useStoreState(selImage.profile);
-  const coords = useStoreState(selSwiper.coords);
+  const categories = useStoreState(selData.categories);
+  const coords = useStoreState(selData.coords);
 
   return {
-    isLoggedIn,
-    userId,
-    profile,
+    categories,
     coords,
   };
 };
 
-const ChapterCard = ({ data, categoryTitle }) => {
-  const nav = useNavigation();
-  const { isLoggedIn, userId, profile, coords } = initStates();
-  const { d1 } = coords;
-  const [_, updateLike] = useLikeUpdate();
-  const {
-    id: chapterId, // 현재 챕터 Id
-    categoryId,
-    // userId: otherUserId,
-    content,
-    replyCount, // -> reply
-    like_count: likeCount, // -> like
-    // group_index: groupIdx, // candiate 붙이는 용도 (검사값)
-    chapterImg, // -> cover image url
-    userImg, // author profile image url
-    userNick: authorNickName, // -> author
-    isLike,
-  } = data;
+const ChapterIndicatorCard = ({ depth }) => {
+  const { categories, coords } = initStates();
 
-  console.log(
-    '----------------------------------------------------------------------',
-  );
-  console.log('userId: ', userId);
-  console.log(data);
-  console.log(
-    '----------------------------------------------------------------------',
-  );
-
-  const onPressLike = useCallback(async () => {
-    if (!isLoggedIn) {
-      Alert("You can't like before logging in.");
-      return;
-    }
-
-    // 이미 좋아요 했음
-    if (isLike === 1) {
-      await ChapterService.DELETE_unlikeChapter(chapterId, userId);
-    } else {
-      await ChapterService.POST_likeChapter(chapterId, userId);
-    }
-
-    updateLike();
-  }, [isLoggedIn, userId, chapterId]);
-
-  const onPressReply = () => {
-    nav.navigate(ScreenNames.MainComments, {
-      chapterId,
-    });
-  };
-
-  const goWriteCardDirectly = () => {
-    nav.navigate(ScreenNames.MainWriteCard, {
-      categoryTitle,
-      chapterId,
-      categoryId,
-    });
-  };
+  const categoryTitle = categories[coords?.d0];
 
   return (
     <View style={s.root}>
       <ImageBackground
-        style={[
-          {
-            width: wp('83.3%'),
-            height: hp('81.2%'),
-            borderRadius: borderRadiusOutside,
-            overflow: 'hidden',
-            alignItems: 'center',
-          },
-          // predicatedPositionBetweenChapters,
-          // predicatedPositionBetweenCandidates,
-          // predicatedScaleBGBetweenChapters,
-        ]}
+        style={{
+          width: wp('83.3%'),
+          height: hp('81.2%'),
+          borderRadius: borderRadiusOutside,
+          overflow: 'hidden',
+          alignItems: 'center',
+        }}
         source={
           chapterImg
             ? { uri: chapterImg }
@@ -122,20 +54,19 @@ const ChapterCard = ({ data, categoryTitle }) => {
       >
         {/* 프로필 및 작가 이름 */}
         <View style={s.authorSection}>
-          <Image
+          {/* <Image
             style={[
               {
                 width: 30,
                 height: 30,
                 borderRadius: 100,
               },
-              // predicatedScaleProfileBetweenChapters,
             ]}
             source={userImg ? { uri: userImg } : dummyProfile}
-          />
-          <Text isBold style={s.authorNameText}>
+          /> */}
+          {/* <Text isBold style={s.authorNameText}>
             {authorNickName || 'Jessica Momo'}
-          </Text>
+          </Text> */}
         </View>
 
         {/* 챕터 내부 */}
@@ -147,59 +78,51 @@ const ChapterCard = ({ data, categoryTitle }) => {
               backgroundColor: colors.light.chapterBGInside,
               borderRadius: borderRadiusInside,
             },
-            // predicatedScaleInsideBGBetweenChapters,
           ]}
         >
           {/* 챕터 제목 */}
           <View style={s.titleSection}>
-            <Text isBold style={s.title}>
+            {/* <Text isBold style={s.title}>
               THE FIRST HEART
-            </Text>
+            </Text> */}
           </View>
 
-          <View style={s.separator}></View>
+          {/* <View style={s.separator}></View> */}
 
           <View style={s.chapterOrderSection}>
-            <Text isBold style={s.chapterOrderPlaceholder}>
+            {/* <Text isBold style={s.chapterOrderPlaceholder}>
               CHAPTER
-            </Text>
-            <Text isBold style={s.chapterOrderText}>
+            </Text> */}
+            {/* <Text isBold style={s.chapterOrderText}>
               {d1 + 1}
-            </Text>
+            </Text> */}
           </View>
 
           {/* 챕터 내용 */}
           <View style={s.contentSection}>
-            <Text style={s.contentText}>&nbsp;{content ?? ''}</Text>
+            {/* <Text style={s.contentText}>&nbsp;{content ?? ''}</Text> */}
           </View>
 
           <AddStory
             style={{ position: 'absolute', right: '5%', bottom: '19%' }}
-            onPress={goWriteCardDirectly}
           />
 
           {/* 좋아요, 댓글 */}
-          <View
-            style={[
-              s.bottomSection,
-              // predicatedScaleBottomSectionBetweenChapters,
-            ]}
-          >
+          <View style={s.bottomSection}>
             <View style={s.bottomInfoPlacer}>
               <View style={s.likeSection}>
-                <Like onPress={onPressLike} />
-                <Text style={s.likeText}>{likeCount}</Text>
+                {/* <Like onPress={onPressLike} /> */}
+                {/* <Text style={s.likeText}>{likeCount}</Text> */}
               </View>
 
               <View style={s.replySection}>
-                <Reply onPress={onPressReply} />
-                <Text style={s.replyText}>{replyCount}</Text>
+                {/* <Reply onPress={onPressReply} /> */}
+                {/* <Text style={s.replyText}>{replyCount}</Text> */}
               </View>
             </View>
 
-            <TouchableWithoutFeedback onPress={onPressReply}>
-              <View style={s.bottomReplyPlacer}>
-                <Image
+            <View style={s.bottomReplyPlacer}>
+              {/* <Image
                   style={{
                     width: 24,
                     height: 24,
@@ -207,24 +130,19 @@ const ChapterCard = ({ data, categoryTitle }) => {
                     backgroundColor: '#fff',
                   }}
                   source={profile ? { uri: profile } : dummyProfile}
-                />
+                /> */}
 
-                <TextInput
-                  style={s.replyTextInput}
-                  placeholder="Add a comment ..."
-                  editable={false}
-                  placeholderTextColor={colors.light.text2}
-                />
+              <TextInput
+                style={s.replyTextInput}
+                placeholder="Add a comment ..."
+                editable={false}
+                placeholderTextColor={colors.light.text2}
+              />
 
-                <Button
-                  isBold
-                  textStyle={s.replyPostText}
-                  onPress={onPressReply}
-                >
-                  Post
-                </Button>
-              </View>
-            </TouchableWithoutFeedback>
+              <Button isBold textStyle={s.replyPostText}>
+                Post
+              </Button>
+            </View>
           </View>
         </ImageBackground>
       </ImageBackground>
@@ -232,7 +150,7 @@ const ChapterCard = ({ data, categoryTitle }) => {
   );
 };
 
-export default React.memo(ChapterCard);
+export default ChapterIndicatorCard;
 
 const s = StyleSheet.create({
   root: {
