@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { useStoreActions, useStoreState } from 'easy-peasy';
+import { useStoreState } from 'easy-peasy';
 import { selData, selSwiper } from '../store/selectors';
-import { actData } from '../store/actions';
 
 import CategoryCard from '../components/reader-card/category/CategoryCard';
 import ChapterCard from '../components/reader-card/chapter/chapter-card/ChapterCard';

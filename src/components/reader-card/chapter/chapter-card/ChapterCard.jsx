@@ -1,22 +1,26 @@
 import React, { useCallback } from 'react';
-import { StyleSheet, View, ImageBackground, Image } from 'react-native';
-import { Text, Alert, Button } from '#components';
+import {
+  StyleSheet,
+  View,
+  ImageBackground,
+  Image,
+  TouchableWithoutFeedback,
+} from 'react-native';
+import { Text, Alert, Button, TextInput } from '#components';
+import { Like, Reply, AddStory } from '#components/icon';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+
 import { colors } from '#constants';
-
-import { TextInput } from '#components';
-import { Like, Reply, AddStory } from '#components/icon';
-
 import { makeCategoryBGImagePath, dummyProfile } from '#constants/images';
 
 import { useLikeUpdate } from '../../../../contexts/chapterDataContext';
 import { useStoreState } from 'easy-peasy';
 import { selAuth, selImage, selSwiper } from '../../../../store/selectors';
 
-// import { useChapterCardExposer_Chapter } from './useChapterCardExposer_Chapter';
+// import { useChapterCardExposer_Chapter } from './u seChapterCardExposer_Chapter';
 // import { useChapterCardExposer_Category } from './useChapterCardExposer_Category';
 
 import { ChapterService } from '../../../../services';
@@ -40,7 +44,6 @@ const initStates = () => {
   };
 };
 
-// const ChapterCard = ({ chapterIdx, data, candidateIdx, categoryTitle }) => {
 const ChapterCard = ({ data, categoryTitle }) => {
   const nav = useNavigation();
   const { isLoggedIn, userId, profile, coords } = initStates();
@@ -70,6 +73,7 @@ const ChapterCard = ({ data, categoryTitle }) => {
   //     candidateIdx,
   //     isMovingChapterLock,
   //   );
+  
   const {
     id: chapterId, // 현재 챕터 Id
     categoryId,
@@ -83,6 +87,7 @@ const ChapterCard = ({ data, categoryTitle }) => {
     userNick: authorNickName, // -> author
     isLike,
   } = data;
+
   console.log(
     '----------------------------------------------------------------------',
   );
@@ -122,10 +127,6 @@ const ChapterCard = ({ data, categoryTitle }) => {
     });
   };
 
-  const coverUri = chapterImg
-    ? { uri: chapterImg }
-    : makeCategoryBGImagePath(categoryTitle);
-
   return (
     <View style={s.root}>
       <ImageBackground
@@ -141,8 +142,11 @@ const ChapterCard = ({ data, categoryTitle }) => {
           // predicatedPositionBetweenCandidates,
           // predicatedScaleBGBetweenChapters,
         ]}
-        source={coverUri}
-        // resizeMode="contain"
+        source={
+          chapterImg
+            ? { uri: chapterImg }
+            : makeCategoryBGImagePath(categoryTitle)
+        }
       >
         {/* 프로필 및 작가 이름 */}
         <View style={s.authorSection}>
@@ -221,24 +225,34 @@ const ChapterCard = ({ data, categoryTitle }) => {
               </View>
             </View>
 
-            <View style={s.bottomReplyPlacer} onPress={onPressReply}>
-              <Image
-                style={{
-                  width: 24,
-                  height: 24,
-                  borderRadius: 100,
-                }}
-                source={profile ? { uri: profile } : dummyProfile}
-              />
-              <TextInput
-                style={s.replyTextInput}
-                placeholder="Add a comment ..."
-                placeholderTextColor={colors.light.text2}
-              />
-              <Button isBold textStyle={s.replyPostText} onPress={() => {}}>
-                Post
-              </Button>
-            </View>
+            <TouchableWithoutFeedback onPress={onPressReply}>
+              <View style={s.bottomReplyPlacer}>
+                <Image
+                  style={{
+                    width: 24,
+                    height: 24,
+                    borderRadius: 100,
+                    backgroundColor: '#fff',
+                  }}
+                  source={profile ? { uri: profile } : dummyProfile}
+                />
+
+                <TextInput
+                  style={s.replyTextInput}
+                  placeholder="Add a comment ..."
+                  editable={false}
+                  placeholderTextColor={colors.light.text2}
+                />
+
+                <Button
+                  isBold
+                  textStyle={s.replyPostText}
+                  onPress={onPressReply}
+                >
+                  Post
+                </Button>
+              </View>
+            </TouchableWithoutFeedback>
           </View>
         </ImageBackground>
       </ImageBackground>
@@ -349,7 +363,9 @@ const s = StyleSheet.create({
     paddingTop: hp('1.4%'),
     paddingLeft: wp('9.5%'),
     paddingBottom: hp('1.4%'),
-    maxWidth: wp('50%'),
+    maxWidth: wp('75%'),
+    width: '100%',
+    // backgroundColor: '#fff'
   },
   replyTextInput: {
     padding: 0,
