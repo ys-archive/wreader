@@ -55,6 +55,8 @@ export const useSwipeDown = forceSwipeVertically => {
           }
 
           decreaseCoords('d2');
+          setMaxCoords({ d3: chapters });
+          
           shared();
         };
 

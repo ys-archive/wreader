@@ -59,10 +59,24 @@ const CardIndicator = ({ children }) => {
 
   if (!isLoaded) return null;
 
-  const IndicatorJSX =
-    depth === 0
-      ? renderWithDepthD0(d0, md0, md1)
-      : renderWithDepths(depth, coords, maxCoords);
+  let IndicatorJSX = undefined;
+
+  switch (depth) {
+    case DEPTH_NAME.CATEGORY:
+      IndicatorJSX = renderWithDepth0(d0, md0, md1);
+      break;
+
+    case DEPTH_NAME.CHAPTER:
+      IndicatorJSX = renderWithDepth1(d1, md1, md2);
+      break;
+
+    case DEPTH_NAME.USER_CHAPTER:
+      IndicatorJSX = renderWithDepth2(d2, md2, md3);
+      break;
+
+    case DEPTH_NAME.NEXT:
+      break;
+  }
 
   return (
     <>
@@ -72,7 +86,7 @@ const CardIndicator = ({ children }) => {
   );
 };
 
-const renderWithDepthD0 = (d0, md0, md1) => {
+const renderWithDepth0 = (d0, md0, md1) => {
   const hasPrvCategory = d0 !== 0 && d0 < md0;
   const hasNextCategory = d0 < md0 - 1;
   const hasChapter = md1 !== 0;
@@ -84,54 +98,41 @@ const renderWithDepthD0 = (d0, md0, md1) => {
   });
 };
 
-const renderWithDepths = (depth, coords, maxCoords) => {
-  const { d0, d1, d2, d3 } = coords;
-  const { d0: md0, d1: md1, d2: md2, d3: md3 } = maxCoords;
-  // initialCategoryIndicators({ left: true })
-  switch (depth) {
-    case DEPTH_NAME.CHAPTER:
-      // todo: 카테고리 렌더 || 이전 챕터
-      const hasPrvCategory = d1 === 0;
-      const hasPrvChapter = d1 !== 0;
+const renderWithDepth1 = (d1, md1, md2) => {
+  const hasCategory = d1 === 0;
+  const hasPrvChapter = d1 !== 0;
+  const hasNextChapter = d1 < md1 - 1;
+  const hasUserChapter = md2 !== 0;
 
-      // todo: 다음 챕터가 있으면
-      const hasNextChapter = d1 < md1 - 1;
+  return MakeIndicators({
+    left: hasCategory ? [hasCategory, 0] : hasPrvChapter && [hasPrvChapter, 1],
+    right: [hasNextChapter, 1],
+    bottom: [hasUserChapter, 1],
+  });
+};
 
-      // todo: 해당 챕터에 유저챕터가 있으면
-      const hasUserChapter = md2 !== 0;
+const renderWithDepth2 = (d2, md2, md3) => {
+  const hasChapter = d2 === 0;
+  const hasPrvUserChapter = d2 !== 0;
+  const hasNextUserChapter = d2 < md2 - 1;
+  const hasUserNext = md3 !== 0;
 
-      return MakeIndicators({
-        left: hasPrvCategory
-          ? [hasPrvCategory, 0]
-          : hasPrvChapter && [hasPrvChapter, 1],
-        right: [hasNextChapter, 1],
-        bottom: [hasUserChapter, 1],
-      });
+  return MakeIndicators({
+    top: hasChapter
+      ? [hasChapter, 1]
+      : hasPrvUserChapter && [hasPrvUserChapter, 1],
+    right: [hasUserNext, 1],
+    bottom: [hasNextUserChapter, 1],
+  });
+};
 
-    case DEPTH_NAME.USER_CHAPTER:
-      // todo: 챕터 렌더 || 이전 유저 챕터
-      // position: 'absolute',
-      // top: '-5%'
-
-      // todo: NEXT 유저 챕터 있으면
-      // position: 'absolute',
-      // right: '-5%'
-
-      // todo: 다음 유저 챕터
-      // position: 'absolute',
-      // bottom: '-7%'
-      break;
-
-    case DEPTH_NAME.NEXT:
-      // todo: 유저 챕터 || 이전 NEXT 챕터
-      // position: 'absolute',
-      // left: '-5%'
-
-      // todo: 다음 NEXT 챕터
-      // position: 'absolute',
-      // right: '-5%'
-      break;
-  }
+const renderWithDepth3 = () => {
+  // todo: 유저 챕터 || 이전 NEXT 챕터
+  // position: 'absolute',
+  // left: '-5%'
+  // todo: 다음 NEXT 챕터
+  // position: 'absolute',
+  // right: '-5%'
 };
 
 export default CardIndicator;
