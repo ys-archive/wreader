@@ -14,6 +14,6 @@ export const colors = {
     chapterBGInside: 'rgba(255, 248, 225, 0.8)', // #fff8e1 + alpha 60%
     tint: '#b00',
     primary: '#d3c4a9', // rgb(211, 196, 169)
-    primaryTransparent: 'rgba(211, 196, 169, 0.4)',
+    primaryTransparent: 'rgba(211, 196, 169, 0.5)',
   },
 };

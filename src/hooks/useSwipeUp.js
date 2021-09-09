@@ -60,6 +60,7 @@ export const useSwipeUp = forceSwipeVertically => {
               categoryTitle: categories[coords.d0].title,
               categoryId: coords.d0,
               chapterId: +chapters[coords.d0][coords.d1].deck.id,
+              order: coords.d1,
             });
             return;
           }
@@ -82,6 +83,7 @@ export const useSwipeUp = forceSwipeVertically => {
               categoryId: coords.d0,
               chapterId:
                 +chapters[coords.d0][coords.d1].deck.id,
+              order: coords.d2,
             });
             return;
           }

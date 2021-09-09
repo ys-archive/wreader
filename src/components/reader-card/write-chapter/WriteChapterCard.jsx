@@ -27,7 +27,7 @@ const borderRadiusOutside = 20;
 const uploadDirName = `writeCardImage-${uuid.v4()}`;
 
 const WriteChapterCard = ({ route }) => {
-  const { categoryTitle, chapterId, categoryId } = route.params;
+  const { categoryTitle, chapterId, categoryId, order } = route.params;
 
   const coords = useStoreState(selSwiper.coords);
   const setCardImageUrl = useStoreActions(actImage.setCard);
@@ -96,7 +96,7 @@ const WriteChapterCard = ({ route }) => {
           <Text isBold style={s.chapterText}>
             CHAPTER&nbsp;&nbsp;
             <Text isBold style={s.chapterNumberText}>
-              {coords.d2}
+              {order + 1}
             </Text>
           </Text>
 

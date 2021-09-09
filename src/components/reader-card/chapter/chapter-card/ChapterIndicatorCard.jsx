@@ -39,7 +39,7 @@ const ChapterIndicatorCard = ({ pos }) => {
       <ImageBackground
         style={{
           width: wp('83.3%'),
-          height: hp('81.2%'),
+          height: hp('81.2%') * 0.88,
           borderRadius: borderRadiusOutside,
           overflow: 'hidden',
           alignItems: 'center',

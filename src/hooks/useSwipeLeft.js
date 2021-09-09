@@ -64,6 +64,7 @@ export const useSwipeLeft = forceSwipeHorizontally => {
                 categoryTitle: categories[coords.d0].title,
                 categoryId: coords.d0,
                 chapterId: 0,
+                order: coords.d1,
               });
               return;
             }
@@ -72,6 +73,7 @@ export const useSwipeLeft = forceSwipeHorizontally => {
           }
 
           increaseCoords('d1');
+          setMaxCoords({ d2: chapters });
 
           shared();
         };
@@ -89,7 +91,8 @@ export const useSwipeLeft = forceSwipeHorizontally => {
               categoryTitle: categories[coords.d0].title,
               categoryId: coords.d0,
               chapterId:
-              +chapters[coords.d0][coords.d1].child[coords.d2].deck.id,
+                +chapters[coords.d0][coords.d1].child[coords.d2].deck.id,
+              order: coords.d3,
             });
             return;
           }
@@ -115,6 +118,7 @@ export const useSwipeLeft = forceSwipeHorizontally => {
               categoryId: +coords.d0,
               chapterId:
                 +chapters[coords.d0][coords.d1].child[coords.d2].deck.id,
+              order: coords.d3,
             });
             return;
           }

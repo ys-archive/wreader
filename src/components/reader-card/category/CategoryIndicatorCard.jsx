@@ -36,7 +36,7 @@ const CategoryIndicatorCard = ({ pos }) => {
         style={[
           {
             width: wp('83.4%'),
-            height: hp('78.2%'),
+            height: hp('78.2%') * 0.9,
             borderRadius: 20,
             overflow: 'hidden',
           },

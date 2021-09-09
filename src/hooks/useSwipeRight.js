@@ -44,6 +44,8 @@ export const useSwipeRight = forceSwipeHorizontally => {
             decreaseCoords('d1');
           }
 
+          setMaxCoords({ d2: chapters });
+
           shared();
         };
 

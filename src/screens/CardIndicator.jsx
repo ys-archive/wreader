@@ -24,10 +24,10 @@ const initStates = () => {
 };
 
 const indicatorPos = {
-  top: '-83%',
-  bottom: '-83%',
-  left: '-88%',
-  right: '-88%',
+  top: '-80%',
+  bottom: '-80%',
+  left: '-87%',
+  right: '-87%',
 };
 
 const MakeIndicators = dir => {
@@ -75,6 +75,7 @@ const CardIndicator = ({ children }) => {
       break;
 
     case DEPTH_NAME.NEXT:
+      IndicatorJSX = renderWithDepth3(d3, md3);
       break;
   }
 
@@ -102,7 +103,7 @@ const renderWithDepth1 = (d1, md1, md2) => {
   const hasCategory = d1 === 0;
   const hasPrvChapter = d1 !== 0;
   const hasNextChapter = d1 < md1 - 1;
-  const hasUserChapter = md2 !== 0;
+  const hasUserChapter = md2 > 0;
 
   return MakeIndicators({
     left: hasCategory ? [hasCategory, 0] : hasPrvChapter && [hasPrvChapter, 1],
@@ -126,15 +127,17 @@ const renderWithDepth2 = (d2, md2, md3) => {
   });
 };
 
-const renderWithDepth3 = () => {
-  // todo: 유저 챕터 || 이전 NEXT 챕터
-  // position: 'absolute',
-  // left: '-5%'
-  // todo: 다음 NEXT 챕터
-  // position: 'absolute',
-  // right: '-5%'
+const renderWithDepth3 = (d3, md3) => {
+  const hasUserChapter = d3 === 0;
+  const hasPrvUserNext = d3 !== 0;
+  const hasNextUserNext = d3 < md3 - 1;
+
+  return MakeIndicators({
+    left: hasUserChapter
+      ? [hasUserChapter, 1]
+      : hasPrvUserNext && [hasPrvUserNext, 1],
+    right: [hasNextUserNext, 1],
+  });
 };
 
 export default CardIndicator;
-
-const s = StyleSheet.create({});
