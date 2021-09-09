@@ -107,9 +107,6 @@ export const useCardsFetch = () => {
     states.setMaxCoords({ d1: states.chapters });
     states.setMaxCoords({ d2: states.chapters });
     states.setMaxCoords({ d3: states.chapters });
-
-    const { d0, d1, d2, d3 } = states.maxCoords;
-    console.log(`max coords---> d0:${d0} | d1:${d1} | d2:${d2} | d3:${d3}`);
   }, [states.isLoaded]);
 };
 

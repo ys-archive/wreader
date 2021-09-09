@@ -47,6 +47,7 @@ export const useSwipeUp = forceSwipeVertically => {
           }
 
           increaseCoords('d0');
+          setMaxCoords({ d1: chapters });
 
           shared();
         };

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { StyleSheet, View, ImageBackground, Image } from 'react-native';
 import { Text, Alert, Button, TextInput } from '#components';
 import { Like, Reply, AddStory } from '#components/icon';
@@ -11,19 +11,14 @@ import { colors } from '#constants';
 import { makeCategoryBGImagePath, dummyProfile } from '#constants/images';
 
 import { useStoreState } from 'easy-peasy';
-import {
-  selAuth,
-  selData,
-  selImage,
-  selSwiper,
-} from '../../../../store/selectors';
+import { selData, selSwiper } from '../../../../store/selectors';
 
 const borderRadiusOutside = 20;
 const borderRadiusInside = 17;
 
 const initStates = () => {
   const categories = useStoreState(selData.categories);
-  const coords = useStoreState(selData.coords);
+  const coords = useStoreState(selSwiper.coords);
 
   return {
     categories,
@@ -31,13 +26,16 @@ const initStates = () => {
   };
 };
 
-const ChapterIndicatorCard = ({ depth }) => {
-  const { categories, coords } = initStates();
+const ChapterIndicatorCard = ({ pos }) => {
+  const {
+    categories,
+    coords: { d0 },
+  } = initStates();
 
-  const categoryTitle = categories[coords?.d0];
+  const categoryTitle = categories[d0].title;
 
   return (
-    <View style={s.root}>
+    <View style={[s.root, pos]}>
       <ImageBackground
         style={{
           width: wp('83.3%'),
@@ -46,11 +44,12 @@ const ChapterIndicatorCard = ({ depth }) => {
           overflow: 'hidden',
           alignItems: 'center',
         }}
-        source={
-          chapterImg
-            ? { uri: chapterImg }
-            : makeCategoryBGImagePath(categoryTitle)
-        }
+        // source={
+        //   chapterImg
+        //     ? { uri: chapterImg }
+        //     : makeCategoryBGImagePath(categoryTitle)
+        // }
+        source={makeCategoryBGImagePath(categoryTitle)}
       >
         {/* 프로필 및 작가 이름 */}
         <View style={s.authorSection}>
@@ -159,7 +158,7 @@ const s = StyleSheet.create({
     minHeight: hp('100%'),
     maxHeight: hp('100%'),
     // flex: 1,
-    backgroundColor: colors.light.primaryTransparent,
+    // backgroundColor: colors.light.primaryTransparent,
     justifyContent: 'center',
     alignItems: 'center',
   },
