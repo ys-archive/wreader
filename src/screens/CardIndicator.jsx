@@ -30,8 +30,8 @@ const indicatorPos = {
   right: '-87%',
 };
 
-const MakeIndicators = dir => {
-  return Object.entries(dir).map((d, i) => {
+const MakeIndicators = dir =>
+  Object.entries(dir).map((d, i) => {
     const [direction, set] = d;
     const [has, isCategory] = set;
     console.log(direction, has, isCategory);
@@ -50,7 +50,6 @@ const MakeIndicators = dir => {
       );
     }
   });
-};
 
 const CardIndicator = ({ children }) => {
   const { coords, maxCoords, depth, isLoaded } = initStates();

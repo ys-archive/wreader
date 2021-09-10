@@ -40,36 +40,46 @@ const CardsRenderer = () => {
   console.log(
     `max coords---> md0:${md0} | md1:${md1} | md2:${md2} | md3:${md3}`,
   );
+
   const { d0, d1, d2, d3 } = coords;
   console.log(`    coords---> d0:${d0} | d1:${d1} | d2:${d2} | d3:${d3}`);
 
-  let CardJSX = undefined;
   const curCategory = categories[d0];
   const curChapter = chapters[d0];
 
-  if (depth === 0) {
-    CardJSX = <CategoryCard data={curCategory} />;
-  } else if (depth === 1) {
-    CardJSX = (
-      <ChapterCard
-        data={curChapter[d1].deck}
-        categoryTitle={curCategory.title}
-      />
-    );
-  } else if (depth === 2) {
-    CardJSX = (
-      <ChapterCard
-        data={curChapter[d1].child[d2].deck}
-        categoryTitle={curCategory.title}
-      />
-    );
-  } else if (depth === 3) {
-    CardJSX = (
-      <ChapterCard
-        data={curChapter[d1].child[d2].child[d3].deck}
-        categoryTitle={curCategory.title}
-      />
-    );
+  let CardJSX = undefined;
+
+  switch (depth) {
+    case 0:
+      CardJSX = <CategoryCard data={curCategory} />;
+      break;
+
+    case 1:
+      CardJSX = (
+        <ChapterCard
+          data={curChapter[d1].deck}
+          categoryTitle={curCategory.title}
+        />
+      );
+      break;
+
+    case 2:
+      CardJSX = (
+        <ChapterCard
+          data={curChapter[d1].child[d2].deck}
+          categoryTitle={curCategory.title}
+        />
+      );
+      break;
+
+    case 3:
+      CardJSX = (
+        <ChapterCard
+          data={curChapter[d1].child[d2].child[d3].deck}
+          categoryTitle={curCategory.title}
+        />
+      );
+      break;
   }
 
   return <CardIndicator>{CardJSX}</CardIndicator>;
