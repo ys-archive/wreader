@@ -1,11 +1,8 @@
 import React from 'react';
 import { Animated, View, Platform } from 'react-native';
 import { StyleSheet } from '#components';
+import { colors } from '../../constants/colors';
 import GestureRecognizer from 'react-native-swipe-gestures';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
 import {
   useSwipeGesture,
   useSwipeLeft,
@@ -20,16 +17,15 @@ const swipeConfig = {
 };
 
 const Reader = ({ children }) => {
-  const { forceSwipeVertically, forceSwipeHorizontally, getStyle } =
-    useSwipeGesture();
+  const { swipe, getStyle } = useSwipeGesture();
 
-  const swipeLeft = useSwipeLeft(forceSwipeHorizontally);
-  const swipeRight = useSwipeRight(forceSwipeHorizontally);
-  const swipeUp = useSwipeUp(forceSwipeVertically);
-  const swipeDown = useSwipeDown(forceSwipeVertically);
+  const swipeLeft = useSwipeLeft(swipe);
+  const swipeRight = useSwipeRight(swipe);
+  const swipeUp = useSwipeUp(swipe);
+  const swipeDown = useSwipeDown(swipe);
 
   return (
-    <View style={s.root}>
+    <View>
       <GestureRecognizer
         onSwipeLeft={state => swipeLeft()(state)}
         onSwipeRight={state => swipeRight()(state)}
@@ -38,8 +34,8 @@ const Reader = ({ children }) => {
         config={swipeConfig}
         style={s.recognizer}
       >
-        {children}
-        {/* <Animated.View style={[getStyle()]}>{children}</Animated.View> */}
+        <Animated.View style={[getStyle()]}>{children}</Animated.View>
+        {/* <View style={s.swipeFiller} /> */}
       </GestureRecognizer>
     </View>
   );
@@ -48,25 +44,15 @@ const Reader = ({ children }) => {
 export default Reader;
 
 const s = StyleSheet.create({
-  root: {
-    // flex: 1,
-    // overflow: 'visible',
-  },
   recognizer: {
-    // minWidth: wp('100%'),
-    // // maxWidth: wp('100%'),
-    // minHeight: hp('100%'),
-    // // maxHeight: hp('100%'),
-    // position: 'absolute',
-    // left: 0,
-    // top: 0,
-    // backgroundColor: 'rgba(255,255,255, 0.7)',
-    minWidth: wp('95%'),
-    minHeight: hp('76%'),
     position: 'absolute',
-    // zIndex: 10,
     left: 0,
     top: 0,
     backgroundColor: 'rgba(255,255,255, 0.7)',
+  },
+  swipeFiller: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: colors.light.background
   },
 });

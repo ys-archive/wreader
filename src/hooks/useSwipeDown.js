@@ -1,7 +1,7 @@
 import { DEPTH_NAME } from '../store/reducers/swiper.depth';
 import { useSwipeStates } from './useSwipeStates';
 
-export const useSwipeDown = forceSwipeVertically => {
+export const useSwipeDown = swipe => {
   const {
     categories,
     chapters,
@@ -23,11 +23,6 @@ export const useSwipeDown = forceSwipeVertically => {
   if (!isLoaded) return null;
 
   return () => {
-    const shared = () => {
-      console.log('swipe to down');
-      forceSwipeVertically('down');
-    };
-
     switch (depth) {
       case DEPTH_NAME.CATEGORY:
         return state => {
@@ -36,10 +31,10 @@ export const useSwipeDown = forceSwipeVertically => {
             return;
           }
 
-          decreaseCoords('d0');
-          setMaxCoords({ d1: chapters });
-
-          shared();
+          swipe('down', () => {
+            decreaseCoords('d0');
+            setMaxCoords({ d1: chapters });
+          });
         };
 
       case DEPTH_NAME.CHAPTER:
@@ -50,14 +45,16 @@ export const useSwipeDown = forceSwipeVertically => {
       case DEPTH_NAME.USER_CHAPTER:
         return state => {
           if (coords.d2 === 0) {
-            decreaseDepth();
+            swipe('down', () => {
+              decreaseDepth();
+            });
             return;
           }
 
-          decreaseCoords('d2');
-          setMaxCoords({ d3: chapters });
-          
-          shared();
+          swipe('down', () => {
+            decreaseCoords('d2');
+            setMaxCoords({ d3: chapters });
+          });
         };
 
       case DEPTH_NAME.NEXT:

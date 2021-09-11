@@ -1,7 +1,7 @@
 import { DEPTH_NAME } from '../store/reducers/swiper.depth';
 import { useSwipeStates } from './useSwipeStates';
 
-export const useSwipeRight = forceSwipeHorizontally => {
+export const useSwipeRight = swipe => {
   const {
     categories,
     chapters,
@@ -23,11 +23,6 @@ export const useSwipeRight = forceSwipeHorizontally => {
   if (!isLoaded) return null;
 
   return () => {
-    const shared = () => {
-      console.log('swipe to right');
-      forceSwipeHorizontally('right');
-    };
-
     switch (depth) {
       case DEPTH_NAME.CATEGORY:
         return state => {
@@ -37,16 +32,20 @@ export const useSwipeRight = forceSwipeHorizontally => {
       case DEPTH_NAME.CHAPTER:
         return state => {
           if (coords.d1 === 0) {
-            decreaseDepth();
+            swipe('right', () => {
+              decreaseDepth();
+            });
           }
 
           if (coords.d1 > 0) {
-            decreaseCoords('d1');
+            swipe('right', () => {
+              decreaseCoords('d1');
+            });
           }
 
-          setMaxCoords({ d2: chapters });
-
-          shared();
+          swipe('right', () => {
+            setMaxCoords({ d2: chapters });
+          });
         };
 
       case DEPTH_NAME.USER_CHAPTER:
@@ -57,14 +56,16 @@ export const useSwipeRight = forceSwipeHorizontally => {
       case DEPTH_NAME.NEXT:
         return state => {
           if (coords.d3 === 0) {
-            decreaseDepth();
+            swipe('right', () => {
+              decreaseDepth();
+            });
           }
 
           if (coords.d3 > 0) {
-            decreaseCoords('d3');
+            swipe('right', () => {
+              decreaseCoords('d3');
+            });
           }
-
-          shared();
         };
 
       default:

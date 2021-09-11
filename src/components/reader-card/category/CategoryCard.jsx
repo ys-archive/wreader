@@ -10,14 +10,6 @@ import { colors } from '#constants';
 
 import { makeCategoryBGImagePath } from '#constants/images';
 
-import { useStoreState } from 'easy-peasy';
-import {
-  selectCurrentCategoryIdx,
-  selectIsFirstCandidate,
-  selectCurrentChapterIdx,
-} from '#store/selectors';
-import { useCategoryCardExposer_Category } from './useCategoryCardExposer_Category';
-
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '../../../navigators/ScreenNames';
 

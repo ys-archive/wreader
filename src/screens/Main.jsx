@@ -11,6 +11,7 @@ import EventModal from '#components/modals/EventModal';
 import Reader from './reader/Reader';
 import CardsRenderer from './CardsRenderer';
 
+
 const Main = () => {
   const nav = useNavigation();
   useAutoLogin();

@@ -11,11 +11,12 @@ export const Text = ({ style, isBold = false, children }) => {
 
 Text.propTypes = {
   isBold: PropTypes.bool,
-  children: PropTypes.any.isRequired,
+  children: PropTypes.any,
 };
 
 Text.defaultProps = {
   isBold: false,
+  children: undefined,
 };
 
 const s = StyleSheet.create({

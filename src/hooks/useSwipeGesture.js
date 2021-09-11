@@ -1,43 +1,57 @@
 import { useRef } from 'react';
-import { Animated, Dimensions } from 'react-native';
+import { Animated, Dimensions, LayoutAnimation } from 'react-native';
+
+import { useStoreActions } from 'easy-peasy';
+import { actSwiper } from '../store/actions';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
-const SWIPE_OUT_DURATION = 450;
-
-const swipeAmount = {
-  x: 0,
-  y: 0,
-};
+const SWIPE_OUT_DURATION = 350;
 
 export const useSwipeGesture = () => {
+  const setSwiping = useStoreActions(actSwiper.setSwiping);
   let position = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current;
 
-  const forceSwipeVertically = dir => {
-    const isUp = dir === 'up';
-    const delta = SCREEN_HEIGHT * (isUp ? -1 : 1);
-    swipeAmount.y += delta;
+  const swipe = (dir, after) => {
+    setSwiping(true);
+
+    const delta = { x: 0, y: 0 };
+    switch (dir) {
+      case 'up':
+        delta.y += SCREEN_HEIGHT * -1;
+        break;
+
+      case 'down':
+        delta.y += SCREEN_HEIGHT;
+        break;
+
+      case 'left':
+        delta.x += SCREEN_WIDTH * -1;
+        break;
+
+      case 'right':
+        delta.x += SCREEN_WIDTH;
+        break;
+
+      default:
+        throw new Error('Invalid direction');
+    }
+
     Animated.timing(position, {
-      toValue: { x: swipeAmount.x, y: swipeAmount.y },
+      toValue: delta,
       duration: SWIPE_OUT_DURATION,
       useNativeDriver: true,
-    }).start();
+    }).start(() => {
+      console.log(`Swipe Amount: x: ${delta.x}, y: ${delta.y}`);
+      if (after) after();
+      onSwipeComplete(dir);
+    });
   };
 
-  const forceSwipeHorizontally = dir => {
-    const isLeft = dir === 'left';
-    const delta = SCREEN_WIDTH * (isLeft ? -1 : 1);
-    swipeAmount.x += delta;
-    Animated.timing(position, {
-      toValue: { x: swipeAmount.x, y: swipeAmount.y },
-      duration: SWIPE_OUT_DURATION,
-      useNativeDriver: true,
-    }).start();
+  const onSwipeComplete = dir => {
+    setSwiping(false);
+    position.setValue({ x: 0, y: 0 });
+    // LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
   };
-
-  // const onSwipeComplete = dir => {
-  //   // position.setValue({ x: 0, y: 0 });
-  //   LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-  // };
 
   const getStyle = () => {
     const { x: translateX, y: translateY } = position;
@@ -48,8 +62,7 @@ export const useSwipeGesture = () => {
   };
 
   return {
-    forceSwipeVertically,
-    forceSwipeHorizontally,
+    swipe,
     getStyle,
   };
 };

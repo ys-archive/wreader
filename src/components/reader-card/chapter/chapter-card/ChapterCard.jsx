@@ -60,14 +60,14 @@ const ChapterCard = ({ data, categoryTitle }) => {
     isLike,
   } = data;
 
-  console.log(
-    '----------------------------------------------------------------------',
-  );
-  console.log('userId: ', userId);
-  console.log(data);
-  console.log(
-    '----------------------------------------------------------------------',
-  );
+  // console.log(
+  //   '----------------------------------------------------------------------',
+  // );
+  // console.log('userId: ', userId);
+  // console.log(data);
+  // console.log(
+  //   '----------------------------------------------------------------------',
+  // );
 
   const onPressLike = useCallback(async () => {
     if (!isLoggedIn) {

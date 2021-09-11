@@ -22,13 +22,13 @@ const initStates = () => {
     coords,
   };
 };
-const CategoryIndicatorCard = ({ pos }) => {
+const CategoryIndicatorCard = ({ pos, order }) => {
   const {
     categories,
-    coords: { d0 },
+    // coords: { d0 },
   } = initStates();
 
-  const categoryTitle = categories[d0].title;
+  const categoryTitle = categories[order].title;
 
   return (
     <View style={[s.root, pos]}>

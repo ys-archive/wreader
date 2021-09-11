@@ -3,7 +3,7 @@ import { useSwipeStates } from './useSwipeStates';
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '../navigators/ScreenNames';
 
-export const useSwipeUp = forceSwipeVertically => {
+export const useSwipeUp = swipe => {
   const {
     categories,
     chapters,
@@ -26,18 +26,15 @@ export const useSwipeUp = forceSwipeVertically => {
   if (!isLoaded) return null;
 
   return () => {
-    const shared = () => {
-      console.log('swipe to up');
-      forceSwipeVertically('up');
-    };
-
     switch (depth) {
       case DEPTH_NAME.CATEGORY:
         return state => {
           if (coords.d0 === maxCoords.d0 - 1) {
             if (maxCoords.d0 !== 0) {
-              console.log('마지막 카테고리!, 이전 카드로 돌아감!');
-              decreaseCoords('d0');
+              swipe('down', () => {
+                console.log('마지막 카테고리!, 이전 카드로 돌아감!');
+                decreaseCoords('d0');
+              });
             } else {
               console.log(
                 '마지막 카테고리!, 첫 카테고리라 이전으로 돌아가진 않음',
@@ -46,10 +43,10 @@ export const useSwipeUp = forceSwipeVertically => {
             return;
           }
 
-          increaseCoords('d0');
-          setMaxCoords({ d1: chapters });
-
-          shared();
+          swipe('up', () => {
+            increaseCoords('d0');
+            setMaxCoords({ d1: chapters });
+          });
         };
 
       case DEPTH_NAME.CHAPTER:
@@ -65,10 +62,10 @@ export const useSwipeUp = forceSwipeVertically => {
             return;
           }
 
-          increaseDepth();
-          setMaxCoords({ d2: chapters });
-
-          shared();
+          swipe('up', () => {
+            increaseDepth();
+            setMaxCoords({ d2: chapters });
+          });
         };
 
       case DEPTH_NAME.USER_CHAPTER:
@@ -81,17 +78,16 @@ export const useSwipeUp = forceSwipeVertically => {
             nav.navigate(ScreenNames.MainWriteCard, {
               categoryTitle: categories[coords.d0].title,
               categoryId: coords.d0,
-              chapterId:
-                +chapters[coords.d0][coords.d1].deck.id,
+              chapterId: +chapters[coords.d0][coords.d1].deck.id,
               order: coords.d2,
             });
             return;
           }
 
-          increaseCoords('d2');
-          setMaxCoords({ d3: chapters });
-
-          shared();
+          swipe('up', () => {
+            increaseCoords('d2');
+            setMaxCoords({ d3: chapters });
+          });
         };
 
       case DEPTH_NAME.NEXT:

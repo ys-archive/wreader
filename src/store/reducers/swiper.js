@@ -1,10 +1,15 @@
-import { TabRouter } from '@react-navigation/routers';
 import { action, computed } from 'easy-peasy';
-import { Coordinates, MaxCoordinates } from './swiper.coords';
+import { Coordinates } from './swiper.coords';
 import { DEPTH_NAME } from './swiper.depth';
 
 export default {
   // model
+  isSwiping: false,
+
+  setSwiping: action((state, payload) => {
+    state.isSwiping = payload;
+  }),
+
   depth: {
     val: DEPTH_NAME.CATEGORY,
 
@@ -116,13 +121,15 @@ export default {
 };
 
 export const selectors = {
+  isSwiping: state => state.swiper.isSwiping,
   depth: state => state.swiper.depth.val,
-
   coords: state => state.swiper.coords.val,
   maxCoords: state => state.swiper.coords.max,
 };
 
 export const actions = {
+  setSwiping: actions => actions.swiper.setSwiping,
+
   setDepth: actions => actions.swiper.depth.set,
   increaseDepth: actions => actions.swiper.depth.increment,
   decreaseDepth: actions => actions.swiper.depth.decrement,

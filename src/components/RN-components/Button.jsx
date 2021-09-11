@@ -7,7 +7,7 @@ import { StyleSheet } from './StyleSheet';
 export const Button = ({
   style = {},
   textStyle = {},
-  onPress,
+  onPress = () => {},
   isBold = false,
   children,
 }) => {
@@ -25,15 +25,17 @@ export const Button = ({
 Button.propTypes = {
   style: PropTypes.object,
   textStyle: PropTypes.object,
-  onPress: PropTypes.func.isRequired,
+  onPress: PropTypes.func,
   isBold: PropTypes.bool,
-  children: PropTypes.any.isRequired,
+  children: PropTypes.any,
 };
 
 Button.defaultProps = {
   style: {},
   textStyle: {},
   isBold: false,
+  onPress: () => {},
+  children: undefined
 };
 
 const s = StyleSheet.create({
