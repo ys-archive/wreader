@@ -41,7 +41,7 @@ export const useSwipeGesture = () => {
       duration: SWIPE_OUT_DURATION,
       useNativeDriver: true,
     }).start(() => {
-      console.log(`Swipe Amount: x: ${delta.x}, y: ${delta.y}`);
+      // console.log(`Swipe Amount: x: ${delta.x}, y: ${delta.y}`);
       if (after) after();
       onSwipeComplete(dir);
     });

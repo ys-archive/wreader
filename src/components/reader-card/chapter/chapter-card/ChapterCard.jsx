@@ -30,20 +30,17 @@ const initStates = () => {
   const isLoggedIn = useStoreState(selAuth.isLoggedIn);
   const userId = useStoreState(selAuth.userId);
   const profile = useStoreState(selImage.profile);
-  const coords = useStoreState(selSwiper.coords);
 
   return {
     isLoggedIn,
     userId,
     profile,
-    coords,
   };
 };
 
-const ChapterCard = ({ data, categoryTitle }) => {
+const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
   const nav = useNavigation();
-  const { isLoggedIn, userId, profile, coords } = initStates();
-  const { d1 } = coords;
+  const { isLoggedIn, userId, profile } = initStates();
   const [_, updateLike] = useLikeUpdate();
   const {
     id: chapterId, // 현재 챕터 Id
@@ -59,6 +56,7 @@ const ChapterCard = ({ data, categoryTitle }) => {
     isLike,
   } = data;
 
+  // console.log('\n');
   // console.log(
   //   '----------------------------------------------------------------------',
   // );
@@ -67,6 +65,7 @@ const ChapterCard = ({ data, categoryTitle }) => {
   // console.log(
   //   '----------------------------------------------------------------------',
   // );
+  // console.log('\n');
 
   const onPressLike = useCallback(async () => {
     if (!isLoggedIn) {
@@ -101,18 +100,13 @@ const ChapterCard = ({ data, categoryTitle }) => {
   return (
     <View style={s.root}>
       <ImageBackground
-        style={[
-          {
-            width: wp('83.3%'),
-            height: hp('81.2%'),
-            borderRadius: StyleDefine.borderRadiusOutside,
-            overflow: 'hidden',
-            alignItems: 'center',
-          },
-          // predicatedPositionBetweenChapters,
-          // predicatedPositionBetweenCandidates,
-          // predicatedScaleBGBetweenChapters,
-        ]}
+        style={{
+          width: wp('83.3%'),
+          height: hp('81.2%'),
+          borderRadius: StyleDefine.borderRadiusOutside,
+          overflow: 'hidden',
+          alignItems: 'center',
+        }}
         source={
           chapterImg
             ? { uri: chapterImg }
@@ -122,14 +116,11 @@ const ChapterCard = ({ data, categoryTitle }) => {
         {/* 프로필 및 작가 이름 */}
         <View style={s.authorSection}>
           <Image
-            style={[
-              {
-                width: 30,
-                height: 30,
-                borderRadius: 100,
-              },
-              // predicatedScaleProfileBetweenChapters,
-            ]}
+            style={{
+              width: 30,
+              height: 30,
+              borderRadius: 100,
+            }}
             source={userImg ? { uri: userImg } : dummyProfile}
           />
           <Text isBold style={s.authorNameText}>
@@ -139,15 +130,12 @@ const ChapterCard = ({ data, categoryTitle }) => {
 
         {/* 챕터 내부 */}
         <ImageBackground
-          style={[
-            {
-              width: wp('75.6%'),
-              height: hp('69.7%'),
-              backgroundColor: colors.light.chapterBGInside,
-              borderRadius: StyleDefine.borderRadiusInside,
-            },
-            // predicatedScaleInsideBGBetweenChapters,
-          ]}
+          style={{
+            width: wp('75.6%'),
+            height: hp('69.7%'),
+            backgroundColor: colors.light.chapterBGInside,
+            borderRadius: StyleDefine.borderRadiusInside,
+          }}
         >
           {/* 챕터 제목 */}
           <View style={s.titleSection}>
@@ -163,7 +151,7 @@ const ChapterCard = ({ data, categoryTitle }) => {
               CHAPTER
             </Text>
             <Text isBold style={s.chapterOrderText}>
-              {d1 + 1}
+              {order + 1}
             </Text>
           </View>
 

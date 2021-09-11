@@ -50,7 +50,7 @@ export const useSwipeLeft = swipe => {
             });
             return;
           }
-          
+
           // todo: 챕터는 유저가 직접 추가하지 않음
           // if (maxCoords.d1 < 10) {
           //   swipe('left', () => {
@@ -79,15 +79,14 @@ export const useSwipeLeft = swipe => {
             chapters[coords.d0][coords.d1].child[coords.d2].child.length === 0
           ) {
             console.log(
-              '해당 유저챕터의 다음 챕터가 존재 하지 않음. 새로운 카드 작성',
+              '해당 유저챕터의 유저 다음 챕터가 존재 하지 않음. 새로운 카드 작성',
             );
-            // todo: 새 챕터 작성
             nav.navigate(ScreenNames.MainWriteCard, {
               categoryTitle: categories[coords.d0].title,
               categoryId: coords.d0,
               chapterId:
                 +chapters[coords.d0][coords.d1].child[coords.d2].deck.id,
-              order: coords.d3,
+              order: coords.d3 + 1,
             });
             return;
           }
@@ -115,7 +114,7 @@ export const useSwipeLeft = swipe => {
               categoryId: +coords.d0,
               chapterId:
                 +chapters[coords.d0][coords.d1].child[coords.d2].deck.id,
-              order: coords.d3,
+              order: coords.d3 + 2,
             });
             return;
           }

@@ -59,6 +59,7 @@ const CardsRenderer = () => {
         <ChapterCard
           data={curChapter[d1].deck}
           categoryTitle={curCategory.title}
+          order={d1}
         />
       );
       break;
@@ -68,6 +69,7 @@ const CardsRenderer = () => {
         <ChapterCard
           data={curChapter[d1].child[d2].deck}
           categoryTitle={curCategory.title}
+          order={d1}
         />
       );
       break;
@@ -77,6 +79,7 @@ const CardsRenderer = () => {
         <ChapterCard
           data={curChapter[d1].child[d2].child[d3].deck}
           categoryTitle={curCategory.title}
+          order={d3 + 1}
         />
       );
       break;
