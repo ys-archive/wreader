@@ -16,7 +16,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StyleDefine } from '../../../constants';
 
 const WriteCardForm = ({ chapterId, categoryId, userId, children }) => {
-  const [_, setNewCandidateWritten] = useWriteNewCard();
+  
 
   const nav = useNavigation();
 

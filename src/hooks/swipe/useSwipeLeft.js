@@ -1,7 +1,7 @@
-import { DEPTH_NAME } from '../store/reducers/swiper.depth';
+import { DEPTH_NAME } from '../../store/reducers/swiper.depth';
 import { useSwipeStates } from './useSwipeStates';
 import { useNavigation } from '@react-navigation/native';
-import * as ScreenNames from '../navigators/ScreenNames';
+import * as ScreenNames from '../../navigators/ScreenNames';
 
 export const useSwipeLeft = swipe => {
   const {
@@ -13,14 +13,13 @@ export const useSwipeLeft = swipe => {
     coords,
     maxCoords,
 
-    setDepth,
+    updateHasNew,
     increaseDepth,
-    decreaseDepth,
 
-    setCoords,
-    setMaxCoords,
     increaseCoords,
     decreaseCoords,
+
+    setMaxCoords,
   } = useSwipeStates();
   const nav = useNavigation();
   if (!isLoaded) return null;
@@ -36,8 +35,12 @@ export const useSwipeLeft = swipe => {
           }
 
           swipe('left', () => {
+            // 카테고리 -> 챕터 선택 (d0 -> d1)
             increaseDepth();
-            setMaxCoords({ d1: chapters });
+            // 각 챕터에 맞게 최대 챕터 설정 (d1)
+            // setMaxCoords({ d1: chapters });
+            console.log('ENTER INTO CHAPTERS');
+            updateHasNew('d2');
           });
         };
 

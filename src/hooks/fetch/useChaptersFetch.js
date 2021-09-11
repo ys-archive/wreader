@@ -1,15 +1,16 @@
 import React from 'react';
-import { asyncForEach } from '../utils';
+import { asyncForEach } from '../../utils';
 
 import { useStoreState, useStoreActions } from 'easy-peasy';
-import { selData, selAuth, selSwiper } from '../store/selectors';
-import { actData, actSwiper } from '../store/actions';
+import { selData, selAuth, selSwiper } from '../../store/selectors';
+import { actData, actSwiper } from '../../store/actions';
 
 const initStates = () => {
   // selectors
   const categories = useStoreState(selData.categories);
   const isLoaded = useStoreState(selData.isLoaded);
   const hasLike = useStoreState(selData.hasLike);
+  const hasNew = useStoreState(selData.hasNew);
 
   // actions
   // - data
@@ -22,6 +23,7 @@ const initStates = () => {
   return {
     categories,
     isLoaded,
+    hasNew,
     hasLike,
 
     addChapter,
@@ -31,19 +33,31 @@ const initStates = () => {
   };
 };
 
-export const useChaptersFetch = () => {
-  // state 가져오기
+let chapters = undefined;
 
-  const { categories } = initStates();
+export const useChaptersFetch = () => {
+  const {
+    categories,
+    isLoaded,
+    addChapter,
+    finishLoading,
+    hasNew,
+    hasLike,
+    setMaxCoords,
+  } = initStates();
 
   React.useEffect(() => {
-    async function fetch() {
-      reset();
+    (async function fetchChapters() {
+      // 카테고리가 먼저 로드 되었어야 함
+      if (!isLoaded.d0) return;
+      if (!categories || categories.length === 0) return;
+      console.log('fetching CHAPTERS');
 
       // 챕터 데이터 정제 및 저장
-      const chapters = Object.values(categories)
+      chapters = Object.values(categories)
         .map(i => i.chapter)
         .filter(i => i.length > 0);
+      // console.log('refined chapters --> ', chapters);
 
       if (!chapters || chapters.length === 0) return;
 
@@ -54,20 +68,13 @@ export const useChaptersFetch = () => {
         addChapter({ deck });
       });
 
-      // ------------------- d1 --------------------------------------
-
-      // 로딩 끝
-      finishLoading('d0');
-    }
-
-    fetch();
-  }, []);
-
+      finishLoading('d1');
+    })();
+  }, [hasNew.d1, hasLike.d1, isLoaded.d0]);
+  
   React.useEffect(() => {
-    if (!isLoaded) return;
+    if (!isLoaded.d1) return;
 
     setMaxCoords({ d1: chapters });
-    // setMaxCoords({ d2: chapters });
-    // setMaxCoords({ d3: chapters });
-  }, [isLoaded]);
+  }, [isLoaded.d1]);
 };

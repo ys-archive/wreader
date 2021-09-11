@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { Animated, Dimensions, LayoutAnimation } from 'react-native';
 
 import { useStoreActions } from 'easy-peasy';
-import { actSwiper } from '../store/actions';
+import { actSwiper } from '../../store/actions';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const SWIPE_OUT_DURATION = 350;

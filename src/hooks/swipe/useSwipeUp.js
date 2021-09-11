@@ -1,7 +1,7 @@
-import { DEPTH_NAME } from '../store/reducers/swiper.depth';
+import { DEPTH_NAME } from '../../store/reducers/swiper.depth';
 import { useSwipeStates } from './useSwipeStates';
 import { useNavigation } from '@react-navigation/native';
-import * as ScreenNames from '../navigators/ScreenNames';
+import * as ScreenNames from '../../navigators/ScreenNames';
 
 export const useSwipeUp = swipe => {
   const {
@@ -13,12 +13,11 @@ export const useSwipeUp = swipe => {
     coords,
     maxCoords,
 
-    setDepth,
     increaseDepth,
-    decreaseDepth,
 
-    setCoords,
     setMaxCoords,
+
+    updateHasNew,
     increaseCoords,
     decreaseCoords,
   } = useSwipeStates();
@@ -64,7 +63,9 @@ export const useSwipeUp = swipe => {
 
           swipe('up', () => {
             increaseDepth();
-            setMaxCoords({ d2: chapters });
+            // setMaxCoords({ d2: chapters });
+            console.log('ENTER INTO USER CHAPTERS');
+            updateHasNew('d3');
           });
         };
 

@@ -1,13 +1,13 @@
 import { useStoreState, useStoreActions } from 'easy-peasy';
-import { selData, selSwiper } from '../store/selectors';
-import { actSwiper } from '../store/actions';
+import { selData, selSwiper } from '../../store/selectors';
+import { actData, actSwiper } from '../../store/actions';
 
 export const useSwipeStates = () => {
   // selectors
   // - data
   const categories = useStoreState(selData.categories);
   const chapters = useStoreState(selData.chapters);
-  const isLoaded = useStoreState(selData.isLoaded);
+  const isLoaded = useStoreState(selData.isLoaded);  
 
   // - swiper
   const depth = useStoreState(selSwiper.depth);
@@ -15,15 +15,19 @@ export const useSwipeStates = () => {
   const maxCoords = useStoreState(selSwiper.maxCoords);
 
   // actions
+  // - data
+  const updateHasNew = useStoreActions(actData.updateHasNew);
+
   // - swiper
   const setDepth = useStoreActions(actSwiper.setDepth);
   const increaseDepth = useStoreActions(actSwiper.increaseDepth);
   const decreaseDepth = useStoreActions(actSwiper.decreaseDepth);
 
   const setCoords = useStoreActions(actSwiper.setCoords);
-  const setMaxCoords = useStoreActions(actSwiper.setMaxCoords);
   const increaseCoords = useStoreActions(actSwiper.increaseCoords);
   const decreaseCoords = useStoreActions(actSwiper.decreaseCoords);
+
+  const setMaxCoords = useStoreActions(actSwiper.setMaxCoords);
 
   return {
     categories,
@@ -33,6 +37,8 @@ export const useSwipeStates = () => {
     depth,
     coords,
     maxCoords,
+
+    updateHasNew,
 
     setDepth,
     increaseDepth,

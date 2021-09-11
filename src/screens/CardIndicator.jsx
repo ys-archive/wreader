@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import { useStoreState } from 'easy-peasy';
 import { selSwiper, selData } from '../store/selectors';
@@ -17,6 +17,7 @@ const initStates = () => {
   const depth = useStoreState(selSwiper.depth);
   const isSwiping = useStoreState(selSwiper.isSwiping);
   const isLoaded = useStoreState(selData.isLoaded);
+  const hasNew = useStoreState(selData.hasNew);
 
   return {
     coords,
@@ -24,28 +25,29 @@ const initStates = () => {
     depth,
     isSwiping,
     isLoaded,
+    hasNew,
   };
 };
 
 const CardIndicator = ({ children }) => {
-  const { coords, maxCoords, depth, isSwiping, isLoaded } = initStates();
+  const { coords, maxCoords, depth, isSwiping, isLoaded, hasNew } =
+    initStates();
 
-  if (!isLoaded) return null;
-  
+  // if (!isLoaded.d0) return null;
 
-  let IndicatorJSX = undefined;
+  let IndicatorJSX = null;
 
   switch (depth) {
     case DEPTH_NAME.CATEGORY:
-      IndicatorJSX = renderWithDepth0(coords, maxCoords);
+      IndicatorJSX = isLoaded.d1 && renderWithDepth0(coords, maxCoords);
       break;
 
     case DEPTH_NAME.CHAPTER:
-      IndicatorJSX = renderWithDepth1(coords, maxCoords);
+      IndicatorJSX = isLoaded.d2 && renderWithDepth1(coords, maxCoords);
       break;
 
     case DEPTH_NAME.USER_CHAPTER:
-      IndicatorJSX = renderWithDepth2(coords, maxCoords);
+      IndicatorJSX = isLoaded.d3 && renderWithDepth2(coords, maxCoords);
       break;
 
     case DEPTH_NAME.NEXT:

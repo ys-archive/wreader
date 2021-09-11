@@ -8,18 +8,18 @@ export const delay = delay =>
 
 /**
  * Wrapped setTimout, fn 은 마지막에 호출됨
- * @param {function} fn callback
  * @param {number} delay 단위 : 초
+ * @param {function} fn callback
  * @returns Promise
  */
-export const delayFinally = (fn, delay) =>
+export const delayFinally = (delay, fn) =>
   new Promise(resolve => setTimeout(resolve(fn), delay * 1000));
 
 /**
  * Wrapped setInterval
- * @param {function} fn callback
  * @param {number} delay 단위 : 초
+ * @param {function} fn callback
  * @returns
  */
-export const tick = (fn, delay) =>
+export const tick = (delay, fn) =>
   new Promise(resolve => setInterval(resolve(fn), delay * 1000));

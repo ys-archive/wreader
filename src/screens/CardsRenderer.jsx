@@ -2,12 +2,11 @@ import React from 'react';
 
 import { useStoreState } from 'easy-peasy';
 import { selData, selSwiper } from '../store/selectors';
-import { useCardsInitialFetch } from '../hooks/useCardsInitialFetch';
 
+import FetchBeforeRender from './CardsRenderer.fetch';
 import CategoryCard from '../components/reader-card/category/CategoryCard';
 import ChapterCard from '../components/reader-card/chapter/chapter-card/ChapterCard';
 import CardIndicator from './CardIndicator';
-
 
 const initStates = () => {
   const categories = useStoreState(selData.categories);
@@ -29,12 +28,13 @@ const initStates = () => {
 };
 
 const CardsRenderer = () => {
-  useCardsInitialFetch();
+  FetchBeforeRender();
 
   const { categories, chapters, isLoaded, depth, coords, maxCoords } =
     initStates();
 
-  if (!isLoaded) return null;
+  if (!isLoaded.d0) return null;
+  if (!isLoaded.d1) return null;
 
   // const { d0: md0, d1: md1, d2: md2, d3: md3 } = maxCoords;
   // console.log(

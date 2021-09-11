@@ -7,6 +7,13 @@ export default {
   chapters: [],
 
   isLoaded: {
+    default: {
+      d0: false,
+      d1: false,
+      d2: false,
+      d3: false,
+    },
+
     val: {
       d0: false,
       d1: false,
@@ -16,28 +23,35 @@ export default {
 
     finishLoading: action((state, payload) => {
       if ('d0' === payload) {
-        state.val.d0 = true;
+        state.val.d0 = !state.val.d0;
         return;
       }
 
       if ('d1' === payload) {
-        state.val.d1 = true;
+        state.val.d1 = !state.val.d1;
         return;
       }
 
       if ('d2' === payload) {
-        state.val.d2 = true;
+        state.val.d2 = !state.val.d2;
         return;
       }
 
       if ('d3' === payload) {
-        state.val.d3 = true;
+        state.val.d3 = !state.val.d3;
         return;
       }
     }),
   },
 
   hasNew: {
+    default: {
+      d0: false,
+      d1: false,
+      d2: false,
+      d3: false,
+    },
+
     val: {
       d0: false,
       d1: false,
@@ -47,28 +61,35 @@ export default {
 
     needUpdate: action((state, payload) => {
       if ('d0' === payload) {
-        state.val.d0 = true;
+        state.val.d0 = !state.val.d0;
         return;
       }
 
       if ('d1' === payload) {
-        state.val.d1 = true;
+        state.val.d1 = !state.val.d1;
         return;
       }
 
       if ('d2' === payload) {
-        state.val.d2 = true;
+        state.val.d2 = !state.val.d2;
         return;
       }
 
       if ('d3' === payload) {
-        state.val.d3 = true;
+        state.val.d3 = !state.val.d3;
         return;
       }
     }),
   },
 
   hasLike: {
+    default: {
+      d0: false,
+      d1: false,
+      d2: false,
+      d3: false,
+    },
+
     val: {
       d0: false,
       d1: false,
@@ -78,48 +99,33 @@ export default {
 
     needUpdate: action((state, payload) => {
       if ('d0' === payload) {
-        state.val.d0 = true;
+        state.val.d0 = !state.val.d0;
         return;
       }
 
       if ('d1' === payload) {
-        state.val.d1 = true;
+        state.val.d1 = !state.val.d1;
         return;
       }
 
       if ('d2' === payload) {
-        state.val.d2 = true;
+        state.val.d2 = !state.val.d2;
         return;
       }
 
       if ('d3' === payload) {
-        state.val.d3 = true;
+        state.val.d3 = !state.val.d3;
         return;
       }
     }),
   },
 
-  reset: action((state, payload) => {
+  reset: action(state => {
     state.categories = [];
     state.chapters = [];
-    state.isLoaded.val = {
-      d0: false,
-      d1: false,
-      d2: false,
-      d3: false,
-    };
-    state.hasNew.val = {
-      d0: false,
-      d1: false,
-      d2: false,
-      d3: false,
-    };
-    state.hasLike.val = {
-      d0: false,
-      d1: false,
-      d2: false,
-      d3: false,
-    };
+    state.isLoaded.val = state.isLoaded.default;
+    state.hasNew.val = state.hasNew.default;
+    state.hasLike.val = state.hasLike.default;
   }),
 
   addCategory: action((state, payload) => {
@@ -191,6 +197,6 @@ export const actions = {
   addChapterChild: actions => actions.data.addChapterChild,
 
   finishLoading: actions => actions.data.isLoaded.finishLoading,
-  hasNew: actions => actions.data.hasNew.needUpdate,
-  hasLike: actions => actions.data.hasLike.needUpdate,
+  updateHasNew: actions => actions.data.hasNew.needUpdate,
+  updateHasLike: actions => actions.data.hasLike.needUpdate,
 };
