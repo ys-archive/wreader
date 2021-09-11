@@ -1,4 +1,5 @@
 import React from 'react';
+import { asyncForEach } from '../utils';
 
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import { selData, selAuth, selSwiper } from '../store/selectors';
@@ -44,13 +45,6 @@ const initStates = () => {
     setMaxCoords,
   };
 };
-
-async function asyncForEach(arr, callback) {
-  const len = arr.length;
-  for (let i = 0; i < len; ++i) {
-    await callback(arr[i], i, arr);
-  }
-}
 
 export const useCardsFetch = () => {
   // state 가져오기

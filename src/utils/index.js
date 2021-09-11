@@ -1,3 +1,4 @@
+import { asyncForEach } from './async';
 import { delay, delayFinally, tick } from './time';
 import {
   isTypeOf,
@@ -14,6 +15,7 @@ import {
 } from './image';
 
 export {
+  asyncForEach,
   delay,
   delayFinally,
   tick,
