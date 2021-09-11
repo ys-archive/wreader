@@ -16,19 +16,13 @@ import {
 
 const initialValues = {
   title: '',
-  sentence1: '',
-  sentence2: '',
-  sentence3: '',
-  sentence4: '',
+  sentence: '',
 };
 
 const validationSchema = Yup.object({
   title: Yup.string(),
 
-  sentence1: Yup.string().min(0).max(20),
-  sentence2: Yup.string().min(0).max(20),
-  sentence3: Yup.string().min(0).max(20),
-  sentence4: Yup.string().min(0).max(20),
+  sentence: Yup.string().min(0).max(20),
 });
 
 const ContactUsDetail = () => {
@@ -52,7 +46,7 @@ const ContactUsDetail = () => {
       onSubmit,
     });
 
-  const { title, sentence1, sentence2, sentence3, sentence4 } = values;
+  const { title, sentence } = values;
 
   return (
     <KeyboardAwareScrollView>
@@ -92,83 +86,20 @@ const ContactUsDetail = () => {
             <RenderError touched={touched.title} errors={errors.title} />
           </View>
           <Text isBold style={s.underTitle}>
-            sentence
+            CONTENTS
           </Text>
           <View style={s.inputView}>
             <TextInput
               style={s.input}
-              ref={textInputRef1}
-              value={sentence1}
-              maxLength={20}
-              onBlur={handleBlur('sentence1')}
-              onChangeText={e => {
-                handleChange('sentence1')(e);
-                if (e && e.length === 20) {
-                  textInputRef2.current.focus();
-                }
-              }}
+              value={sentence}
+              multiline
+              maxLength={300}
+              // minHeight={300}
+              maxHeight={300}
+              numberOfLines={12}
+              onBlur={handleBlur('sentence')}
+              onChangeText={handleChange('sentence')}
               placeholder="Write down sentence of your inquery"
-            />
-            <RenderError
-              touched={touched.sentence1}
-              errors={errors.sentence1}
-            />
-            <TextInput
-              style={s.input}
-              ref={textInputRef2}
-              value={sentence2}
-              maxLength={20}
-              onBlur={handleBlur('sentence2')}
-              onChangeText={handleChange('sentence2')}
-              onChangeText={e => {
-                handleChange('sentence2')(e);
-                if (e && e.length === 20) {
-                  textInputRef3.current.focus();
-                }
-              }}
-              onKeyPress={({ nativeEvent }) => {
-                if (nativeEvent.key === 'Backspace') {
-                  if (sentence2.length === 0) {
-                    textInputRef1.current.focus();
-                  }
-                }
-              }}
-            />
-            <TextInput
-              style={s.input}
-              ref={textInputRef3}
-              value={sentence3}
-              maxLength={20}
-              onBlur={handleBlur('sentence3')}
-              onChangeText={handleChange('sentence3')}
-              onChangeText={e => {
-                handleChange('sentence3')(e);
-                if (e && e.length === 20) {
-                  textInputRef4.current.focus();
-                }
-              }}
-              onKeyPress={({ nativeEvent }) => {
-                if (nativeEvent.key === 'Backspace') {
-                  if (sentence3.length === 0) {
-                    textInputRef2.current.focus();
-                  }
-                }
-              }}
-            />
-            <TextInput
-              style={s.input}
-              ref={textInputRef4}
-              value={sentence4}
-              maxLength={20}
-              onBlur={handleBlur('sentence4')}
-              onChangeText={handleChange('sentence4')}
-              onKeyPress={({ nativeEvent }) => {
-                if (nativeEvent.key === 'Backspace') {
-                  if (sentence4.length === 0) {
-                    textInputRef3.current.focus();
-                  }
-                }
-              }}
             />
           </View>
           <View>
@@ -192,6 +123,7 @@ export default ContactUsDetail;
 const s = StyleSheet.create({
   root: {
     flex: 1,
+    minHeight: hp('100%'),
     backgroundColor: colors.light.background,
   },
   placer: {
@@ -250,20 +182,18 @@ const s = StyleSheet.create({
   input: {
     borderBottomWidth: 1,
     borderColor: colors.light.ivory2,
+
     marginHorizontal: 0,
-    paddingLeft: 10,
-    fontSize: 18,
-    padding: 0,
     marginVertical: 10,
-    // paddingRight: 0,
-    // ...Platform.select({
-    //   android: {
-    //     marginBottom: 0,
-    //   },
-    // }),
+
+    paddingLeft: 10,
+    paddingBottom: 4,
+
     minWidth: '101%',
     maxWidth: '101%',
     fontSize: Platform.OS === 'android' ? 13 : 12,
+
+    // textDecorationLine: 'underline',
   },
   // dummyInput: {
   //   // margin: 0,
@@ -288,3 +218,76 @@ const s = StyleSheet.create({
     fontSize: 17,
   },
 });
+
+/* <TextInput
+              style={s.input}
+              ref={textInputRef1}
+              value={sentence}
+              maxLength={20}
+              onBlur={handleBlur('sentence')}
+              onChangeText={e => {
+                handleChange('sentence')(e);
+                if (e && e.length === 20) {
+                  textInputRef2.current.focus();
+                }
+              }}
+              placeholder="Write down sentence of your inquery"
+            />
+            <RenderError touched={touched.sentence} errors={errors.sentence} />
+            <TextInput
+              style={s.input}
+              ref={textInputRef2}
+              value={sentence2}
+              maxLength={20}
+              onBlur={handleBlur('sentence2')}
+              onChangeText={handleChange('sentence2')}
+              onChangeText={e => {
+                handleChange('sentence2')(e);
+                if (e && e.length === 20) {
+                  textInputRef3.current.focus();
+                }
+              }}
+              onKeyPress={({ nativeEvent }) => {
+                if (nativeEvent.key === 'Backspace') {
+                  if (sentence2.length === 0) {
+                    textInputRef1.current.focus();
+                  }
+                }
+              }}
+            />
+            <TextInput
+              style={s.input}
+              ref={textInputRef3}
+              value={sentence3}
+              maxLength={20}
+              onBlur={handleBlur('sentence3')}
+              onChangeText={handleChange('sentence3')}
+              onChangeText={e => {
+                handleChange('sentence3')(e);
+                if (e && e.length === 20) {
+                  textInputRef4.current.focus();
+                }
+              }}
+              onKeyPress={({ nativeEvent }) => {
+                if (nativeEvent.key === 'Backspace') {
+                  if (sentence3.length === 0) {
+                    textInputRef2.current.focus();
+                  }
+                }
+              }}
+            />
+            <TextInput
+              style={s.input}
+              ref={textInputRef4}
+              value={sentence4}
+              maxLength={20}
+              onBlur={handleBlur('sentence4')}
+              onChangeText={handleChange('sentence4')}
+              onKeyPress={({ nativeEvent }) => {
+                if (nativeEvent.key === 'Backspace') {
+                  if (sentence4.length === 0) {
+                    textInputRef3.current.focus();
+                  }
+                }
+              }}
+            /> */

@@ -1,4 +1,4 @@
 export const StyleDefine = {
-  borderRadiusInside = 17,
-  borderRadiusOutside = 20
+  borderRadiusInside: 17,
+  borderRadiusOutside: 20
 }

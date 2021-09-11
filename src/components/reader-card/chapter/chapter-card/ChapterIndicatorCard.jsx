@@ -37,7 +37,7 @@ const ChapterIndicatorCard = ({ pos, order }) => {
         style={{
           width: wp('83.3%'),
           height: hp('81.2%') * 0.88,
-          borderRadius: borderRadiusOutside,
+          borderRadius: StyleDefine.borderRadiusOutside,
           overflow: 'hidden',
           alignItems: 'center',
         }}
@@ -72,7 +72,7 @@ const ChapterIndicatorCard = ({ pos, order }) => {
               width: wp('75.6%'),
               height: hp('69.7%'),
               backgroundColor: colors.light.chapterBGInside,
-              borderRadius: borderRadiusInside,
+              borderRadius: StyleDefine.borderRadiusInside,
             },
           ]}
         >
@@ -215,8 +215,8 @@ const s = StyleSheet.create({
     bottom: '0%',
     minWidth: wp('75.6%'),
     minHeight: 72.2,
-    borderBottomStartRadius: borderRadiusInside,
-    borderBottomEndRadius: borderRadiusInside,
+    borderBottomStartRadius: StyleDefine.borderRadiusInside,
+    borderBottomEndRadius: StyleDefine.borderRadiusInside,
     backgroundColor: colors.light.ivory3,
     // minHeight: hp('12.2%'),
     paddingTop: hp('2.4%'),

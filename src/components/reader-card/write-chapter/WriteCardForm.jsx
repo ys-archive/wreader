@@ -1,6 +1,6 @@
 import React, { useCallback, useRef } from 'react';
 import { View, Platform } from 'react-native';
-import { StyleSheet, TextInput, Button, RenderError } from '#components';
+import { StyleSheet, TextInput, Button, RenderError } from '../../';
 
 import {
   widthPercentageToDP as wp,
@@ -20,13 +20,6 @@ const WriteCardForm = ({ chapterId, categoryId, userId, children }) => {
 
   const nav = useNavigation();
 
-  const textInputRef1 = useRef(null);
-  const textInputRef2 = useRef(null);
-  const textInputRef3 = useRef(null);
-  const textInputRef4 = useRef(null);
-  const textInputRef5 = useRef(null);
-  const textInputRef6 = useRef(null);
-
   const afterFormSubmitted = useCallback(() => {
     nav?.goBack();
     setNewCandidateWritten();
@@ -35,20 +28,105 @@ const WriteCardForm = ({ chapterId, categoryId, userId, children }) => {
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
     useWriteChapterCardForm(userId, categoryId, chapterId, afterFormSubmitted);
 
-  const {
-    // title,
-    sentence1,
-    sentence2,
-    sentence3,
-    sentence4,
-    sentence5,
-    sentence6,
-  } = values;
+  const { sentence } = values;
 
   return (
     <>
       <View style={s.textInputSection}>
         <TextInput
+          style={s.input}
+          maxLength={120}
+          autoFocus
+          value={sentence}
+          onBlur={handleBlur('sentence')}
+          multiline
+          maxHeight={500}
+          onChangeText={handleChange('sentence')}
+          // if (e && e.length % 20 === 0) e = `${e}\n`;
+          placeholder="Write a story for this chapter..."
+          placeholderTextColor="rgba(0, 0, 0, 0.2)"
+        />
+      </View>
+
+      <View style={s.bottomSection}>
+        {/* Add Image 아이콘 */}
+        {children}
+
+        {/* 작성한 카드 저장 */}
+        <Button
+          style={s.summitButton}
+          textStyle={s.summitInsideText}
+          onPress={handleSubmit}
+          isBold
+        >
+          SAVE
+        </Button>
+      </View>
+    </>
+  );
+};
+
+export default WriteCardForm;
+
+const s = StyleSheet.create({
+  textInputSection: {
+    minHeight: Platform.OS === 'ios' ? wp('110%') : wp('90%'),
+    maxHeight: Platform.OS === 'ios' ? wp('110%') : wp('90%'),
+  },
+  input: {
+    borderBottomWidth: 0.3,
+    borderColor: '#000',
+
+    minWidth: '100%',
+    maxWidth: '100%',
+
+    margin: 0,
+    padding: 0,
+    paddingLeft: 0,
+    marginBottom: Platform.OS === 'ios' ? wp('4%') : wp('1.8%'),
+
+    fontSize: 21,
+    fontWeight: '200',
+    color: 'rgba(0, 0, 0, 0.3)',
+
+    // textDecorationLine: 'underline',
+  },
+
+  bottomSection: {
+    maxWidth: '120%',
+    minWidth: '120%',
+
+    // marginTop: hp('50%'),
+    flexDirection: 'row',
+    // justifyContent: 'center',
+    // justifyContent: 'space-around',
+    alignItems: 'center',
+    // backgroundColor: 'rgba(255, 255, 255, 0.6)',
+  },
+
+  summitButton: {
+    backgroundColor: colors.light.ivory5,
+    paddingVertical: 11,
+    paddingHorizontal: 15,
+    position: 'relative',
+    right: -135,
+    bottom: -10,
+    borderRadius: StyleDefine.borderRadiusInside - 6,
+  },
+  summitInsideText: {
+    fontSize: 16,
+    color: colors.light.ivory1,
+  },
+});
+
+// const textInputRef1 = useRef(null);
+// const textInputRef2 = useRef(null);
+// const textInputRef3 = useRef(null);
+// const textInputRef4 = useRef(null);
+// const textInputRef5 = useRef(null);
+// const textInputRef6 = useRef(null);
+
+/* <TextInput
           style={s.input}
           ref={textInputRef1}
           maxLength={20}
@@ -169,97 +247,4 @@ const WriteCardForm = ({ chapterId, categoryId, userId, children }) => {
               }
             }
           }}
-        />
-        {/* <TextInput
-          style={s.input}
-          value={sentence7}
-          onBlur={handleBlur('sentence7')}
-          onChangeText={handleChange('sentence7')}
-        />
-        <TextInput
-          style={s.input}
-          value={sentence8}
-          onBlur={handleBlur('sentence8')}
-          onChangeText={handleChange('sentence8')}
-        />
-        <TextInput
-          style={s.input}
-          value={sentence9}
-          onBlur={handleBlur('sentence9')}
-          onChangeText={handleChange('sentence9')}
-        />
-        <TextInput
-          style={s.input}
-          value={sentence10}
-          onBlur={handleBlur('sentence10')}
-          onChangeText={handleChange('sentence10')}
-        /> */}
-      </View>
-
-      <View style={s.bottomSection}>
-        {/* Add Image 아이콘 */}
-        {children}
-
-        {/* 작성한 카드 저장 */}
-        <Button
-          style={s.summitButton}
-          textStyle={s.summitInsideText}
-          onPress={handleSubmit}
-          isBold
-        >
-          SAVE
-        </Button>
-      </View>
-    </>
-  );
-};
-
-export default WriteCardForm;
-
-const s = StyleSheet.create({
-  textInputSection: {
-    minHeight: Platform.OS === 'ios' ? wp('110%') : wp('90%'),
-    maxHeight: Platform.OS === 'ios' ? wp('110%') : wp('90%'),
-  },
-  input: {
-    borderBottomWidth: 0.3,
-    borderColor: '#000',
-    minWidth: '100%',
-    maxWidth: '100%',
-
-    margin: 0,
-    padding: 0,
-    paddingLeft: 0,
-    marginBottom: Platform.OS === 'ios' ? wp('4%') : wp('1.8%'),
-
-    fontSize: 21,
-    fontWeight: '200',
-    color: 'rgba(0, 0, 0, 0.3)',
-  },
-
-  bottomSection: {
-    maxWidth: '120%',
-    minWidth: '120%',
-
-    // marginTop: hp('50%'),
-    flexDirection: 'row',
-    // justifyContent: 'center',
-    // justifyContent: 'space-around',
-    alignItems: 'center',
-    // backgroundColor: 'rgba(255, 255, 255, 0.6)',
-  },
-
-  summitButton: {
-    backgroundColor: colors.light.ivory5,
-    paddingVertical: 11,
-    paddingHorizontal: 15,
-    position: 'relative',
-    right: -135,
-    bottom: -10,
-    borderRadius: StyleDefine.borderRadiusInside - 6,
-  },
-  summitInsideText: {
-    fontSize: 16,
-    color: colors.light.ivory1,
-  },
-});
+        /> */

@@ -10,37 +10,17 @@ import { ChapterService } from '../../../services';
 
 const initialValues = {
   // title: '',
-  sentence1: '',
-  sentence2: '',
-  sentence3: '',
-  sentence4: '',
-  sentence5: '',
-  sentence6: '',
-  // sentence7: '',
-  // sentence8: '',
-  // sentence9: '',
-  // sentence10: '',
-  // sentence11: '',
+  sentence: '',
 };
 
 const validationSchema = Yup.object({
   // title: Yup.string().required('You have to input a title'),
 
-  sentence1: Yup.string()
+  sentence: Yup.string()
     .min(4)
     .required('Min is 4')
-    .max(20)
-    .required('Max is 20'),
-
-  sentence2: Yup.string().min(0).max(20),
-  sentence3: Yup.string().min(0).max(20),
-  sentence4: Yup.string().min(0).max(20),
-  sentence5: Yup.string().min(0).max(20),
-  sentence6: Yup.string().min(0).max(20),
-  // sentence7: Yup.string().min(0).max(20),
-  // sentence8: Yup.string().min(0).max(20),
-  // sentence9: Yup.string().min(0).max(20),
-  // sentence10: Yup.string().min(0).max(20),
+    .max(120)
+    .required('Max is 120'),
 });
 
 export const useWriteChapterCardForm = (
@@ -53,13 +33,14 @@ export const useWriteChapterCardForm = (
   const resetCard = useStoreActions(actImage.resetCard);
 
   const onSubmit = async values => {
-    const sentences = Object.values(values).reduce(
-      (prv, cur) => `${prv}${cur}`,
-    );
+    const { sentence } = values;
+    // const sentences = Object.values(values).reduce(
+    //   (prv, cur) => `${prv}${cur}`,
+    // );
     const status = await ChapterService.POST_createChapter(
       userId,
       currentChapterIdx,
-      sentences,
+      sentence,
       currentCategoryIdx,
       cardImageUrl,
     );
