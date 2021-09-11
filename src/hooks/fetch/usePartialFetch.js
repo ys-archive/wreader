@@ -1,13 +1,13 @@
 import React from 'react';
-import { asyncForEach } from '../utils';
+import { asyncForEach } from '../../utils';
 
 import { useStoreState, useStoreActions } from 'easy-peasy';
-import { selData, selAuth, selSwiper } from '../store/selectors';
-import { actData, actSwiper } from '../store/actions';
+import { selData, selAuth, selSwiper } from '../../store/selectors';
+import { actData, actSwiper } from '../../store/actions';
 
-import ChapterService from '../services/ChapterService';
+import ChapterService from '../../services/ChapterService';
 
-import { useWriteNewCard, useLikeUpdate } from '../contexts/chapterDataContext';
+import { useWriteNewCard, useLikeUpdate } from '../../contexts/chapterDataContext';
 
 const initStates = () => {
   // selectors
@@ -40,38 +40,46 @@ const initStates = () => {
   };
 };
 
-export const useCardsInitialFetch = () => {
+export const usePartialFetch = d => {
   // state 가져오기
   const [isNewNextWritten] = useWriteNewCard();
   const [isLikeUpdated] = useLikeUpdate();
-  const states = initStates();
+  const {
+    userId,
+    chapters,
+    isLoaded,
+
+    addChapterChild,
+    finishLoading,
+
+    // initCoords,
+    setMaxCoords,
+  } = initStates();
 
   React.useEffect(() => {
     async function fetch() {
-      if (!states.chapters || states.chapters.length === 0) return;
+      if (!chapters || chapters.length === 0) return;
 
       // group_index 0 부터 저장
-      await asyncForEach(states.chapters, async deck => {
+      await asyncForEach(chapters, async deck => {
         if (deck.length === 0) return;
 
         // 이후의 chapterId 로 재귀적으로 fetch
-        await fetchRecursively(deck, states.userId, states.addChapterChild);
+        await fetchRecursively(deck, userId, addChapterChild);
       });
 
       // 로딩 끝
-      states.finishLoading(true);
+      finishLoading(true);
     }
 
     fetch();
   }, [isNewNextWritten, isLikeUpdated]);
 
   React.useEffect(() => {
-    if (!states.isLoaded) return;
+    if (!isLoaded) return;
 
-    // states.setMaxCoords({ d1: states.chapters });
-    // states.setMaxCoords({ d2: states.chapters });
-    // states.setMaxCoords({ d3: states.chapters });
-  }, [states.isLoaded]);
+    setMaxCoords({ d1: chapters });
+  }, [isLoaded]);
 };
 
 const fetchRecursively = async (arr, userId, addChapterChild) => {

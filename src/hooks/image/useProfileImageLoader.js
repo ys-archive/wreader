@@ -3,8 +3,8 @@ import firebase from 'firebase';
 import * as FileSystem from 'expo-file-system';
 
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import { selImage } from '../store/selectors';
-import { actImage } from '../store/actions';
+import { selImage } from '../../store/selectors';
+import { actImage } from '../../store/actions';
 
 export const useProfileImageLoader = () => {
   const setProfile = useStoreActions(actImage.setProfile);

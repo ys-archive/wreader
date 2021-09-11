@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { Alert } from '#components/alert';
 import { useStoreActions } from 'easy-peasy';
-import { actAuth } from '../store/actions';
+import { actAuth } from '../../store/actions';
 
 import * as SecureStore from 'expo-secure-store';
-import AuthService from '../services/AuthService';
+import AuthService from '../../services/AuthService';
 
 export const useAutoLogin = () => {
   const login = useStoreActions(actAuth.login);

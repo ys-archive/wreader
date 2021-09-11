@@ -28,7 +28,7 @@ const initStates = () => {
   };
 };
 
-export const useCardsInitialFetch = () => {
+export const useCategoriesFetch = () => {
   const { reset, setMaxCoords, addCategory, finishLoading } = initStates();
 
   React.useEffect(() => {
@@ -40,12 +40,11 @@ export const useCardsInitialFetch = () => {
       if (!data.item.length) return;
 
       // 카테고리 데이터 정제 및 저장
-      const categories = Object.values(
-        JSON.parse(JSON.stringify(data.item)),
-      ).map(item => {
-        delete item.chapter;
-        return item;
-      });
+      const categories = Object.values(JSON.parse(JSON.stringify(data.item)));
+      // .map(item => {
+      // delete item.chapter;
+      //   return item;
+      // });
 
       // 카테고리 값 업데이트 - d0
       setMaxCoords({ d0: categories });
