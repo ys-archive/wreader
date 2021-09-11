@@ -1,0 +1,108 @@
+import React from 'react';
+import { asyncForEach } from '../utils';
+
+import { useStoreState, useStoreActions } from 'easy-peasy';
+import { selData, selAuth, selSwiper } from '../store/selectors';
+import { actData, actSwiper } from '../store/actions';
+
+import ChapterService from '../services/ChapterService';
+
+import { useWriteNewCard, useLikeUpdate } from '../contexts/chapterDataContext';
+
+const initStates = () => {
+  // selectors
+  const userId = useStoreState(selAuth.userId);
+
+  const chapters = useStoreState(selData.chapters);
+  const isLoaded = useStoreState(selData.isLoaded);
+  const maxCoords = useStoreState(selSwiper.maxCoords);
+
+  // actions
+  // - data
+  const reset = useStoreActions(actData.reset);
+  const addCategory = useStoreActions(actData.addCategory);
+  const addChapter = useStoreActions(actData.addChapter);
+  const addChapterChild = useStoreActions(actData.addChapterChild);
+  const finishLoading = useStoreActions(actData.finishLoading);
+
+  // - swiper
+  // const initCoords = useStoreActions(actSwiper.initCoords);
+  const setMaxCoords = useStoreActions(actSwiper.setMaxCoords);
+
+  return {
+    userId,
+    chapters,
+    isLoaded,
+    maxCoords,
+
+    reset,
+    addCategory,
+    addChapter,
+    addChapterChild,
+    finishLoading,
+
+    // initCoords,
+    setMaxCoords,
+  };
+};
+
+export const useChaptersFetch = () => {
+  // state 가져오기
+  const [isNewNextWritten] = useWriteNewCard();
+  const [isLikeUpdated] = useLikeUpdate();
+  const states = initStates();
+
+  React.useEffect(() => {
+    async function fetch() {
+      states.reset();
+
+      // // ------------------- d0 --------------------------------------
+      // const { data } = await ChapterService.GET_getCategory();
+
+      // if (!data.item.length) return;
+
+      // // 카테고리 데이터 정제 및 저장
+      // const categories = Object.values(
+      //   JSON.parse(JSON.stringify(data.item)),
+      // ).map(item => {
+      //   delete item.chapter;
+      //   return item;
+      // });
+
+      // // 카테고리 값 업데이트 - d0
+      // states.setMaxCoords({ d0: categories });
+      // categories.forEach(category => states.addCategory(category));
+      // // ------------------- d0 --------------------------------------
+
+      // ------------------- d1 --------------------------------------
+      // 챕터 데이터 정제 및 저장
+      const chapters = Object.values(data.item)
+        .map(i => i.chapter)
+        .filter(i => i.length > 0);
+
+      if (!chapters || chapters.length === 0) return;
+
+      // group_index 0 부터 저장
+      await asyncForEach(chapters, async deck => {
+        if (deck.length === 0) return;
+
+        states.addChapter({ deck });
+      });
+
+      // ------------------- d1 --------------------------------------
+
+      // 로딩 끝
+      states.finishLoading('d0');
+    }
+
+    fetch();
+  }, [isNewNextWritten, isLikeUpdated]);
+
+  React.useEffect(() => {
+    if (!states.isLoaded) return;
+
+    states.setMaxCoords({ d1: states.chapters });
+    // states.setMaxCoords({ d2: states.chapters });
+    // states.setMaxCoords({ d3: states.chapters });
+  }, [states.isLoaded]);
+};

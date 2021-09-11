@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useStoreState } from 'easy-peasy';
 import { selData, selSwiper } from '../store/selectors';
-import { useCardsFetch } from '../hooks/useCardsFetch';
+import { useCardsInitialFetch } from '../hooks/useCardsInitialFetch';
 
 import CategoryCard from '../components/reader-card/category/CategoryCard';
 import ChapterCard from '../components/reader-card/chapter/chapter-card/ChapterCard';
@@ -29,7 +29,7 @@ const initStates = () => {
 };
 
 const CardsRenderer = () => {
-  useCardsFetch();
+  useCardsInitialFetch();
 
   const { categories, chapters, isLoaded, depth, coords, maxCoords } =
     initStates();

@@ -5,12 +5,121 @@ import * as _ from 'lodash';
 export default {
   categories: [],
   chapters: [],
-  isLoaded: false,
+
+  isLoaded: {
+    val: {
+      d0: false,
+      d1: false,
+      d2: false,
+      d3: false,
+    },
+
+    finishLoading: action((state, payload) => {
+      if ('d0' === payload) {
+        state.val.d0 = true;
+        return;
+      }
+
+      if ('d1' === payload) {
+        state.val.d1 = true;
+        return;
+      }
+
+      if ('d2' === payload) {
+        state.val.d2 = true;
+        return;
+      }
+
+      if ('d3' === payload) {
+        state.val.d3 = true;
+        return;
+      }
+    }),
+  },
+
+  hasNew: {
+    val: {
+      d0: false,
+      d1: false,
+      d2: false,
+      d3: false,
+    },
+
+    needUpdate: action((state, payload) => {
+      if ('d0' === payload) {
+        state.val.d0 = true;
+        return;
+      }
+
+      if ('d1' === payload) {
+        state.val.d1 = true;
+        return;
+      }
+
+      if ('d2' === payload) {
+        state.val.d2 = true;
+        return;
+      }
+
+      if ('d3' === payload) {
+        state.val.d3 = true;
+        return;
+      }
+    }),
+  },
+
+  hasLike: {
+    val: {
+      d0: false,
+      d1: false,
+      d2: false,
+      d3: false,
+    },
+
+    needUpdate: action((state, payload) => {
+      if ('d0' === payload) {
+        state.val.d0 = true;
+        return;
+      }
+
+      if ('d1' === payload) {
+        state.val.d1 = true;
+        return;
+      }
+
+      if ('d2' === payload) {
+        state.val.d2 = true;
+        return;
+      }
+
+      if ('d3' === payload) {
+        state.val.d3 = true;
+        return;
+      }
+    }),
+  },
 
   reset: action((state, payload) => {
     state.categories = [];
     state.chapters = [];
-    state.isLoaded = false;
+    state.isLoaded.val = {
+      d0: false,
+      d1: false,
+      d2: false,
+      d3: false,
+    };
+    state.hasNew.val = {
+      d0: false,
+      d1: false,
+      d2: false,
+      d3: false,
+    };
+    state.hasLike.val = {
+      d0: false,
+      d1: false,
+      d2: false,
+      d3: false,
+    };
   }),
 
   addCategory: action((state, payload) => {
@@ -64,16 +173,15 @@ export default {
       findRecursively(chapter);
     });
   }),
-
-  setLoaded: action((state, payload) => {
-    state.isLoaded = payload;
-  }),
 };
 
 export const selectors = {
   categories: state => state.data.categories,
   chapters: state => state.data.chapters,
-  isLoaded: state => state.data.isLoaded,
+
+  isLoaded: state => state.data.isLoaded.val,
+  hasNew: state => state.data.hasNew.val,
+  hasLike: state => state.data.hasLike.val,
 };
 
 export const actions = {
@@ -81,5 +189,8 @@ export const actions = {
   addCategory: actions => actions.data.addCategory,
   addChapter: actions => actions.data.addChapter,
   addChapterChild: actions => actions.data.addChapterChild,
-  setLoaded: actions => actions.data.setLoaded,
+
+  finishLoading: actions => actions.data.isLoaded.finishLoading,
+  hasNew: actions => actions.data.hasNew.needUpdate,
+  hasLike: actions => actions.data.hasLike.needUpdate,
 };
