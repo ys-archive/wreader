@@ -9,13 +9,13 @@ import {
 } from 'react-native-responsive-screen';
 
 import AddImage from '../../icon/AddImage';
-import { colors } from '#constants';
+import { colors, StyleDefine } from '../../../constants';
 
 import { makeCategoryBGImagePath } from '#constants/images';
 
 import { useImagePicker } from '../../../hooks';
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import { selImage, selSwiper } from '../../../store/selectors';
+import { selImage, selSwiper, selAuth } from '../../../store/selectors';
 import { actImage } from '../../../store/actions';
 
 import uuid from 'react-native-uuid';
@@ -23,17 +23,31 @@ import WriteCardForm from './WriteCardForm';
 
 import { ImageService } from '../../../services';
 
-const borderRadiusOutside = 20;
+
 const uploadDirName = `writeCardImage-${uuid.v4()}`;
 
-const WriteChapterCard = ({ route }) => {
-  const { categoryTitle, chapterId, categoryId, order } = route.params;
-
-  const coords = useStoreState(selSwiper.coords);
+const initStates = () => {
+  // const coords = useStoreState(selSwiper.coords);
   const setCardImageUrl = useStoreActions(actImage.setCard);
   const completeUploadCardImage = useStoreActions(
     actImage.completeUploadingCard,
   );
+  const cardImageUrl = useStoreState(selImage.card);
+  const userId = useStoreState(selAuth.userId);
+
+  return {
+    // coords,
+    setCardImageUrl,
+    completeUploadCardImage,
+    cardImageUrl,
+    userId,
+  };
+};
+
+const WriteChapterCard = ({ route }) => {
+  const { categoryTitle, chapterId, categoryId, order } = route.params;
+  const { setCardImageUrl, completeUploadCardImage, cardImageUrl, userId } =
+    initStates();
 
   const pickImage = useImagePicker(
     async uri => {
@@ -52,8 +66,6 @@ const WriteChapterCard = ({ route }) => {
     9,
     21,
   );
-
-  const cardImageUrl = useStoreState(selImage.card);
 
   const onPickCardImage = async () => await pickImage();
 
@@ -78,19 +90,18 @@ const WriteChapterCard = ({ route }) => {
           style={{
             width: wp('83.3%'),
             height: hp('81.2%'),
-            borderRadius: borderRadiusOutside,
+            borderRadius: StyleDefine.borderRadiusOutside,
             overflow: 'hidden',
             backgroundColor: 'rgba(255, 255, 255, 0.8)',
             paddingHorizontal: wp('10.4%'),
           }}
         >
+          {/* todo: 현재 새 카드의 title 은 사용하지 않음 */}
           <TextInput
             style={s.titleInput}
-            // value={title}
-            // onBlur={handleBlur('title')}
-            // onChangeText={handleChange('title')}
             placeholder={'Title'}
             placeholderTextColor="rgba(0, 0, 0, 0.2)"
+            editable={false}
           />
 
           <Text isBold style={s.chapterText}>
@@ -100,7 +111,11 @@ const WriteChapterCard = ({ route }) => {
             </Text>
           </Text>
 
-          <WriteCardForm chapterId={chapterId} categoryId={categoryId}>
+          <WriteCardForm
+            chapterId={chapterId}
+            categoryId={categoryId}
+            userId={userId}
+          >
             <AddImage style={s.imageIcon} onPress={onPickCardImage} />
           </WriteCardForm>
         </View>

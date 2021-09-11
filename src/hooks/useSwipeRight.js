@@ -40,12 +40,9 @@ export const useSwipeRight = swipe => {
           if (coords.d1 > 0) {
             swipe('right', () => {
               decreaseCoords('d1');
+              setMaxCoords({ d2: chapters });
             });
           }
-
-          swipe('right', () => {
-            setMaxCoords({ d2: chapters });
-          });
         };
 
       case DEPTH_NAME.USER_CHAPTER:

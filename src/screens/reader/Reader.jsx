@@ -48,11 +48,12 @@ const s = StyleSheet.create({
     position: 'absolute',
     left: 0,
     top: 0,
-    backgroundColor: 'rgba(255,255,255, 0.7)',
+    // backgroundColor: 'rgba(255,255,255, 0.7)'/,
+    backgroundColor: colors.light.primaryTransparent,
   },
   swipeFiller: {
     width: '100%',
     height: '100%',
-    backgroundColor: colors.light.background
+    backgroundColor: colors.light.background,
   },
 });

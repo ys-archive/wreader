@@ -50,7 +50,7 @@ export const useSwipeGesture = () => {
   const onSwipeComplete = dir => {
     setSwiping(false);
     position.setValue({ x: 0, y: 0 });
-    // LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
   };
 
   const getStyle = () => {

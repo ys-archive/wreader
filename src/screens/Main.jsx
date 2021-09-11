@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { View, ActivityIndicator, ScrollView } from 'react-native';
-import { StyleSheet, Text } from '#components';
-import { Logo, Sort, Menu } from '#components/icon';
+import React from 'react';
+import { View } from 'react-native';
+import { StyleSheet } from '#components';
+import { Logo, Sort, Menu } from '../components/icon';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -10,7 +10,6 @@ import { useAutoLogin } from '../hooks';
 import EventModal from '#components/modals/EventModal';
 import Reader from './reader/Reader';
 import CardsRenderer from './CardsRenderer';
-
 
 const Main = () => {
   const nav = useNavigation();
@@ -44,8 +43,6 @@ export default Main;
 
 const s = StyleSheet.create({
   root: {
-    // justifyContent: 'flex-start',
     // flex: 1,
-    // overflow: 'visible',
   },
 });

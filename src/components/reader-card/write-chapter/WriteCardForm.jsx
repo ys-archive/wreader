@@ -8,21 +8,14 @@ import {
 } from 'react-native-responsive-screen';
 import { colors } from '#constants';
 
-import { useStoreState } from 'easy-peasy';
-
-import { selAuth, selSwiper } from '../../../store/selectors';
-
 import { useWriteNewCard } from '../../../contexts/chapterDataContext';
 import { useWriteChapterCardForm } from './useWriteChapterCardForm';
 
 import { useNavigation } from '@react-navigation/native';
 
-const borderRadiusInside = 17;
+import { StyleDefine } from '../../../constants';
 
-const WriteCardForm = ({ chapterId, categoryId, children }) => {
-  const userId = useStoreState(selAuth.userId);
-  // const coords = useStoreState(selSwiper.coords);
-
+const WriteCardForm = ({ chapterId, categoryId, userId, children }) => {
   const [_, setNewCandidateWritten] = useWriteNewCard();
 
   const nav = useNavigation();
@@ -50,10 +43,6 @@ const WriteCardForm = ({ chapterId, categoryId, children }) => {
     sentence4,
     sentence5,
     sentence6,
-    // sentence7,
-    // sentence8,
-    // sentence9,
-    // sentence10,
   } = values;
 
   return (
@@ -267,7 +256,7 @@ const s = StyleSheet.create({
     position: 'relative',
     right: -135,
     bottom: -10,
-    borderRadius: borderRadiusInside - 6,
+    borderRadius: StyleDefine.borderRadiusInside - 6,
   },
   summitInsideText: {
     fontSize: 16,

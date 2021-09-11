@@ -5,8 +5,11 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import { useStoreActions } from 'easy-peasy';
-import { actionsIgnoreEventModalFor1day } from '#store/actions';
+
+// import { useStoreActions } from 'easy-peasy';
+// import { actionsIgnoreEventModalFor1day } from '#store/actions';
+
+import { StyleDefine } from '../../constants';
 
 // TODO: 실제 url 받아서 webview 로 교체
 const EventModal = ({ eventImageUrl }) => {
@@ -82,7 +85,7 @@ const s = StyleSheet.create({
     // justifyContent: 'center',
     // alignItems: 'center',
     backgroundColor: 'white',
-    borderRadius: 20,
+    borderRadius: StyleDefine.borderRadiusOutside,
     padding: 15,
     alignItems: 'center',
     // shadowColor: '#000',

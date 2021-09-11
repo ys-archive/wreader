@@ -7,11 +7,12 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import { colors } from '#constants';
+import { StyleDefine } from '../../../constants';
 
 import { makeCategoryBGImagePath } from '#constants/images';
 
 import { useNavigation } from '@react-navigation/native';
-import * as ScreenNames from '../../../navigators/ScreenNames';
+// import * as ScreenNames from '../../../navigators/ScreenNames';
 
 const CategoryCard = ({ data }) => {
   const nav = useNavigation();
@@ -36,7 +37,7 @@ const CategoryCard = ({ data }) => {
           {
             width: wp('83.4%'),
             height: hp('78.2%'),
-            borderRadius: 20,
+            borderRadius: StyleDefine.borderRadiusOutside,
             overflow: 'hidden',
           },
           // predicatedPosition,

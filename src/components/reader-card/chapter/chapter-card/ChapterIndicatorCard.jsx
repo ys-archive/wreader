@@ -7,14 +7,11 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-import { colors } from '#constants';
+import { colors, StyleDefine } from '../../../../constants';
 import { makeCategoryBGImagePath, dummyProfile } from '#constants/images';
 
 import { useStoreState } from 'easy-peasy';
 import { selData, selSwiper } from '../../../../store/selectors';
-
-const borderRadiusOutside = 20;
-const borderRadiusInside = 17;
 
 const initStates = () => {
   const categories = useStoreState(selData.categories);

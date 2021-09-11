@@ -7,6 +7,8 @@ import {
 } from 'react-native-responsive-screen';
 import { AntDesign } from 'react-native-vector-icons';
 
+import { StyleDefine } from '../../constants';
+
 const CommentsModal = ({
   isCommentsOpen,
   setCommentsOpen,
@@ -71,7 +73,7 @@ const s = StyleSheet.create({
     minWidth: wp('95%'),
     minHeight: hp('60%'),
     backgroundColor: 'white',
-    borderRadius: 20,
+    borderRadius: StyleDefine.borderRadiusOutside,
     padding: 15,
     alignItems: 'center',
   },

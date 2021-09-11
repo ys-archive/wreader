@@ -1,12 +1,14 @@
 import React from 'react';
 import { View, ImageBackground } from 'react-native';
 import { StyleSheet, Text } from '#components';
-import AddStory from '../../icon/AddStory';
+
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import { colors } from '#constants';
+
+import { StyleDefine } from '../../../constants';
 
 import { makeCategoryBGImagePath } from '#constants/images';
 
@@ -37,7 +39,7 @@ const CategoryIndicatorCard = ({ pos, order }) => {
           {
             width: wp('83.4%'),
             height: hp('78.2%') * 0.9,
-            borderRadius: 20,
+            borderRadius: StyleDefine.borderRadiusOutside,
             overflow: 'hidden',
           },
         ]}

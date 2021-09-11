@@ -13,7 +13,8 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-import { colors } from '#constants';
+import { colors, StyleDefine } from '../../../../constants';
+
 import { makeCategoryBGImagePath, dummyProfile } from '#constants/images';
 
 import { useLikeUpdate } from '../../../../contexts/chapterDataContext';
@@ -21,11 +22,9 @@ import { useStoreState } from 'easy-peasy';
 import { selAuth, selImage, selSwiper } from '../../../../store/selectors';
 
 import { ChapterService } from '../../../../services';
-import * as ScreenNames from '../../../../navigators/ScreenNames';
-import { useNavigation } from '@react-navigation/native';
 
-const borderRadiusOutside = 20;
-const borderRadiusInside = 17;
+import { useNavigation } from '@react-navigation/native';
+import * as ScreenNames from '../../../../navigators/ScreenNames';
 
 const initStates = () => {
   const isLoggedIn = useStoreState(selAuth.isLoggedIn);
@@ -106,7 +105,7 @@ const ChapterCard = ({ data, categoryTitle }) => {
           {
             width: wp('83.3%'),
             height: hp('81.2%'),
-            borderRadius: borderRadiusOutside,
+            borderRadius: StyleDefine.borderRadiusOutside,
             overflow: 'hidden',
             alignItems: 'center',
           },
@@ -145,7 +144,7 @@ const ChapterCard = ({ data, categoryTitle }) => {
               width: wp('75.6%'),
               height: hp('69.7%'),
               backgroundColor: colors.light.chapterBGInside,
-              borderRadius: borderRadiusInside,
+              borderRadius: StyleDefine.borderRadiusInside,
             },
             // predicatedScaleInsideBGBetweenChapters,
           ]}

@@ -14,6 +14,7 @@ import {
   dummyProfile,
   makeCategoryBGImagePath,
 } from './images';
+import { StyleDefine } from './style';
 
 export {
   regular,
@@ -32,4 +33,5 @@ export {
   replyIcon,
   dummyProfile,
   makeCategoryBGImagePath,
+  StyleDefine
 };

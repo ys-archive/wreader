@@ -45,9 +45,7 @@ const s = StyleSheet.create({
     height: 16,
     justifyContent: 'center',
     alignItems: 'center',
-    // borderRadius: 4,
     borderWidth: 2,
     borderColor: 'white',
-    // backgroundColor: 'transparent',
   },
 });
