@@ -8,6 +8,7 @@ export const useSwipeUp = swipe => {
     categories,
     chapters,
     isLoaded,
+    hasNew,
 
     depth,
     coords,
@@ -57,6 +58,7 @@ export const useSwipeUp = swipe => {
               categoryId: coords.d0,
               chapterId: +chapters[coords.d0][coords.d1].deck.id,
               order: coords.d1,
+              depth: 2,
             });
             return;
           }
@@ -65,7 +67,7 @@ export const useSwipeUp = swipe => {
             increaseDepth();
             // setMaxCoords({ d2: chapters });
             console.log('ENTER INTO USER CHAPTERS');
-            updateHasNew('d3');
+            updateHasNew({ d3: true });
           });
         };
 
@@ -81,12 +83,14 @@ export const useSwipeUp = swipe => {
               categoryId: coords.d0,
               chapterId: +chapters[coords.d0][coords.d1].deck.id,
               order: coords.d1,
+              depth: 2,
             });
             return;
           }
 
           swipe('up', () => {
             increaseCoords('d2');
+            updateHasNew({ d3: true });
             setMaxCoords({ d3: chapters });
           });
         };

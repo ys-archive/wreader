@@ -23,22 +23,22 @@ export default {
 
     finishLoading: action((state, payload) => {
       if ('d0' === payload) {
-        state.val.d0 = !state.val.d0;
+        state.val.d0 = true;
         return;
       }
 
       if ('d1' === payload) {
-        state.val.d1 = !state.val.d1;
+        state.val.d1 = true;
         return;
       }
 
       if ('d2' === payload) {
-        state.val.d2 = !state.val.d2;
+        state.val.d2 = true;
         return;
       }
 
       if ('d3' === payload) {
-        state.val.d3 = !state.val.d3;
+        state.val.d3 = true;
         return;
       }
     }),
@@ -59,24 +59,24 @@ export default {
       d3: false,
     },
 
-    needUpdate: action((state, payload) => {
-      if ('d0' === payload) {
-        state.val.d0 = !state.val.d0;
+    update: action((state, payload) => {
+      if ('d0' in payload) {
+        state.val.d0 = payload.d0;
         return;
       }
 
-      if ('d1' === payload) {
-        state.val.d1 = !state.val.d1;
+      if ('d1' in payload) {
+        state.val.d1 = payload.d1;
         return;
       }
 
-      if ('d2' === payload) {
-        state.val.d2 = !state.val.d2;
+      if ('d2' in payload) {
+        state.val.d2 = payload.d2;
         return;
       }
 
-      if ('d3' === payload) {
-        state.val.d3 = !state.val.d3;
+      if ('d3' in payload) {
+        state.val.d3 = payload.d3;
         return;
       }
     }),
@@ -97,24 +97,24 @@ export default {
       d3: false,
     },
 
-    needUpdate: action((state, payload) => {
-      if ('d0' === payload) {
-        state.val.d0 = !state.val.d0;
+    update: action((state, payload) => {
+      if ('d0' in payload) {
+        state.val.d0 = payload.d0;
         return;
       }
 
-      if ('d1' === payload) {
-        state.val.d1 = !state.val.d1;
+      if ('d1' in payload) {
+        state.val.d1 = payload.d1;
         return;
       }
 
-      if ('d2' === payload) {
-        state.val.d2 = !state.val.d2;
+      if ('d2' in payload) {
+        state.val.d2 = payload.d2;
         return;
       }
 
-      if ('d3' === payload) {
-        state.val.d3 = !state.val.d3;
+      if ('d3' in payload) {
+        state.val.d3 = payload.d3;
         return;
       }
     }),
@@ -128,12 +128,19 @@ export default {
     state.hasLike.val = state.hasLike.default;
   }),
 
+  resetCategory: action(state => {
+    state.category = [];
+  }),
+
   addCategory: action((state, payload) => {
     const hasFound = state.categories.findIndex(cat => _.isEqual(cat, payload));
-
     if (hasFound === -1) {
       state.categories.push(payload);
     }
+  }),
+
+  resetChapter: action((state, payload) => {
+    state.chapters = [];
   }),
 
   addChapter: action((state, payload) => {
@@ -164,8 +171,12 @@ export default {
     const findRecursively = arr => {
       arr.forEach(item => {
         if (+item.deck.id === comparer) {
-          item.child.push({ deck: payload.deck, child: [] });
-          return;
+          if (
+            item.child.findIndex(f => _.isEqual(f.deck, payload.deck)) === -1
+          ) {
+            item.child.push({ deck: payload.deck, child: [] });
+            return;
+          }
         }
 
         if (item.child.length > 0) {
@@ -192,11 +203,14 @@ export const selectors = {
 
 export const actions = {
   reset: actions => actions.data.reset,
+  resetCategory: actions => actions.data.resetCategory,
   addCategory: actions => actions.data.addCategory,
+
+  resetChapter: actions => actions.data.resetChapter,
   addChapter: actions => actions.data.addChapter,
   addChapterChild: actions => actions.data.addChapterChild,
 
   finishLoading: actions => actions.data.isLoaded.finishLoading,
-  updateHasNew: actions => actions.data.hasNew.needUpdate,
-  updateHasLike: actions => actions.data.hasLike.needUpdate,
+  updateHasNew: actions => actions.data.hasNew.update,
+  updateHasLike: actions => actions.data.hasLike.update,
 };

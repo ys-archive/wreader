@@ -16,13 +16,12 @@ import { makeCategoryBGImagePath } from '#constants/images';
 import { useImagePicker } from '../../../hooks';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { selImage, selSwiper, selAuth } from '../../../store/selectors';
-import { actImage } from '../../../store/actions';
+import { actData, actImage, actSwiper } from '../../../store/actions';
 
 import uuid from 'react-native-uuid';
 import WriteCardForm from './WriteCardForm';
 
 import { ImageService } from '../../../services';
-
 
 const uploadDirName = `writeCardImage-${uuid.v4()}`;
 
@@ -33,20 +32,18 @@ const initStates = () => {
     actImage.completeUploadingCard,
   );
   const cardImageUrl = useStoreState(selImage.card);
-  const userId = useStoreState(selAuth.userId);
 
   return {
     // coords,
     setCardImageUrl,
     completeUploadCardImage,
     cardImageUrl,
-    userId,
   };
 };
 
 const WriteChapterCard = ({ route }) => {
-  const { categoryTitle, chapterId, categoryId, order } = route.params;
-  const { setCardImageUrl, completeUploadCardImage, cardImageUrl, userId } =
+  const { categoryTitle, chapterId, categoryId, order, depth } = route.params;
+  const { setCardImageUrl, completeUploadCardImage, cardImageUrl } =
     initStates();
 
   const pickImage = useImagePicker(
@@ -114,7 +111,7 @@ const WriteChapterCard = ({ route }) => {
           <WriteCardForm
             chapterId={chapterId}
             categoryId={categoryId}
-            userId={userId}
+            depth={depth}
           >
             <AddImage style={s.imageIcon} onPress={onPickCardImage} />
           </WriteCardForm>

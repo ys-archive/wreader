@@ -8,25 +8,39 @@ import {
 } from 'react-native-responsive-screen';
 import { colors } from '#constants';
 
-import { useWriteNewCard } from '../../../contexts/chapterDataContext';
+import { useStoreState, useStoreActions } from 'easy-peasy';
+import { selAuth } from '../../../store/selectors';
+import { actData } from '../../../store/actions';
+
 import { useWriteChapterCardForm } from './useWriteChapterCardForm';
 
 import { useNavigation } from '@react-navigation/native';
 
 import { StyleDefine } from '../../../constants';
 
-const WriteCardForm = ({ chapterId, categoryId, userId, children }) => {
-  
+const initStates = () => {
+  const userId = useStoreState(selAuth.userId);
+  const updateHasNew = useStoreActions(actData.updateHasNew);
+  return {
+    userId,
+    updateHasNew,
+  };
+};
 
+const WriteCardForm = ({ chapterId, categoryId, depth, children }) => {
   const nav = useNavigation();
 
-  const afterFormSubmitted = useCallback(() => {
+  const { userId, updateHasNew } = initStates();
+
+  const afterFormSubmitted = () => {
+    console.log('depth in WriteCard -->', depth);
+    if (depth === 2) updateHasNew({ d2: true });
+    if (depth === 3) updateHasNew({ d3: true });
     nav?.goBack();
-    setNewCandidateWritten();
-  }, []);
+  };
 
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
-    useWriteChapterCardForm(userId, categoryId, chapterId, afterFormSubmitted);
+    useWriteChapterCardForm(userId, chapterId, categoryId, afterFormSubmitted);
 
   const { sentence } = values;
 

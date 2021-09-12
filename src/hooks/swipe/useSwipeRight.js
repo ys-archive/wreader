@@ -3,21 +3,15 @@ import { useSwipeStates } from './useSwipeStates';
 
 export const useSwipeRight = swipe => {
   const {
-    categories,
     chapters,
     isLoaded,
 
     depth,
     coords,
-    maxCoords,
 
-    setDepth,
-    increaseDepth,
     decreaseDepth,
 
-    setCoords,
     setMaxCoords,
-    increaseCoords,
     decreaseCoords,
   } = useSwipeStates();
   if (!isLoaded) return null;

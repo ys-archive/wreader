@@ -8,6 +8,7 @@ export const useSwipeStates = () => {
   const categories = useStoreState(selData.categories);
   const chapters = useStoreState(selData.chapters);
   const isLoaded = useStoreState(selData.isLoaded);  
+  const hasNew = useStoreState(selData.hasNew);
 
   // - swiper
   const depth = useStoreState(selSwiper.depth);
@@ -33,6 +34,7 @@ export const useSwipeStates = () => {
     categories,
     chapters,
     isLoaded,
+    hasNew,
 
     depth,
     coords,

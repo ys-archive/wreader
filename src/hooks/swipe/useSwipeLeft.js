@@ -8,6 +8,7 @@ export const useSwipeLeft = swipe => {
     categories,
     chapters,
     isLoaded,
+    hasNew,
 
     depth,
     coords,
@@ -40,7 +41,8 @@ export const useSwipeLeft = swipe => {
             // 각 챕터에 맞게 최대 챕터 설정 (d1)
             // setMaxCoords({ d1: chapters });
             console.log('ENTER INTO CHAPTERS');
-            updateHasNew('d2');
+            updateHasNew({ d1: true });
+            updateHasNew({ d2: true });
           });
         };
 
@@ -71,7 +73,8 @@ export const useSwipeLeft = swipe => {
           // }
 
           swipe('left', () => {
-            increaseCoords('d1');
+            increaseCoords('d1');            
+            updateHasNew({ d2: true });
             setMaxCoords({ d2: chapters });
           });
         };
@@ -90,6 +93,7 @@ export const useSwipeLeft = swipe => {
               chapterId:
                 +chapters[coords.d0][coords.d1].child[coords.d2].deck.id,
               order: coords.d3 + 1,
+              depth: 3,
             });
             return;
           }
@@ -118,6 +122,7 @@ export const useSwipeLeft = swipe => {
               chapterId:
                 +chapters[coords.d0][coords.d1].child[coords.d2].deck.id,
               order: coords.d3 + 2,
+              depth: 3,
             });
             return;
           }

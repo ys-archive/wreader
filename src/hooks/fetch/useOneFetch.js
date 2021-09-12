@@ -1,5 +1,5 @@
 import React from 'react';
-import { asyncForEach, delay, delayFinally } from '../../utils';
+import { asyncForEach } from '../../utils';
 
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import { selData, selAuth, selSwiper } from '../../store/selectors';
@@ -15,8 +15,6 @@ const initStates = () => {
   const isLoaded = useStoreState(selData.isLoaded);
   const hasLike = useStoreState(selData.hasLike);
   const hasNew = useStoreState(selData.hasNew);
-
-  const coords = useStoreState(selSwiper.coords);
 
   // actions
   // - data
@@ -35,8 +33,6 @@ const initStates = () => {
     hasNew,
     hasLike,
 
-    coords,
-
     addChapterChild,
     finishLoading,
     updateHasNew,
@@ -45,7 +41,9 @@ const initStates = () => {
   };
 };
 
-export const useUserChaptersFetch = () => {
+export const useOneFetch = chapterId => {
+  if (depth === 0) return;
+
   const {
     userId,
 
@@ -54,8 +52,6 @@ export const useUserChaptersFetch = () => {
     hasNew,
     hasLike,
 
-    coords,
-
     addChapterChild,
     finishLoading,
     updateHasNew,
@@ -63,46 +59,25 @@ export const useUserChaptersFetch = () => {
     setMaxCoords,
   } = initStates();
 
-  React.useEffect(() => {
-    (async function fetchUserChapters() {
-      if (!isLoaded.d1) return;
-      if (!hasNew.d2) return;
-      if (!chapters || chapters.length === 0) return;
-      console.log('fetching USER CHAPTERS');
 
-      // await fetchUserChapter(chapters[coords.d0], userId, addChapterChild);
-      const target = chapters[coords.d0][coords.d1].deck;
 
-      // console.log('target -> ', target);
-
-      const { data } = await ChapterService.GET_getChapter(+target.id, +userId);
-
-      if (data.item.length === 1) {
-        addChapterChild({ deck: data.item[0] });
-      } else if (data.item.length >= 2) {
-        data.item.forEach(data => {
-          addChapterChild({ deck: data });
-        });
-      }
-
-      // await asyncForEach(arr, async item => {
-
-      // });
-      // 로딩 끝
-      updateHasNew({ d2: false });
-      finishLoading('d2');
-    })();
-  }, [hasLike.d2, hasNew.d2, isLoaded.d1]);
-
-  React.useEffect(() => {
-    if (!isLoaded.d2) return;
-
-    // console.log('UPDATE MAX WITH -->', chapters);
-    setMaxCoords({ d2: chapters });
-  }, [isLoaded.d2]);
+  React.useEffect(() => {}, []);
 };
 
-const fetchUserChapter = async (arr, userId, addChapterChild) => {
+
+const fetchD1 = () => {
+
+};
+
+const fetchD2 = () => {
+
+}
+
+const fetchD3 = () => {
+    
+}
+
+const fetchRecursively = async (arr, userId, addChapterChild) => {
   await asyncForEach(arr, async item => {
     const { data } = await ChapterService.GET_getChapter(
       +item.deck.id,

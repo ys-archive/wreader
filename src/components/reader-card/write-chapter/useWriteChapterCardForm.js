@@ -25,8 +25,8 @@ const validationSchema = Yup.object({
 
 export const useWriteChapterCardForm = (
   userId,
-  currentCategoryIdx,
   currentChapterIdx,
+  currentCategoryIdx,
   afterFormSubmitted,
 ) => {
   const cardImageUrl = useStoreState(selImage.card);
