@@ -151,7 +151,7 @@ export default {
   }),
 
   resetCategory: action(state => {
-    state.category = [];
+    state.categories = [];
   }),
 
   addCategory: action((state, payload) => {

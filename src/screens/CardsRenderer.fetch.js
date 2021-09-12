@@ -21,7 +21,8 @@ const FetchBeforeRender = () => {
   const { updateHasNew } = initStates();
 
   useEffect(() => {
-    updateHasNew({ d1: true });
+    updateHasNew({ d0: true });
+    // updateHasNew({ d1: true });
   }, []);
 
   useCategoriesFetch();

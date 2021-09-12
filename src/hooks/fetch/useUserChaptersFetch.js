@@ -76,7 +76,7 @@ export const useUserChaptersFetch = () => {
 
       const target = chapters[coords.d0][coords.d1].deck;
 
-      const { data } = await ChapterService.GET_getChapter(+target.id, +userId);
+      const { data } = await ChapterService.GET_getChapter(+target.id, userId);
 
       if (data.item.length === 1) {
         addChapterChild({ deck: data.item[0] });
@@ -90,7 +90,7 @@ export const useUserChaptersFetch = () => {
       updateHasNew({ d2: false });
       finishLoading('d2');
     })();
-  }, [hasNew.d2, isLoaded.d1]);
+  }, [hasNew.d2, isLoaded.d1, userId]);
 
   React.useEffect(() => {
     if (!isLoaded.d2) return;

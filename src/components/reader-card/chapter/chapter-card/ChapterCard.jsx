@@ -6,7 +6,7 @@ import {
   Image,
   TouchableWithoutFeedback,
 } from 'react-native';
-import { Text, Alert, Button, TextInput } from '#components';
+import { Text, Alert, Button, TextInput } from '../../../';
 import { Like, Reply, AddStory } from '#components/icon';
 import {
   widthPercentageToDP as wp,
@@ -73,24 +73,24 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
 
   const onPressLike = useCallback(async () => {
     if (!isLoggedIn) {
-      Alert("You can't like before logging in.");
+      Alert('Need Login to write a new card');
       return;
     }
 
     console.log('userID: ', userId);
     // 이미 좋아요 했음
     if (isLike === 1) {
-      console.log('UNLIKE! chapterID: ', chapterId, ", likeCount: ", likeCount);
+      console.log('UNLIKE! chapterID: ', chapterId, ', likeCount: ', likeCount);
       await ChapterService.DELETE_unlikeChapter(chapterId, userId);
     } else {
-      console.log('LIKE! chapterID: ', chapterId, ", likeCount: ", likeCount);
+      console.log('LIKE! chapterID: ', chapterId, ', likeCount: ', likeCount);
       await ChapterService.POST_likeChapter(chapterId, userId);
     }
 
     switch (depth) {
       case DEPTH_NAME.CHAPTER:
+        updateHasNew({ d0: true });
         updateHasNew({ d1: true });
-        updateHasNew({ d2: true });
         break;
 
       case DEPTH_NAME.USER_CHAPTER:
@@ -110,6 +110,11 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
   };
 
   const goWriteCardDirectly = () => {
+    if (!isLoggedIn) {
+      Alert('Need Login to write a new card');
+      return;
+    }
+
     nav.navigate(ScreenNames.MainWriteCard, {
       categoryTitle,
       chapterId,

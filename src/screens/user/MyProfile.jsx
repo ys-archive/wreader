@@ -9,7 +9,6 @@ import * as ScreenNames from '#navigators/ScreenNames';
 import {
   Cancel,
   Edit2,
-  Person,
   Like,
   Instagram,
   Facebook,

@@ -28,10 +28,10 @@ const initStates = () => {
 };
 
 const CardsRenderer = () => {
-  FetchBeforeRender();
-
   const { categories, chapters, isLoaded, depth, coords, maxCoords } =
     initStates();
+
+  FetchBeforeRender();
 
   if (!isLoaded.d0) return null;
   if (!isLoaded.d1) return null;

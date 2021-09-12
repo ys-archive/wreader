@@ -10,10 +10,16 @@ import { useAutoLogin } from '../hooks';
 import EventModal from '#components/modals/EventModal';
 import Reader from './reader/Reader';
 import CardsRenderer from './CardsRenderer';
+import { useStoreState } from 'easy-peasy';
+import { selAuth } from '../store/selectors';
 
 const Main = () => {
   const nav = useNavigation();
+  const userId = useStoreState(selAuth.userId);
+
   useAutoLogin();
+
+  if (userId === 0) return null;
 
   const onPressSortIcon = () => {
     console.log('정렬 아이콘');

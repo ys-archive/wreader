@@ -1,5 +1,5 @@
 import React from 'react';
-import { asyncForEach } from '../../utils';
+import { asyncForEach, delay } from '../../utils';
 
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import { selData, selAuth, selSwiper } from '../../store/selectors';
@@ -62,6 +62,8 @@ export const useChaptersFetch = () => {
       if (!isLoaded.d0) return;
       if (!hasNew.d1) return;
       if (!categories || categories.length === 0) return;
+
+      // await delay(1.05);
 
       console.log('fetching CHAPTERS');
       startLoading('d1');
