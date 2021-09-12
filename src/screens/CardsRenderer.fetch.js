@@ -1,33 +1,28 @@
-import { useStoreState } from 'easy-peasy';
+import { useEffect } from 'react';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 import { selData, selSwiper } from '../store/selectors';
 import {
   useCategoriesFetch,
   useChaptersFetch,
   useUserChaptersFetch,
-  useNextFetch
+  useNextFetch,
 } from '../hooks';
+import { actData } from '../store/actions';
 
 const initStates = () => {
-  const categories = useStoreState(selData.categories);
-  const chapters = useStoreState(selData.chapters);
-  const isLoaded = useStoreState(selData.isLoaded);
-
-  const depth = useStoreState(selSwiper.depth);
-  const coords = useStoreState(selSwiper.coords);
-  const maxCoords = useStoreState(selSwiper.maxCoords);
+  const updateHasNew = useStoreActions(actData.updateHasNew);
 
   return {
-    categories,
-    chapters,
-    isLoaded,
-    depth,
-    coords,
-    maxCoords,
+    updateHasNew,
   };
 };
 
 const FetchBeforeRender = () => {
-  // const {} = initStates();
+  const { updateHasNew } = initStates();
+
+  useEffect(() => {
+    updateHasNew({ d1: true });
+  }, []);
 
   useCategoriesFetch();
   useChaptersFetch();

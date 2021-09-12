@@ -18,34 +18,59 @@ import { useNavigation } from '@react-navigation/native';
 import { colors } from '../../../constants';
 import { dummyProfile } from '#constants/images';
 
-import { useStoreState } from 'easy-peasy';
-import { selAuth, selImage } from '../../../store/selectors';
+import { useStoreActions, useStoreState } from 'easy-peasy';
+import {
+  selAuth,
+  selData,
+  selImage,
+  selSwiper,
+} from '../../../store/selectors';
+import { actData } from '../../../store/actions';
 import { CommentsService } from '../../../services';
 
 import { useCommentsLogic } from './useCommentsLogic';
 import CommentItem_Me from '../comment-item/CommentItem_Me';
 import CommentItem_Other from '../comment-item/CommentItem_Other';
+import { DEPTH_NAME } from '../../../store/reducers/swiper.depth';
 
 const initStates = () => {
-  const profileUrl = useStoreState(selImage.profile);
-  const userId = useStoreState(selAuth.userId);
   const [contents, setContents] = useState('');
 
+  const userId = useStoreState(selAuth.userId);
+
+  const hasNew = useStoreState(selData.hasNew);
+  const depth = useStoreState(selSwiper.depth);
+
+  const profileUrl = useStoreState(selImage.profile);
+
+  const updateHasNew = useStoreActions(actData.updateHasNew);
+
   return {
-    profileUrl,
     userId,
+    hasNew,
+    depth,
+    profileUrl,
     contents,
     setContents,
+    updateHasNew,
   };
 };
 
 const Comments = ({ route }) => {
   const nav = useNavigation();
-  const { profileUrl, userId, contents, setContents } = initStates();
+  const {
+    profileUrl,
+    userId,
+    contents,
+    hasNew,
+    depth,
+    setContents,
+    updateHasNew,
+  } = initStates();
 
   const { chapterId } = route.params;
 
-  const data = useCommentsLogic(chapterId, isNewCommentWritten);
+  const data = useCommentsLogic(chapterId, hasNew);
 
   if (!data) {
     return (
@@ -66,11 +91,25 @@ const Comments = ({ route }) => {
 
     if (status === 200) {
       // 성공했으니깐 다시 fetch
-      onWriteNewComment();
+      console.log('depth during COMMENT ===> ', depth);
+      switch (depth) {
+        case DEPTH_NAME.CHAPTER:
+          updateHasNew({ d1: true });
+          updateHasNew({ d2: true });
+          break;
+
+        case DEPTH_NAME.USER_CHAPTER:
+          updateHasNew({ d2: true });
+          break;
+
+        case DEPTH_NAME.NEXT:
+          updateHasNew({ d3: true });
+          break;
+      }
     }
 
     // 새 댓글 입력 후 입력창 비우기
-    setNewComment('');
+    setContents('');
   };
 
   const onCloseComment = () => nav.goBack();

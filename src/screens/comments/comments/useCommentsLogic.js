@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { CommentsService } from '../../../services';
 
-export const useCommentsLogic = (chapterId, isNewCommentWritten) => {
+export const useCommentsLogic = (chapterId, hasNew) => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -13,7 +13,7 @@ export const useCommentsLogic = (chapterId, isNewCommentWritten) => {
       }
     }
     fetchAllComments();
-  }, [chapterId, isNewCommentWritten]);
+  }, [chapterId, hasNew.d0, hasNew.d1, hasNew.d2, hasNew.d3]);
 
   return data;
 };

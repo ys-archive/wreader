@@ -52,6 +52,7 @@ export const useChaptersFetch = () => {
     addChapter,
     startLoading,
     finishLoading,
+    updateHasNew,
     setMaxCoords,
   } = initStates();
 
@@ -59,6 +60,7 @@ export const useChaptersFetch = () => {
     (async function fetchChapters() {
       // 카테고리가 먼저 로드 되었어야 함
       if (!isLoaded.d0) return;
+      if (!hasNew.d1) return;
       if (!categories || categories.length === 0) return;
 
       console.log('fetching CHAPTERS');
@@ -81,9 +83,10 @@ export const useChaptersFetch = () => {
         addChapter({ deck });
       });
 
+      updateHasNew({ d1: false });
       finishLoading('d1');
     })();
-  }, [isLoaded.d0]);
+  }, [hasNew.d1, isLoaded.d0]);
 
   React.useEffect(() => {
     if (!isLoaded.d1) return;
