@@ -17,31 +17,35 @@ import { colors, StyleDefine } from '../../../../constants';
 
 import { makeCategoryBGImagePath, dummyProfile } from '#constants/images';
 
-import { useLikeUpdate } from '../../../../contexts/chapterDataContext';
-import { useStoreState } from 'easy-peasy';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 import { selAuth, selImage, selSwiper } from '../../../../store/selectors';
+import { actData } from '../../../../store/actions';
 
 import { ChapterService } from '../../../../services';
 
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '../../../../navigators/ScreenNames';
+import { DEPTH_NAME } from '../../../../store/reducers/swiper.depth';
 
 const initStates = () => {
   const isLoggedIn = useStoreState(selAuth.isLoggedIn);
   const userId = useStoreState(selAuth.userId);
   const profile = useStoreState(selImage.profile);
+  const depth = useStoreState(selSwiper.depth);
+  const updateHasNew = useStoreActions(actData.updateHasNew);
 
   return {
     isLoggedIn,
     userId,
     profile,
+    depth,
+    updateHasNew,
   };
 };
 
 const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
   const nav = useNavigation();
-  const { isLoggedIn, userId, profile } = initStates();
-  const [_, updateLike] = useLikeUpdate();
+  const { isLoggedIn, userId, profile, depth, updateHasNew } = initStates();
   const {
     id: chapterId, // 현재 챕터 Id
     categoryId,
@@ -73,14 +77,30 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
       return;
     }
 
+    console.log('userID: ', userId);
     // 이미 좋아요 했음
     if (isLike === 1) {
+      console.log('UNLIKE! chapterID: ', chapterId, ", likeCount: ", likeCount);
       await ChapterService.DELETE_unlikeChapter(chapterId, userId);
     } else {
+      console.log('LIKE! chapterID: ', chapterId, ", likeCount: ", likeCount);
       await ChapterService.POST_likeChapter(chapterId, userId);
     }
 
-    updateLike();
+    switch (depth) {
+      case DEPTH_NAME.CHAPTER:
+        updateHasNew({ d1: true });
+        updateHasNew({ d2: true });
+        break;
+
+      case DEPTH_NAME.USER_CHAPTER:
+        updateHasNew({ d2: true });
+        break;
+
+      case DEPTH_NAME.NEXT:
+        updateHasNew({ d3: true });
+        break;
+    }
   }, [isLoggedIn, userId, chapterId]);
 
   const onPressReply = () => {
@@ -166,12 +186,7 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
           />
 
           {/* 좋아요, 댓글 */}
-          <View
-            style={[
-              s.bottomSection,
-              // predicatedScaleBottomSectionBetweenChapters,
-            ]}
-          >
+          <View style={s.bottomSection}>
             <View style={s.bottomInfoPlacer}>
               <View style={s.likeSection}>
                 <Like onPress={onPressLike} />
