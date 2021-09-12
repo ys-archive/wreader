@@ -39,6 +39,7 @@ const Reader = ({ children }) => {
       </GestureRecognizer>
     </View>
   );
+  // return children;
 };
 
 export default Reader;

@@ -9,6 +9,7 @@ const initStates = () => {
   // actions
   // - data
   const addCategory = useStoreActions(actData.addCategory);
+  const startLoading = useStoreActions(actData.startLoading);
   const finishLoading = useStoreActions(actData.finishLoading);
 
   // - swiper
@@ -16,17 +17,21 @@ const initStates = () => {
 
   return {
     addCategory,
+    startLoading,
     finishLoading,
+
     setMaxCoords,
   };
 };
 
 export const useCategoriesFetch = () => {
-  const { setMaxCoords, addCategory, finishLoading } = initStates();
+  const { setMaxCoords, addCategory, startLoading, finishLoading } = initStates();
 
   React.useEffect(() => {
     (async function fetchCategories() {
       console.log('start fetching CATEGORY');
+      startLoading('d0');
+      
       const { data } = await ChapterService.GET_getCategory();
 
       if (!data || !data.item || data.item.length === 0) return;

@@ -26,18 +26,24 @@ import { useCommentsLogic } from './useCommentsLogic';
 import CommentItem_Me from '../comment-item/CommentItem_Me';
 import CommentItem_Other from '../comment-item/CommentItem_Other';
 
-const Comments = ({ route }) => {
-  const nav = useNavigation();
-
+const initStates = () => {
   const profileUrl = useStoreState(selImage.profile);
   const userId = useStoreState(selAuth.userId);
+  const [contents, setContents] = useState('');
+
+  return {
+    profileUrl,
+    userId,
+    contents,
+    setContents,
+  };
+};
+
+const Comments = ({ route }) => {
+  const nav = useNavigation();
+  const { profileUrl, userId, contents, setContents } = initStates();
 
   const { chapterId } = route.params;
-
-  const [newComment, setNewComment] = useState('');
-
-  const [isNewCommentWritten, u1] = useState(false);
-  const onWriteNewComment = () => u1(prv => !prv);
 
   const data = useCommentsLogic(chapterId, isNewCommentWritten);
 
@@ -52,7 +58,7 @@ const Comments = ({ route }) => {
   const postNewComment = async () => {
     const status = await CommentsService.POST_createComment(
       chapterId,
-      newComment,
+      contents,
       userId,
     );
 
@@ -123,8 +129,8 @@ const Comments = ({ route }) => {
 
         <TextInput
           style={s.replyTextInput}
-          value={newComment}
-          onChangeText={text => setNewComment(text)}
+          value={contents}
+          onChangeText={setContents}
           placeholder="Add a comment ..."
           placeholderTextColor={colors.light.text2}
         />

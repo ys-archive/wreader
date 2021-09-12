@@ -21,6 +21,28 @@ export default {
       d3: false,
     },
 
+    startLoading:  action((state, payload) => {
+      if ('d0' === payload) {
+        state.val.d0 = false;
+        return;
+      }
+
+      if ('d1' === payload) {
+        state.val.d1 = false;
+        return;
+      }
+
+      if ('d2' === payload) {
+        state.val.d2 = false;
+        return;
+      }
+
+      if ('d3' === payload) {
+        state.val.d3 = false;
+        return;
+      }
+    }),
+
     finishLoading: action((state, payload) => {
       if ('d0' === payload) {
         state.val.d0 = true;
@@ -82,43 +104,43 @@ export default {
     }),
   },
 
-  hasLike: {
-    default: {
-      d0: false,
-      d1: false,
-      d2: false,
-      d3: false,
-    },
+  // hasLike: {
+  //   default: {
+  //     d0: false,
+  //     d1: false,
+  //     d2: false,
+  //     d3: false,
+  //   },
 
-    val: {
-      d0: false,
-      d1: false,
-      d2: false,
-      d3: false,
-    },
+  //   val: {
+  //     d0: false,
+  //     d1: false,
+  //     d2: false,
+  //     d3: false,
+  //   },
 
-    update: action((state, payload) => {
-      if ('d0' in payload) {
-        state.val.d0 = payload.d0;
-        return;
-      }
+  //   update: action((state, payload) => {
+  //     if ('d0' in payload) {
+  //       state.val.d0 = payload.d0;
+  //       return;
+  //     }
 
-      if ('d1' in payload) {
-        state.val.d1 = payload.d1;
-        return;
-      }
+  //     if ('d1' in payload) {
+  //       state.val.d1 = payload.d1;
+  //       return;
+  //     }
 
-      if ('d2' in payload) {
-        state.val.d2 = payload.d2;
-        return;
-      }
+  //     if ('d2' in payload) {
+  //       state.val.d2 = payload.d2;
+  //       return;
+  //     }
 
-      if ('d3' in payload) {
-        state.val.d3 = payload.d3;
-        return;
-      }
-    }),
-  },
+  //     if ('d3' in payload) {
+  //       state.val.d3 = payload.d3;
+  //       return;
+  //     }
+  //   }),
+  // },
 
   reset: action(state => {
     state.categories = [];
@@ -174,9 +196,9 @@ export default {
           if (
             item.child.findIndex(f => _.isEqual(f.deck, payload.deck)) === -1
           ) {
-            item.child.push({ deck: payload.deck, child: [] });
-            return;
           }
+          item.child.push({ deck: payload.deck, child: [] });
+          return;
         }
 
         if (item.child.length > 0) {
@@ -198,7 +220,7 @@ export const selectors = {
 
   isLoaded: state => state.data.isLoaded.val,
   hasNew: state => state.data.hasNew.val,
-  hasLike: state => state.data.hasLike.val,
+  // hasLike: state => state.data.hasLike.val,
 };
 
 export const actions = {
@@ -210,7 +232,8 @@ export const actions = {
   addChapter: actions => actions.data.addChapter,
   addChapterChild: actions => actions.data.addChapterChild,
 
+  startLoading: actions => actions.data.isLoaded.startLoading,
   finishLoading: actions => actions.data.isLoaded.finishLoading,
   updateHasNew: actions => actions.data.hasNew.update,
-  updateHasLike: actions => actions.data.hasLike.update,
+  // updateHasLike: actions => actions.data.hasLike.update,
 };

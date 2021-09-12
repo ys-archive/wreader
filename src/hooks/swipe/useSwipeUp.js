@@ -8,7 +8,6 @@ export const useSwipeUp = swipe => {
     categories,
     chapters,
     isLoaded,
-    hasNew,
 
     depth,
     coords,
@@ -65,7 +64,6 @@ export const useSwipeUp = swipe => {
 
           swipe('up', () => {
             increaseDepth();
-            // setMaxCoords({ d2: chapters });
             console.log('ENTER INTO USER CHAPTERS');
             updateHasNew({ d3: true });
           });
@@ -89,7 +87,7 @@ export const useSwipeUp = swipe => {
           }
 
           swipe('up', () => {
-            increaseCoords('d2');
+            increaseCoords('d2');            
             updateHasNew({ d3: true });
             setMaxCoords({ d3: chapters });
           });

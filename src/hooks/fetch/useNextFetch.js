@@ -14,7 +14,6 @@ const initStates = () => {
 
   const chapters = useStoreState(selData.chapters);
   const isLoaded = useStoreState(selData.isLoaded);
-  const hasLike = useStoreState(selData.hasLike);
   const hasNew = useStoreState(selData.hasNew);
 
   const coords = useStoreState(selSwiper.coords);
@@ -22,6 +21,7 @@ const initStates = () => {
   // actions
   // - data
   const addChapterChild = useStoreActions(actData.addChapterChild);
+  const startLoading = useStoreActions(actData.startLoading);
   const finishLoading = useStoreActions(actData.finishLoading);
   const updateHasNew = useStoreActions(actData.updateHasNew);
 
@@ -34,11 +34,11 @@ const initStates = () => {
     chapters,
     isLoaded,
     hasNew,
-    hasLike,
 
     coords,
 
     addChapterChild,
+    startLoading,
     finishLoading,
     updateHasNew,
 
@@ -53,11 +53,11 @@ export const useNextFetch = () => {
     chapters,
     isLoaded,
     hasNew,
-    hasLike,
 
     coords,
 
     addChapterChild,
+    startLoading,
     finishLoading,
     updateHasNew,
 
@@ -69,15 +69,11 @@ export const useNextFetch = () => {
       if (!isLoaded.d2) return;
       if (!hasNew.d3) return;
       if (!chapters || chapters.length === 0) return;
+
       console.log('fetching NEXT CHAPTERS');
+      startLoading('d3');
 
-      // group_index 0 부터 저장
-      // await asyncForEach(chapters, async chapter => {
-      //   if (!chapter || chapter.length === 0) return;
-
-      // });
       const target = chapters[coords.d0][coords.d1].child[coords.d2];
-      console.log('target ---> ', target);
 
       const { data } = await ChapterService.GET_getChapter(
         +target.deck.id,
@@ -96,7 +92,7 @@ export const useNextFetch = () => {
       updateHasNew({ d3: false });
       finishLoading('d3');
     })();
-  }, [isLoaded.d2, hasLike.d3, hasNew.d3]);
+  }, [isLoaded.d2, hasNew.d3]);
 
   React.useEffect(() => {
     if (!isLoaded.d3) return;

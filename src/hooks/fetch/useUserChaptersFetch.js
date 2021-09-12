@@ -13,7 +13,6 @@ const initStates = () => {
 
   const chapters = useStoreState(selData.chapters);
   const isLoaded = useStoreState(selData.isLoaded);
-  const hasLike = useStoreState(selData.hasLike);
   const hasNew = useStoreState(selData.hasNew);
 
   const coords = useStoreState(selSwiper.coords);
@@ -21,6 +20,7 @@ const initStates = () => {
   // actions
   // - data
   const addChapterChild = useStoreActions(actData.addChapterChild);
+  const startLoading = useStoreActions(actData.startLoading);
   const finishLoading = useStoreActions(actData.finishLoading);
   const updateHasNew = useStoreActions(actData.updateHasNew);
 
@@ -33,11 +33,12 @@ const initStates = () => {
     chapters,
     isLoaded,
     hasNew,
-    hasLike,
 
     coords,
 
     addChapterChild,
+
+    startLoading,
     finishLoading,
     updateHasNew,
 
@@ -52,11 +53,12 @@ export const useUserChaptersFetch = () => {
     chapters,
     isLoaded,
     hasNew,
-    hasLike,
 
     coords,
 
     addChapterChild,
+
+    startLoading,
     finishLoading,
     updateHasNew,
 
@@ -70,10 +72,9 @@ export const useUserChaptersFetch = () => {
       if (!chapters || chapters.length === 0) return;
       console.log('fetching USER CHAPTERS');
 
-      // await fetchUserChapter(chapters[coords.d0], userId, addChapterChild);
-      const target = chapters[coords.d0][coords.d1].deck;
+      startLoading('d2');
 
-      // console.log('target -> ', target);
+      const target = chapters[coords.d0][coords.d1].deck;
 
       const { data } = await ChapterService.GET_getChapter(+target.id, +userId);
 
@@ -85,14 +86,11 @@ export const useUserChaptersFetch = () => {
         });
       }
 
-      // await asyncForEach(arr, async item => {
-
-      // });
       // 로딩 끝
       updateHasNew({ d2: false });
       finishLoading('d2');
     })();
-  }, [hasLike.d2, hasNew.d2, isLoaded.d1]);
+  }, [hasNew.d2, isLoaded.d1]);
 
   React.useEffect(() => {
     if (!isLoaded.d2) return;
@@ -102,19 +100,19 @@ export const useUserChaptersFetch = () => {
   }, [isLoaded.d2]);
 };
 
-const fetchUserChapter = async (arr, userId, addChapterChild) => {
-  await asyncForEach(arr, async item => {
-    const { data } = await ChapterService.GET_getChapter(
-      +item.deck.id,
-      +userId,
-    );
+// const fetchUserChapter = async (arr, userId, addChapterChild) => {
+//   await asyncForEach(arr, async item => {
+//     const { data } = await ChapterService.GET_getChapter(
+//       +item.deck.id,
+//       +userId,
+//     );
 
-    if (data.item.length === 1) {
-      addChapterChild({ deck: data.item[0] });
-    } else if (data.item.length >= 2) {
-      data.item.forEach(data => {
-        addChapterChild({ deck: data });
-      });
-    }
-  });
-};
+//     if (data.item.length === 1) {
+//       addChapterChild({ deck: data.item[0] });
+//     } else if (data.item.length >= 2) {
+//       data.item.forEach(data => {
+//         addChapterChild({ deck: data });
+//       });
+//     }
+//   });
+// };

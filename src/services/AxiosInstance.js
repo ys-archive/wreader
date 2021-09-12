@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { BASE_URL } from '@env';
+import { BASE_URL, DEV_URL } from '@env';
 
 export const instance = axios.create({
-  baseURL: BASE_URL,
+  baseURL: 'http://ec2-3-34-188-160.ap-northeast-2.compute.amazonaws.com/',
 });

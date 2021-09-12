@@ -9,13 +9,14 @@ const initStates = () => {
   // selectors
   const categories = useStoreState(selData.categories);
   const isLoaded = useStoreState(selData.isLoaded);
-  const hasLike = useStoreState(selData.hasLike);
   const hasNew = useStoreState(selData.hasNew);
 
   // actions
   // - data
   const resetChapter = useStoreActions(actData.resetChapter);
   const addChapter = useStoreActions(actData.addChapter);
+
+  const startLoading = useStoreActions(actData.startLoading);
   const finishLoading = useStoreActions(actData.finishLoading);
 
   const updateHasNew = useStoreActions(actData.updateHasNew);
@@ -27,10 +28,11 @@ const initStates = () => {
     categories,
     isLoaded,
     hasNew,
-    hasLike,
 
     resetChapter,
     addChapter,
+
+    startLoading,
     finishLoading,
 
     updateHasNew,
@@ -46,11 +48,10 @@ export const useChaptersFetch = () => {
     categories,
     isLoaded,
     hasNew,
-    hasLike,
     resetChapter,
     addChapter,
+    startLoading,
     finishLoading,
-    updateHasNew,
     setMaxCoords,
   } = initStates();
 
@@ -58,9 +59,11 @@ export const useChaptersFetch = () => {
     (async function fetchChapters() {
       // 카테고리가 먼저 로드 되었어야 함
       if (!isLoaded.d0) return;
-      // if (!hasNew.d1) return;
       if (!categories || categories.length === 0) return;
+
       console.log('fetching CHAPTERS');
+      startLoading('d1');
+
       resetChapter();
 
       // 챕터 데이터 정제 및 저장
@@ -78,10 +81,9 @@ export const useChaptersFetch = () => {
         addChapter({ deck });
       });
 
-      // updateHasNew({ d1: false });
       finishLoading('d1');
     })();
-  }, [hasNew.d1, hasLike.d1, isLoaded.d0]);
+  }, [isLoaded.d0]);
 
   React.useEffect(() => {
     if (!isLoaded.d1) return;
