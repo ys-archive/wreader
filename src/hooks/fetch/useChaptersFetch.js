@@ -84,7 +84,6 @@ export const useChaptersFetch = () => {
       });
 
       updateHasNew({ d1: false });
-      updateHasNew({ d2: true });
       finishLoading('d1');
     })();
   }, [hasNew.d1, isLoaded.d0]);
