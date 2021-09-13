@@ -130,6 +130,16 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
 
   return (
     <View style={s.root}>
+      <AddStory
+        style={{
+          position: 'absolute',
+          right: wp('8.3%'),
+          bottom: hp('4.7%'),
+          zIndex: 15
+        }}
+        onPress={goWriteCardDirectly}
+      />
+
       <ImageBackground
         style={{
           width: wp('83.3%'),
@@ -190,11 +200,6 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
           <View style={s.contentSection}>
             <Text style={s.contentText}>&nbsp;{content ?? ''}</Text>
           </View>
-
-          <AddStory
-            style={{ position: 'absolute', right: '5%', bottom: '19%' }}
-            onPress={goWriteCardDirectly}
-          />
 
           {/* 좋아요, 댓글 */}
           <View style={s.bottomSection}>

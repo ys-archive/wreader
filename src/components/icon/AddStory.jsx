@@ -1,10 +1,10 @@
 import React from 'react';
 import { Image, TouchableOpacity } from 'react-native';
 import { addStoryIcon } from '#constants/images';
-// import {
-//   widthPercentageToDP as wp,
-//   heightPercentageToDP as hp,
-// } from 'react-native-responsive-screen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 const AddStory = ({ style = {}, iconStyle = {}, onPress }) => (
   <TouchableOpacity
@@ -14,8 +14,8 @@ const AddStory = ({ style = {}, iconStyle = {}, onPress }) => (
     <Image
       style={[
         {
-          width: 41,
-          height: 41,
+          width: wp('23%'),
+          height: hp('11%'),
         },
         iconStyle,
       ]}
