@@ -94,12 +94,13 @@ const WriteChapterCard = ({ route }) => {
           }}
         >
           {/* todo: 현재 새 카드의 title 은 사용하지 않음 */}
-          <TextInput
+          {/* <TextInput
             style={s.titleInput}
             placeholder={'Title'}
             placeholderTextColor="rgba(0, 0, 0, 0.2)"
             editable={false}
-          />
+          /> */}
+          <View style={{ marginTop: '20%', marginBottom: hp('4%') }} />
 
           <Text isBold style={s.chapterText}>
             CHAPTER&nbsp;&nbsp;
@@ -144,7 +145,7 @@ const s = StyleSheet.create({
 
   chapterText: {
     fontSize: 17,
-    marginBottom: hp('7%'),
+    marginBottom: hp('9%'),
   },
   chapterNumberText: {
     fontSize: 28,
