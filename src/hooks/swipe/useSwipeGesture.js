@@ -36,13 +36,15 @@ export const useSwipeGesture = () => {
         throw new Error('Invalid direction');
     }
 
+    if (after) {
+      setTimeout(() => after(), SWIPE_OUT_DURATION - 80);
+    }
     Animated.timing(position, {
       toValue: delta,
       duration: SWIPE_OUT_DURATION,
       useNativeDriver: true,
     }).start(() => {
       // console.log(`Swipe Amount: x: ${delta.x}, y: ${delta.y}`);
-      if (after) after();
       onSwipeComplete(dir);
     });
   };
