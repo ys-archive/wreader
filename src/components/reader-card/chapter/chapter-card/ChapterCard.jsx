@@ -31,7 +31,9 @@ const initStates = () => {
   const isLoggedIn = useStoreState(selAuth.isLoggedIn);
   const userId = useStoreState(selAuth.userId);
   const profile = useStoreState(selImage.profile);
+
   const depth = useStoreState(selSwiper.depth);
+  const coords = useStoreState(selSwiper.coords);
   const updateHasNew = useStoreActions(actData.updateHasNew);
 
   return {
@@ -39,13 +41,15 @@ const initStates = () => {
     userId,
     profile,
     depth,
+    coords,
     updateHasNew,
   };
 };
 
 const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
   const nav = useNavigation();
-  const { isLoggedIn, userId, profile, depth, updateHasNew } = initStates();
+  const { isLoggedIn, userId, profile, depth, coords, updateHasNew } =
+    initStates();
   const {
     id: chapterId, // 현재 챕터 Id
     categoryId,
@@ -119,6 +123,8 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
       categoryTitle,
       chapterId,
       categoryId,
+      order: coords.d1,
+      depth,
     });
   };
 
@@ -158,7 +164,7 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
           style={{
             width: wp('75.6%'),
             height: hp('69.7%'),
-            backgroundColor: colors.light.chapterBGInside,
+            backgroundColor: colors.light.whiteTransparent,
             borderRadius: StyleDefine.borderRadiusInside,
           }}
         >
