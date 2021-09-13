@@ -163,7 +163,7 @@ export default {
 
   resetChapter: action((state, payload) => {
     state.chapters = [];
-  }),
+  }),  
 
   addChapter: action((state, payload) => {
     const hasFound = state.chapters.findIndex(ch =>
@@ -225,6 +225,7 @@ export const selectors = {
 
 export const actions = {
   reset: actions => actions.data.reset,
+
   resetCategory: actions => actions.data.resetCategory,
   addCategory: actions => actions.data.addCategory,
 
