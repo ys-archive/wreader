@@ -98,11 +98,11 @@ const Comments = ({ route }) => {
 
         case DEPTH_NAME.USER_CHAPTER:
           // updateHasNew({ d0: true });
-          updateHasNew({ d2: true });
           break;
 
         case DEPTH_NAME.NEXT:
-          updateHasNew({ d3: true });
+          // updateHasNew({ d0: true });
+          // updateHasNew({ d3: true });
           break;
       }
     }
@@ -151,7 +151,7 @@ const Comments = ({ route }) => {
         style={s.contentsSection}
         data={data.item}
         renderItem={renderComments}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.id.toString()}
       />
 
       {/* 새 댓글 섹션 */}

@@ -119,13 +119,15 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
       return;
     }
 
-    nav.navigate(ScreenNames.MainWriteCard, {
-      categoryTitle,
-      chapterId,
-      categoryId,
-      order: coords.d1,
-      depth,
-    });
+    Alert('작업 중입니다.');
+
+    // nav.navigate(ScreenNames.MainWriteCard, {
+    //   categoryTitle,
+    //   chapterId,
+    //   categoryId,
+    //   order: coords.d1,
+    //   depth,
+    // });
   };
 
   return (
