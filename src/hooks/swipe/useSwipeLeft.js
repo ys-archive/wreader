@@ -39,10 +39,8 @@ export const useSwipeLeft = swipe => {
             // 카테고리 -> 챕터 선택 (d0 -> d1)
             increaseDepth();
             // 각 챕터에 맞게 최대 챕터 설정 (d1)
-            // setMaxCoords({ d1: chapters });
-            console.log('ENTER INTO CHAPTERS');
-            // updateHasNew({ d1: true });
-            updateHasNew({ d2: true });
+            console.log('ENTER INTO CHAPTERS');            
+            // updateHasNew({ d2: true });
           });
         };
 

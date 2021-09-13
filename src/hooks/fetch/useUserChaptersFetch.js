@@ -70,6 +70,9 @@ export const useUserChaptersFetch = () => {
       if (!isLoaded.d1) return;
       if (!hasNew.d2) return;
       if (!chapters || chapters.length === 0) return;
+
+      await delay(1);
+      
       console.log('fetching USER CHAPTERS');
 
       startLoading('d2');

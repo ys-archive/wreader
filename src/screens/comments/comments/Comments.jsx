@@ -93,10 +93,11 @@ const Comments = ({ route }) => {
       // 성공했으니깐 다시 fetch      console.log('depth during COMMENT ===> ', depth);
       switch (depth) {
         case DEPTH_NAME.CHAPTER:
-          updateHasNew({ d0: true });          
+          updateHasNew({ d0: true });
           break;
 
         case DEPTH_NAME.USER_CHAPTER:
+          // updateHasNew({ d0: true });
           updateHasNew({ d2: true });
           break;
 

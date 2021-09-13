@@ -61,9 +61,7 @@ export const useChaptersFetch = () => {
       // 카테고리가 먼저 로드 되었어야 함
       if (!isLoaded.d0) return;
       if (!hasNew.d1) return;
-      if (!categories || categories.length === 0) return;
-
-      // await delay(1.05);
+      if (!categories || categories.length === 0) return      
 
       console.log('fetching CHAPTERS');
       startLoading('d1');
@@ -86,6 +84,7 @@ export const useChaptersFetch = () => {
       });
 
       updateHasNew({ d1: false });
+      updateHasNew({ d2: true });
       finishLoading('d1');
     })();
   }, [hasNew.d1, isLoaded.d0]);
