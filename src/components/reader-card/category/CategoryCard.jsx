@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, ImageBackground } from 'react-native';
 import { StyleSheet, Text } from '#components';
-import AddStory from '../../icon/AddStory';
+// import AddStory from '../../icon/AddStory';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -11,38 +11,26 @@ import { StyleDefine } from '../../../constants';
 
 import { makeCategoryBGImagePath } from '#constants/images';
 
-import { useNavigation } from '@react-navigation/native';
+// import { useNavigation } from '@react-navigation/native';
 // import * as ScreenNames from '../../../navigators/ScreenNames';
 
 const CategoryCard = ({ data }) => {
-  const nav = useNavigation();
   const { title, subTitle, imageUri } = data;
 
-  // const { predicatedPosition, predicatedScale } =
-  //   useCategoryCardExposer_Category(
-  //     currentCategoryIdx + 1 === categoryIdx,
-  //     currentCategoryIdx - 1 === categoryIdx,
-  //     isFirstCandidate && currentChapterIdx === 1,
-  //   );
-
-  const goWriteCard = () => {
-    console.log('New Write Card');
-    // nav.navigate(ScreenNames.MainWriteCard);
-  };
+  // const goWriteCard = () => {
+  //   console.log('New Write Card');
+  //   // nav.navigate(ScreenNames.MainWriteCard);
+  // };
 
   return (
     <View style={s.root}>
       <ImageBackground
-        style={[
-          {
-            width: wp('83.4%'),
-            height: hp('78.2%'),
-            borderRadius: StyleDefine.borderRadiusOutside,
-            overflow: 'hidden',
-          },
-          // predicatedPosition,
-          // predicatedScale,
-        ]}
+        style={{
+          width: wp('83.4%'),
+          height: hp('78.2%'),
+          borderRadius: StyleDefine.borderRadiusOutside,
+          overflow: 'hidden',
+        }}
         source={makeCategoryBGImagePath(title)}
         // source={{ uri: bgImgUri }}
         resizeMode="cover"
@@ -57,7 +45,7 @@ const CategoryCard = ({ data }) => {
           <Text style={s.subTitle}>{subTitle}</Text>
         </View>
 
-        <AddStory onPress={goWriteCard} />
+        {/* <AddStory onPress={goWriteCard} /> */}
       </ImageBackground>
     </View>
   );
