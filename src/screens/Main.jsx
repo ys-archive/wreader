@@ -21,6 +21,11 @@ const Main = () => {
 
   if (userId === 0) return null;
 
+  const returnToMain = () => {
+    console.log('로고 아이콘');
+    // todo: depth -> 0, d0 -> 0, d1 -> 0, d2 -> 0, d3 -> 0 으로 초기화 이동
+  };
+
   const onPressSortIcon = () => {
     console.log('정렬 아이콘');
     // TODO: 후보 챕터들을 조회수 별로 정렬
@@ -32,7 +37,7 @@ const Main = () => {
 
   return (
     <View style={s.root}>
-      <Logo />
+      <Logo onPress={returnToMain} />
       <Sort onPress={onPressSortIcon} />
       <Menu onPress={onPressMenuIcon} />
 

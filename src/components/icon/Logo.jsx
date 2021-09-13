@@ -1,23 +1,29 @@
 import React from 'react';
-import { Image } from 'react-native';
+import { Image, TouchableOpacity } from 'react-native';
 import { logoIcon } from '#constants/images';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-const Logo = () => (
-  <Image
+const Logo = ({ onPress }) => (
+  <TouchableOpacity
+    onPress={onPress}
     style={{
-      width: 107.4,
-      height: 28.8,
       position: 'absolute',
       left: wp('8.3%'),
       top: hp('3.6%'),
       zIndex: 1000,
     }}
-    source={logoIcon}
-  />
+  >
+    <Image
+      style={{
+        width: 107.4,
+        height: 28.8,
+      }}
+      source={logoIcon}
+    />
+  </TouchableOpacity>
 );
 
 export default Logo;
