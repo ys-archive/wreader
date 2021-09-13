@@ -2,7 +2,7 @@ export const colors = {
   light: {
     black: '#000',
     white: '#fff',
-    whiteTransparent: 'rgba(255,255,255, 0.5)',
+    whiteTransparent: 'rgba(255,255,255, 0.8)',
     transparent: 'rgba(255, 255, 255, 0.01)',
     ivory1: '#fff8e1',
     ivory1Transparent: 'rgba(255, 248, 225, 0.5)',
