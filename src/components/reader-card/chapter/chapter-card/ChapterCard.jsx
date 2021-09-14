@@ -135,7 +135,7 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
       <AddStory
         style={{
           position: 'absolute',
-          right: wp('8.3%'),
+          right: wp('4%'),
           bottom: hp('4.7%'),
           zIndex: 15
         }}
@@ -236,13 +236,13 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
                   placeholderTextColor={colors.light.text2}
                 />
 
-                <Button
+                {/* <Button
                   isBold
                   textStyle={s.replyPostText}
                   onPress={onPressReply}
                 >
                   Post
-                </Button>
+                </Button> */}
               </View>
             </TouchableWithoutFeedback>
           </View>

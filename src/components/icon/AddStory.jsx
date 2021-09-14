@@ -14,8 +14,8 @@ const AddStory = ({ style = {}, iconStyle = {}, onPress }) => (
     <Image
       style={[
         {
-          width: wp('23%'),
-          height: hp('11%'),
+          width: wp('24%'),
+          height: hp('12%'),
         },
         iconStyle,
       ]}
