@@ -41,7 +41,7 @@ const Main = () => {
       <Sort onPress={onPressSortIcon} />
       <Menu onPress={onPressMenuIcon} />
 
-      <EventModal />
+      {/* <EventModal /> */}
 
       <Reader>
         <CardsRenderer />
