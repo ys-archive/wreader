@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, TouchableOpacity } from 'react-native';
+import { Image, TouchableOpacity, Platform } from 'react-native';
 import { addStoryIcon } from '#constants/images';
 import {
   widthPercentageToDP as wp,
@@ -14,7 +14,7 @@ const AddStory = ({ style = {}, iconStyle = {}, onPress }) => (
     <Image
       style={[
         {
-          width: wp('24%'),
+          width: Platform.OS === 'android' ? wp('24%') : wp('25%'),
           height: hp('12%'),
         },
         iconStyle,

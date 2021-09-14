@@ -5,6 +5,7 @@ import { useCategoriesFetch } from './fetch/useCategoriesFetch';
 import { useChaptersFetch } from './fetch/useChaptersFetch';
 import { useUserChaptersFetch } from './fetch/useUserChaptersFetch';
 import { useNextFetch } from './fetch/useNextFetch';
+import { useFetchAll } from './fetch/useFetchAll';
 
 import { useImagePicker } from './image/useImagePicker';
 import { useProfileImageLoader } from './image/useProfileImageLoader';
@@ -23,6 +24,7 @@ export {
   useChaptersFetch,
   useUserChaptersFetch,
   useNextFetch,
+  useFetchAll,
   useImagePicker,
   useProfileImageLoader,
   useSwipeGesture,

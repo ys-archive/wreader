@@ -77,6 +77,8 @@ export const useUserChaptersFetch = () => {
 
       startLoading('d2');
 
+      console.log(coords);
+      
       const target = chapters[coords.d0][coords.d1].deck;
 
       const { data } = await ChapterService.GET_getChapter(+target.id, userId);

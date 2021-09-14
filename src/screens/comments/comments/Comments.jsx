@@ -14,6 +14,7 @@ import {
 } from 'react-native-responsive-screen';
 
 import { useNavigation } from '@react-navigation/native';
+import { delay } from '../../../utils';
 
 import { colors } from '../../../constants';
 import { dummyProfile } from '#constants/images';
@@ -94,15 +95,34 @@ const Comments = ({ route }) => {
       switch (depth) {
         case DEPTH_NAME.CHAPTER:
           updateHasNew({ d0: true });
+          await delay(2);
+          updateHasNew({ d1: true });
           break;
 
         case DEPTH_NAME.USER_CHAPTER:
           // updateHasNew({ d0: true });
+
+          // setTimeout(() => {
+          //   updateHasNew({ d1: true });
+
+          //   setTimeout(() => {
+          //     updateHasNew({ d2: true });
+          //   }, 1000);
+          // }, 2000);
           break;
 
         case DEPTH_NAME.NEXT:
-          // updateHasNew({ d0: true });
-          // updateHasNew({ d3: true });
+          // setTimeout(() => {
+          //   updateHasNew({ d1: true });
+
+          //   setTimeout(() => {
+          //     updateHasNew({ d2: true });
+
+          //     setTimeout(() => {
+          //       updateHasNew({ d3: true });
+          //     }, 1000);
+          //   }, 1000);
+          // }, 2000);
           break;
       }
     }
