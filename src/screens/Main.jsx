@@ -19,8 +19,6 @@ const Main = () => {
 
   useAutoLogin();
 
-  if (userId === 0) return null;
-
   const returnToMain = () => {
     console.log('로고 아이콘');
     // todo: depth -> 0, d0 -> 0, d1 -> 0, d2 -> 0, d3 -> 0 으로 초기화 이동
@@ -41,7 +39,7 @@ const Main = () => {
       <Sort onPress={onPressSortIcon} />
       <Menu onPress={onPressMenuIcon} />
 
-      {/* <EventModal /> */}
+      <EventModal />
 
       <Reader>
         <CardsRenderer />
