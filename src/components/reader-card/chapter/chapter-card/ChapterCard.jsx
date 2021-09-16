@@ -108,6 +108,11 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
   }, [isLoggedIn, userId, chapterId]);
 
   const onPressReply = () => {
+    if (!isLoggedIn) {
+      Alert('Need Login to write a new card');
+      return;
+    }
+
     nav.navigate(ScreenNames.MainComments, {
       chapterId,
     });
@@ -119,7 +124,7 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
       return;
     }
 
-    Alert('작업 중입니다.');
+    Alert('Work In Progress!');
 
     // nav.navigate(ScreenNames.MainWriteCard, {
     //   categoryTitle,
