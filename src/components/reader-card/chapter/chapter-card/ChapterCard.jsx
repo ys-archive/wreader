@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
@@ -6,7 +6,7 @@ import {
   Image,
   TouchableWithoutFeedback,
 } from 'react-native';
-import { Text, Alert, Button, TextInput } from '../../../';
+import { Text, Button, TextInput } from '../../../';
 import { Like, Reply, AddStory } from '#components/icon';
 import {
   widthPercentageToDP as wp,
@@ -17,54 +17,15 @@ import { colors, StyleDefine } from '../../../../constants';
 
 import { makeCategoryBGImagePath, dummyProfile } from '#constants/images';
 
-import { useStoreActions, useStoreState } from 'easy-peasy';
-import { selAuth, selImage, selSwiper } from '../../../../store/selectors';
-import { actData } from '../../../../store/actions';
+import { useStoreState } from 'easy-peasy';
+import { selImage } from '../../../../store/selectors';
 
-import { ChapterService } from '../../../../services';
-
-import { useNavigation } from '@react-navigation/native';
-import * as ScreenNames from '../../../../navigators/ScreenNames';
-import { DEPTH_NAME } from '../../../../store/reducers/swiper.depth';
-
-const initStates = () => {
-  // selectors
-  const isLoggedIn = useStoreState(selAuth.isLoggedIn);
-  const userId = useStoreState(selAuth.userId);
-  const profile = useStoreState(selImage.profile);
-
-  const depth = useStoreState(selSwiper.depth);
-  const coords = useStoreState(selSwiper.coords);
-
-  // actions
-  const updateHasNew = useStoreActions(actData.updateHasNew);
-  const fetchOneChapter = useStoreActions(actData.fetchOneChapter);
-  const fetchOneUserChapter = useStoreActions(actData.fetchOneUserChapter);
-
-  return {
-    isLoggedIn,
-    userId,
-    profile,
-    depth,
-    coords,
-    updateHasNew,
-    fetchOneChapter,
-    fetchOneUserChapter,
-  };
-};
+import { useChapterCardLike } from './chapter-card.module/useChapterCardLike';
+import { useChapterCardComments } from './chapter-card.module/useChapterCardComments';
+import { useChapterCard_GoWritingCardDirectly } from './chapter-card.module/useChapterCard_GoWritingCardDirectly';
 
 const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
-  const nav = useNavigation();
-  const {
-    isLoggedIn,
-    userId,
-    profile,
-    depth,
-    coords,
-    updateHasNew,
-    fetchOneChapter,
-    fetchOneUserChapter,
-  } = initStates();
+  const profile = useStoreState(selImage.profile);
 
   const {
     id: chapterId, // 현재 챕터 Id
@@ -91,64 +52,12 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
   // );
   // console.log('\n');
 
-  const onPressLike = async () => {
-    if (!isLoggedIn) {
-      Alert('Need Login to write a new card');
-      return;
-    }
-
-    console.log('userID: ', userId);
-    // 이미 좋아요 했음
-    if (isLike === 1) {
-      console.log('UNLIKE! chapterID: ', chapterId, ', likeCount: ', likeCount);
-      await ChapterService.DELETE_unlikeChapter(chapterId, userId);
-    } else {
-      console.log('LIKE! chapterID: ', chapterId, ', likeCount: ', likeCount);
-      await ChapterService.POST_likeChapter(chapterId, userId);
-    }
-
-    switch (depth) {
-      case DEPTH_NAME.CHAPTER:
-        fetchOneChapter();
-        break;
-
-      case DEPTH_NAME.USER_CHAPTER:
-        fetchOneUserChapter();
-        break;
-
-      case DEPTH_NAME.NEXT:
-        updateHasNew({ d3: true });
-        break;
-    }
-  };
-
-  const onPressReply = () => {
-    if (!isLoggedIn) {
-      Alert('Need Login to write a new card');
-      return;
-    }
-
-    nav.navigate(ScreenNames.MainComments, {
-      chapterId,
-    });
-  };
-
-  const goWriteCardDirectly = () => {
-    if (!isLoggedIn) {
-      Alert('Need Login to write a new card');
-      return;
-    }
-
-    Alert('Work In Progress!');
-
-    // nav.navigate(ScreenNames.MainWriteCard, {
-    //   categoryTitle,
-    //   chapterId,
-    //   categoryId,
-    //   order: coords.d1,
-    //   depth,
-    // });
-  };
+  const onPressLike = useChapterCardLike(chapterId, isLike, likeCount);
+  const onPressReply = useChapterCardComments(chapterId);
+  const goWriteCardDirectly = useChapterCard_GoWritingCardDirectly(
+    chapterId,
+    categoryId,
+  );
 
   return (
     <View style={s.root}>
