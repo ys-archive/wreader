@@ -1,6 +1,5 @@
 import * as axios from './AxiosInstance';
 class ChapterService {
-  //TODO: user ID 직접 입력 or persisted store 에서 사용 할 지 결정
   static async POST_createChapter(
     userId,
     groupIndex,

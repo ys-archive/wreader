@@ -5,7 +5,10 @@ import * as _ from 'lodash';
 export default {
   categories: [],
   chapters: [],
+  originalChapters: [],
   commentsUpdated: false,
+  isUserChaptersSorted: false,
+  isNextSorted: false,
 
   updateComments: action(state => {
     state.commentsUpdated = !state.commentsUpdated;
@@ -118,6 +121,7 @@ export default {
   reset: action(state => {
     state.categories = [];
     state.chapters = [];
+    state.originalChapters = [];
     state.isLoaded.val = state.isLoaded.default;
     state.hasNew.val = state.hasNew.default;
     state.isUpdatingAll = false;
@@ -136,6 +140,7 @@ export default {
 
   resetChapter: action((state, payload) => {
     state.chapters = [];
+    state.originalChapters = [];
   }),
 
   addChapter: action((state, payload) => {
@@ -150,6 +155,7 @@ export default {
           child: [],
         })),
       );
+      state.originalChapters = state.chapters;
     }
   }),
 
@@ -184,11 +190,14 @@ export default {
       if (chapter.length === 0) return;
       findRecursively(chapter);
     });
+
+    state.originalChapters = state.chapters;
   }),
 
   addOneChapter: action((state, payload) => {
     const { d0, d1, card } = payload;
     state.chapters[d0][d1].deck = card;
+    state.originalChapters[d0][d1].deck = card;
   }),
 
   fetchOneChapter: thunk(
@@ -211,6 +220,7 @@ export default {
   addOneUserChapter: action((state, payload) => {
     const { d0, d1, d2, card } = payload;
     state.chapters[d0][d1].child[d2].deck = card;
+    state.originalChapters[d0][d1].child[d2].deck = card;
   }),
 
   fetchOneUserChapter: thunk(
@@ -238,6 +248,7 @@ export default {
   addOneNext: action((state, payload) => {
     const { d0, d1, d2, d3, card } = payload;
     state.chapters[d0][d1].child[d2].child[d3].deck = card;
+    state.originalChapters[d0][d1].child[d2].child[d3].deck = card;
   }),
 
   fetchOneNext: thunk(async (actions, payload, { getState, getStoreState }) => {
@@ -259,6 +270,69 @@ export default {
 
     actions.addOneNext({ d0, d1, d2, d3, card: filteredData[d3] });
   }),
+
+  sortUserChapter_internal: action((state, payload) => {
+    const { d0, d1, d2 } = payload;
+    let sorted = undefined;
+    // console.log(state.chapters[d0][d1].child);
+
+    if (!state.isUserChaptersSorted) {
+      sorted = state.chapters[d0][d1].child.sort((a, b) => {
+        const bStr = b.deck.updateDt;
+        const bb = new Date(
+          +bStr.slice(0, 4),
+          +bStr.slice(5, 7),
+          +bStr.slice(8, 10),
+          +bStr.slice(11, 13),
+          +bStr.slice(14, 16),
+          +bStr.slice(17, 19),
+        );
+
+        const aStr = a.deck.updateDt;
+        const aa = new Date(
+          +aStr.slice(0, 4),
+          +aStr.slice(5, 7),
+          +aStr.slice(8, 10),
+          +aStr.slice(11, 13),
+          +aStr.slice(14, 16),
+          +aStr.slice(17, 19),
+        );
+
+        console.log(bb, aa, bb - aa);
+
+        return bb - aa;
+      });
+    } else {
+      // sorted = state.chapters[d0][d1].child.sort(
+      //   (a, b) => {
+      //     const bb = +b.deck.like_count;
+      //     const aa = +a.deck.like_count;
+      //     console.log(bb, aa, bb - aa);
+
+      //     return bb - aa;
+      //   }, // sort descendingly
+      // );
+      sorted = state.originalChapters.slice()[d0][d1].child;
+    }
+
+    // console.log(sorted);
+    state.chapters[d0][d1].child = sorted;
+
+    state.isUserChaptersSorted = !state.isUserChaptersSorted;
+  }),
+
+  sortUserChapters: thunk((actions, payload, { getState, getStoreState }) => {
+    const { coords } = getStoreState().swiper;
+    const { d0, d1, d2 } = coords.val;
+    actions.sortUserChapter_internal({ d0, d1, d2 });
+  }),
+
+  sortNext: action((state, payload) => {
+    if (state.isNextSorted) {
+    } else {
+    }
+    state.isNextSorted = !state.isNextSorted;
+  }),
 };
 
 export const selectors = {
@@ -266,6 +340,9 @@ export const selectors = {
   chapters: state => state.data.chapters,
 
   commentsUpdated: state => state.data.commentsUpdated,
+
+  isUserChaptersSorted: state => state.data.isUserChaptersSorted,
+  isNextSorted: state => state.data.isNextSorted,
 
   isLoaded: state => state.data.isLoaded.val,
   hasNew: state => state.data.hasNew.val,
@@ -294,4 +371,7 @@ export const actions = {
   fetchOneChapter: actions => actions.data.fetchOneChapter,
   fetchOneUserChapter: actions => actions.data.fetchOneUserChapter,
   fetchOneNext: actions => actions.data.fetchOneNext,
+
+  sortUserChapters: actions => actions.data.sortUserChapters,
+  sortNext: actions => actions.data.sortNext,
 };

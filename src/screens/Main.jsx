@@ -10,12 +10,30 @@ import { useAutoLogin } from '../hooks';
 import EventModal from '#components/modals/EventModal';
 import Reader from './reader/Reader';
 import CardsRenderer from './CardsRenderer';
-import { useStoreState } from 'easy-peasy';
-import { selAuth } from '../store/selectors';
+import { useStoreActions, useStoreState } from 'easy-peasy';
+import { selAuth, selSwiper } from '../store/selectors';
+import { actData } from '../store/actions';
+import { DEPTH_NAME } from '../store/reducers/swiper.depth';
+
+const initStates = () => {
+  // selectors
+  const userId = useStoreState(selAuth.userId);
+  const depth = useStoreState(selSwiper.depth);
+
+  // acitons
+  const sortUserChapters = useStoreActions(actData.sortUserChapters);
+  const sortNext = useStoreActions(actData.sortNext);
+  return {
+    userId,
+    depth,
+    sortUserChapters,
+    sortNext,
+  };
+};
 
 const Main = () => {
   const nav = useNavigation();
-  const userId = useStoreState(selAuth.userId);
+  const { userId, depth, sortUserChapters, sortNext } = initStates();
 
   useAutoLogin();
 
@@ -25,16 +43,25 @@ const Main = () => {
   };
 
   const onPressSortIcon = () => {
-    console.log('정렬 아이콘');
-    // TODO: 후보 챕터들을 조회수 별로 정렬
+    switch (depth) {
+      case DEPTH_NAME.USER_CHAPTER:
+        sortUserChapters();
+        break;
+
+      case DEPTH_NAME.NEXT:
+        sortNext();
+        break;
+
+      default:
+        console.log("You can't sort due to the depth!");
+        break;
+    }
   };
 
-  const onPressMenuIcon = () => {
-    nav.openDrawer();
-  };
+  const onPressMenuIcon = () => nav.openDrawer();
 
   return (
-    <View style={s.root}>
+    <View>
       <Logo onPress={returnToMain} />
       <Sort onPress={onPressSortIcon} />
       <Menu onPress={onPressMenuIcon} />
@@ -49,9 +76,3 @@ const Main = () => {
 };
 
 export default Main;
-
-const s = StyleSheet.create({
-  root: {
-    // flex: 1,
-  },
-});
