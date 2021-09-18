@@ -61,12 +61,12 @@ export const useCategoriesFetch = () => {
     (async function fetchCategories() {
       if (!hasNew.d0) return;
 
-      await delay(1);
+      // await delay(1);         
 
       console.log('start fetching CATEGORY');
       startLoading('d0');
 
-      resetCategory();
+      // resetCategory();
 
       const { data } = await ChapterService.GET_getCategory(userId);
 

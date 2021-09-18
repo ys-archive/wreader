@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   View,
   SafeAreaView,
@@ -37,6 +37,7 @@ import { DEPTH_NAME } from '../../../store/reducers/swiper.depth';
 const initStates = () => {
   const [contents, setContents] = useState('');
 
+  // selectors
   const userId = useStoreState(selAuth.userId);
 
   const hasNew = useStoreState(selData.hasNew);
@@ -44,7 +45,12 @@ const initStates = () => {
 
   const profileUrl = useStoreState(selImage.profile);
 
+  // actions
   const updateHasNew = useStoreActions(actData.updateHasNew);
+  const fetchOneChapter = useStoreActions(actData.fetchOneChapter);
+
+  const commentsUpdated = useStoreState(selData.commentsUpdated);
+  const updateComments = useStoreActions(actData.updateComments);
 
   return {
     userId,
@@ -54,6 +60,9 @@ const initStates = () => {
     contents,
     setContents,
     updateHasNew,
+    fetchOneChapter,
+    commentsUpdated,
+    updateComments,
   };
 };
 
@@ -67,11 +76,14 @@ const Comments = ({ route }) => {
     depth,
     setContents,
     updateHasNew,
+    fetchOneChapter,
+    commentsUpdated,
+    updateComments,
   } = initStates();
 
   const { chapterId } = route.params;
 
-  const data = useCommentsLogic(chapterId, hasNew);
+  const data = useCommentsLogic(chapterId, commentsUpdated);
 
   if (!data) {
     return (
@@ -94,37 +106,18 @@ const Comments = ({ route }) => {
       // 성공했으니깐 다시 fetch      console.log('depth during COMMENT ===> ', depth);
       switch (depth) {
         case DEPTH_NAME.CHAPTER:
-          updateHasNew({ d0: true });
-          await delay(2);
-          updateHasNew({ d1: true });
+          fetchOneChapter();
           break;
 
         case DEPTH_NAME.USER_CHAPTER:
-          // updateHasNew({ d0: true });
-
-          // setTimeout(() => {
-          //   updateHasNew({ d1: true });
-
-          //   setTimeout(() => {
-          //     updateHasNew({ d2: true });
-          //   }, 1000);
-          // }, 2000);
+          updateHasNew({ d2: true });
           break;
 
         case DEPTH_NAME.NEXT:
-          // setTimeout(() => {
-          //   updateHasNew({ d1: true });
-
-          //   setTimeout(() => {
-          //     updateHasNew({ d2: true });
-
-          //     setTimeout(() => {
-          //       updateHasNew({ d3: true });
-          //     }, 1000);
-          //   }, 1000);
-          // }, 2000);
+          updateHasNew({ d3: true });
           break;
       }
+      updateComments();
     }
 
     // 새 댓글 입력 후 입력창 비우기

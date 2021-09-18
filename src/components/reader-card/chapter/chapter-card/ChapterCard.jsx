@@ -64,18 +64,18 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
     isLike,
   } = data;
 
-  // console.log('\n');
-  // console.log(
-  //   '----------------------------------------------------------------------',
-  // );
-  // console.log('userId: ', userId);
-  // console.log(data);
-  // console.log(
-  //   '----------------------------------------------------------------------',
-  // );
-  // console.log('\n');
+  console.log('\n');
+  console.log(
+    '----------------------------------------------------------------------',
+  );
+  console.log('userId: ', userId);
+  console.log(data);
+  console.log(
+    '----------------------------------------------------------------------',
+  );
+  console.log('\n');
 
-  const onPressLike = useCallback(async () => {
+  const onPressLike = async () => {
     if (!isLoggedIn) {
       Alert('Need Login to write a new card');
       return;
@@ -105,7 +105,7 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
         updateHasNew({ d3: true });
         break;
     }
-  }, [isLoggedIn, userId, chapterId]);
+  };
 
   const onPressReply = () => {
     if (!isLoggedIn) {
@@ -142,7 +142,7 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
           position: 'absolute',
           right: wp('4%'),
           bottom: hp('4.7%'),
-          zIndex: 15
+          zIndex: 15,
         }}
         onPress={goWriteCardDirectly}
       />
@@ -257,7 +257,7 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
   );
 };
 
-export default React.memo(ChapterCard);
+export default ChapterCard;
 
 const s = StyleSheet.create({
   root: {

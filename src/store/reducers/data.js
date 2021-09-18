@@ -5,6 +5,11 @@ import * as _ from 'lodash';
 export default {
   categories: [],
   chapters: [],
+  commentsUpdated: false,
+
+  updateComments: action(state => {
+    state.commentsUpdated = !state.commentsUpdated;
+  }),
 
   isLoaded: {
     default: {
@@ -180,20 +185,59 @@ export default {
       findRecursively(chapter);
     });
   }),
+
+  addOneChapter: action((state, payload) => {
+    const { d0, d1, card } = payload;
+    state.chapters[d0][d1].deck = card;
+  }),
+
+  fetchOneChapter: thunk(
+    async (actions, payload, { getState, getStoreState }) => {
+      const { userId } = getStoreState().auth;
+      const { coords } = getStoreState().swiper;
+
+      const { data } = await ChapterService.GET_getChapter(0, userId);
+
+      if (data.item.length === 0) return;
+
+      const { d0, d1 } = coords.val;
+
+      // console.log(data.item);
+      // console.log('coords: ', coords);
+      const filteredData = data.item.filter(i => {
+        // console.log(+i.categoryId - 5);
+        return +i.categoryId - 5 === d0;
+      });
+      // console.log(filteredData);
+
+      actions.addOneChapter({ d0, d1, card: filteredData[d1] });
+    },
+  ),
+
+  fetchOneUserChapter: thunk(
+    async (actions, payload, { getState, getStoreState }) => {},
+  ),
+
+  fetchOneNext: thunk(
+    async (actions, payload, { getState, getStoreState }) => {},
+  ),
 };
 
 export const selectors = {
   categories: state => state.data.categories,
   chapters: state => state.data.chapters,
 
+  commentsUpdated: state => state.data.commentsUpdated,
+
   isLoaded: state => state.data.isLoaded.val,
   hasNew: state => state.data.hasNew.val,
 
   isUpdatingAll: state => state.data.isUpdatingAll,
-  // hasLike: state => state.data.hasLike.val,
 };
 
 export const actions = {
+  updateComments: state => state.data.updateComments,
+
   reset: actions => actions.data.reset,
 
   resetCategory: actions => actions.data.resetCategory,
@@ -208,5 +252,8 @@ export const actions = {
   updateHasNew: actions => actions.data.hasNew.update,
 
   updateAll: actions => actions.data.setUpdateAll,
-  // updateHasLike: actions => actions.data.hasLike.update,
+
+  fetchOneChapter: actions => actions.data.fetchOneChapter,
+  fetchOneUserChapter: actions => actions.data.fetchOneUserChapter,
+  fetchOneNext: actions => actions.data.fetchOneNext,
 };

@@ -25,25 +25,25 @@ const FetchBeforeRender = () => {
 
   useEffect(() => {
     updateHasNew({ d0: true });
-    const timer = setTimeout(() => {
-      updateHasNew({ d1: true });
+    updateHasNew({ d1: true });
+    updateHasNew({ d2: true });
+    // const timer = setTimeout(() => {
 
-      setTimeout(() => {
-        updateHasNew({ d2: true });
-      }, 1000);
-    }, 3000);
+    //   setTimeout(() => {
+    //   }, 1000);
+    // }, 3000);
 
-    return () => {
-      if (timer) clearTimeout(timer);
-    };
+    // return () => {
+    //   if (timer) clearTimeout(timer);
+    // };
   }, []);
 
   useCategoriesFetch();
   useChaptersFetch();
   useUserChaptersFetch();
   useNextFetch();
- 
-  useFetchAll(); 
+
+  useFetchAll();
 };
 
 export default FetchBeforeRender;

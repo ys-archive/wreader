@@ -69,7 +69,7 @@ export const useChaptersFetch = () => {
       
       startLoading('d1');
 
-      resetChapter();
+      // resetChapter();
 
       // 챕터 데이터 정제 및 저장
       chapters = Object.values(categories)

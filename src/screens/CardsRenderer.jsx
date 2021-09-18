@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useStoreState } from 'easy-peasy';
 import { selData, selSwiper } from '../store/selectors';
@@ -44,21 +44,18 @@ const CardsRenderer = () => {
   const { d0, d1, d2, d3 } = coords;
   // console.log(`    coords---> d0:${d0} | d1:${d1} | d2:${d2} | d3:${d3}`);
 
-  const curCategory = categories[d0];
-  const curChapter = chapters[d0];
-
-  let CardJSX = undefined;
+  let CardJSX = null;
 
   switch (depth) {
     case 0:
-      CardJSX = <CategoryCard data={curCategory} />;
+      CardJSX = <CategoryCard data={categories[d0]} />;
       break;
 
     case 1:
       CardJSX = (
         <ChapterCard
-          data={curChapter[d1].deck}
-          categoryTitle={curCategory.title}
+          data={chapters[d0][d1].deck}
+          categoryTitle={categories[d0].title}
           order={d1}
         />
       );
@@ -67,8 +64,8 @@ const CardsRenderer = () => {
     case 2:
       CardJSX = (
         <ChapterCard
-          data={curChapter[d1].child[d2].deck}
-          categoryTitle={curCategory.title}
+          data={chapters[d0][d1].child[d2].deck}
+          categoryTitle={categories[d0].title}
           order={d1}
         />
       );
@@ -77,8 +74,8 @@ const CardsRenderer = () => {
     case 3:
       CardJSX = (
         <ChapterCard
-          data={curChapter[d1].child[d2].child[d3].deck}
-          categoryTitle={curCategory.title}
+          data={chapters[d0][d1].child[d2].child[d3].deck}
+          categoryTitle={categories[d0].title}
           order={d3 + 1}
         />
       );

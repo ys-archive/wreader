@@ -16,6 +16,9 @@ export default {
   fetchNextCardData: thunk(
     async (actions, payload, { getState, getStoreState }) => {
       const { userId } = getStoreState().auth;
+      
+      
+      
       const { data } = await ChapterService.GET_getChapter(
         prvChapterId,
         userId,
