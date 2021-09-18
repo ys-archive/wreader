@@ -41,16 +41,16 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
     isLike,
   } = data;
 
-  // console.log('\n');
-  // console.log(
-  //   '----------------------------------------------------------------------',
-  // );
+  console.log('\n');
+  console.log(
+    '----------------------------------------------------------------------',
+  );
   // console.log('userId: ', userId);
-  // console.log(data);
-  // console.log(
-  //   '----------------------------------------------------------------------',
-  // );
-  // console.log('\n');
+  console.log(data);
+  console.log(
+    '----------------------------------------------------------------------',
+  );
+  console.log('\n');
 
   const onPressLike = useChapterCardLike(chapterId, isLike, likeCount);
   const onPressReply = useChapterCardComments(chapterId);

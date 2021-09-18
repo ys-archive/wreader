@@ -56,7 +56,7 @@ class ChapterService {
 
   static async DELETE_deleteChapter(chapterId, userId) {
     const { status } = await axios.instance
-      .delete(`chapter/${chapterId}/like`, { userId })
+      .delete(`chapter/${chapterId}/like`, { data: { userId } })
       .catch(console.error);
     return status;
   }
@@ -73,7 +73,9 @@ class ChapterService {
   static async DELETE_unlikeChapter(chapterId, userId) {
     const { status } = await axios.instance
       .delete(`chapter/${chapterId}/like`, {
-        userId,
+        data: {
+          userId,
+        },
       })
       .catch(console.error);
 

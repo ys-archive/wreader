@@ -1,8 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
-import * as ScreenNames from '../../../../navigators/ScreenNames';
+import * as ScreenNames from '../../../../../navigators/ScreenNames';
 
 import { useStoreState } from 'easy-peasy';
-import { selAuth } from '../../../../store/selectors';
+import { selAuth } from '../../../../../store/selectors';
 
 export const useChapterCardComments = chapterId => {
   const isLoggedIn = useStoreState(selAuth.isLoggedIn);

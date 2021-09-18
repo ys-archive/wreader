@@ -1,9 +1,9 @@
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import { selAuth, selImage, selSwiper } from '../../../../store/selectors';
-import { actData } from '../../../../store/actions';
+import { selAuth, selImage, selSwiper } from '../../../../../store/selectors';
+import { actData } from '../../../../../store/actions';
 
-import { ChapterService } from '../../../../services';
-import { DEPTH_NAME } from '../../../../store/reducers/swiper.depth';
+import { ChapterService } from '../../../../../services';
+import { DEPTH_NAME } from '../../../../../store/reducers/swiper.depth';
 
 const initStates = () => {
   // selectors
@@ -15,9 +15,9 @@ const initStates = () => {
   const coords = useStoreState(selSwiper.coords);
 
   // actions
-  const updateHasNew = useStoreActions(actData.updateHasNew);
   const fetchOneChapter = useStoreActions(actData.fetchOneChapter);
   const fetchOneUserChapter = useStoreActions(actData.fetchOneUserChapter);
+  const fetchOneNext = useStoreActions(actData.fetchOneNext);
 
   return {
     isLoggedIn,
@@ -25,9 +25,9 @@ const initStates = () => {
     profile,
     depth,
     coords,
-    updateHasNew,
     fetchOneChapter,
     fetchOneUserChapter,
+    fetchOneNext,
   };
 };
 
@@ -36,9 +36,9 @@ export const useChapterCardLike = (chapterId, isLike, likeCount) => {
     isLoggedIn,
     userId,
     depth,
-    updateHasNew,
     fetchOneChapter,
     fetchOneUserChapter,
+    fetchOneNext,
   } = initStates();
 
   return async () => {
@@ -67,7 +67,7 @@ export const useChapterCardLike = (chapterId, isLike, likeCount) => {
         break;
 
       case DEPTH_NAME.NEXT:
-        updateHasNew({ d3: true });
+        fetchOneNext();
         break;
     }
   };
