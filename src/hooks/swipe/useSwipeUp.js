@@ -45,6 +45,7 @@ export const useSwipeUp = swipe => {
           swipe('up', () => {
             increaseCoords('d0');
             setMaxCoords({ d1: chapters });
+            updateHasNew({ d2: chapters });
           });
         };
 
@@ -87,7 +88,7 @@ export const useSwipeUp = swipe => {
           }
 
           swipe('up', () => {
-            increaseCoords('d2');            
+            increaseCoords('d2');
             updateHasNew({ d3: true });
             setMaxCoords({ d3: chapters });
           });
