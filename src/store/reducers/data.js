@@ -194,33 +194,71 @@ export default {
   fetchOneChapter: thunk(
     async (actions, payload, { getState, getStoreState }) => {
       const { userId } = getStoreState().auth;
-      const { coords } = getStoreState().swiper;
 
       const { data } = await ChapterService.GET_getChapter(0, userId);
 
       if (data.item.length === 0) return;
 
+      const { coords } = getStoreState().swiper;
       const { d0, d1 } = coords.val;
 
-      // console.log(data.item);
-      // console.log('coords: ', coords);
-      const filteredData = data.item.filter(i => {
-        // console.log(+i.categoryId - 5);
-        return +i.categoryId - 5 === d0;
-      });
-      // console.log(filteredData);
+      const filteredData = data.item.filter(i => +i.categoryId - 5 === d0);
 
       actions.addOneChapter({ d0, d1, card: filteredData[d1] });
     },
   ),
 
+  addOneUserChapter: action((state, payload) => {
+    const { d0, d1, d2, card } = payload;
+    state.chapters[d0][d1].child[d2].deck = card;
+  }),
+
   fetchOneUserChapter: thunk(
-    async (actions, payload, { getState, getStoreState }) => {},
+    async (actions, payload, { getState, getStoreState }) => {
+      const { userId } = getStoreState().auth;
+      const { coords } = getStoreState().swiper;
+      const { chapters } = getState();
+
+      const { d0, d1, d2 } = coords.val;
+      const { data } = await ChapterService.GET_getChapter(
+        chapters[d0][d1].deck.id,
+        userId,
+      );
+
+      if (data.item.length === 0) return;
+
+      const filteredData = data.item.filter(i => +i.categoryId - 5 === d0);
+
+      console.log('updated user card: ', filteredData[d2]);
+
+      actions.addOneUserChapter({ d0, d1, d2, card: filteredData[d2] });
+    },
   ),
 
-  fetchOneNext: thunk(
-    async (actions, payload, { getState, getStoreState }) => {},
-  ),
+  addOneNext: action((state, payload) => {
+    const { d0, d1, d2, d3, card } = payload;
+    state.chapters[d0][d1].child[d2].child[d3].deck = card;
+  }),
+
+  fetchOneNext: thunk(async (actions, payload, { getState, getStoreState }) => {
+    const { userId } = getStoreState().auth;
+    const { coords } = getStoreState().swiper;
+    const { chapters } = getState();
+
+    const { d0, d1, d2, d3 } = coords.val;
+    const { data } = await ChapterService.GET_getChapter(
+      chapters[d0][d1].child[d2].deck.id,
+      userId,
+    );
+
+    if (data.item.length === 0) return;
+
+    const filteredData = data.item.filter(i => +i.categoryId - 5 === d0);
+
+    console.log('updated next: ', filteredData[d3]);
+
+    actions.addOneNext({ d0, d1, d2, d3, card: filteredData[d3] });
+  }),
 };
 
 export const selectors = {

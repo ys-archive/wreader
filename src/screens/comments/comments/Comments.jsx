@@ -48,6 +48,8 @@ const initStates = () => {
   // actions
   const updateHasNew = useStoreActions(actData.updateHasNew);
   const fetchOneChapter = useStoreActions(actData.fetchOneChapter);
+  const fetchOneUserChapter = useStoreActions(actData.fetchOneUserChapter);
+  const fetchOneNext = useStoreActions(actData.fetchOneNext);
 
   const commentsUpdated = useStoreState(selData.commentsUpdated);
   const updateComments = useStoreActions(actData.updateComments);
@@ -61,6 +63,8 @@ const initStates = () => {
     setContents,
     updateHasNew,
     fetchOneChapter,
+    fetchOneUserChapter,
+    fetchOneNext,
     commentsUpdated,
     updateComments,
   };
@@ -77,6 +81,8 @@ const Comments = ({ route }) => {
     setContents,
     updateHasNew,
     fetchOneChapter,
+    fetchOneUserChapter,
+    fetchOneNext,
     commentsUpdated,
     updateComments,
   } = initStates();
@@ -110,11 +116,11 @@ const Comments = ({ route }) => {
           break;
 
         case DEPTH_NAME.USER_CHAPTER:
-          updateHasNew({ d2: true });
+          fetchOneUserChapter();
           break;
 
         case DEPTH_NAME.NEXT:
-          updateHasNew({ d3: true });
+          fetchOneNext();
           break;
       }
       updateComments();

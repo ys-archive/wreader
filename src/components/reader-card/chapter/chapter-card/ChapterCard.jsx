@@ -28,13 +28,18 @@ import * as ScreenNames from '../../../../navigators/ScreenNames';
 import { DEPTH_NAME } from '../../../../store/reducers/swiper.depth';
 
 const initStates = () => {
+  // selectors
   const isLoggedIn = useStoreState(selAuth.isLoggedIn);
   const userId = useStoreState(selAuth.userId);
   const profile = useStoreState(selImage.profile);
 
   const depth = useStoreState(selSwiper.depth);
   const coords = useStoreState(selSwiper.coords);
+
+  // actions
   const updateHasNew = useStoreActions(actData.updateHasNew);
+  const fetchOneChapter = useStoreActions(actData.fetchOneChapter);
+  const fetchOneUserChapter = useStoreActions(actData.fetchOneUserChapter);
 
   return {
     isLoggedIn,
@@ -43,13 +48,24 @@ const initStates = () => {
     depth,
     coords,
     updateHasNew,
+    fetchOneChapter,
+    fetchOneUserChapter,
   };
 };
 
 const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
   const nav = useNavigation();
-  const { isLoggedIn, userId, profile, depth, coords, updateHasNew } =
-    initStates();
+  const {
+    isLoggedIn,
+    userId,
+    profile,
+    depth,
+    coords,
+    updateHasNew,
+    fetchOneChapter,
+    fetchOneUserChapter,
+  } = initStates();
+
   const {
     id: chapterId, // 현재 챕터 Id
     categoryId,
@@ -64,16 +80,16 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
     isLike,
   } = data;
 
-  console.log('\n');
-  console.log(
-    '----------------------------------------------------------------------',
-  );
-  console.log('userId: ', userId);
-  console.log(data);
-  console.log(
-    '----------------------------------------------------------------------',
-  );
-  console.log('\n');
+  // console.log('\n');
+  // console.log(
+  //   '----------------------------------------------------------------------',
+  // );
+  // console.log('userId: ', userId);
+  // console.log(data);
+  // console.log(
+  //   '----------------------------------------------------------------------',
+  // );
+  // console.log('\n');
 
   const onPressLike = async () => {
     if (!isLoggedIn) {
@@ -93,12 +109,11 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
 
     switch (depth) {
       case DEPTH_NAME.CHAPTER:
-        updateHasNew({ d0: true });
-        updateHasNew({ d1: true });
+        fetchOneChapter();
         break;
 
       case DEPTH_NAME.USER_CHAPTER:
-        updateHasNew({ d2: true });
+        fetchOneUserChapter();
         break;
 
       case DEPTH_NAME.NEXT:
