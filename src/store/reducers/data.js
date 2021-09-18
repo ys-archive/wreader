@@ -274,7 +274,6 @@ export default {
   sortUserChapter_internal: action((state, payload) => {
     const { d0, d1, d2 } = payload;
     let sorted = undefined;
-    // console.log(state.chapters[d0][d1].child);
 
     if (!state.isUserChaptersSorted) {
       sorted = state.chapters[d0][d1].child.sort((a, b) => {
@@ -327,11 +326,49 @@ export default {
     actions.sortUserChapter_internal({ d0, d1, d2 });
   }),
 
-  sortNext: action((state, payload) => {
-    if (state.isNextSorted) {
+  sortNext_internal: action((state, payload) => {
+    const { d0, d1, d2, d3 } = payload;
+    let sorted = undefined;
+    // console.log();
+
+    if (!state.isNextSorted) {
+      sorted = state.chapters[d0][d1].child[d2].child.sort((a, b) => {
+        const bStr = b.deck.updateDt;
+        const bb = new Date(
+          +bStr.slice(0, 4),
+          +bStr.slice(5, 7),
+          +bStr.slice(8, 10),
+          +bStr.slice(11, 13),
+          +bStr.slice(14, 16),
+          +bStr.slice(17, 19),
+        );
+
+        const aStr = a.deck.updateDt;
+        const aa = new Date(
+          +aStr.slice(0, 4),
+          +aStr.slice(5, 7),
+          +aStr.slice(8, 10),
+          +aStr.slice(11, 13),
+          +aStr.slice(14, 16),
+          +aStr.slice(17, 19),
+        );
+
+        console.log(bb, aa, bb - aa);
+
+        return bb - aa;
+      });
     } else {
+      sorted = state.originalChapters.slice()[d0][d1].child[d2].child;
     }
+
+    state.chapters[d0][d1].child[d2].child = sorted;
+
     state.isNextSorted = !state.isNextSorted;
+  }),
+
+  sortNext: thunk((actions, payload, { getState, getStoreState }) => {
+    const { coords } = getStoreState().swiper;
+    actions.sortNext_internal(coords.val);
   }),
 };
 
