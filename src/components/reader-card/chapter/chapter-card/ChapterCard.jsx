@@ -6,6 +6,7 @@ import {
   ImageBackground,
   Image,
   TouchableWithoutFeedback,
+  Platform,
 } from 'react-native';
 import { Text, Button, TextInput } from '../../../';
 import { Like, Reply, AddStory } from '#components/icon';
@@ -265,7 +266,7 @@ const s = StyleSheet.create({
     marginTop: hp('4.2%'),
   },
   theEnd: {
-    fontSize: 18,
+    fontSize: Platform.OS === 'android' ? 18 : 16,
     color: colors.light.ivory3,
 
     position: 'absolute',
@@ -273,28 +274,28 @@ const s = StyleSheet.create({
     right: '4%',
   },
   previous: {
-    fontSize: 20,
+    fontSize: Platform.OS === 'android' ? 20 : 18,
     color: colors.light.ivory3,
 
     position: 'absolute',
     bottom: '15%',
-    left: '5%',
+    left: Platform.OS === 'android' ? '5%' : '2%',
   },
   next: {
-    fontSize: 20,
+    fontSize: Platform.OS === 'android' ? 20 : 18,
     color: colors.light.ivory3,
 
     position: 'absolute',
     bottom: '15%',
-    right: '5%',
+    right: Platform.OS === 'android' ? '5%' : '2%',
   },
   fullStory: {
-    fontSize: 20,
+    fontSize: Platform.OS === 'android' ? 20 : 18,
     color: colors.light.ivory3,
 
     position: 'absolute',
     bottom: '15%',
-    right: '5%',
+    right: Platform.OS === 'android' ? '5%' : '2%',
   },
 
   title: {
