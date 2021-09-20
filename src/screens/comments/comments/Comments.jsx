@@ -6,6 +6,7 @@ import {
   Image,
   ActivityIndicator,
 } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { StyleSheet, Text, TextInput, Button } from '#components';
 import { Cancel } from '#components/icon';
 import {
@@ -150,53 +151,52 @@ const Comments = ({ route }) => {
   };
 
   return (
-    <SafeAreaView style={s.root}>
-      {/* Title */}
-      <View style={s.topSection}>
-        <Text isBold style={s.title}>
-          COMMENTS
-        </Text>
-      </View>
-
-      {/* 뒤로 가기 */}
-      <Cancel
-        onPress={onCloseComment}
-        style={{ zIndex: 50, top: hp('5.9%'), right: wp('5.7%') }}
-        iconStyle={{ width: 12, height: 12 }}
-      />
-
-      {/* 댓글들 */}
-      <FlatList
-        style={s.contentsSection}
-        data={data.item}
-        renderItem={renderComments}
-        keyExtractor={item => item.id.toString()}
-      />
-
-      {/* 새 댓글 섹션 */}
-      <View style={s.writeCommentSection}>
-        <Image
-          style={{
-            width: 40,
-            height: 40,
-            borderRadius: 100,
-          }}
-          source={profileUrl ? { uri: profileUrl } : dummyProfile}
+    <KeyboardAwareScrollView
+      contentContainerStyle={s.root}
+    >
+      <View style={s.root}>
+        {/* Title */}
+        <View style={s.topSection}>
+          <Text isBold style={s.title}>
+            COMMENTS
+          </Text>
+        </View>
+        {/* 뒤로 가기 */}
+        <Cancel
+          onPress={onCloseComment}
+          style={{ zIndex: 50, top: hp('5.9%'), right: wp('5.7%') }}
+          iconStyle={{ width: 12, height: 12 }}
         />
-
-        <TextInput
-          style={s.replyTextInput}
-          value={contents}
-          onChangeText={setContents}
-          placeholder="Add a comment ..."
-          placeholderTextColor={colors.light.text2}
+        {/* 댓글들 */}
+        <FlatList
+          style={s.contentsSection}
+          data={data.item}
+          renderItem={renderComments}
+          keyExtractor={item => item.id.toString()}
         />
-
-        <Button isBold textStyle={s.replyPostText} onPress={postNewComment}>
-          Post
-        </Button>
+        {/* 새 댓글 섹션 */}
+        <View style={s.writeCommentSection}>
+          <Image
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 100,
+            }}
+            source={profileUrl ? { uri: profileUrl } : dummyProfile}
+          />
+          <TextInput
+            style={s.replyTextInput}
+            value={contents}
+            onChangeText={setContents}
+            placeholder="Add a comment ..."
+            placeholderTextColor={colors.light.text2}
+          />
+          <Button isBold textStyle={s.replyPostText} onPress={postNewComment}>
+            Post
+          </Button>
+        </View>
       </View>
-    </SafeAreaView>
+    </KeyboardAwareScrollView>
   );
 };
 
@@ -222,7 +222,7 @@ const s = StyleSheet.create({
     flex: 0,
     marginTop: hp('5.7%'),
     marginHorizontal: '9.7%',
-    height: hp('90%'),
+    maxHeight: hp('81%'),
   },
   writeCommentSection: {
     flexDirection: 'row',

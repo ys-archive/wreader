@@ -196,8 +196,14 @@ export default {
 
   addOneChapter: action((state, payload) => {
     const { d0, d1, card } = payload;
-    state.chapters[d0][d1].deck = card;
-    state.originalChapters[d0][d1].deck = card;
+    // console.log(card);
+    // state.chapters[d0][d1].deck = card;
+    // state.originalChapters[d0][d1].deck = card;
+
+    card.forEach((c, i) => {
+      state.chapters[d0][i].deck = c;
+      state.originalChapters[d0][i].deck = c;
+    });
   }),
 
   fetchOneChapter: thunk(
@@ -213,14 +219,21 @@ export default {
 
       const filteredData = data.item.filter(i => +i.categoryId - 5 === d0);
 
-      actions.addOneChapter({ d0, d1, card: filteredData[d1] });
+      // actions.addOneChapter({ d0, d1, card: filteredData[d1] });
+      actions.addOneChapter({ d0, d1, card: filteredData });
     },
   ),
 
   addOneUserChapter: action((state, payload) => {
     const { d0, d1, d2, card } = payload;
-    state.chapters[d0][d1].child[d2].deck = card;
-    state.originalChapters[d0][d1].child[d2].deck = card;
+
+    // state.chapters[d0][d1].child[d2].deck = card;
+    // state.originalChapters[d0][d1].child[d2].deck = card;
+    card.forEach((c, i) => {
+      // console.log(c);
+      state.chapters[d0][d1].child[i].deck = c;
+      state.originalChapters[d0][d1].child[i].deck = c;
+    });
   }),
 
   fetchOneUserChapter: thunk(
@@ -239,16 +252,22 @@ export default {
 
       const filteredData = data.item.filter(i => +i.categoryId - 5 === d0);
 
-      console.log('updated user card: ', filteredData[d2]);
+      console.log('updated user card: ', filteredData);
 
-      actions.addOneUserChapter({ d0, d1, d2, card: filteredData[d2] });
+      // actions.addOneUserChapter({ d0, d1, d2, card: filteredData[d2] });
+      actions.addOneUserChapter({ d0, d1, d2, card: filteredData });
     },
   ),
 
   addOneNext: action((state, payload) => {
     const { d0, d1, d2, d3, card } = payload;
-    state.chapters[d0][d1].child[d2].child[d3].deck = card;
-    state.originalChapters[d0][d1].child[d2].child[d3].deck = card;
+
+    // state.chapters[d0][d1].child[d2].child[d3].deck = card;
+    // state.originalChapters[d0][d1].child[d2].child[d3].deck = card;
+    card.forEach((c, i) => {
+      state.chapters[d0][d1].child[d2].child[i].deck = c;
+      state.originalChapters[d0][d1].child[d2].child[i].deck = c;
+    });
   }),
 
   fetchOneNext: thunk(async (actions, payload, { getState, getStoreState }) => {
@@ -266,9 +285,9 @@ export default {
 
     const filteredData = data.item.filter(i => +i.categoryId - 5 === d0);
 
-    console.log('updated next: ', filteredData[d3]);
+    console.log('updated next: ', filteredData);
 
-    actions.addOneNext({ d0, d1, d2, d3, card: filteredData[d3] });
+    actions.addOneNext({ d0, d1, d2, d3, card: filteredData });
   }),
 
   sortUserChapter_internal: action((state, payload) => {

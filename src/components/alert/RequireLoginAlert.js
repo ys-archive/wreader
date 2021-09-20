@@ -1,7 +1,7 @@
 import { Alert } from 'react-native';
 
 export const RequireLoginAlert = (
-  title = 'Need to login',
+  title = 'need to login',
   closeLabel = 'close',
   onClose = undefined,
 ) =>

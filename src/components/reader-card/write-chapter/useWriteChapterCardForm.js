@@ -9,13 +9,10 @@ import { actImage } from '../../../store/actions';
 import { ChapterService } from '../../../services';
 
 const initialValues = {
-  // title: '',
   sentence: '',
 };
 
 const validationSchema = Yup.object({
-  // title: Yup.string().required('You have to input a title'),
-
   sentence: Yup.string()
     .min(4)
     .required('Min is 4')
@@ -30,7 +27,7 @@ export const useWriteChapterCardForm = (
   afterFormSubmitted,
 ) => {
   const cardImageUrl = useStoreState(selImage.card);
-  const resetCard = useStoreActions(actImage.resetCard);
+  // const resetCard = useStoreActions(actImage.resetCard);
 
   const onSubmit = async values => {
     const { sentence } = values;
@@ -50,15 +47,12 @@ export const useWriteChapterCardForm = (
     } else {
       Alert('Writing chapter fails');
     }
-    resetCard();
+    // resetCard();
   };
 
-  const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
-    useFormik({
-      initialValues,
-      validationSchema,
-      onSubmit,
-    });
-
-  return { handleChange, handleBlur, handleSubmit, values, errors, touched };
+  return useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit,
+  });
 };
