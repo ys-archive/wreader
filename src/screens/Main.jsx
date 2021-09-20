@@ -12,7 +12,7 @@ import Reader from './reader/Reader';
 import CardsRenderer from './CardsRenderer';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { selAuth, selSwiper } from '../store/selectors';
-import { actData } from '../store/actions';
+import { actData, actSwiper } from '../store/actions';
 import { DEPTH_NAME } from '../store/reducers/swiper.depth';
 
 const initStates = () => {
@@ -23,23 +23,32 @@ const initStates = () => {
   // acitons
   const sortUserChapters = useStoreActions(actData.sortUserChapters);
   const sortNext = useStoreActions(actData.sortNext);
+
+  const setDepth = useStoreActions(actSwiper.setDepth);
+  const setCoords = useStoreActions(actSwiper.setCoords);
+
   return {
     userId,
     depth,
     sortUserChapters,
     sortNext,
+    setDepth,
+    setCoords,
   };
 };
 
 const Main = () => {
   const nav = useNavigation();
-  const { userId, depth, sortUserChapters, sortNext } = initStates();
+  const { userId, depth, sortUserChapters, sortNext, setDepth, setCoords } =
+    initStates();
 
   useAutoLogin();
 
   const returnToMain = () => {
     console.log('로고 아이콘');
     // todo: depth -> 0, d0 -> 0, d1 -> 0, d2 -> 0, d3 -> 0 으로 초기화 이동
+    setDepth(0);
+    setCoords({ d0: 0, d1: 0, d2: 0, d3: 0 });
   };
 
   const onPressSortIcon = () => {

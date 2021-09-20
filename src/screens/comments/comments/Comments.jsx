@@ -110,7 +110,8 @@ const Comments = ({ route }) => {
     console.log('comment fetch result: ', status);
 
     if (status === 200) {
-      // 성공했으니깐 다시 fetch      console.log('depth during COMMENT ===> ', depth);
+      // 성공했으니깐 다시 fetch
+      // console.log('depth during COMMENT ===> ', depth);
       switch (depth) {
         case DEPTH_NAME.CHAPTER:
           fetchOneChapter();
