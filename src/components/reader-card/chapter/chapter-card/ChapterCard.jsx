@@ -23,10 +23,22 @@ import { selImage, selSwiper } from '../../../../store/selectors';
 import { useChapterCardLike } from './chapter-card.module/useChapterCardLike';
 import { useChapterCardComments } from './chapter-card.module/useChapterCardComments';
 import { useChapterCard_GoWritingCardDirectly } from './chapter-card.module/useChapterCard_GoWritingCardDirectly';
+import { DEPTH_NAME } from '../../../../store/reducers/swiper.depth';
 
-const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
+const initStates = () => {
   const profile = useStoreState(selImage.profile);
   const depth = useStoreState(selSwiper.depth);
+  const maxCoords = useStoreState(selSwiper.maxCoords);
+
+  return {
+    profile,
+    depth,
+    maxCoords,
+  };
+};
+
+const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
+  const { profile, depth, maxCoords } = initStates();
 
   const {
     id: chapterId, // 현재 챕터 Id
@@ -68,6 +80,20 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
       onPress={goWriteCardDirectly}
     />
   );
+
+  // const theEndLabel = depth === DEPTH_NAME.CHAPTER && (
+  //   <Text isBold style={s.theEnd}>
+  //     THE END
+  //   </Text>
+  // );
+
+  console.log(order, maxCoords.d1);
+  const theEndLabel = depth === DEPTH_NAME.CHAPTER &&
+    order + 1 === maxCoords.d1 && (
+      <Text isBold style={s.theEnd}>
+        THE END
+      </Text>
+    );
 
   return (
     <View style={s.root}>
@@ -111,6 +137,8 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
             borderRadius: StyleDefine.borderRadiusInside,
           }}
         >
+          {theEndLabel}
+
           {/* 챕터 제목 */}
           <View style={s.titleSection}>
             <Text isBold style={s.title}>
@@ -211,6 +239,14 @@ const s = StyleSheet.create({
   titleSection: {
     marginLeft: wp('5.5%'),
     marginTop: hp('4.2%'),
+  },
+  theEnd: {
+    fontSize: 18,
+    color: colors.light.ivory3,
+
+    position: 'absolute',
+    top: '2%',
+    right: '4%',
   },
   title: {
     fontSize: 22,
