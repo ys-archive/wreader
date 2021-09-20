@@ -261,8 +261,13 @@ export default {
 
   addOneNext: action((state, payload) => {
     const { d0, d1, d2, d3, card } = payload;
-    state.chapters[d0][d1].child[d2].child[d3].deck = card;
-    state.originalChapters[d0][d1].child[d2].child[d3].deck = card;
+
+    // state.chapters[d0][d1].child[d2].child[d3].deck = card;
+    // state.originalChapters[d0][d1].child[d2].child[d3].deck = card;
+    card.forEach((c, i) => {
+      state.chapters[d0][d1].child[d2].child[i].deck = c;
+      state.originalChapters[d0][d1].child[d2].child[i].deck = c;
+    });
   }),
 
   fetchOneNext: thunk(async (actions, payload, { getState, getStoreState }) => {
@@ -280,9 +285,9 @@ export default {
 
     const filteredData = data.item.filter(i => +i.categoryId - 5 === d0);
 
-    console.log('updated next: ', filteredData[d3]);
+    console.log('updated next: ', filteredData);
 
-    actions.addOneNext({ d0, d1, d2, d3, card: filteredData[d3] });
+    actions.addOneNext({ d0, d1, d2, d3, card: filteredData });
   }),
 
   sortUserChapter_internal: action((state, payload) => {
