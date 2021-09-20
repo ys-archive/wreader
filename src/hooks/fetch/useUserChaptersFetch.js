@@ -71,14 +71,18 @@ export const useUserChaptersFetch = () => {
       if (!hasNew.d2) return;
       if (!chapters || chapters.length === 0) return;
 
-      await delay(1);
-      
+      // await delay(1);
+
       console.log('fetching USER CHAPTERS');
 
       startLoading('d2');
 
-      console.log(coords);
-      
+      // console.log(coords);
+
+      if (coords.d0 >= 2) return;
+
+      // if (chapters[coords.d0][coords.d1]) return;
+
       const target = chapters[coords.d0][coords.d1].deck;
 
       const { data } = await ChapterService.GET_getChapter(+target.id, userId);

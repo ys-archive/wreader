@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
+import { Alert } from '../../../../alert';
 import * as ScreenNames from '../../../../../navigators/ScreenNames';
 
 import { useStoreState } from 'easy-peasy';

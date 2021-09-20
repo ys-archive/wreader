@@ -45,7 +45,9 @@ export const useSwipeUp = swipe => {
           swipe('up', () => {
             increaseCoords('d0');
             setMaxCoords({ d1: chapters });
-            updateHasNew({ d2: chapters });
+            // todo: ㅇㅣㅁ시코드
+            if (coords.d0 < 2)
+              updateHasNew({ d2: chapters });
           });
         };
 

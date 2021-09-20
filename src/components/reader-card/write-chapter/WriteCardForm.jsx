@@ -60,6 +60,7 @@ const WriteCardForm = ({ chapterId, categoryId, depth, children }) => {
           placeholder="Write a story for this chapter..."
           placeholderTextColor="rgba(0, 0, 0, 0.2)"
         />
+        <RenderError touched={touched.sentence} errors={errors.sentence} />
       </View>
 
       <View style={s.bottomSection}>

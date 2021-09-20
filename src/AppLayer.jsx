@@ -7,6 +7,8 @@ import { loadFontsAsync } from './constants/fonts';
 import { ReduxProvider } from './store';
 import { NavigationProvider } from './navigators';
 import { enableScreens } from 'react-native-screens';
+import { delay } from './utils';
+
 enableScreens(true);
 
 // import './Setup';
@@ -20,10 +22,15 @@ export default () => {
   if (!isLoadingDone) {
     return (
       <AppLoading
-        startAsync={() => {
-          loadFontsAsync();
-          SplashScreen.preventAutoHideAsync();
-          setTimeout(SplashScreen.hideAsync, SplashDelay);
+        startAsync={async () => {
+          await loadFontsAsync();
+          await SplashScreen.preventAutoHideAsync();
+
+          // await delay(SplashDelay);
+
+          await SplashScreen.hideAsync();
+          // setTimeout(async () => {
+          // }, SplashDelay);
         }}
         onFinish={() => {
           setTimeout(() => setLoadingDone(true), SplashDelay);

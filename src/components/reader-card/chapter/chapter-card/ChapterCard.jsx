@@ -18,7 +18,7 @@ import { colors, StyleDefine } from '../../../../constants';
 import { makeCategoryBGImagePath, dummyProfile } from '#constants/images';
 
 import { useStoreState } from 'easy-peasy';
-import { selImage } from '../../../../store/selectors';
+import { selImage, selSwiper } from '../../../../store/selectors';
 
 import { useChapterCardLike } from './chapter-card.module/useChapterCardLike';
 import { useChapterCardComments } from './chapter-card.module/useChapterCardComments';
@@ -26,6 +26,7 @@ import { useChapterCard_GoWritingCardDirectly } from './chapter-card.module/useC
 
 const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
   const profile = useStoreState(selImage.profile);
+  const depth = useStoreState(selSwiper.depth);
 
   const {
     id: chapterId, // 현재 챕터 Id
@@ -55,21 +56,26 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
   const onPressLike = useChapterCardLike(chapterId, isLike, likeCount);
   const onPressReply = useChapterCardComments(chapterId);
   const goWriteCardDirectly = useChapterCard_GoWritingCardDirectly(
+    categoryTitle,
     chapterId,
     categoryId,
   );
 
+  const AddStoryJSX = (depth === 1 || depth === 2) && (
+    <AddStory
+      style={{
+        position: 'absolute',
+        right: wp('4%'),
+        bottom: hp('4.7%'),
+        zIndex: 15,
+      }}
+      onPress={goWriteCardDirectly}
+    />
+  );
+
   return (
     <View style={s.root}>
-      <AddStory
-        style={{
-          position: 'absolute',
-          right: wp('4%'),
-          bottom: hp('4.7%'),
-          zIndex: 15,
-        }}
-        onPress={goWriteCardDirectly}
-      />
+      {AddStoryJSX}
 
       <ImageBackground
         style={{
