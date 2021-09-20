@@ -55,13 +55,9 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
 
   const onPressLike = useChapterCardLike(chapterId, isLike, likeCount);
   const onPressReply = useChapterCardComments(chapterId);
-  const goWriteCardDirectly = useChapterCard_GoWritingCardDirectly(
-    categoryTitle,
-    chapterId,
-    categoryId,
-  );
+  const goWriteCardDirectly = useChapterCard_GoWritingCardDirectly();
 
-  const AddStoryJSX = (depth === 1 || depth === 2) && (
+  const AddStoryJSX = (depth === 1 || depth === 2 || depth === 3) && (
     <AddStory
       style={{
         position: 'absolute',

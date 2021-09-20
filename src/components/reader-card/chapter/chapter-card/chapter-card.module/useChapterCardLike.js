@@ -16,7 +16,6 @@ const initStates = () => {
 
   // actions
   const fetchOneChapter = useStoreActions(actData.fetchOneChapter);
-  const updateHasNew = useStoreActions(actData.updateHasNew);
   const fetchOneUserChapter = useStoreActions(actData.fetchOneUserChapter);
   const fetchOneNext = useStoreActions(actData.fetchOneNext);
 
@@ -27,7 +26,6 @@ const initStates = () => {
     depth,
     coords,
     fetchOneChapter,
-    updateHasNew,
     fetchOneUserChapter,
     fetchOneNext,
   };
@@ -39,7 +37,6 @@ export const useChapterCardLike = (chapterId, isLike, likeCount) => {
     userId,
     depth,
     fetchOneChapter,
-    updateHasNew,
     fetchOneUserChapter,
     fetchOneNext,
   } = initStates();
@@ -63,10 +60,6 @@ export const useChapterCardLike = (chapterId, isLike, likeCount) => {
     switch (depth) {
       case DEPTH_NAME.CHAPTER:
         fetchOneChapter();
-        // updateHasNew({ d0: true });
-        // setTimeout(() => {
-        //   updateHasNew({ d1: true });
-        // }, 500);  
         break;
 
       case DEPTH_NAME.USER_CHAPTER:
