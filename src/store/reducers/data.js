@@ -196,8 +196,15 @@ export default {
 
   addOneChapter: action((state, payload) => {
     const { d0, d1, card } = payload;
-    state.chapters[d0][d1].deck = card;
-    state.originalChapters[d0][d1].deck = card;
+    // console.log(card);
+    // state.chapters[d0][d1].deck = card;
+    // state.originalChapters[d0][d1].deck = card;
+
+    card.forEach((c, i) => {
+      console.log(c);
+      state.chapters[d0][i].deck = c;
+      state.originalChapters[d0][i].deck = c;
+    })
   }),
 
   fetchOneChapter: thunk(
@@ -213,7 +220,8 @@ export default {
 
       const filteredData = data.item.filter(i => +i.categoryId - 5 === d0);
 
-      actions.addOneChapter({ d0, d1, card: filteredData[d1] });
+      // actions.addOneChapter({ d0, d1, card: filteredData[d1] });
+      actions.addOneChapter({ d0, d1, card: filteredData });
     },
   ),
 
