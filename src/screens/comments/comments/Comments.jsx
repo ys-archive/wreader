@@ -151,9 +151,7 @@ const Comments = ({ route }) => {
   };
 
   return (
-    <KeyboardAwareScrollView
-      contentContainerStyle={s.root}
-    >
+    <KeyboardAwareScrollView contentContainerStyle={s.root} nestedScrollEnabled>
       <View style={s.root}>
         {/* Title */}
         <View style={s.topSection}>
@@ -161,19 +159,23 @@ const Comments = ({ route }) => {
             COMMENTS
           </Text>
         </View>
+
         {/* 뒤로 가기 */}
         <Cancel
           onPress={onCloseComment}
           style={{ zIndex: 50, top: hp('5.9%'), right: wp('5.7%') }}
           iconStyle={{ width: 12, height: 12 }}
         />
+
         {/* 댓글들 */}
         <FlatList
           style={s.contentsSection}
           data={data.item}
           renderItem={renderComments}
           keyExtractor={item => item.id.toString()}
+          nestedScrollEnabled
         />
+
         {/* 새 댓글 섹션 */}
         <View style={s.writeCommentSection}>
           <Image
@@ -184,6 +186,7 @@ const Comments = ({ route }) => {
             }}
             source={profileUrl ? { uri: profileUrl } : dummyProfile}
           />
+
           <TextInput
             style={s.replyTextInput}
             value={contents}
@@ -191,6 +194,7 @@ const Comments = ({ route }) => {
             placeholder="Add a comment ..."
             placeholderTextColor={colors.light.text2}
           />
+
           <Button isBold textStyle={s.replyPostText} onPress={postNewComment}>
             Post
           </Button>

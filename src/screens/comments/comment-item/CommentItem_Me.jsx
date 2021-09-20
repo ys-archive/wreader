@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, ImageBackground } from 'react-native';
 import { StyleSheet, Text } from '#components';
-import { commentBox } from '#constants/images';
+import { commentBox2 } from '#constants/images';
 import { colors } from '#constants';
 import {
   widthPercentageToDP as wp,
@@ -12,8 +12,8 @@ const CommentItem_Me = ({ contents }) => {
   return (
     <View style={s.root}>
       <ImageBackground
-        source={commentBox}
-        tintColor={colors.light.ivory2}
+        source={commentBox2}
+        // tintColor={colors.light.ivory3}
         style={{
           minWidth: wp('51.9%'),
           maxWidth: wp('51.9%'),

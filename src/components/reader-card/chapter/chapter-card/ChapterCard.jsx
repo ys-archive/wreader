@@ -1,4 +1,5 @@
 import React from 'react';
+import Icon from 'react-native-vector-icons/AntDesign';
 import {
   StyleSheet,
   View,
@@ -24,21 +25,24 @@ import { useChapterCardLike } from './chapter-card.module/useChapterCardLike';
 import { useChapterCardComments } from './chapter-card.module/useChapterCardComments';
 import { useChapterCard_GoWritingCardDirectly } from './chapter-card.module/useChapterCard_GoWritingCardDirectly';
 import { DEPTH_NAME } from '../../../../store/reducers/swiper.depth';
+import { max } from 'react-native-reanimated';
 
 const initStates = () => {
   const profile = useStoreState(selImage.profile);
   const depth = useStoreState(selSwiper.depth);
+  const coords = useStoreState(selSwiper.coords);
   const maxCoords = useStoreState(selSwiper.maxCoords);
 
   return {
     profile,
     depth,
+    coords,
     maxCoords,
   };
 };
 
 const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
-  const { profile, depth, maxCoords } = initStates();
+  const { profile, depth, coords, maxCoords } = initStates();
 
   const {
     id: chapterId, // 현재 챕터 Id
@@ -81,17 +85,34 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
     />
   );
 
-  // const theEndLabel = depth === DEPTH_NAME.CHAPTER && (
-  //   <Text isBold style={s.theEnd}>
-  //     THE END
-  //   </Text>
-  // );
-
-  console.log(order, maxCoords.d1);
-  const theEndLabel = depth === DEPTH_NAME.CHAPTER &&
+  const TheEndLabelJSX = depth === DEPTH_NAME.CHAPTER &&
     order + 1 === maxCoords.d1 && (
       <Text isBold style={s.theEnd}>
         THE END
+      </Text>
+    );
+
+  const PreviousJSX = depth === DEPTH_NAME.CHAPTER &&
+    order !== 0 &&
+    order + 1 <= maxCoords.d1 && (
+      <Text isBold style={s.previous}>
+        <Icon name="left" size={18} />
+        PREVIOUS
+      </Text>
+    );
+
+  const NextJSX = depth === DEPTH_NAME.CHAPTER && order + 1 < maxCoords.d1 && (
+    <Text isBold style={s.next}>
+      NEXT
+      <Icon name="right" size={18} />
+    </Text>
+  );
+
+  const FullStoryJSX = depth === DEPTH_NAME.CHAPTER &&
+    order + 1 === maxCoords.d1 && (
+      <Text isBold style={s.fullStory}>
+        FULL&nbsp;STORY
+        <Icon name="right" size={18} />
       </Text>
     );
 
@@ -137,7 +158,10 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
             borderRadius: StyleDefine.borderRadiusInside,
           }}
         >
-          {theEndLabel}
+          {TheEndLabelJSX}
+          {PreviousJSX}
+          {NextJSX}
+          {FullStoryJSX}
 
           {/* 챕터 제목 */}
           <View style={s.titleSection}>
@@ -248,6 +272,31 @@ const s = StyleSheet.create({
     top: '2%',
     right: '4%',
   },
+  previous: {
+    fontSize: 20,
+    color: colors.light.ivory3,
+
+    position: 'absolute',
+    bottom: '15%',
+    left: '5%',
+  },
+  next: {
+    fontSize: 20,
+    color: colors.light.ivory3,
+
+    position: 'absolute',
+    bottom: '15%',
+    right: '5%',
+  },
+  fullStory: {
+    fontSize: 20,
+    color: colors.light.ivory3,
+
+    position: 'absolute',
+    bottom: '15%',
+    right: '5%',
+  },
+
   title: {
     fontSize: 22,
   },

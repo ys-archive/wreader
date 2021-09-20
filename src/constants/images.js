@@ -22,10 +22,12 @@ export const addImageIcon = require('!images/add-image-icon.png');
 export const addStoryIcon = require('!images/plus-button.png');
 export const cancelIcon = require('!images/cancel-icon.png');
 export const commentBox = require('!images/comment-box.png');
+export const commentBox2 = require('!images/comment-box2.png');
 export const drawerCancelIcon = require('!images/drawer-cancel-icon.png');
 export const editIcon = require('!images/edit-icon.png');
 export const edit2Icon = require('!images/edit2-icon.png');
 export const emailIcon = require('!images/email-icon.png');
+export const filterBox = require('!images/filter-box.png');
 export const facebookIcon = require('!images/facebook-icon.png');
 export const instagramIcon = require('!images/instagram-icon.png');
 export const lockIcon = require('!images/lock-icon.png');
@@ -47,7 +49,7 @@ export const downArrow = require('!images/down-arrow.png');
 
 export const makeCategoryBGImagePath = title => {
   if (!title) return '';
-  
+
   const id = title.toLowerCase().trim();
   if (id === 'romance') {
     return romanceCategoryBG;
