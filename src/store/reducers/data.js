@@ -201,10 +201,9 @@ export default {
     // state.originalChapters[d0][d1].deck = card;
 
     card.forEach((c, i) => {
-      console.log(c);
       state.chapters[d0][i].deck = c;
       state.originalChapters[d0][i].deck = c;
-    })
+    });
   }),
 
   fetchOneChapter: thunk(
@@ -227,8 +226,14 @@ export default {
 
   addOneUserChapter: action((state, payload) => {
     const { d0, d1, d2, card } = payload;
-    state.chapters[d0][d1].child[d2].deck = card;
-    state.originalChapters[d0][d1].child[d2].deck = card;
+
+    // state.chapters[d0][d1].child[d2].deck = card;
+    // state.originalChapters[d0][d1].child[d2].deck = card;
+    card.forEach((c, i) => {
+      // console.log(c);
+      state.chapters[d0][d1].child[i].deck = c;
+      state.originalChapters[d0][d1].child[i].deck = c;
+    });
   }),
 
   fetchOneUserChapter: thunk(
@@ -247,9 +252,10 @@ export default {
 
       const filteredData = data.item.filter(i => +i.categoryId - 5 === d0);
 
-      console.log('updated user card: ', filteredData[d2]);
+      console.log('updated user card: ', filteredData);
 
-      actions.addOneUserChapter({ d0, d1, d2, card: filteredData[d2] });
+      // actions.addOneUserChapter({ d0, d1, d2, card: filteredData[d2] });
+      actions.addOneUserChapter({ d0, d1, d2, card: filteredData });
     },
   ),
 
