@@ -8,25 +8,24 @@ import {
   TouchableWithoutFeedback,
   Platform,
 } from 'react-native';
-import { Text, Button, TextInput } from '../../../';
+import { Text, TextInput } from '#components';
 import { Like, Reply, AddStory } from '#components/icon';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-import { colors, StyleDefine } from '../../../../constants';
+import { colors, StyleDefine } from '#constants';
 
 import { makeCategoryBGImagePath, dummyProfile } from '#constants/images';
 
 import { useStoreState } from 'easy-peasy';
-import { selImage, selSwiper } from '../../../../store/selectors';
+import { selImage, selSwiper } from '#store/selectors';
 
 import { useChapterCardLike } from './chapter-card.module/useChapterCardLike';
 import { useChapterCardComments } from './chapter-card.module/useChapterCardComments';
 import { useChapterCard_GoWritingCardDirectly } from './chapter-card.module/useChapterCard_GoWritingCardDirectly';
-import { DEPTH_NAME } from '../../../../store/reducers/swiper.depth';
-import { max } from 'react-native-reanimated';
+import { DEPTH_NAME } from '#store/reducers/swiper.depth';
 
 const initStates = () => {
   const profile = useStoreState(selImage.profile);

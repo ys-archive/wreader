@@ -2,9 +2,8 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
-import { useStoreState, useStoreActions } from 'easy-peasy';
+import { useStoreState } from 'easy-peasy';
 import { selImage } from '../../../store/selectors';
-import { actImage } from '../../../store/actions';
 
 import { ChapterService } from '../../../services';
 
@@ -27,13 +26,10 @@ export const useWriteChapterCardForm = (
   afterFormSubmitted,
 ) => {
   const cardImageUrl = useStoreState(selImage.card);
-  // const resetCard = useStoreActions(actImage.resetCard);
 
   const onSubmit = async values => {
     const { sentence } = values;
-    // const sentences = Object.values(values).reduce(
-    //   (prv, cur) => `${prv}${cur}`,
-    // );
+
     const status = await ChapterService.POST_createChapter(
       userId,
       currentChapterIdx,
@@ -47,7 +43,6 @@ export const useWriteChapterCardForm = (
     } else {
       Alert('Writing chapter fails');
     }
-    // resetCard();
   };
 
   return useFormik({

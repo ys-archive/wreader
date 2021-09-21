@@ -1,4 +1,4 @@
-import { action, computed } from 'easy-peasy';
+import { action, thunk } from 'easy-peasy';
 import { Coordinates } from './swiper.coords';
 import { DEPTH_NAME } from './swiper.depth';
 
@@ -118,6 +118,11 @@ export default {
       }
     }),
   },
+
+  resetToStartScreen: thunk((actions, payload, { getState, getStoreState }) => {
+    actions.depth.set(0);
+    actions.coords.set({ d0: 0, d1: 0, d2: 0, d3: 0 });
+  }),
 };
 
 export const selectors = {
@@ -140,4 +145,6 @@ export const actions = {
 
   initCoords: actions => actions.swiper.coords.init,
   setMaxCoords: actions => actions.swiper.coords.setMax,
+
+  resetToStartScreen: actions => actions.swiper.resetToStartScreen,
 };

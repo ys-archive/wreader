@@ -25,10 +25,7 @@ const initStates = () => {
   };
 };
 const CategoryIndicatorCard = ({ pos, order }) => {
-  const {
-    categories,
-    // coords: { d0 },
-  } = initStates();
+  const { categories } = initStates();
 
   const categoryTitle = categories[order].title;
 

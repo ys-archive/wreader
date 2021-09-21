@@ -1,9 +1,9 @@
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import { selAuth, selImage, selSwiper } from '../../../../../store/selectors';
-import { actData } from '../../../../../store/actions';
+import { selAuth, selImage, selSwiper } from '#store/selectors';
+import { actData } from '#store/actions';
 
-import { ChapterService } from '../../../../../services';
-import { DEPTH_NAME } from '../../../../../store/reducers/swiper.depth';
+import { ChapterService } from '#services';
+import { DEPTH_NAME } from '#store/reducers/swiper.depth';
 
 const initStates = () => {
   // selectors

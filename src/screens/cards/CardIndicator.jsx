@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo } from 'react';
 
 import { useStoreState } from 'easy-peasy';
-import { selSwiper, selData } from '../store/selectors';
-import { DEPTH_NAME } from '../store/reducers/swiper.depth';
+import { selSwiper, selData } from '../../store/selectors';
+import { DEPTH_NAME } from '../../store/reducers/swiper.depth';
 
 import {
   renderWithDepth0,

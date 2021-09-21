@@ -1,6 +1,6 @@
 import React from 'react';
-import ChapterIndicatorCard from '../components/reader-card/chapter/chapter-card/ChapterIndicatorCard';
-import CategoryIndicatorCard from '../components/reader-card/category/CategoryIndicatorCard';
+import ChapterIndicatorCard from './chapter-card/ChapterIndicatorCard';
+import CategoryIndicatorCard from './category/CategoryIndicatorCard';
 
 const indicatorPos = {
   top: '-80%',
@@ -10,12 +10,11 @@ const indicatorPos = {
 };
 
 const MakeIndicators = (dir, coords) => {
-  const { d0, d1, d2, d3 } = coords;
+  const { d0 } = coords;
 
   return Object.entries(dir).map((d, i) => {
     const [direction, set] = d;
     const [has, isCategory] = set;
-    // console.log(direction, has, isCategory);
 
     if (has) {
       return isCategory === 0 ? (

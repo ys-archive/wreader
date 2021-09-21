@@ -11,16 +11,8 @@ import { StyleDefine } from '../../../constants';
 
 import { makeCategoryBGImagePath } from '#constants/images';
 
-// import { useNavigation } from '@react-navigation/native';
-// import * as ScreenNames from '../../../navigators/ScreenNames';
-
 const CategoryCard = ({ data }) => {
   const { title, subTitle, imageUri } = data;
-
-  // const goWriteCard = () => {
-  //   console.log('New Write Card');
-  //   // nav.navigate(ScreenNames.MainWriteCard);
-  // };
 
   return (
     <View style={s.root}>
@@ -44,8 +36,6 @@ const CategoryCard = ({ data }) => {
         <View style={s.cardSubTitleView}>
           <Text style={s.subTitle}>{subTitle}</Text>
         </View>
-
-        {/* <AddStory onPress={goWriteCard} /> */}
       </ImageBackground>
     </View>
   );

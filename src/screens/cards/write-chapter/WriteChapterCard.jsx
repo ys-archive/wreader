@@ -8,7 +8,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-import AddImage from '../../icon/AddImage';
+import AddImage from '../../../components/icon/AddImage';
 import { colors, StyleDefine } from '../../../constants';
 
 import { makeCategoryBGImagePath } from '#constants/images';

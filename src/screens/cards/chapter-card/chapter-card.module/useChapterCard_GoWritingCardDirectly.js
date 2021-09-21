@@ -1,11 +1,11 @@
-import { Alert } from '../../../../alert';
+import { Alert } from '#components/alert';
 
 import { useNavigation } from '@react-navigation/native';
-import * as ScreenNames from '../../../../../navigators/ScreenNames';
+import * as ScreenNames from '#navigators/ScreenNames';
 
 import { useStoreState } from 'easy-peasy';
-import { selSwiper, selAuth, selData } from '../../../../../store/selectors';
-import { DEPTH_NAME } from '../../../../../store/reducers/swiper.depth';
+import { selSwiper, selAuth, selData } from '#store/selectors';
+import { DEPTH_NAME } from '#store/reducers/swiper.depth';
 
 const initStates = () => {
   const categories = useStoreState(selData.categories);

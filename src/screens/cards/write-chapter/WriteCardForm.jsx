@@ -1,6 +1,6 @@
 import React, { useCallback, useRef } from 'react';
 import { View, Platform } from 'react-native';
-import { StyleSheet, TextInput, Button, RenderError } from '../../';
+import { StyleSheet, TextInput, Button, RenderError } from '../../../components';
 
 import {
   widthPercentageToDP as wp,

@@ -1,27 +1,25 @@
 import { useEffect } from 'react';
-import { useStoreActions, useStoreState } from 'easy-peasy';
-import { selData, selSwiper } from '../store/selectors';
+
+import { useStoreActions } from 'easy-peasy';
+import { actData } from '../../store/actions';
+
 import {
   useCategoriesFetch,
   useChaptersFetch,
   useUserChaptersFetch,
   useNextFetch,
-  useFetchAll,
-} from '../hooks';
-import { actData } from '../store/actions';
+} from '../../hooks';
 
 const initStates = () => {
-  const hasNew = useStoreState(selData.hasNew);
   const updateHasNew = useStoreActions(actData.updateHasNew);
 
   return {
-    hasNew,
     updateHasNew,
   };
 };
 
 const FetchBeforeRender = () => {
-  const { hasNew, updateHasNew } = initStates();
+  const { updateHasNew } = initStates();
 
   useEffect(() => {
     updateHasNew({ d0: true });
@@ -41,8 +39,6 @@ const FetchBeforeRender = () => {
   useChaptersFetch();
   useUserChaptersFetch();
   useNextFetch();
-
-  useFetchAll();
 };
 
 export default FetchBeforeRender;

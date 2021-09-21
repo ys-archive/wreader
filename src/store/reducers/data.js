@@ -316,7 +316,7 @@ export default {
           +aStr.slice(17, 19),
         );
 
-        console.log(bb, aa, bb - aa);
+        // console.log(bb, aa, bb - aa);
 
         return bb - aa;
       });
@@ -372,7 +372,7 @@ export default {
           +aStr.slice(17, 19),
         );
 
-        console.log(bb, aa, bb - aa);
+        // console.log(bb, aa, bb - aa);
 
         return bb - aa;
       });

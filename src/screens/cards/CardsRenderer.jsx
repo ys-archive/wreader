@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { useStoreState } from 'easy-peasy';
-import { selData, selSwiper } from '../store/selectors';
+import { selData, selSwiper } from '../../store/selectors';
+
+import CategoryCard from './category/CategoryCard';
+import ChapterCard from './chapter-card/ChapterCard';
 
 import FetchBeforeRender from './CardsRenderer.fetch';
-import CategoryCard from '../components/reader-card/category/CategoryCard';
-import ChapterCard from '../components/reader-card/chapter/chapter-card/ChapterCard';
 import CardIndicator from './CardIndicator';
 
 const initStates = () => {
