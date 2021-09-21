@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { selSwiper } from '../../store/selectors';
@@ -19,21 +19,34 @@ const initStates = () => {
 };
 
 export const useCardSorter = () => {
+  const [isSorterOpen, setSorter] = useState(false);
   const { depth, sortUserChapters, sortNext } = initStates();
 
-  return useCallback(() => {
-    switch (depth) {
-      case DEPTH_NAME.USER_CHAPTER:
-        sortUserChapters();
-        break;
+  const openSorterForSecs = useCallback((duration = 2) => {
+    setSorter(true);
+    setTimeout(() => {
+      setSorter(false);
+    }, duration * 1000);
+  }, []);
 
-      case DEPTH_NAME.NEXT:
-        sortNext();
-        break;
+  return {
+    callback: useCallback(() => {
+      switch (depth) {
+        case DEPTH_NAME.USER_CHAPTER:
+          sortUserChapters();
+          openSorterForSecs(2);
+          break;
 
-      default:
-        console.log("You can't sort due to the depth!");
-        break;
-    }
-  }, [depth]);
+        case DEPTH_NAME.NEXT:
+          sortNext();
+          openSorterForSecs(2);
+          break;
+
+        default:
+          console.log("You can't sort due to the depth!");
+          break;
+      }
+    }, [depth]),
+    isSorterOpen,
+  };
 };

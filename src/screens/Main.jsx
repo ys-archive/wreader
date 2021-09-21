@@ -12,6 +12,7 @@ import CardsRenderer from './cards/CardsRenderer';
 
 import { useCardSorter } from './cards/useCardSorter';
 import { useCardResetToStartScreen } from './cards/useCardResetToStartScreen';
+import SortIndicator from './cards/SortIndicator';
 
 const Main = () => {
   const nav = useNavigation();
@@ -19,13 +20,14 @@ const Main = () => {
   useAutoLogin();
 
   const returnToMain = useCardResetToStartScreen();
-  const onPressSortIcon = useCardSorter();
+  const { callback: onPressSortIcon, isSorterOpen } = useCardSorter();
   const onPressMenuIcon = () => nav.openDrawer();
 
   return (
     <View>
       <Logo onPress={returnToMain} />
       <Sort onPress={onPressSortIcon} />
+      {isSorterOpen && <SortIndicator />}
       <Menu onPress={onPressMenuIcon} />
 
       <EventModal />

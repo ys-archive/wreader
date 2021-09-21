@@ -55,7 +55,7 @@ const OtherProfile = ({ route }) => {
                 height: 230,
                 borderRadius: 200,
               }}
-              source={{ path }}
+              source={{ uri: path }}
             />
           ) : (
             // <Person iconStyle={{ width: wp('55.6%'), height: 230, borderRadius: 50 }} />
