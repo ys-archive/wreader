@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Main from '../../screens/Main';
 import WriteChapterCard from '../../screens/cards/write-chapter/WriteChapterCard';
 import Comments from '../../screens/comments/comments/Comments';
+import OtherProfile from '../../screens/user/OtherProfile';
 
 const Stack = createStackNavigator();
 
@@ -30,6 +31,11 @@ const MainStack = () => {
       />
 
       <Stack.Screen name={ScreenNames.MainComments} component={Comments} />
+
+      <Stack.Screen
+        name={ScreenNames.MainOtherProfile}
+        component={OtherProfile}
+      />
     </Stack.Navigator>
   );
 };

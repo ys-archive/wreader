@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { Alert } from '#components/alert';
 
 import { useNavigation } from '@react-navigation/native';
@@ -27,7 +28,7 @@ export const useChapterCard_GoWritingCardDirectly = () => {
   const nav = useNavigation();
   const { categories, chapters, coords, depth, isLoggedIn } = initStates();
 
-  return () => {
+  return useCallback(() => {
     if (!isLoggedIn) {
       Alert('Need Login to write a new card');
       return;
@@ -55,5 +56,5 @@ export const useChapterCard_GoWritingCardDirectly = () => {
         });
         break;
     }
-  };
+  }, [categories, chapters, coords, depth, isLoggedIn]);
 };

@@ -1,11 +1,11 @@
 export const MainStack = 'Main';
 export const MainDrawer = 'MainDrawer';
+
 export const Main = 'Main/Main';
-export const MainCategoryCard = 'Main/MainCategoryCard';
 export const MainChapterCard = 'Main/MainChapterCard';
 export const MainWriteCard = 'Main/MainWriteCard';
-export const MainWriteCardNext = 'Main/MainWriteCardNext';
 export const MainComments = 'Main/Comments';
+export const MainOtherProfile = 'Main/OtherProfile';
 
 export const PolicyAndConditionStack = 'PolicyAndCondition';
 export const PolicyAndCondition = 'PolicyAndCondition/PolicyAndCondition';

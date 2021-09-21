@@ -1,15 +1,15 @@
 import React from 'react';
-import Icon from 'react-native-vector-icons/AntDesign';
+
 import {
   StyleSheet,
   View,
   ImageBackground,
   Image,
   TouchableWithoutFeedback,
-  Platform,
+  TouchableOpacity,
 } from 'react-native';
 import { Text, TextInput } from '#components';
-import { Like, Reply, AddStory } from '#components/icon';
+import { Like, Reply } from '#components/icon';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -24,30 +24,27 @@ import { selImage, selSwiper } from '#store/selectors';
 
 import { useChapterCardLike } from './chapter-card.module/useChapterCardLike';
 import { useChapterCardComments } from './chapter-card.module/useChapterCardComments';
-import { useChapterCard_GoWritingCardDirectly } from './chapter-card.module/useChapterCard_GoWritingCardDirectly';
-import { DEPTH_NAME } from '#store/reducers/swiper.depth';
+import { useChapterCard_AddStory } from './chapter-card.module/useChapterCard_AddStory';
+import { useChapterCard_Labels } from './chapter-card.module/useChapterCard_Labels';
+import { useChapterCard_OtherProfile } from './chapter-card.module/useChapterCard_OtherProfile';
 
 const initStates = () => {
   const profile = useStoreState(selImage.profile);
   const depth = useStoreState(selSwiper.depth);
-  const coords = useStoreState(selSwiper.coords);
-  const maxCoords = useStoreState(selSwiper.maxCoords);
 
   return {
     profile,
     depth,
-    coords,
-    maxCoords,
   };
 };
 
 const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
-  const { profile, depth, coords, maxCoords } = initStates();
+  const { profile, depth } = initStates();
 
   const {
     id: chapterId, // 현재 챕터 Id
     categoryId,
-    // userId: otherUserId,
+    userId: otherUserId,
     content,
     replyCount, // -> reply
     like_count: likeCount, // -> like
@@ -71,50 +68,10 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
 
   const onPressLike = useChapterCardLike(chapterId, isLike, likeCount);
   const onPressReply = useChapterCardComments(chapterId);
-  const goWriteCardDirectly = useChapterCard_GoWritingCardDirectly();
-
-  const AddStoryJSX = (depth === 1 || depth === 2 || depth === 3) && (
-    <AddStory
-      style={{
-        position: 'absolute',
-        right: wp('4%'),
-        bottom: hp('4.7%'),
-        zIndex: 15,
-      }}
-      onPress={goWriteCardDirectly}
-    />
-  );
-
-  const TheEndLabelJSX = depth === DEPTH_NAME.CHAPTER &&
-    order + 1 === maxCoords.d1 && (
-      <Text isBold style={s.theEnd}>
-        THE END
-      </Text>
-    );
-
-  const PreviousJSX = depth === DEPTH_NAME.CHAPTER &&
-    order !== 0 &&
-    order + 1 <= maxCoords.d1 && (
-      <Text isBold style={s.previous}>
-        <Icon name="left" size={18} />
-        PREVIOUS
-      </Text>
-    );
-
-  const NextJSX = depth === DEPTH_NAME.CHAPTER && order + 1 < maxCoords.d1 && (
-    <Text isBold style={s.next}>
-      NEXT
-      <Icon name="right" size={18} />
-    </Text>
-  );
-
-  const FullStoryJSX = depth === DEPTH_NAME.CHAPTER &&
-    order + 1 === maxCoords.d1 && (
-      <Text isBold style={s.fullStory}>
-        FULL&nbsp;STORY
-        <Icon name="right" size={18} />
-      </Text>
-    );
+  const AddStoryJSX = useChapterCard_AddStory();
+  const { TheEndLabelJSX, PreviousJSX, NextJSX, FullStoryJSX } =
+    useChapterCard_Labels(order);
+  const onPressOtherProfile = useChapterCard_OtherProfile(otherUserId);
 
   return (
     <View style={s.root}>
@@ -135,19 +92,21 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
         }
       >
         {/* 프로필 및 작가 이름 */}
-        <View style={s.authorSection}>
-          <Image
-            style={{
-              width: 30,
-              height: 30,
-              borderRadius: 100,
-            }}
-            source={userImg ? { uri: userImg } : dummyProfile}
-          />
-          <Text isBold style={s.authorNameText}>
-            {authorNickName || 'Jessica Momo'}
-          </Text>
-        </View>
+        <TouchableOpacity onPress={onPressOtherProfile}>
+          <View style={s.authorSection}>
+            <Image
+              style={{
+                width: 30,
+                height: 30,
+                borderRadius: 100,
+              }}
+              source={userImg ? { uri: userImg } : dummyProfile}
+            />
+            <Text isBold style={s.authorNameText}>
+              {authorNickName || 'Jessica Momo'}
+            </Text>
+          </View>
+        </TouchableOpacity>
 
         {/* 챕터 내부 */}
         <ImageBackground
@@ -263,38 +222,6 @@ const s = StyleSheet.create({
   titleSection: {
     marginLeft: wp('5.5%'),
     marginTop: hp('4.2%'),
-  },
-  theEnd: {
-    fontSize: Platform.OS === 'android' ? 18 : 16,
-    color: colors.light.ivory3,
-
-    position: 'absolute',
-    top: '2%',
-    right: '4%',
-  },
-  previous: {
-    fontSize: Platform.OS === 'android' ? 20 : 18,
-    color: colors.light.ivory3,
-
-    position: 'absolute',
-    bottom: '15%',
-    left: Platform.OS === 'android' ? '5%' : '2%',
-  },
-  next: {
-    fontSize: Platform.OS === 'android' ? 20 : 18,
-    color: colors.light.ivory3,
-
-    position: 'absolute',
-    bottom: '15%',
-    right: Platform.OS === 'android' ? '5%' : '2%',
-  },
-  fullStory: {
-    fontSize: Platform.OS === 'android' ? 20 : 18,
-    color: colors.light.ivory3,
-
-    position: 'absolute',
-    bottom: '15%',
-    right: Platform.OS === 'android' ? '5%' : '2%',
   },
 
   title: {
