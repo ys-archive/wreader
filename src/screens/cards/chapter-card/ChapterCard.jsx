@@ -69,8 +69,7 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
   const onPressLike = useChapterCardLike(chapterId, isLike, likeCount);
   const onPressReply = useChapterCardComments(chapterId);
   const AddStoryJSX = useChapterCard_AddStory();
-  const { TheEndLabelJSX, PreviousJSX, NextJSX, FullStoryJSX } =
-    useChapterCard_Labels(order);
+  const { TheEndLabelJSX, FullStoryJSX } = useChapterCard_Labels(order);
   const onPressOtherProfile = useChapterCard_OtherProfile(otherUserId);
 
   return (
@@ -118,8 +117,8 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
           }}
         >
           {TheEndLabelJSX}
-          {PreviousJSX}
-          {NextJSX}
+          {/* {PreviousJSX} */}
+          {/* {NextJSX} */}
           {FullStoryJSX}
 
           {/* 챕터 제목 */}

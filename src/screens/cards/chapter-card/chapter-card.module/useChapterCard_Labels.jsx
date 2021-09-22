@@ -19,21 +19,21 @@ export const useChapterCard_Labels = order => {
       </Text>
     );
 
-  const PreviousJSX = depth === DEPTH_NAME.CHAPTER &&
-    order !== 0 &&
-    order + 1 <= maxCoords.d1 && (
-      <Text isBold style={s.previous}>
-        <Icon name="left" size={18} />
-        PREVIOUS
-      </Text>
-    );
+  // const PreviousJSX = depth === DEPTH_NAME.CHAPTER &&
+  //   order !== 0 &&
+  //   order + 1 <= maxCoords.d1 && (
+  //     <Text isBold style={s.previous}>
+  //       <Icon name="left" size={18} />
+  //       PREVIOUS
+  //     </Text>
+  //   );
 
-  const NextJSX = depth === DEPTH_NAME.CHAPTER && order + 1 < maxCoords.d1 && (
-    <Text isBold style={s.next}>
-      NEXT
-      <Icon name="right" size={18} />
-    </Text>
-  );
+  // const NextJSX = depth === DEPTH_NAME.CHAPTER && order + 1 < maxCoords.d1 && (
+  //   <Text isBold style={s.next}>
+  //     NEXT
+  //     <Icon name="right" size={18} />
+  //   </Text>
+  // );
 
   const FullStoryJSX = depth === DEPTH_NAME.CHAPTER &&
     order + 1 === maxCoords.d1 && (
@@ -45,8 +45,8 @@ export const useChapterCard_Labels = order => {
 
   return {
     TheEndLabelJSX,
-    PreviousJSX,
-    NextJSX,
+    // PreviousJSX,
+    // NextJSX,
     FullStoryJSX,
   };
 };
@@ -60,22 +60,22 @@ const s = StyleSheet.create({
     top: '2%',
     right: '4%',
   },
-  previous: {
-    fontSize: Platform.OS === 'android' ? 20 : 18,
-    color: colors.light.ivory3,
+  // previous: {
+  //   fontSize: Platform.OS === 'android' ? 20 : 18,
+  //   color: colors.light.ivory3,
 
-    position: 'absolute',
-    bottom: '15%',
-    left: Platform.OS === 'android' ? '5%' : '2%',
-  },
-  next: {
-    fontSize: Platform.OS === 'android' ? 20 : 18,
-    color: colors.light.ivory3,
+  //   position: 'absolute',
+  //   bottom: '15%',
+  //   left: Platform.OS === 'android' ? '5%' : '2%',
+  // },
+  // next: {
+  //   fontSize: Platform.OS === 'android' ? 20 : 18,
+  //   color: colors.light.ivory3,
 
-    position: 'absolute',
-    bottom: '15%',
-    right: Platform.OS === 'android' ? '5%' : '2%',
-  },
+  //   position: 'absolute',
+  //   bottom: '15%',
+  //   right: Platform.OS === 'android' ? '5%' : '2%',
+  // },
   fullStory: {
     fontSize: Platform.OS === 'android' ? 20 : 18,
     color: colors.light.ivory3,
