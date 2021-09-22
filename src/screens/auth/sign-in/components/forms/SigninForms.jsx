@@ -67,6 +67,7 @@ const SigninForms = () => {
     const { code, item } = await AuthService.POST_login(email, password);
 
     if (code === 1) {
+      console.log(email, password, item.id, item);
       login();
       setEmail(email);
       setPassword(password);
@@ -76,7 +77,7 @@ const SigninForms = () => {
 
       if ((await SecureStore.getItemAsync('isAutoLogin')) === 'true') {
         await StorageService.saveSigninInfo(email, password);
-        // console.log('Auto Login + 데이터 등록됨: ', email, password);
+        console.log('Auto Login + 데이터 등록됨: ', email, password);
       }
 
       nav.navigate(ScreenNames.Main);

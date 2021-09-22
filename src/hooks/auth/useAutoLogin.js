@@ -47,12 +47,12 @@ export const useAutoLogin = () => {
       }
 
       if (code === 100) {
-        Alert("Fail (it's in the withdrawal status)");
+        // Alert("Fail (it's in the withdrawal status)");
         return;
       }
 
       if (code === 102 || code === 103) {
-        Alert('Fail (neither email or password is correct)');
+        // Alert('Fail (neither email or password is correct)');
         return;
       }
     })();
