@@ -2,7 +2,7 @@
   "expo": {
     "name": "wreader",
     "slug": "wreader",
-    "version": "1.0.13",
+    "version": "1.0.14",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "assetBundlePatterns": [
@@ -12,7 +12,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.wreader.wreader-resource",
-      "buildNumber": "1.0.13",
+      "buildNumber": "1.0.14",
       "googleServicesFile": "./GoogleService-Info.plist",
       "splash": {
         "image": "./assets/images/splash@2x.png",
