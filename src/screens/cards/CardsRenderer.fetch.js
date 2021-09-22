@@ -23,16 +23,17 @@ const FetchBeforeRender = () => {
 
   useEffect(() => {
     updateHasNew({ d0: true });
-    const timer = setTimeout(() => {
-      updateHasNew({ d1: true });
-      setTimeout(() => {
-        updateHasNew({ d2: true });
-      }, 500);
-    }, 500);
+    updateHasNew({ d1: true });
+    updateHasNew({ d2: true });
+    updateHasNew({ d3: true });
+    // const timer = setTimeout(() => {
+    //   setTimeout(() => {
+    //   }, 500);
+    // }, 500);
 
-    return () => {
-      if (timer) clearTimeout(timer);
-    };
+    // return () => {
+    //   if (timer) clearTimeout(timer);
+    // };
   }, []);
 
   useCategoriesFetch();
