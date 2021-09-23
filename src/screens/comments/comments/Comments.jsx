@@ -152,7 +152,12 @@ const Comments = ({ route }) => {
   };
 
   return (
-    <KeyboardAwareScrollView contentContainerStyle={s.root} nestedScrollEnabled>
+    <KeyboardAwareScrollView
+      contentContainerStyle={s.root}
+      nestedScrollEnabled
+      showsVerticalScrollIndicator={false}
+      showsHorizontalScrollIndicator={false}
+    >
       <View style={s.root}>
         {/* Title */}
         <View style={s.topSection}>
@@ -175,6 +180,8 @@ const Comments = ({ route }) => {
           renderItem={renderComments}
           keyExtractor={item => item.id.toString()}
           nestedScrollEnabled
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
         />
 
         {/* 새 댓글 섹션 */}
