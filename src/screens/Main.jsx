@@ -30,7 +30,7 @@ const Main = () => {
       {isSorterOpen && <SortIndicator />}
       <Menu onPress={onPressMenuIcon} />
 
-      <EventModal />
+      {/* <EventModal /> */}
 
       <Reader>
         <CardsRenderer />
