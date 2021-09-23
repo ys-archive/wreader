@@ -73,7 +73,6 @@ const SigninForms = () => {
       setPassword(password);
       setUserId(item.id);
       setInfo(item);
-      Alert('로그인 성공');
 
       if ((await SecureStore.getItemAsync('isAutoLogin')) === 'true') {
         await StorageService.saveSigninInfo(email, password);
