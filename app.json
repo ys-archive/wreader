@@ -4,7 +4,7 @@
     "slug": "wreader",
     "version": "1.0.18",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/app-icon.png",
     "assetBundlePatterns": [
       "assets/fonts/*",
       "assets/images/*"
