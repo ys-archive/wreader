@@ -176,7 +176,7 @@ const Comments = ({ route }) => {
         {/* 댓글들 */}
         <FlatList
           style={s.contentsSection}
-          data={data.item}
+          data={data.item.reverse()}
           renderItem={renderComments}
           keyExtractor={item => item.id.toString()}
           nestedScrollEnabled
