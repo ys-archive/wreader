@@ -136,6 +136,7 @@ const Comments = ({ route }) => {
 
   const renderComments = comments => {
     const { id, user_id: otherId, reply, userImg, usreNick } = comments.item;
+    console.log(comments.item);
 
     if (+otherId === userId) {
       return <CommentItem_Me key={id} contents={reply} />;
@@ -176,12 +177,13 @@ const Comments = ({ route }) => {
         {/* 댓글들 */}
         <FlatList
           style={s.contentsSection}
-          data={data.item.reverse()}
+          data={data.item}
           renderItem={renderComments}
           keyExtractor={item => item.id.toString()}
           nestedScrollEnabled
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
+          inverted
         />
 
         {/* 새 댓글 섹션 */}

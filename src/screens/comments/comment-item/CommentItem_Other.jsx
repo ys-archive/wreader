@@ -13,8 +13,11 @@ const CommentItem_Other = ({ profileImage, userName, contents }) => {
   return (
     <View style={s.root}>
       <View style={s.profile}>
-        {profileImage || profileImage !== '' ? (
-          <Image source={{ uri: profileImage }} />
+        {profileImage !== '' ? (
+          <Image
+            source={{ uri: profileImage }}
+            style={{ width: 30, height: 30, borderRadius: 50 }}
+          />
         ) : (
           <View
             style={{
