@@ -20,8 +20,8 @@ import { AuthService } from '#services';
 import SigninInput from './SigninInput';
 import SigninAutoLogin from './SigninAutoLogin';
 import SigninLogin from './SigninLogin';
+import { useCardResetToStartScreen } from '../../../../cards/useCardResetToStartScreen';
 
-// import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as SecureStore from 'expo-secure-store';
 import StorageService from '../../../../../services/StorageService';
 
@@ -48,6 +48,7 @@ const SigninForms = () => {
   const setPassword = useStoreActions(actAuth.setPassword);
   const setUserId = useStoreActions(actAuth.setUserId);
   const setInfo = useStoreActions(actAuth.setInfo);
+  const returnToMain = useCardResetToStartScreen();
 
   const nav = useNavigation();
 
@@ -80,6 +81,7 @@ const SigninForms = () => {
       }
 
       nav.navigate(ScreenNames.Main);
+      returnToMain();
     }
 
     if (code === 100) {
