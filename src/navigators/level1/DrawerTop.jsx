@@ -20,6 +20,7 @@ import { actAuth, actImage } from '../../store/actions';
 import { selImage, selAuth } from '../../store/selectors';
 
 import { useProfileImageLoader } from '../../hooks';
+import { useCardResetToStartScreen } from '../../screens/cards/useCardResetToStartScreen';
 
 const initStates = () => {
   const isLoggedIn = useStoreState(selAuth.isLoggedIn);
@@ -31,6 +32,8 @@ const initStates = () => {
   const logout = useStoreActions(actAuth.logout);
   const resetProfile = useStoreActions(actImage.resetProfile);
 
+  const resetMain = useCardResetToStartScreen();
+
   return {
     isLoggedIn,
     userInfo,
@@ -38,13 +41,21 @@ const initStates = () => {
     nick,
     logout,
     resetProfile,
+    resetMain,
   };
 };
 
 const DrawerTop = props => {
   const { navigation: nav } = props;
-  const { isLoggedIn, userInfo, profileImageUrl, nick, logout, resetProfile } =
-    initStates();
+  const {
+    isLoggedIn,
+    userInfo,
+    profileImageUrl,
+    nick,
+    logout,
+    resetProfile,
+    resetMain,
+  } = initStates();
 
   // 프로필 이미지 로드
   useProfileImageLoader();
@@ -113,7 +124,10 @@ const DrawerTop = props => {
           {/* 홈 (스크린 이동) */}
           <TouchableOpacity
             style={s.drawerItem}
-            onPress={() => nav.navigate(ScreenNames.MainStack)}
+            onPress={() => {
+              nav.navigate(ScreenNames.MainStack);
+              resetMain();
+            }}
           >
             <Text isBold style={s.drawerItemText}>
               HOME
