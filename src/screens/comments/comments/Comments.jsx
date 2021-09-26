@@ -136,7 +136,7 @@ const Comments = ({ route }) => {
 
   const renderComments = comments => {
     const { id, user_id: otherId, reply, userImg, usreNick } = comments.item;
-    console.log(comments.item);
+    // console.log(comments.item);
 
     if (+otherId === userId) {
       return <CommentItem_Me key={id} contents={reply} />;
@@ -144,6 +144,7 @@ const Comments = ({ route }) => {
       return (
         <CommentItem_Other
           key={id}
+          userId={otherId}
           profileImage={userImg}
           userName={usreNick}
           contents={reply}

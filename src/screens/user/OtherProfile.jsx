@@ -27,16 +27,13 @@ const OtherProfile = ({ route }) => {
 
   if (!data || !data.item) return null;
 
-  const {
-    nick,
-    instagram,
-    facebook,
-    intro,
-    img: { path },
-  } = data.item;
-
   console.log(data.item);
-  // console.log(path);
+
+  const { nick, instagram, facebook, intro } = data.item;
+  let path = '';
+  if (data.item.img) {
+    path = data.item.img.path;
+  }
 
   const onPressGoBackIcon = () => nav.goBack();
 

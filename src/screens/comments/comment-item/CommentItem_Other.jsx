@@ -1,5 +1,10 @@
 import React from 'react';
-import { View, Image, ImageBackground } from 'react-native';
+import {
+  View,
+  Image,
+  ImageBackground,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import { StyleSheet, Text } from '#components';
 import { commentBox } from '#constants/images';
 import { colors } from '#constants';
@@ -8,30 +13,34 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-const CommentItem_Other = ({ profileImage, userName, contents }) => {
-  // console.log(profileImage, userName, contents);
+import { useChapterCard_OtherProfile } from '../../cards/chapter-card/chapter-card.module/useChapterCard_OtherProfile';
+
+const CommentItem_Other = ({ userId, profileImage, userName, contents }) => {
+  const onPressOtherProfile = useChapterCard_OtherProfile(userId);
   return (
     <View style={s.root}>
-      <View style={s.profile}>
-        {profileImage !== '' ? (
-          <Image
-            source={{ uri: profileImage }}
-            style={{ width: 30, height: 30, borderRadius: 50 }}
-          />
-        ) : (
-          <View
-            style={{
-              backgroundColor: '#000',
-              width: 30,
-              height: 30,
-              borderRadius: 50,
-            }}
-          />
-        )}
-        <Text isBold style={s.userName}>
-          {userName}
-        </Text>
-      </View>
+      <TouchableWithoutFeedback onPress={onPressOtherProfile}>
+        <View style={s.profile}>
+          {profileImage && profileImage !== '' ? (
+            <Image
+              source={{ uri: profileImage }}
+              style={{ width: 30, height: 30, borderRadius: 50 }}
+            />
+          ) : (
+            <View
+              style={{
+                backgroundColor: '#000',
+                width: 30,
+                height: 30,
+                borderRadius: 50,
+              }}
+            />
+          )}
+          <Text isBold style={s.userName}>
+            {userName}
+          </Text>
+        </View>
+      </TouchableWithoutFeedback>
 
       <ImageBackground
         source={commentBox}
