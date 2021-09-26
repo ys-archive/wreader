@@ -1,12 +1,7 @@
-import React, { useCallback, useState } from 'react';
-import {
-  View,
-  SafeAreaView,
-  FlatList,
-  Image,
-  ActivityIndicator,
-} from 'react-native';
+import React, { useState } from 'react';
+import { View, FlatList, Image, ActivityIndicator } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { Alert } from '../../../components/alert';
 import { StyleSheet, Text, TextInput, Button } from '#components';
 import { Cancel } from '#components/icon';
 import {
@@ -101,6 +96,11 @@ const Comments = ({ route }) => {
   }
 
   const postNewComment = async () => {
+    if (contents === '') {
+      Alert('Comments can not be empty!');
+      return;
+    }
+
     const status = await CommentsService.POST_createComment(
       chapterId,
       contents,
