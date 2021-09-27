@@ -6,11 +6,10 @@ export const RenderError = ({
   touched = undefined,
   errors = undefined,
   color = '#fff',
-  isBold = false,
 }) =>
   touched && errors ? (
     <View>
-      <Text isBold={isBold} style={{ color, textAlign: 'center' }}>
+      <Text fontFamily="heavy" style={{ color, textAlign: 'center' }}>
         {errors}
       </Text>
     </View>

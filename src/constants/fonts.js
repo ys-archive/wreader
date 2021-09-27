@@ -1,12 +1,22 @@
 import * as Font from 'expo-font';
 
-//www.dafont.com/mont.font
-export const regular = 'mont-extra-light-demo';
-export const bold = 'mont-heavy-demo';
+// www.dafont.com/mont.font
+export const fonts = {
+  xlight: 'mont-extra-light',
+  light: 'mont-light',
+  thin: 'mont-thin',
+  regular: 'mont-regular',
+  semibold: 'mont-semi-bold',
+  heavy: 'mont-heavy',
+};
 
 export const loadFontsAsync = async () => {
   return await Font.loadAsync({
-    'mont-extra-light-demo': require('!fonts/Mont-ExtraLightDEMO.otf'),
-    'mont-heavy-demo': require('!fonts/Mont-HeavyDEMO.otf'),
+    'mont-extra-light': require('!fonts/Mont-ExtraLight.otf'),
+    'mont-light': require('!fonts/Mont-Light.otf'),
+    'mont-thin': require('!fonts/Mont-Thin.otf'),
+    'mont-regular': require('!fonts/Mont-Regular.otf'),
+    'mont-semi-bold': require('!fonts/Mont-SemiBold.otf'),
+    'mont-heavy': require('!fonts/Mont-Heavy.otf'),
   });
 };

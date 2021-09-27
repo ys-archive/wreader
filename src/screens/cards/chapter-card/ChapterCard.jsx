@@ -101,7 +101,7 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
               }}
               source={userImg ? { uri: userImg } : dummyProfile}
             />
-            <Text isBold style={s.authorNameText}>
+            <Text fontFamily="heavy" style={s.authorNameText}>
               {authorNickName || 'Jessica Momo'}
             </Text>
           </View>
@@ -123,7 +123,7 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
 
           {/* 챕터 제목 */}
           <View style={s.titleSection}>
-            <Text isBold style={s.title}>
+            <Text fontFamily="semibold" style={s.title}>
               THE FIRST HEART
             </Text>
           </View>
@@ -131,17 +131,19 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
           <View style={s.separator}></View>
 
           <View style={s.chapterOrderSection}>
-            <Text isBold style={s.chapterOrderPlaceholder}>
+            <Text fontFamily="semibold" style={s.chapterOrderPlaceholder}>
               CHAPTER
             </Text>
-            <Text isBold style={s.chapterOrderText}>
+            <Text fontFamily="regular" style={s.chapterOrderText}>
               {order + 1}
             </Text>
           </View>
 
           {/* 챕터 내용 */}
           <View style={s.contentSection}>
-            <Text style={s.contentText}>&nbsp;{content ?? ''}</Text>
+            <Text style={s.contentText} fontFamily="light">
+              &nbsp;{content ?? ''}
+            </Text>
           </View>
 
           {/* 좋아요, 댓글 */}
@@ -185,7 +187,7 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
                 />
 
                 {/* <Button
-                  isBold
+                  fontFamily="heavy"
                   textStyle={s.replyPostText}
                   onPress={onPressReply}
                 >
@@ -231,7 +233,8 @@ const s = StyleSheet.create({
   },
 
   title: {
-    fontSize: 22,
+    fontSize: 27,
+    // color: colors.light.ivory4,
   },
   separator: {
     maxWidth: 100,
@@ -250,9 +253,11 @@ const s = StyleSheet.create({
   },
   chapterOrderPlaceholder: {
     fontSize: 15,
+    color: colors.light.ivory5,
   },
   chapterOrderText: {
     fontSize: 26,
+    color: colors.light.ivory5,
     marginLeft: '8%',
     marginTop: '-6%',
   },
@@ -261,8 +266,9 @@ const s = StyleSheet.create({
     marginTop: hp('6.1%'),
   },
   contentText: {
-    fontSize: 20,
+    fontSize: 22,
     lineHeight: 35,
+    // color: colors.light.ivory4
   },
   bottomSection: {
     // flexDirection: 'row',

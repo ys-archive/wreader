@@ -1,4 +1,4 @@
-import { regular, bold, loadFontsAsync } from './fonts';
+import { fonts, loadFontsAsync } from './fonts';
 import { colors } from './colors';
 import {
   romanceCategoryBG,
@@ -17,8 +17,7 @@ import {
 import { StyleDefine } from './style';
 
 export {
-  regular,
-  bold,
+  fonts,
   loadFontsAsync,
   colors,
   romanceCategoryBG,

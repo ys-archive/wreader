@@ -6,7 +6,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '#navigators/ScreenNames';
-import { StyleSheet, Text, TextInput, Button } from '#components';
+import { StyleSheet, TextInput, Button } from '#components';
 import { AuthService } from '#services';
 import { Me, Instagram, Facebook, Person } from '#components/icon';
 import { colors } from '#constants';

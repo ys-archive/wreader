@@ -25,12 +25,18 @@ const SortIndicator = () => {
   switch (depth) {
     case DEPTH_NAME.USER_CHAPTER:
       PopularTextJSX = (
-        <Text isBold={!isUserChaptersSorted} style={s.label}>
+        <Text
+          fontFamily={!isUserChaptersSorted ? 'heavy' : 'xlight'}
+          style={s.label}
+        >
           POPULAR
         </Text>
       );
       NewTextJSX = (
-        <Text isBold={isUserChaptersSorted} style={s.label}>
+        <Text
+          fontFamily={isUserChaptersSorted ? 'heavy' : 'xlight'}
+          style={s.label}
+        >
           NEW
         </Text>
       );
@@ -38,12 +44,12 @@ const SortIndicator = () => {
 
     case DEPTH_NAME.NEXT:
       PopularTextJSX = (
-        <Text isBold={!isNextSorted} style={s.label}>
+        <Text fontFamily={!isNextSorted ? 'heavy' : 'xlight'} style={s.label}>
           POPULAR
         </Text>
       );
       NewTextJSX = (
-        <Text isBold={isNextSorted} style={s.label}>
+        <Text fontFamily={isNextSorted ? 'heavy' : 'xlight'} style={s.label}>
           NEW
         </Text>
       );

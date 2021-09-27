@@ -108,7 +108,7 @@ const DrawerTop = props => {
           {/* 유저 이름 */}
           <TouchableOpacity onPress={onPressUserName}>
             <Text
-              isBold
+              fontFamily="heavy"
               style={[s.userName, { marginLeft: 8, marginBottom: 9 }]}
             >
               {nick}
@@ -129,7 +129,7 @@ const DrawerTop = props => {
               resetMain();
             }}
           >
-            <Text isBold style={s.drawerItemText}>
+            <Text fontFamily="heavy" style={s.drawerItemText}>
               HOME
             </Text>
             <Arrow
@@ -149,7 +149,7 @@ const DrawerTop = props => {
                 style={s.drawerItem}
                 onPress={() => nav.navigate(ScreenNames.ContactUsStack)}
               >
-                <Text isBold style={s.drawerItemText}>
+                <Text fontFamily="heavy" style={s.drawerItemText}>
                   HELP & FEEDBACK
                 </Text>
                 <Arrow
@@ -168,7 +168,7 @@ const DrawerTop = props => {
             style={s.drawerItem}
             onPress={() => nav.navigate(ScreenNames.PolicyAndConditionStack)}
           >
-            <Text isBold style={s.drawerItemText}>
+            <Text fontFamily="heavy" style={s.drawerItemText}>
               TERMS OF USE
             </Text>
             <Arrow
@@ -188,7 +188,7 @@ const DrawerTop = props => {
             //   style={s.drawerItem}
             //   onPress={() => nav.navigate(ScreenNames.SigninStack)}
             // >
-            //   <Text isBold style={s.drawerItemText}>
+            //   <Text fontFamily="heavy" style={s.drawerItemText}>
             //     LOG IN
             //   </Text>
             // </TouchableOpacity>
@@ -196,7 +196,7 @@ const DrawerTop = props => {
             // 로그인 되어있으면 -> 로그아웃 실행
             <>
               <TouchableOpacity style={s.drawerItem} onPress={onLogout}>
-                <Text isBold style={s.drawerItemText}>
+                <Text fontFamily="heavy" style={s.drawerItemText}>
                   LOGOUT
                 </Text>
               </TouchableOpacity>

@@ -12,7 +12,7 @@ const Logo = ({ onPress }) => (
     style={{
       position: 'absolute',
       left: wp('8.3%'),
-      top: hp('3.6%'),
+      top: hp('4.8%'),
       zIndex: 1000,
     }}
   >

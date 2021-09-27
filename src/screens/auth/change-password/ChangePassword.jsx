@@ -7,13 +7,12 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '#navigators/ScreenNames';
-import { StyleSheet, Text, TextInput, Button } from '#components';
-import { Ionicons } from '@expo/vector-icons';
-import { LockFindPassword, Email, LockPassword } from '#components/icon';
+import { StyleSheet, TextInput, Button } from '#components';
+import { LockFindPassword, LockPassword } from '#components/icon';
 import { colors } from '#constants';
 import {
   widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
+  // heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import SignupPolicyTexts from '../sign-up/components/SignupPolicyTexts';
 

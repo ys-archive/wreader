@@ -14,7 +14,10 @@ export const Button = ({
   return (
     <TouchableOpacity style={{ ...s.root, ...style }} onPress={onPress}>
       <View style={s.view}>
-        <Text isBold={isBold} style={{ ...s.text, ...textStyle }}>
+        <Text
+          fontFamily={isBold ? 'heavy' : 'xlight'}
+          style={{ ...s.text, ...textStyle }}
+        >
           {children}
         </Text>
       </View>
@@ -35,7 +38,7 @@ Button.defaultProps = {
   textStyle: {},
   isBold: false,
   onPress: () => {},
-  children: undefined
+  children: undefined,
 };
 
 const s = StyleSheet.create({
