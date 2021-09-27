@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { Text, TextInput } from '#components';
-import { Like, Reply } from '#components/icon';
+import { Like, Reply, NotLike } from '#components/icon';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -148,7 +148,14 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
           <View style={s.bottomSection}>
             <View style={s.bottomInfoPlacer}>
               <View style={s.likeSection}>
-                <Like onPress={onPressLike} />
+                {isLike === 1 ? (
+                  <Like
+                    onPress={onPressLike}
+                    iconStyle={{ tintColor: '#e77' }}
+                  />
+                ) : (
+                  <NotLike onPress={onPressLike} />
+                )}
                 <Text style={s.likeText}>{likeCount}</Text>
               </View>
 

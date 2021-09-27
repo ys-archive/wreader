@@ -25,6 +25,7 @@ import Reply from './Reply';
 import Plus from './Plus';
 import Photo from './Photo';
 import Unlike from './Unlike';
+import NotLike from './NotLike';
 
 export {
   AddImage,
@@ -54,4 +55,5 @@ export {
   Plus,
   Photo,
   Unlike,
+  NotLike
 };

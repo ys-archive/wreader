@@ -38,6 +38,7 @@ export const person2Icon = require('!images/person2-icon.png');
 export const photoIcon = require('!images/photo-icon.png');
 export const sortIcon = require('!images/sort-icon.png');
 export const unlikeIcon = require('!images/unlike-icon.png');
+export const notlikeIcon = require('!images/not-like.png');
 export const wreaderCircleLogo = require('!images/wreader-circle-logo.png');
 export const plusIcon = require('!images/plus.png');
 
