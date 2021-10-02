@@ -1,6 +1,11 @@
 import React, { useCallback, useRef } from 'react';
 import { View, Platform } from 'react-native';
-import { StyleSheet, TextInput, Button, RenderError } from '../../../components';
+import {
+  StyleSheet,
+  TextInput,
+  Button,
+  RenderError,
+} from '../../../components';
 
 import {
   widthPercentageToDP as wp,
@@ -17,25 +22,54 @@ import { useWriteChapterCardForm } from './useWriteChapterCardForm';
 import { useNavigation } from '@react-navigation/native';
 
 import { StyleDefine } from '../../../constants';
+import { DEPTH_NAME } from '../../../store/reducers/swiper.depth';
 
 const initStates = () => {
   const userId = useStoreState(selAuth.userId);
   const updateHasNew = useStoreActions(actData.updateHasNew);
+  const fetchOneChapter = useStoreActions(actData.fetchOneChapter);
+  const fetchOneUserChapter = useStoreActions(actData.fetchOneUserChapter);
+  const fetchOneNext = useStoreActions(actData.fetchOneNext);
+
   return {
     userId,
     updateHasNew,
+    fetchOneChapter,
+    fetchOneUserChapter,
+    fetchOneNext,
   };
 };
 
 const WriteCardForm = ({ chapterId, categoryId, depth, children }) => {
   const nav = useNavigation();
 
-  const { userId, updateHasNew } = initStates();
+  const {
+    userId,
+    updateHasNew,
+    fetchOneChapter,
+    fetchOneUserChapter,
+    fetchOneNext,
+  } = initStates();
 
   const afterFormSubmitted = () => {
     console.log('depth in WriteCard -->', depth);
-    if (depth === 2) updateHasNew({ d2: true });
-    if (depth === 3) updateHasNew({ d3: true });
+    switch (depth) {
+      case DEPTH_NAME.CHAPTER:
+        updateHasNew({ d0: true });
+        fetchOneChapter();
+        break;
+
+      case DEPTH_NAME.USER_CHAPTER:
+        // updateHasNew({ d2: true });
+        fetchOneUserChapter();
+        break;
+
+      case DEPTH_NAME.NEXT:
+        // updateHasNew({ d3: true });
+        fetchOneNext();
+        break;
+    }
+
     nav?.goBack();
   };
 

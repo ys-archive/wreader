@@ -88,7 +88,7 @@ export const useFetchAll = () => {
         await fetchRecursively(deck, states.userId, states.addChapterChild);
       });
 
-      states.setMaxCoords({ d1: states.chapters });
+      // states.setMaxCoords({ d1: states.chapters });
       states.setMaxCoords({ d2: states.chapters });
       states.setMaxCoords({ d3: states.chapters });
       states.updateAll(false);

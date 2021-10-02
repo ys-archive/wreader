@@ -102,10 +102,10 @@ const WriteChapterCard = ({ route }) => {
           /> */}
           <View style={{ marginTop: '20%', marginBottom: hp('4%') }} />
 
-          <Text isBold style={s.chapterText}>
+          <Text fontFamily="semibold" style={s.chapterText}>
             CHAPTER&nbsp;&nbsp;
-            <Text isBold style={s.chapterNumberText}>
-              {order + 1}
+            <Text fontFamily="regular" style={s.chapterNumberText}>
+              {order}
             </Text>
           </Text>
 

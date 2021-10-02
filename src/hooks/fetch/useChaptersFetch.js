@@ -70,6 +70,7 @@ export const useChaptersFetch = () => {
       startLoading('d1');
 
       // resetChapter();
+      updateHasNew({ d1: false });
 
       // 챕터 데이터 정제 및 저장
       chapters = Object.values(categories)
@@ -94,6 +95,6 @@ export const useChaptersFetch = () => {
     if (!isLoaded.d1) return;
 
     updateHasNew({ d1: false });
-    setMaxCoords({ d1: chapters });
+    // setMaxCoords({ d1: chapters });
   }, [isLoaded.d1, chapters]);
 };

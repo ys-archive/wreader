@@ -44,10 +44,11 @@ export const useSwipeUp = swipe => {
 
           swipe('up', () => {
             increaseCoords('d0');
-            setMaxCoords({ d1: chapters });
-            // todo: ㅇㅣㅁ시코드
-            if (coords.d0 < 2)
+            // setMaxCoords({ d1: chapters });
+            setMaxCoords({ d1: categories[coords.d0].maxLength });
+            if (coords.d0 < 2) {
               updateHasNew({ d2: chapters });
+            }
           });
         };
 
@@ -60,7 +61,7 @@ export const useSwipeUp = swipe => {
               categoryId: coords.d0,
               chapterId: +chapters[coords.d0][coords.d1].deck.id,
               order: coords.d1,
-              depth: 2,
+              depth: DEPTH_NAME.USER_CHAPTER,
             });
             return;
           }
@@ -83,8 +84,8 @@ export const useSwipeUp = swipe => {
               categoryTitle: categories[coords.d0].title,
               categoryId: coords.d0,
               chapterId: +chapters[coords.d0][coords.d1].deck.id,
-              order: coords.d1,
-              depth: 2,
+              order: coords.d1 + 1,
+              depth: DEPTH_NAME.USER_CHAPTER,
             });
             return;
           }
@@ -104,16 +105,5 @@ export const useSwipeUp = swipe => {
       default:
         throw new Error('depth 는 0~3 사이만 가능 depth: ', depth);
     }
-
-    // if (
-    //   lastCandidateIdx !== 0 &&
-    //   currentCandidateIdx + 1 === lastCandidateIdx
-    // ) {
-    //   setTimeout(() => {
-    //     console.log('새 카드 작성 후 위치 복귀');
-    //     forceSwipeVertically('down');
-    //     swipeToDown();
-    //   }, 1000);
-    // }
   };
 };

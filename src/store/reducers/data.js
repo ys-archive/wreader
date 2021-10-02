@@ -1,6 +1,7 @@
 import { action, computed, thunk } from 'easy-peasy';
 import ChapterService from '../../services/ChapterService';
 import * as _ from 'lodash';
+import { State } from 'react-native-gesture-handler';
 
 export default {
   categories: [],
@@ -138,6 +139,12 @@ export default {
     }
   }),
 
+  // addCategory: thunk(async (actions, payload, { getState, getStoreState }) => {
+  //   actions.addCategory_intenal(payload);
+  //   const { setMaxCoords } = getStoreState().swiper;
+  //   setMaxCoords
+  // }),
+
   resetChapter: action((state, payload) => {
     state.chapters = [];
     state.originalChapters = [];
@@ -200,9 +207,21 @@ export default {
     // state.chapters[d0][d1].deck = card;
     // state.originalChapters[d0][d1].deck = card;
 
+    const lastLen = state.chapters[d0].length;
     card.forEach((c, i) => {
-      state.chapters[d0][i].deck = c;
-      state.originalChapters[d0][i].deck = c;
+      if (lastLen === i) {
+        console.log('새로운 카드중 마지막 추가! ', lastLen, i);
+        state.chapters[d0].push({ deck: c, child: [] });
+        const added = state.chapters[d0].shift();
+        state.chapters[d0].push(added);
+        
+        state.originalChapters[d0].push({ deck: c, child: [] });
+        const addedOrig = state.originalChapters[d0].shift();
+        state.originalChapters[d0].push(addedOrig);
+      } else {
+        state.chapters[d0][i].deck = c;
+        state.originalChapters[d0][i].deck = c;
+      }
     });
   }),
 
@@ -218,6 +237,11 @@ export default {
       const { d0, d1 } = coords.val;
 
       const filteredData = data.item.filter(i => +i.categoryId - 5 === d0);
+
+      if (filteredData.length === getState().chapters[d0].length) {
+        await delay(1000);
+        await actions.fetchOneChapter();
+      }
 
       // actions.addOneChapter({ d0, d1, card: filteredData[d1] });
       actions.addOneChapter({ d0, d1, card: filteredData });

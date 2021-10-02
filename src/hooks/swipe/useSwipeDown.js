@@ -3,6 +3,7 @@ import { useSwipeStates } from './useSwipeStates';
 
 export const useSwipeDown = swipe => {
   const {
+    categories,
     chapters,
     isLoaded,
 
@@ -28,7 +29,7 @@ export const useSwipeDown = swipe => {
 
           swipe('down', () => {
             decreaseCoords('d0');
-            setMaxCoords({ d1: chapters });
+            setMaxCoords({ d1: categories[coords.d0].maxLength });
           });
         };
 

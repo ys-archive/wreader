@@ -77,7 +77,7 @@ const CardsRenderer = () => {
         <ChapterCard
           data={chapters[d0][d1].child[d2].child[d3].deck}
           categoryTitle={categories[d0].title}
-          order={d3 + 1}
+          order={d3 + 1 + d1}
         />
       );
       break;

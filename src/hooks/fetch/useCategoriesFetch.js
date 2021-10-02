@@ -2,11 +2,10 @@ import React from 'react';
 import { delay } from '../../utils';
 
 import { useStoreState, useStoreActions } from 'easy-peasy';
-import { selAuth, selData } from '../../store/selectors';
+import { selAuth, selData, selSwiper } from '../../store/selectors';
 import { actData, actSwiper } from '../../store/actions';
 
 import ChapterService from '../../services/ChapterService';
-import { isLoaded } from 'expo-font';
 
 const initStates = () => {
   // actions
@@ -14,6 +13,8 @@ const initStates = () => {
   const hasNew = useStoreState(selData.hasNew);
 
   const isLoaded = useStoreState(selData.isLoaded);
+
+  const coords = useStoreState(selSwiper.coords);
 
   // - data
   const resetCategory = useStoreActions(actData.resetCategory);
@@ -30,6 +31,7 @@ const initStates = () => {
 
     userId,
     hasNew,
+    coords,
 
     resetCategory,
 
@@ -49,6 +51,7 @@ export const useCategoriesFetch = () => {
     isLoaded,
     userId,
     hasNew,
+    coords,
     setMaxCoords,
     resetCategory,
     addCategory,
@@ -61,12 +64,12 @@ export const useCategoriesFetch = () => {
     (async function fetchCategories() {
       if (!hasNew.d0) return;
 
-      // await delay(1);         
+      await delay(1);
 
       console.log('start fetching CATEGORY');
       startLoading('d0');
 
-      // resetCategory();
+      resetCategory();
 
       const { data } = await ChapterService.GET_getCategory(userId);
 
@@ -74,14 +77,11 @@ export const useCategoriesFetch = () => {
 
       // 카테고리 데이터 정제 및 저장
       categories = Object.values(data.item);
-      // .map(item => {
-      // delete item.chapter;
-      //   return item;
-      // });
 
       // 카테고리 값 업데이트 - d0
       categories.forEach(category => addCategory(category));
 
+      updateHasNew({ d0: false });
       finishLoading('d0');
     })();
   }, [userId, hasNew.d0]);
@@ -91,6 +91,11 @@ export const useCategoriesFetch = () => {
 
     updateHasNew({ d0: false });
     setMaxCoords({ d0: categories });
+    if (coords.d0 === 0) {
+      console.log('initial category maxLength: ', categories[0].maxLength);
+      setMaxCoords({ d1: categories[0].maxLength });
+    }
+
     // updateHasNew({ d1: true });
   }, [isLoaded.d0, categories]);
 };

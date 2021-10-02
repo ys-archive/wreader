@@ -41,17 +41,18 @@ export const useChapterCard_GoWritingCardDirectly = () => {
           categoryTitle: categories[coords.d0].title,
           categoryId: coords.d0,
           chapterId: +chapters[coords.d0][coords.d1].deck.id,
-          order: coords.d1,
+          order: coords.d1 + 1,
           depth: 2,
         });
         break;
 
       case DEPTH_NAME.NEXT:
+        // d3 는 0 부터 시작!
         nav.navigate(ScreenNames.MainWriteCard, {
           categoryTitle: categories[coords.d0].title,
           categoryId: +coords.d0,
-          chapterId: +chapters[coords.d0][coords.d1].child[coords.d2].deck.id,
-          order: coords.d3 + 2,
+          chapterId: +chapters[coords.d0][coords.d1 + 1].deck.id,
+          order: coords.d3 + 2 + coords.d1,
           depth: 3,
         });
         break;

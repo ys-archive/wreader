@@ -102,8 +102,9 @@ export default {
       }
 
       if ('d1' in payload) {
-        const chapters = payload.d1;
-        state.max.setD1(chapters[d0] ? chapters[d0].length : 0);
+        const maxLength = payload.d1;
+        state.max.setD1(maxLength);
+        // state.max.setD1(chapters[d0] ? chapters[d0].length : 0);
       }
 
       if ('d2' in payload) {

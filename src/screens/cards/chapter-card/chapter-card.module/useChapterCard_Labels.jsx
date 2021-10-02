@@ -1,7 +1,7 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { Text, StyleSheet } from '#components';
-import { colors, StyleDefine } from '#constants';
+import { colors } from '#constants';
 
 import { useStoreState } from 'easy-peasy';
 import { selSwiper } from '#store/selectors';

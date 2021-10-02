@@ -22,7 +22,9 @@ export const useSwipeLeft = swipe => {
 
     setMaxCoords,
   } = useSwipeStates();
+
   const nav = useNavigation();
+
   if (!isLoaded) return null;
 
   return () => {
@@ -31,7 +33,19 @@ export const useSwipeLeft = swipe => {
         return state => {
           // 현재 카테고리의 챕터
           if (!chapters[coords.d0]) {
-            console.log('해당 카테고리의 챕터가 존재하지 않음');
+            // console.log('해당 카테고리의 챕터가 존재하지 않음');
+            swipe('left', () => {
+              console.log(
+                '마지막 챕터!, 더이상 다음 챕터가 없어서 새 챕터 작성!',
+              );
+              nav.navigate(ScreenNames.MainWriteCard, {
+                categoryTitle: categories[coords.d0].title,
+                categoryId: coords.d0,
+                chapterId: 0,
+                order: coords.d1 + 1,
+                depth: DEPTH_NAME.CHAPTER,
+              });
+            });
             return;
           }
 
@@ -39,7 +53,7 @@ export const useSwipeLeft = swipe => {
             // 카테고리 -> 챕터 선택 (d0 -> d1)
             increaseDepth();
             // 각 챕터에 맞게 최대 챕터 설정 (d1)
-            console.log('ENTER INTO CHAPTERS');            
+            console.log('ENTER INTO CHAPTERS');
             // updateHasNew({ d2: true });
           });
         };
@@ -55,23 +69,27 @@ export const useSwipeLeft = swipe => {
           }
 
           // todo: 챕터는 유저가 직접 추가하지 않음
-          // if (maxCoords.d1 < 10) {
-          //   swipe('left', () => {
-          //     console.log(
-          //       '마지막 챕터!, 더이상 다음 챕터가 없어서 새 챕터 작성!',
-          //     );
-          //     // todo: 새 챕터 작성
-          //     nav.navigate(ScreenNames.MainWriteCard, {
-          //       categoryTitle: categories[coords.d0].title,
-          //       categoryId: coords.d0,
-          //       chapterId: 0,
-          //       order: coords.d1,
-          //     });
-          //   });
-          // }
+          if (
+            coords.d1 < maxCoords.d1 - 2 &&
+            coords.d1 + 1 === chapters[coords.d0].length
+          ) {
+            swipe('left', () => {
+              console.log(
+                '마지막 챕터!, 더이상 다음 챕터가 없어서 새 챕터 작성!',
+              );
+              nav.navigate(ScreenNames.MainWriteCard, {
+                categoryTitle: categories[coords.d0].title,
+                categoryId: coords.d0,
+                chapterId: 0,
+                order: coords.d1 + 2,
+                depth: DEPTH_NAME.CHAPTER,
+              });
+            });
+            return;
+          }
 
           swipe('left', () => {
-            increaseCoords('d1');            
+            increaseCoords('d1');
             updateHasNew({ d2: true });
             setMaxCoords({ d2: chapters });
           });
@@ -90,8 +108,8 @@ export const useSwipeLeft = swipe => {
               categoryId: coords.d0,
               chapterId:
                 +chapters[coords.d0][coords.d1].child[coords.d2].deck.id,
-              order: coords.d3 + 1,
-              depth: 3,
+              order: coords.d3 + 2 + coords.d1,
+              depth: DEPTH_NAME.NEXT,
             });
             return;
           }
@@ -119,8 +137,8 @@ export const useSwipeLeft = swipe => {
               categoryId: +coords.d0,
               chapterId:
                 +chapters[coords.d0][coords.d1].child[coords.d2].deck.id,
-              order: coords.d3 + 2,
-              depth: 3,
+              order: coords.d3 + 2 + coords.d1,
+              depth: DEPTH_NAME.NEXT,
             });
             return;
           }
