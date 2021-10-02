@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Modal } from 'react-native';
-import { Button, StyleSheet, Text, LocalImage } from '../';
+import { Alert } from '#components/alert';
+import { Button, StyleSheet, LocalImage } from '../';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
