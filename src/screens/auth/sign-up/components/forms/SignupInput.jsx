@@ -8,11 +8,6 @@ import { AuthService } from '#services';
 import { Email, LockPassword } from '#components/icon';
 import { colors } from '#constants';
 
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
-
 const SignupInput = ({
   values,
   onChange,
@@ -27,13 +22,13 @@ const SignupInput = ({
     const code = await AuthService.GET_CheckUserExists(email);
 
     if (code === 1) {
-      Alert('사용가능한 메일입니다.');
+      Alert('Valid Mail!');
       setFieldValue('isGoodToProceed', true);
       return;
     }
 
     if (code === 101) {
-      Alert('이미 사용중인 메일입니다. 다른 이메일을 입력해주세요');
+      Alert('This mail is already in use. please, use another email');
       setFieldValue('isGoodToProceed', false);
       setFieldValue('email', '');
       return;
@@ -42,12 +37,12 @@ const SignupInput = ({
 
   const checkValidPassword = () => {
     if (password === passwordRepeat) {
-      Alert('입력하신 비밀번호가 서로 같습니다.');
+      Alert('both passwords match!');
       setFieldValue('isGoodToProceed', true);
       return;
     }
 
-    Alert('입력하신 비밀번호가 서로 다릅니다.');
+    Alert('both passwords does not match!');
     setFieldValue('isGoodToProceed', false);
     setFieldValue('password', '');
     setFieldValue('passwordRepeat', '');

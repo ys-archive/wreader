@@ -14,7 +14,7 @@ export const useChapterCard_Labels = order => {
 
   const TheEndLabelJSX = depth === DEPTH_NAME.CHAPTER &&
     order + 1 === maxCoords.d1 && (
-      <Text isBold style={s.theEnd}>
+      <Text fontFamily="regular" style={s.theEnd}>
         THE END
       </Text>
     );
@@ -37,7 +37,7 @@ export const useChapterCard_Labels = order => {
 
   const FullStoryJSX = depth === DEPTH_NAME.CHAPTER &&
     order + 1 === maxCoords.d1 && (
-      <Text isBold style={s.fullStory}>
+      <Text fontFamily="regular" style={s.fullStory}>
         FULL&nbsp;STORY
         <Icon name="right" size={18} />
       </Text>
@@ -53,12 +53,12 @@ export const useChapterCard_Labels = order => {
 
 const s = StyleSheet.create({
   theEnd: {
-    fontSize: Platform.OS === 'android' ? 18 : 16,
-    color: colors.light.ivory3,
+    fontSize: Platform.OS === 'android' ? 20 : 18,
+    color: colors.light.ivory4,
 
     position: 'absolute',
-    top: '2%',
-    right: '4%',
+    top: '1.5%',
+    right: '3.5%',
   },
   // previous: {
   //   fontSize: Platform.OS === 'android' ? 20 : 18,
@@ -78,10 +78,10 @@ const s = StyleSheet.create({
   // },
   fullStory: {
     fontSize: Platform.OS === 'android' ? 20 : 18,
-    color: colors.light.ivory3,
+    color: colors.light.ivory4,
 
     position: 'absolute',
     bottom: '15%',
-    right: Platform.OS === 'android' ? '5%' : '2%',
+    right: Platform.OS === 'android' ? '4.5%' : '1.5%',
   },
 });
