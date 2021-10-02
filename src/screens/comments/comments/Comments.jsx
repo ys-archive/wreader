@@ -163,7 +163,7 @@ const Comments = ({ route }) => {
       <View style={s.root}>
         {/* Title */}
         <View style={s.topSection}>
-          <Text isBold style={s.title}>
+          <Text fontFamily="heavy" style={s.title}>
             COMMENTS
           </Text>
         </View>

@@ -60,17 +60,17 @@ const WriteCardForm = ({ chapterId, categoryId, depth, children }) => {
         break;
 
       case DEPTH_NAME.USER_CHAPTER:
-        // updateHasNew({ d2: true });
-        fetchOneUserChapter();
+        updateHasNew({ d2: true });
+        // fetchOneUserChapter();
         break;
 
       case DEPTH_NAME.NEXT:
-        // updateHasNew({ d3: true });
-        fetchOneNext();
+        updateHasNew({ d3: true });
+        // fetchOneNext();
         break;
     }
 
-    nav?.goBack();
+    nav.goBack();
   };
 
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
@@ -92,9 +92,13 @@ const WriteCardForm = ({ chapterId, categoryId, depth, children }) => {
           onChangeText={handleChange('sentence')}
           // if (e && e.length % 20 === 0) e = `${e}\n`;
           placeholder="Write a story for this chapter..."
-          placeholderTextColor="rgba(0, 0, 0, 0.2)"
+          placeholderTextColor={colors.light.ivory4}
         />
-        <RenderError touched={touched.sentence} errors={errors.sentence} />
+        <RenderError
+          touched={touched.sentence}
+          errors={errors.sentence}
+          color={colors.light.ivory3}
+        />
       </View>
 
       <View style={s.bottomSection}>

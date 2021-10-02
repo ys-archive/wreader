@@ -79,7 +79,7 @@ export const useUserChaptersFetch = () => {
 
       // console.log(coords);
 
-      if (coords.d0 >= 2) return;
+      // if (coords.d0 >= 2) return;
 
       // if (chapters[coords.d0][coords.d1]) return;
 

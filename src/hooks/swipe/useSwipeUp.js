@@ -60,7 +60,7 @@ export const useSwipeUp = swipe => {
               categoryTitle: categories[coords.d0].title,
               categoryId: coords.d0,
               chapterId: +chapters[coords.d0][coords.d1].deck.id,
-              order: coords.d1,
+              order: coords.d1 + 1,
               depth: DEPTH_NAME.USER_CHAPTER,
             });
             return;

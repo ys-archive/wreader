@@ -51,7 +51,7 @@ export const useChapterCard_GoWritingCardDirectly = () => {
         nav.navigate(ScreenNames.MainWriteCard, {
           categoryTitle: categories[coords.d0].title,
           categoryId: +coords.d0,
-          chapterId: +chapters[coords.d0][coords.d1 + 1].deck.id,
+          chapterId: +chapters[coords.d0][coords.d1 + 1 + coords.d3].deck.id,
           order: coords.d3 + 2 + coords.d1,
           depth: 3,
         });

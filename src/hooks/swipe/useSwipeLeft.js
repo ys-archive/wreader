@@ -122,6 +122,11 @@ export const useSwipeLeft = swipe => {
 
       case DEPTH_NAME.NEXT:
         return state => {
+          if (coords.d3 === maxCoords.d1) {
+            console.log('해당 카드가 마지막 챕터입니다!');
+            return;
+          }
+
           if (coords.d3 === maxCoords.d3 - 1) {
             if (maxCoords.d3 === 10) {
               swipe('right', () => {
