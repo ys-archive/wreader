@@ -2,7 +2,7 @@
   "expo": {
     "name": "wreader",
     "slug": "wreader",
-    "version": "1.0.19",
+    "version": "1.0.20",
     "orientation": "portrait",
     "icon": "./assets/images/app-icon.png",
     "assetBundlePatterns": [
@@ -12,7 +12,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.wreader.wreader-resource",
-      "buildNumber": "1.0.19",
+      "buildNumber": "1.0.20",
       "googleServicesFile": "./GoogleService-Info.plist",
       "splash": {
         "image": "./assets/images/splash@2x.png",
@@ -24,7 +24,7 @@
         "NSPhotoLibraryUsageDescription": "Wreader requires accessing your photo library to pick one and use it as a background image of a chapter card",
         "CFBundleAllowMixedLocalizations": false,
         "CFBundleIdentifier": "com.wreader.wreader-resource",
-        "useNonExemptEncryption": false,
+        "useNonExemptEncryption": false
       }
     },
     "android": {
