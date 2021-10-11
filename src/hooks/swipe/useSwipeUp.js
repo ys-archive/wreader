@@ -1,4 +1,5 @@
 import { DEPTH_NAME } from '../../store/reducers/swiper.depth';
+import { Alert } from '../../components/alert';
 import { useSwipeStates } from './useSwipeStates';
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '../../navigators/ScreenNames';
@@ -30,10 +31,12 @@ export const useSwipeUp = swipe => {
         return state => {
           if (coords.d0 === maxCoords.d0 - 1) {
             if (maxCoords.d0 !== 0) {
-              swipe('down', () => {
-                console.log('마지막 카테고리!, 이전 카드로 돌아감!');
-                decreaseCoords('d0');
-              });
+              Alert('You are at the last category!', 'Go Previous Category', () =>
+                swipe('down', () => {
+                  console.log('마지막 카테고리!, 이전 카드로 돌아감!');
+                  decreaseCoords('d0');
+                }),
+              );
             } else {
               console.log(
                 '마지막 카테고리!, 첫 카테고리라 이전으로 돌아가진 않음',
