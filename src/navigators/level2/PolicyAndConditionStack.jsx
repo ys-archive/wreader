@@ -25,7 +25,7 @@ const PolicyAndConditionStack = () => {
           title: 'TERMS OF USE',
           headerTitleStyle: {
             color: '#fff',
-            fontFamily: 'mont-heavy-demo',
+            fontFamily: 'mont-heavy',
             fontSize: 20,
             ...Platform.select({
               android: {

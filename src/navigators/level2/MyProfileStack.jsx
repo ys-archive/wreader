@@ -25,7 +25,7 @@ const MyProfileStack = () => {
           title: 'EDIT PROFILE',
           headerTitleStyle: {
             color: '#fff',
-            fontFamily: 'mont-heavy-demo',
+            fontFamily: 'mont-heavy',
             fontSize: 20,
             ...Platform.select({
               android: {

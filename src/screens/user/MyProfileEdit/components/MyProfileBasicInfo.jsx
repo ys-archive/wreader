@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { View, Platform } from 'react-native';
 import { StyleSheet, Text, TextInput, RenderError, Button } from '#components';
 import { Alert } from '#components/alert';
@@ -22,17 +22,25 @@ import { selAuth } from '../../../../store/selectors';
 const initialValues = {
   instagramUrl: '',
   facebookUrl: '',
-  introduction: '',
+  introduction1: '',
+  introduction2: '',
+  introduction3: '',
 };
 
 const validationSchema = Yup.object({
   instagramUrl: Yup.string(),
   facebookUrl: Yup.string(),
-  introduction: Yup.string().max(50, '최대 50자까지 작성 하실 수 있습니다.'),
+  introduction1: Yup.string(),
+  introduction2: Yup.string(),
+  introduction3: Yup.string(),
 });
 
 const MyProfileBasicInfo = () => {
   const nav = useNavigation();
+
+  const bioTextInputRef1 = useRef(null);
+  const bioTextInputRef2 = useRef(null);
+  const bioTextInputRef3 = useRef(null);
 
   const userId = useStoreState(selAuth.userId);
   const password = useStoreState(selAuth.password);
@@ -44,7 +52,14 @@ const MyProfileBasicInfo = () => {
   const toggleEditingUserInfo = () => setEditingUserInfo(prv => !prv);
 
   const onSubmit = async values => {
-    const { instagramUrl, facebookUrl, introduction } = values;
+    const {
+      instagramUrl,
+      facebookUrl,
+      introduction1,
+      introduction2,
+      introduction3,
+    } = values;
+    const introduction = '';
     const code = await UserService.PUT_updateUserInfo(
       userId,
       password,
@@ -55,9 +70,9 @@ const MyProfileBasicInfo = () => {
     );
 
     if (code === 1) {
-      Alert('프로필 업데이트됨!');
+      Alert('Profile successfully updated!');
     } else {
-      Alert('프로필 업데이트실패!');
+      Alert('Profile fails at updating!');
     }
 
     nav.navigate(ScreenNames.MainStack);
@@ -78,7 +93,13 @@ const MyProfileBasicInfo = () => {
     onSubmit,
   });
 
-  const { instagramUrl, facebookUrl, introduction } = values;
+  const {
+    instagramUrl,
+    facebookUrl,
+    introduction1,
+    introduction2,
+    introduction3,
+  } = values;
 
   useEffect(() => {
     // console.log(userInfo);
@@ -170,18 +191,60 @@ const MyProfileBasicInfo = () => {
               <View style={s.introInputs}>
                 <TextInput
                   style={{ ...s.textInput, ...s.textInputLast }}
-                  value={introduction}
-                  onBlur={handleBlur('introduction')}
-                  onChangeText={handleChange('introduction')}
+                  ref={bioTextInputRef1}
+                  value={introduction1}
+                  onBlur={handleBlur('introduction1')}
+                  onChangeText={e => {
+                    handleChange('introduction1')(e);
+
+                    if (e && e.length === 25) {
+                      bioTextInputRef2.current.focus();
+                    }
+                  }}
                   placeholder="let them know about you"
                 />
-                <TextInput style={s.dummyInput} />
-                <TextInput style={s.dummyInput} />
+                {/* <RenderError
+                  touched={touched.introduction1}
+                  errors={errors.introduction1}
+                /> */}
+
+                <TextInput
+                  style={{ ...s.textInput, ...s.textInputLast }}
+                  ref={bioTextInputRef2}
+                  value={introduction2}
+                  onBlur={handleBlur('introduction2')}
+                  onChangeText={e => {
+                    handleChange('introduction2')(e);
+
+                    if (e && e.length === 25) {
+                      bioTextInputRef3.current.focus();
+                    }
+                  }}
+                  onKeyPress={({ nativeEvent }) => {
+                    if (nativeEvent.key === 'Backspace') {
+                      if (introduction2.length === 0) {
+                        bioTextInputRef1.current.focus();
+                      }
+                    }
+                  }}
+                />
+
+                <TextInput
+                  style={{ ...s.textInput, ...s.textInputLast }}
+                  ref={bioTextInputRef3}
+                  value={introduction3}
+                  maxLength={25}
+                  onBlur={handleBlur('introduction3')}
+                  onChangeText={handleChange('introduction3')}
+                  onKeyPress={({ nativeEvent }) => {
+                    if (nativeEvent.key === 'Backspace') {
+                      if (introduction3.length === 0) {
+                        bioTextInputRef2.current.focus();
+                      }
+                    }
+                  }}
+                />
               </View>
-              <RenderError
-                touched={touched.introduction}
-                errors={errors.introduction}
-              />
             </>
           ) : (
             <Text
@@ -260,7 +323,7 @@ const s = StyleSheet.create({
     paddingLeft: 5,
     maxWidth: wp('45%'),
     minWidth: wp('45%'),
-    padding: 0,
+    // padding: 0,
     margin: 0,
   },
   textInputFirst: {
