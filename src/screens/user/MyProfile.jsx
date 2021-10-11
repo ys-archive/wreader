@@ -6,13 +6,7 @@ import { StyleSheet, Text } from '#components';
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '#navigators/ScreenNames';
 
-import {
-  Cancel,
-  Edit2,
-  Like,
-  Instagram,
-  Facebook,
-} from '#components/icon';
+import { Cancel, Edit2, Like, Instagram, Facebook } from '#components/icon';
 import { colors } from '#constants';
 
 import {
@@ -74,7 +68,7 @@ const MyProfile = () => {
         </View>
 
         <View style={s.userNamePlacer}>
-          <Text isBold style={s.userName}>
+          <Text fontFamily="semibold" style={s.userName}>
             {nick}
           </Text>
         </View>
@@ -92,7 +86,9 @@ const MyProfile = () => {
               }}
               isPressable={false}
             />
-            <Text style={s.socialText}>1500K</Text>
+            <Text fontFamily="regular" style={s.socialText}>
+              1500K
+            </Text>
           </View>
           <View style={s.social}>
             <Instagram
@@ -105,7 +101,9 @@ const MyProfile = () => {
                 tintColor: colors.light.ivory5,
               }}
             />
-            <Text style={s.socialText}>{instagram || 'NONE'}</Text>
+            <Text fontFamily="regular" style={s.socialText}>
+              {instagram || 'NONE'}
+            </Text>
           </View>
           <View style={s.social}>
             <Facebook
@@ -118,15 +116,15 @@ const MyProfile = () => {
                 tintColor: colors.light.ivory5,
               }}
             />
-            <Text style={s.socialText}>{facebook || 'NONE'}</Text>
+            <Text fontFamily="regular" style={s.socialText}>
+              {facebook || 'NONE'}
+            </Text>
           </View>
         </View>
 
         <View style={s.introductionSection}>
-          <Text style={s.introductionText}>
+          <Text fontFamily="regular" style={s.introductionText}>
             {intro || 'NONE'}
-            {/* Hello, I’m Jessica Momo It19 my hobbies to write some stories. Love
-            to share my stories. */}
           </Text>
         </View>
       </View>

@@ -32,12 +32,12 @@ const validationSchema = Yup.object({
 });
 
 const MyProfileBasicInfo = () => {
-  // TODO: 기본 Profile 정보 불러와 로드하기
   const nav = useNavigation();
+
   const userId = useStoreState(selAuth.userId);
   const password = useStoreState(selAuth.password);
   const userInfo = useStoreState(selAuth.info);
-  
+
   const { nick, instagram, facebook, intro } = userInfo;
 
   const [isEditingUserInfo, setEditingUserInfo] = useState(false);
@@ -93,7 +93,7 @@ const MyProfileBasicInfo = () => {
 
   return (
     <View style={s.root}>
-      <Text isBold style={s.title}>
+      <Text fontFamily="heavy" style={s.title}>
         INFORMATION
       </Text>
 
@@ -106,7 +106,9 @@ const MyProfileBasicInfo = () => {
 
       <View style={s.inputSection}>
         <View style={[s.inputView, { paddingTop: 0 }]}>
-          <Text style={s.infoPlaceholder}>INSTAGRAM</Text>
+          <Text fontFamily="regular" style={s.infoPlaceholder}>
+            INSTAGRAM
+          </Text>
           {isEditingUserInfo ? (
             <>
               <TextInput
@@ -122,12 +124,16 @@ const MyProfileBasicInfo = () => {
               />
             </>
           ) : (
-            <Text style={s.infoText}>{instagram || 'NONE'}</Text>
+            <Text fontFamily="regular" style={s.infoText}>
+              {instagram || 'NONE'}
+            </Text>
           )}
         </View>
 
         <View style={s.inputView}>
-          <Text style={s.infoPlaceholder}>FACEBOOK</Text>
+          <Text fontFamily="regular" style={s.infoPlaceholder}>
+            FACEBOOK
+          </Text>
           {isEditingUserInfo ? (
             <>
               <TextInput
@@ -143,14 +149,20 @@ const MyProfileBasicInfo = () => {
               />
             </>
           ) : (
-            <Text style={{ ...s.infoText, ...s.infoTextSecond }}>
+            <Text
+              fontFamily="regular"
+              style={{ ...s.infoText, ...s.infoTextSecond }}
+            >
               {facebookUrl || 'NONE'}
             </Text>
           )}
         </View>
 
         <View style={s.inputView}>
-          <Text style={[s.infoPlaceholder, { alignSelf: 'flex-start' }]}>
+          <Text
+            fontFamily="regular"
+            style={[s.infoPlaceholder, { alignSelf: 'flex-start' }]}
+          >
             BIO
           </Text>
           {isEditingUserInfo ? (
@@ -172,7 +184,10 @@ const MyProfileBasicInfo = () => {
               />
             </>
           ) : (
-            <Text style={{ ...s.infoText, ...s.infoTextLast }}>
+            <Text
+              fontFamily="regular"
+              style={{ ...s.infoText, ...s.infoTextLast }}
+            >
               {intro || 'NONE'}
             </Text>
           )}

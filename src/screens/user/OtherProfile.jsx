@@ -27,7 +27,7 @@ const OtherProfile = ({ route }) => {
 
   if (!data || !data.item) return null;
 
-  console.log(data.item);
+  console.log('Other Profile: ', data.item);
 
   const { nick, instagram, facebook, intro } = data.item;
   let path = '';
@@ -68,7 +68,7 @@ const OtherProfile = ({ route }) => {
         </View>
 
         <View style={s.userNamePlacer}>
-          <Text isBold style={s.userName}>
+          <Text fontFamily="semibold" style={s.userName}>
             {nick}
           </Text>
         </View>
@@ -86,7 +86,9 @@ const OtherProfile = ({ route }) => {
               }}
               isPressable={false}
             />
-            <Text style={s.socialText}>1500K</Text>
+            <Text fontFamily="regular" style={s.socialText}>
+              1500K
+            </Text>
           </View>
           <View style={s.social}>
             <Instagram
@@ -99,7 +101,9 @@ const OtherProfile = ({ route }) => {
                 tintColor: colors.light.ivory5,
               }}
             />
-            <Text style={s.socialText}>{instagram || 'NONE'}</Text>
+            <Text fontFamily="regular" style={s.socialText}>
+              {instagram || 'NONE'}
+            </Text>
           </View>
           <View style={s.social}>
             <Facebook
@@ -112,12 +116,16 @@ const OtherProfile = ({ route }) => {
                 tintColor: colors.light.ivory5,
               }}
             />
-            <Text style={s.socialText}>{facebook || 'NONE'}</Text>
+            <Text fontFamily="regular" style={s.socialText}>
+              {facebook || 'NONE'}
+            </Text>
           </View>
         </View>
 
         <View style={s.introductionSection}>
-          <Text style={s.introductionText}>{intro || 'NONE'}</Text>
+          <Text fontFamily="regular" style={s.introductionText}>
+            {intro || 'NONE'}
+          </Text>
         </View>
       </View>
     </SafeAreaView>

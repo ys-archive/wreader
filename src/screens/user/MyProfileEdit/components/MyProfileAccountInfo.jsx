@@ -33,7 +33,7 @@ const MyProfileAccountInfo = () => {
         onPress={toggleEditingUserName}
       />
 
-      <Text isBold style={s.title}>
+      <Text fontFamily="heavy" style={s.title}>
         ACCOUNT INFO
       </Text>
 
@@ -46,8 +46,8 @@ const MyProfileAccountInfo = () => {
 
       <View style={s.accountInfoSection}>
         <View style={s.emailView}>
-          <Text style={s.infoPlaceholder}>E-MAIL</Text>
-          <Text style={s.emailText}>{email}</Text>
+          <Text fontFamily="regular" style={s.infoPlaceholder}>E-MAIL</Text>
+          <Text fontFamily="regular" style={s.emailText}>{email}</Text>
         </View>
         <View style={s.passwordView}>
           <MyProfilePassword isEditingPassword={isEditingPassword} />

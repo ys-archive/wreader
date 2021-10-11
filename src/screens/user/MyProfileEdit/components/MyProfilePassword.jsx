@@ -92,7 +92,7 @@ const MyProfilePassword = ({ isEditingPassword }) => {
 
   return (
     <View style={s.root}>
-      <Text style={s.infoPlaceholder}>PW</Text>
+      <Text fontFamily="regular" style={s.infoPlaceholder}>PW</Text>
       <View style={s.inputSection}>
         {isEditingPassword ? (
           <>
@@ -114,7 +114,7 @@ const MyProfilePassword = ({ isEditingPassword }) => {
             </Button>
           </>
         ) : (
-          <Text style={s.passwordText}>
+          <Text fontFamily="regular" style={s.passwordText}>
             {new Array(currentPasswordLength).fill('*').map(letter => letter)}
           </Text>
         )}
