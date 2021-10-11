@@ -94,13 +94,17 @@ const WriteChapterCard = ({ route }) => {
           }}
         >
           {/* todo: 현재 새 카드의 title 은 사용하지 않음 */}
-          {/* <TextInput
-            style={s.titleInput}
-            placeholder={'Title'}
-            placeholderTextColor="rgba(0, 0, 0, 0.2)"
-            editable={false}
-          /> */}
-          <View style={{ marginTop: '20%', marginBottom: hp('4%') }} />
+          <Text fontFamily="heavy" style={s.categoryTitle}>
+            {categoryTitle}
+          </Text>
+          <View
+            style={{
+              marginTop: '3%',
+              marginBottom: '7%',
+              minHeight: 1.5,
+              backgroundColor: '#000',
+            }}
+          />
 
           <Text fontFamily="semibold" style={s.chapterText}>
             CHAPTER&nbsp;&nbsp;
@@ -125,6 +129,12 @@ const WriteChapterCard = ({ route }) => {
 export default WriteChapterCard;
 
 const s = StyleSheet.create({
+  categoryTitle: {
+    marginTop: hp('5%'),
+    fontSize: 33,
+    // color: colors.light.ivory4,
+  },
+
   titleInput: {
     maxWidth: '50%',
     minWidth: '50%',
