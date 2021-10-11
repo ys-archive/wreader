@@ -1,38 +1,38 @@
-import React from 'react';
-import { SafeAreaView, View, TouchableOpacity, Image } from 'react-native';
-import { Alert, AlertRequireLogin } from '#components/alert';
-import { colors } from '#constants';
-import { Cancel, Arrow, Person2 } from '#components/icon';
+import React from "react"
+import { SafeAreaView, View, TouchableOpacity, Image } from "react-native"
+import { Alert, AlertRequireLogin } from "#components/alert"
+import { colors } from "#constants"
+import { Cancel, Arrow, Person2 } from "#components/icon"
 import {
   // widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+} from "react-native-responsive-screen"
 import {
   DrawerContentScrollView,
   // DrawerItemList,
   // DrawerItem,
-} from '@react-navigation/drawer';
-import { StyleSheet, Text } from '#components';
-import * as ScreenNames from '../ScreenNames';
+} from "@react-navigation/drawer"
+import { StyleSheet, Text } from "#components"
+import * as ScreenNames from "../ScreenNames"
 
-import { useStoreActions, useStoreState } from 'easy-peasy';
-import { actAuth, actImage } from '../../store/actions';
-import { selImage, selAuth } from '../../store/selectors';
+import { useStoreActions, useStoreState } from "easy-peasy"
+import { actAuth, actImage } from "../../store/actions"
+import { selImage, selAuth } from "../../store/selectors"
 
-import { useProfileImageLoader } from '../../hooks';
-import { useCardResetToStartScreen } from '../../screens/cards/useCardResetToStartScreen';
+import { useProfileImageLoader } from "../../hooks"
+import { useCardResetToStartScreen } from "../../screens/cards/useCardResetToStartScreen"
 
 const initStates = () => {
-  const isLoggedIn = useStoreState(selAuth.isLoggedIn);
-  const userInfo = useStoreState(selAuth.info);
-  const profileImageUrl = useStoreState(selImage.profile);
+  const isLoggedIn = useStoreState(selAuth.isLoggedIn)
+  const userInfo = useStoreState(selAuth.info)
+  const profileImageUrl = useStoreState(selImage.profile)
 
-  const nick = userInfo?.nick || 'SIGN IN';
+  const nick = userInfo?.nick || "SIGN IN"
 
-  const logout = useStoreActions(actAuth.logout);
-  const resetProfile = useStoreActions(actImage.resetProfile);
+  const logout = useStoreActions(actAuth.logout)
+  const resetProfile = useStoreActions(actImage.resetProfile)
 
-  const resetMain = useCardResetToStartScreen();
+  const resetMain = useCardResetToStartScreen()
 
   return {
     isLoggedIn,
@@ -42,11 +42,11 @@ const initStates = () => {
     logout,
     resetProfile,
     resetMain,
-  };
-};
+  }
+}
 
 const DrawerTop = props => {
-  const { navigation: nav } = props;
+  const { navigation: nav } = props
   const {
     isLoggedIn,
     userInfo,
@@ -55,29 +55,31 @@ const DrawerTop = props => {
     logout,
     resetProfile,
     resetMain,
-  } = initStates();
+  } = initStates()
 
   // 프로필 이미지 로드
-  useProfileImageLoader();
+  useProfileImageLoader()
 
   const onPressProfileImage = () => {
     isLoggedIn
       ? nav.navigate(ScreenNames.MyProfileStack) // true -> 프로필 스크린으로 이동
-      : RequireLoginAlert(); // false -> 로그인 확인 메시지
-  };
+      : Alert("Need login to see your profile", "close", () =>
+          nav.navigate(ScreenNames.SigninStack),
+        ) // false -> 로그인 확인 메시지
+  }
 
   const onPressUserName = () => {
-    if (nick === 'SIGN IN') {
-      nav.navigate(ScreenNames.SigninStack);
+    if (nick === "SIGN IN") {
+      nav.navigate(ScreenNames.SigninStack)
     }
-  };
+  }
 
   const onLogout = () => {
-    Alert("You've logged out");
-    resetProfile();
-    logout();
-    nav.closeDrawer();
-  };
+    Alert("You've logged out")
+    resetProfile()
+    logout()
+    nav.closeDrawer()
+  }
 
   return (
     <DrawerContentScrollView {...props} contentContainerStyle={s.root}>
@@ -125,8 +127,8 @@ const DrawerTop = props => {
           <TouchableOpacity
             style={s.drawerItem}
             onPress={() => {
-              nav.navigate(ScreenNames.MainStack);
-              resetMain();
+              nav.navigate(ScreenNames.MainStack)
+              resetMain()
             }}
           >
             <Text fontFamily="heavy" style={s.drawerItemText}>
@@ -208,10 +210,10 @@ const DrawerTop = props => {
         {/* <DrawerItem label="help" onPress={() => console.log('help clicked')} /> */}
       </SafeAreaView>
     </DrawerContentScrollView>
-  );
-};
+  )
+}
 
-export default DrawerTop;
+export default DrawerTop
 
 const s = StyleSheet.create({
   root: {
@@ -219,10 +221,10 @@ const s = StyleSheet.create({
     flex: 1,
   },
   elementPlacer: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
+    flexDirection: "row",
+    alignItems: "flex-end",
     backgroundColor: colors.light.ivory5,
-    minHeight: '14.9%',
+    minHeight: "14.9%",
     paddingLeft: 26.7,
     paddingBottom: 20,
     borderBottomStartRadius: 20,
@@ -237,30 +239,30 @@ const s = StyleSheet.create({
     maxHeight: 18,
   },
   closeDrawerPlacer: {
-    position: 'absolute',
-    right: '6.8%',
-    top: '6.4%',
+    position: "absolute",
+    right: "6.8%",
+    top: "6.4%",
   },
   userNamePlacer: {
-    position: 'absolute',
+    position: "absolute",
     marginLeft: 11,
     top: -30,
   },
   userName: {
-    color: 'white',
+    color: "white",
     fontSize: 18,
   },
   drawerView: {
     backgroundColor: colors.light.ivory1,
-    minHeight: '100%',
-    position: 'relative',
+    minHeight: "100%",
+    position: "relative",
     top: -50,
   },
   drawerPlacer: {
-    minHeight: hp('4.9%') + 50,
+    minHeight: hp("4.9%") + 50,
   },
   drawerItem: {
-    marginLeft: '8.9%',
+    marginLeft: "8.9%",
   },
   drawerItemText: {
     fontSize: 18,
@@ -273,16 +275,16 @@ const s = StyleSheet.create({
     maxHeight: 13,
   },
   drawerItemArrowPlacer: {
-    position: 'absolute',
-    right: '5%',
+    position: "absolute",
+    right: "5%",
     top: 0,
   },
   separator: {
-    maxWidth: '100%',
+    maxWidth: "100%",
     minHeight: 1,
     backgroundColor: colors.light.ivory5,
-    marginLeft: '5.9%',
-    marginTop: '2%',
-    marginBottom: '10.8%',
+    marginLeft: "5.9%",
+    marginTop: "2%",
+    marginBottom: "10.8%",
   },
-});
+})
