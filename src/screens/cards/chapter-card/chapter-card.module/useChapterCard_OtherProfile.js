@@ -9,5 +9,5 @@ export const useChapterCard_OtherProfile = otherUserId => {
     nav.navigate(ScreenNames.MainOtherProfile, {
       userId: otherUserId,
     });
-  }, []);
+  }, [otherUserId]);
 };

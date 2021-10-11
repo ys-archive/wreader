@@ -214,7 +214,7 @@ export default {
         state.chapters[d0].push({ deck: c, child: [] });
         const added = state.chapters[d0].shift();
         state.chapters[d0].push(added);
-        
+
         state.originalChapters[d0].push({ deck: c, child: [] });
         const addedOrig = state.originalChapters[d0].shift();
         state.originalChapters[d0].push(addedOrig);
@@ -284,10 +284,11 @@ export default {
   ),
 
   addOneNext: action((state, payload) => {
-    const { d0, d1, d2, d3, card } = payload;
+    const { d0, d1, d2, card } = payload;
 
     // state.chapters[d0][d1].child[d2].child[d3].deck = card;
     // state.originalChapters[d0][d1].child[d2].child[d3].deck = card;
+    
     card.forEach((c, i) => {
       state.chapters[d0][d1].child[d2].child[i].deck = c;
       state.originalChapters[d0][d1].child[d2].child[i].deck = c;
@@ -315,10 +316,11 @@ export default {
   }),
 
   sortUserChapter_internal: action((state, payload) => {
-    const { d0, d1, d2 } = payload;
+    const { d0, d1 } = payload;
     let sorted = undefined;
 
     if (!state.isUserChaptersSorted) {
+      // 업데이트 날짜로 정렬
       sorted = state.chapters[d0][d1].child.sort((a, b) => {
         const bStr = b.deck.updateDt;
         const bb = new Date(
@@ -345,6 +347,7 @@ export default {
         return bb - aa;
       });
     } else {
+      // like count 로 정렬
       // sorted = state.chapters[d0][d1].child.sort(
       //   (a, b) => {
       //     const bb = +b.deck.like_count;
