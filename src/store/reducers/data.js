@@ -1,7 +1,7 @@
 import { action, computed, thunk } from 'easy-peasy';
 import ChapterService from '../../services/ChapterService';
 import * as _ from 'lodash';
-import { State } from 'react-native-gesture-handler';
+import { delay } from '../../utils';
 
 export default {
   categories: [],

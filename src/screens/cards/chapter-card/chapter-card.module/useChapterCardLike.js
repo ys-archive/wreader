@@ -1,3 +1,5 @@
+import { Alert } from '../../../../components/alert';
+
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { selAuth, selImage, selSwiper } from '#store/selectors';
 import { actData } from '#store/actions';
