@@ -233,7 +233,7 @@ const s = StyleSheet.create({
   },
 
   title: {
-    fontSize: 27,
+    fontSize: 22,
     // color: colors.light.ivory4,
   },
   separator: {
@@ -256,17 +256,17 @@ const s = StyleSheet.create({
     color: colors.light.ivory5,
   },
   chapterOrderText: {
-    fontSize: 26,
+    fontSize: 22,
     color: colors.light.ivory5,
     marginLeft: '8%',
-    marginTop: '-6%',
+    marginTop: '-3%',
   },
   contentSection: {
     paddingHorizontal: wp('5.5%'),
     paddingVertical: hp('6.1%'),
   },
   contentText: {
-    fontSize: 22,
+    fontSize: 25,
     lineHeight: 35,
     // color: colors.light.ivory4
   },
