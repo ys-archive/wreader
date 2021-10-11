@@ -58,7 +58,7 @@ const DrawerTop = props => {
   } = initStates()
 
   // 프로필 이미지 로드
-  useProfileImageLoader()
+  useProfileImageLoader(isLoggedIn)
 
   const onPressProfileImage = () => {
     isLoggedIn

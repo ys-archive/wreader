@@ -1,16 +1,16 @@
-import React from 'react';
-import { View } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { StyleSheet, Text } from '#components';
+import React from "react"
+import { View } from "react-native"
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
+import { StyleSheet, Text } from "#components"
 
-import { colors } from '#constants';
+import { colors } from "#constants"
 
-import Signup2Form from './components/Signup2Form';
-import SignupPolicyTexts from '../sign-up/components/SignupPolicyTexts';
+import Signup2Form from "./components/Signup2Form"
+import SignupPolicyTexts from "../sign-up/components/SignupPolicyTexts"
 
 const Signup2 = ({ route }) => (
-  <KeyboardAwareScrollView contentContainerStyle={s.root}>
-    <View style={s.placer}>
+  <View style={s.root}>
+    <KeyboardAwareScrollView contentContainerStyle={s.placer}>
       <SignupPolicyTexts
         title="CREATE ACCOUNT"
         subtitle="WELCOME TO W.READER"
@@ -19,11 +19,11 @@ const Signup2 = ({ route }) => (
         basicInfo="BASIC INFO"
       />
       <Signup2Form route={route} />
-    </View>
-  </KeyboardAwareScrollView>
-);
+    </KeyboardAwareScrollView>
+  </View>
+)
 
-export default Signup2;
+export default Signup2
 
 const s = StyleSheet.create({
   root: {
@@ -31,13 +31,13 @@ const s = StyleSheet.create({
     backgroundColor: colors.light.background,
   },
   placer: {
-    flex: 1,
-    height: '100%',
-    marginHorizontal: '5.7%',
+    // flex: 1,
+    height: "100%",
+    marginHorizontal: "5.7%",
     ...Platform.select({
       android: {
-        marginTop: '7%',
+        marginTop: "7%",
       },
     }),
   },
-});
+})

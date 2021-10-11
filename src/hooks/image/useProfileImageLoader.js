@@ -1,22 +1,22 @@
-import React, { useEffect } from 'react';
-import firebase from 'firebase';
-import * as FileSystem from 'expo-file-system';
+import React, { useEffect } from "react"
+import firebase from "firebase"
+import * as FileSystem from "expo-file-system"
 
-import { useStoreActions, useStoreState } from 'easy-peasy';
-import { selImage } from '../../store/selectors';
-import { actImage } from '../../store/actions';
+import { useStoreActions, useStoreState } from "easy-peasy"
+import { selImage } from "../../store/selectors"
+import { actImage } from "../../store/actions"
 
-export const useProfileImageLoader = () => {
-  const setProfile = useStoreActions(actImage.setProfile);
-  const isProfileUploaded = useStoreState(selImage.isProfileUploaded);
+export const useProfileImageLoader = isLoggedIn => {
+  const setProfile = useStoreActions(actImage.setProfile)
+  const isProfileUploaded = useStoreState(selImage.isProfileUploaded)
 
   useEffect(() => {
     async function loadProfileImage() {
-      const ref = firebase.storage().ref().child('profileImage');
-      setProfile(await ref.getDownloadURL());
+      const ref = firebase.storage().ref().child("profileImage")
+      setProfile(await ref.getDownloadURL())
     }
 
-    loadProfileImage();
+    if (isLoggedIn) loadProfileImage()
 
     // (async function loadLocalImage() {
     //   const ref = firebase.database().ref().child('profileImage');
@@ -43,5 +43,5 @@ export const useProfileImageLoader = () => {
     //     }
     //   });
     // })();
-  }, [setProfile, isProfileUploaded]);
-};
+  }, [setProfile, isProfileUploaded])
+}
