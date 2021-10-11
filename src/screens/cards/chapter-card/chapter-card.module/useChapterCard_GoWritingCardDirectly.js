@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { Alert } from '#components/alert';
+import { Alert, AlertRequireLogin } from '#components/alert';
 
 import { useNavigation } from '@react-navigation/native';
 import * as ScreenNames from '#navigators/ScreenNames';
@@ -30,7 +30,9 @@ export const useChapterCard_GoWritingCardDirectly = () => {
 
   return useCallback(() => {
     if (!isLoggedIn) {
-      Alert('Need Login to write a new card');
+      Alert('Need Login to write a new card', 'close', () =>
+        nav.navigate(ScreenNames.SigninStack),
+      );
       return;
     }
 

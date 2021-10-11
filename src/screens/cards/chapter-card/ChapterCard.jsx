@@ -262,8 +262,8 @@ const s = StyleSheet.create({
     marginTop: '-6%',
   },
   contentSection: {
-    marginLeft: wp('5.5%'),
-    marginTop: hp('6.1%'),
+    paddingHorizontal: wp('5.5%'),
+    paddingVertical: hp('6.1%'),
   },
   contentText: {
     fontSize: 22,

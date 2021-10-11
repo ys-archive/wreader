@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { Alert } from '#components/alert';
+import { Alert, AlertRequireLogin } from '#components/alert';
 import * as ScreenNames from '#navigators/ScreenNames';
 
 import { useStoreState } from 'easy-peasy';
@@ -11,7 +11,9 @@ export const useChapterCardComments = chapterId => {
 
   return () => {
     if (!isLoggedIn) {
-      Alert('Need Login to write a new card');
+      Alert('Need Login to see comments', 'close', () =>
+        nav.navigate(ScreenNames.SigninStack),
+      );
       return;
     }
 

@@ -1,8 +1,11 @@
-import { Alert } from '../../../../components/alert';
+import { Alert, AlertRequireLogin } from '../../../../components/alert';
 
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { selAuth, selImage, selSwiper } from '#store/selectors';
 import { actData } from '#store/actions';
+
+import { useNavigation } from '@react-navigation/native';
+import * as ScreenNames from '../../../../navigators/ScreenNames';
 
 import { ChapterService } from '#services';
 import { DEPTH_NAME } from '#store/reducers/swiper.depth';
@@ -43,13 +46,17 @@ export const useChapterCardLike = (chapterId, isLike, likeCount) => {
     fetchOneNext,
   } = initStates();
 
+  const nav = useNavigation();
+
   return async () => {
     if (!isLoggedIn) {
-      Alert('Need Login to write a new card');
+      Alert('Need Login to like this card', 'close', () =>
+        nav.navigate(ScreenNames.SigninStack),
+      );
       return;
     }
 
-    console.log('userID: ', userId);
+    // console.log('userID: ', userId);
     // 이미 좋아요 했음
     if (isLike === 1) {
       console.log('UNLIKE! chapterID: ', chapterId, ', likeCount: ', likeCount);

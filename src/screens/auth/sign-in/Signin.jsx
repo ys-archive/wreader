@@ -7,14 +7,23 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
+import { useNavigation } from '@react-navigation/native';
+import * as ScreenNames from '../../../navigators/ScreenNames';
+
 import { bg } from '#constants/images';
-import { LogoSignin } from '#components/icon';
+import { LogoSignin, Cancel } from '#components/icon';
 import { colors } from '#constants';
 
 import SigninForms from './components/forms/SigninForms';
 import SigninFindPasswordSignup from './components/SigninFindPasswordSignup';
 
 const Signin = () => {
+  const nav = useNavigation();
+  const onPressGoBackIcon = () => {
+    // nav.navigate(ScreenNames.Signin);
+    nav.goBack();
+  };
+
   return (
     <KeyboardAwareScrollView contentContainerStyle={s.root}>
       <ImageBackground
@@ -29,6 +38,10 @@ const Signin = () => {
         source={bg}
         resizeMode="cover"
       >
+        <Cancel
+          onPress={onPressGoBackIcon}
+          style={{ top: '7%', right: '5%' }}
+        />
         <LogoSignin />
         <SigninForms />
         <SigninFindPasswordSignup />

@@ -1,5 +1,5 @@
 import { Alert } from './Alert';
 import { AlertWithValue } from './AlertWithValue';
-import { RequireLoginAlert } from './RequireLoginAlert';
+import { AlertRequireLogin } from './AlertRequireLogin';
 
-export { Alert, AlertWithValue, RequireLoginAlert };
+export { Alert, AlertWithValue, AlertRequireLogin };
