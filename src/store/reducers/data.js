@@ -1,18 +1,22 @@
-import { action, computed, thunk } from 'easy-peasy';
-import ChapterService from '../../services/ChapterService';
-import * as _ from 'lodash';
-import { delay } from '../../utils';
+import { action, computed, thunk } from "easy-peasy"
+import ChapterService from "../../services/ChapterService"
+import * as _ from "lodash"
+import { delay } from "../../utils"
+import { sorter } from "./data.logic"
 
 export default {
   categories: [],
   chapters: [],
   originalChapters: [],
+
   commentsUpdated: false,
+
+  isChaptersSorted: false,
   isUserChaptersSorted: false,
   isNextSorted: false,
 
   updateComments: action(state => {
-    state.commentsUpdated = !state.commentsUpdated;
+    state.commentsUpdated = !state.commentsUpdated
   }),
 
   isLoaded: {
@@ -31,46 +35,46 @@ export default {
     },
 
     startLoading: action((state, payload) => {
-      if ('d0' === payload) {
-        state.val.d0 = false;
-        return;
+      if ("d0" === payload) {
+        state.val.d0 = false
+        return
       }
 
-      if ('d1' === payload) {
-        state.val.d1 = false;
-        return;
+      if ("d1" === payload) {
+        state.val.d1 = false
+        return
       }
 
-      if ('d2' === payload) {
-        state.val.d2 = false;
-        return;
+      if ("d2" === payload) {
+        state.val.d2 = false
+        return
       }
 
-      if ('d3' === payload) {
-        state.val.d3 = false;
-        return;
+      if ("d3" === payload) {
+        state.val.d3 = false
+        return
       }
     }),
 
     finishLoading: action((state, payload) => {
-      if ('d0' === payload) {
-        state.val.d0 = true;
-        return;
+      if ("d0" === payload) {
+        state.val.d0 = true
+        return
       }
 
-      if ('d1' === payload) {
-        state.val.d1 = true;
-        return;
+      if ("d1" === payload) {
+        state.val.d1 = true
+        return
       }
 
-      if ('d2' === payload) {
-        state.val.d2 = true;
-        return;
+      if ("d2" === payload) {
+        state.val.d2 = true
+        return
       }
 
-      if ('d3' === payload) {
-        state.val.d3 = true;
-        return;
+      if ("d3" === payload) {
+        state.val.d3 = true
+        return
       }
     }),
   },
@@ -91,24 +95,24 @@ export default {
     },
 
     update: action((state, payload) => {
-      if ('d0' in payload) {
-        state.val.d0 = payload.d0;
-        return;
+      if ("d0" in payload) {
+        state.val.d0 = payload.d0
+        return
       }
 
-      if ('d1' in payload) {
-        state.val.d1 = payload.d1;
-        return;
+      if ("d1" in payload) {
+        state.val.d1 = payload.d1
+        return
       }
 
-      if ('d2' in payload) {
-        state.val.d2 = payload.d2;
-        return;
+      if ("d2" in payload) {
+        state.val.d2 = payload.d2
+        return
       }
 
-      if ('d3' in payload) {
-        state.val.d3 = payload.d3;
-        return;
+      if ("d3" in payload) {
+        state.val.d3 = payload.d3
+        return
       }
     }),
   },
@@ -116,26 +120,26 @@ export default {
   isUpdatingAll: false,
 
   setUpdateAll: action((state, payload) => {
-    state.isUpdatingAll = payload;
+    state.isUpdatingAll = payload
   }),
 
   reset: action(state => {
-    state.categories = [];
-    state.chapters = [];
-    state.originalChapters = [];
-    state.isLoaded.val = state.isLoaded.default;
-    state.hasNew.val = state.hasNew.default;
-    state.isUpdatingAll = false;
+    state.categories = []
+    state.chapters = []
+    state.originalChapters = []
+    state.isLoaded.val = state.isLoaded.default
+    state.hasNew.val = state.hasNew.default
+    state.isUpdatingAll = false
   }),
 
   resetCategory: action(state => {
-    state.categories = [];
+    state.categories = []
   }),
 
   addCategory: action((state, payload) => {
-    const hasFound = state.categories.findIndex(cat => _.isEqual(cat, payload));
+    const hasFound = state.categories.findIndex(cat => _.isEqual(cat, payload))
     if (hasFound === -1) {
-      state.categories.push(payload);
+      state.categories.push(payload)
     }
   }),
 
@@ -146,14 +150,14 @@ export default {
   // }),
 
   resetChapter: action((state, payload) => {
-    state.chapters = [];
-    state.originalChapters = [];
+    state.chapters = []
+    state.originalChapters = []
   }),
 
   addChapter: action((state, payload) => {
     const hasFound = state.chapters.findIndex(ch =>
       _.isEqual(ch.deck, payload.deck),
-    );
+    )
 
     if (hasFound === -1) {
       state.chapters.push(
@@ -161,20 +165,20 @@ export default {
           deck: d,
           child: [],
         })),
-      );
-      state.originalChapters = state.chapters;
+      )
+      state.originalChapters = state.chapters
     }
   }),
 
   addChapterChild: action((state, payload) => {
     // 아무 부모 챕터 하나라도 있어야함
-    if (state.chapters.length === 0) return;
+    if (state.chapters.length === 0) return
 
     // 비교용 index 찾아오기
-    const comparer = +payload.deck.group_index;
+    const comparer = +payload.deck.group_index
 
     // undefined
-    if (!comparer) return;
+    if (!comparer) return
 
     const findRecursively = arr => {
       arr.forEach(item => {
@@ -182,241 +186,205 @@ export default {
           if (
             item.child.findIndex(f => _.isEqual(f.deck, payload.deck)) === -1
           ) {
-            item.child.push({ deck: payload.deck, child: [] });
+            item.child.push({ deck: payload.deck, child: [] })
           }
-          return;
+          return
         }
 
         if (item.child.length > 0) {
-          findRecursively(item.child);
+          findRecursively(item.child)
         }
-      });
-    };
+      })
+    }
 
     state.chapters.forEach(chapter => {
-      if (chapter.length === 0) return;
-      findRecursively(chapter);
-    });
+      if (chapter.length === 0) return
+      findRecursively(chapter)
+    })
 
-    state.originalChapters = state.chapters;
+    state.originalChapters = state.chapters
   }),
 
   addOneChapter: action((state, payload) => {
-    const { d0, d1, card } = payload;
+    const { d0, d1, card } = payload
     // console.log(card);
     // state.chapters[d0][d1].deck = card;
     // state.originalChapters[d0][d1].deck = card;
 
-    const lastLen = state.chapters[d0].length;
+    const lastLen = state.chapters[d0].length
     card.forEach((c, i) => {
       if (lastLen === i) {
-        console.log('새로운 카드중 마지막 추가! ', lastLen, i);
-        state.chapters[d0].push({ deck: c, child: [] });
-        const added = state.chapters[d0].shift();
-        state.chapters[d0].push(added);
+        console.log("새로운 카드중 마지막 추가! ", lastLen, i)
+        state.chapters[d0].push({ deck: c, child: [] })
+        const added = state.chapters[d0].shift()
+        state.chapters[d0].push(added)
 
-        state.originalChapters[d0].push({ deck: c, child: [] });
-        const addedOrig = state.originalChapters[d0].shift();
-        state.originalChapters[d0].push(addedOrig);
+        state.originalChapters[d0].push({ deck: c, child: [] })
+        const addedOrig = state.originalChapters[d0].shift()
+        state.originalChapters[d0].push(addedOrig)
       } else {
-        state.chapters[d0][i].deck = c;
-        state.originalChapters[d0][i].deck = c;
+        state.chapters[d0][i].deck = c
+        state.originalChapters[d0][i].deck = c
       }
-    });
+    })
   }),
 
   fetchOneChapter: thunk(
     async (actions, payload, { getState, getStoreState }) => {
-      const { userId } = getStoreState().auth;
+      const { userId } = getStoreState().auth
 
-      const { data } = await ChapterService.GET_getChapter(0, userId);
+      const { data } = await ChapterService.GET_getChapter(0, userId)
 
-      if (data.item.length === 0) return;
+      if (data.item.length === 0) return
 
-      const { coords } = getStoreState().swiper;
-      const { d0, d1 } = coords.val;
+      const { coords } = getStoreState().swiper
+      const { d0, d1 } = coords.val
 
-      const filteredData = data.item.filter(i => +i.categoryId - 5 === d0);
+      const filteredData = data.item.filter(i => +i.categoryId - 5 === d0)
 
       if (filteredData.length === getState().chapters[d0].length) {
-        await delay(1000);
-        await actions.fetchOneChapter();
+        await delay(1000)
+        await actions.fetchOneChapter()
       }
 
       // actions.addOneChapter({ d0, d1, card: filteredData[d1] });
-      actions.addOneChapter({ d0, d1, card: filteredData });
+      actions.addOneChapter({ d0, d1, card: filteredData })
     },
   ),
 
   addOneUserChapter: action((state, payload) => {
-    const { d0, d1, d2, card } = payload;
+    const { d0, d1, d2, card } = payload
 
     // state.chapters[d0][d1].child[d2].deck = card;
     // state.originalChapters[d0][d1].child[d2].deck = card;
     card.forEach((c, i) => {
       // console.log(c);
-      state.chapters[d0][d1].child[i].deck = c;
-      state.originalChapters[d0][d1].child[i].deck = c;
-    });
+      state.chapters[d0][d1].child[i].deck = c
+      state.originalChapters[d0][d1].child[i].deck = c
+    })
   }),
 
   fetchOneUserChapter: thunk(
     async (actions, payload, { getState, getStoreState }) => {
-      const { userId } = getStoreState().auth;
-      const { coords } = getStoreState().swiper;
-      const { chapters } = getState();
+      const { userId } = getStoreState().auth
+      const { coords } = getStoreState().swiper
+      const { chapters } = getState()
 
-      const { d0, d1, d2 } = coords.val;
+      const { d0, d1, d2 } = coords.val
       const { data } = await ChapterService.GET_getChapter(
         chapters[d0][d1].deck.id,
         userId,
-      );
+      )
 
-      if (data.item.length === 0) return;
+      if (data.item.length === 0) return
 
-      const filteredData = data.item.filter(i => +i.categoryId - 5 === d0);
+      const filteredData = data.item.filter(i => +i.categoryId - 5 === d0)
 
-      console.log('updated user card: ', filteredData);
+      console.log("updated user card: ", filteredData)
 
       // actions.addOneUserChapter({ d0, d1, d2, card: filteredData[d2] });
-      actions.addOneUserChapter({ d0, d1, d2, card: filteredData });
+      actions.addOneUserChapter({ d0, d1, d2, card: filteredData })
     },
   ),
 
   addOneNext: action((state, payload) => {
-    const { d0, d1, d2, card } = payload;
+    const { d0, d1, d2, card } = payload
 
     // state.chapters[d0][d1].child[d2].child[d3].deck = card;
     // state.originalChapters[d0][d1].child[d2].child[d3].deck = card;
-    
+
     card.forEach((c, i) => {
-      state.chapters[d0][d1].child[d2].child[i].deck = c;
-      state.originalChapters[d0][d1].child[d2].child[i].deck = c;
-    });
+      state.chapters[d0][d1].child[d2].child[i].deck = c
+      state.originalChapters[d0][d1].child[d2].child[i].deck = c
+    })
   }),
 
   fetchOneNext: thunk(async (actions, payload, { getState, getStoreState }) => {
-    const { userId } = getStoreState().auth;
-    const { coords } = getStoreState().swiper;
-    const { chapters } = getState();
+    const { userId } = getStoreState().auth
+    const { coords } = getStoreState().swiper
+    const { chapters } = getState()
 
-    const { d0, d1, d2, d3 } = coords.val;
+    const { d0, d1, d2, d3 } = coords.val
     const { data } = await ChapterService.GET_getChapter(
       chapters[d0][d1].child[d2].deck.id,
       userId,
-    );
+    )
 
-    if (data.item.length === 0) return;
+    if (data.item.length === 0) return
 
-    const filteredData = data.item.filter(i => +i.categoryId - 5 === d0);
+    const filteredData = data.item.filter(i => +i.categoryId - 5 === d0)
 
-    console.log('updated next: ', filteredData);
+    console.log("updated next: ", filteredData)
 
-    actions.addOneNext({ d0, d1, d2, d3, card: filteredData });
+    actions.addOneNext({ d0, d1, d2, d3, card: filteredData })
+  }),
+
+  sortChapters_internal: action((state, payload) => {
+    const { d0, d1, d2 } = payload
+    let sorted = undefined
+
+    if (!state.isChaptersSorted) {
+      sorted = state.chapters[d0].sort(sorter)
+    } else {
+      sorted = state.originalChapters.slice()[d0]
+    }
+
+    state.chapters[d0] = sorted
+
+    state.isChaptersSorted = !state.isChaptersSorted
+  }),
+
+  sortChapters: thunk((actions, payload, { getState, getStoreState }) => {
+    const { coords } = getStoreState().swiper
+    const { d0, d1, d2 } = coords.val
+    actions.sortChapters_internal({ d0, d1, d2 })
   }),
 
   sortUserChapter_internal: action((state, payload) => {
-    const { d0, d1 } = payload;
-    let sorted = undefined;
+    const { d0, d1 } = payload
+    let sorted = undefined
 
     if (!state.isUserChaptersSorted) {
       // 업데이트 날짜로 정렬
-      sorted = state.chapters[d0][d1].child.sort((a, b) => {
-        const bStr = b.deck.updateDt;
-        const bb = new Date(
-          +bStr.slice(0, 4),
-          +bStr.slice(5, 7),
-          +bStr.slice(8, 10),
-          +bStr.slice(11, 13),
-          +bStr.slice(14, 16),
-          +bStr.slice(17, 19),
-        );
-
-        const aStr = a.deck.updateDt;
-        const aa = new Date(
-          +aStr.slice(0, 4),
-          +aStr.slice(5, 7),
-          +aStr.slice(8, 10),
-          +aStr.slice(11, 13),
-          +aStr.slice(14, 16),
-          +aStr.slice(17, 19),
-        );
-
-        // console.log(bb, aa, bb - aa);
-
-        return bb - aa;
-      });
+      sorted = state.chapters[d0][d1].child.sort(sorter)
     } else {
       // like count 로 정렬
-      // sorted = state.chapters[d0][d1].child.sort(
-      //   (a, b) => {
-      //     const bb = +b.deck.like_count;
-      //     const aa = +a.deck.like_count;
-      //     console.log(bb, aa, bb - aa);
-
-      //     return bb - aa;
-      //   }, // sort descendingly
-      // );
-      sorted = state.originalChapters.slice()[d0][d1].child;
+      sorted = state.originalChapters.slice()[d0][d1].child
     }
 
     // console.log(sorted);
-    state.chapters[d0][d1].child = sorted;
+    state.chapters[d0][d1].child = sorted
 
-    state.isUserChaptersSorted = !state.isUserChaptersSorted;
+    state.isUserChaptersSorted = !state.isUserChaptersSorted
   }),
 
   sortUserChapters: thunk((actions, payload, { getState, getStoreState }) => {
-    const { coords } = getStoreState().swiper;
-    const { d0, d1, d2 } = coords.val;
-    actions.sortUserChapter_internal({ d0, d1, d2 });
+    const { coords } = getStoreState().swiper
+    const { d0, d1, d2 } = coords.val
+    actions.sortUserChapter_internal({ d0, d1, d2 })
   }),
 
   sortNext_internal: action((state, payload) => {
-    const { d0, d1, d2, d3 } = payload;
-    let sorted = undefined;
+    const { d0, d1, d2, d3 } = payload
+    let sorted = undefined
     // console.log();
 
     if (!state.isNextSorted) {
-      sorted = state.chapters[d0][d1].child[d2].child.sort((a, b) => {
-        const bStr = b.deck.updateDt;
-        const bb = new Date(
-          +bStr.slice(0, 4),
-          +bStr.slice(5, 7),
-          +bStr.slice(8, 10),
-          +bStr.slice(11, 13),
-          +bStr.slice(14, 16),
-          +bStr.slice(17, 19),
-        );
-
-        const aStr = a.deck.updateDt;
-        const aa = new Date(
-          +aStr.slice(0, 4),
-          +aStr.slice(5, 7),
-          +aStr.slice(8, 10),
-          +aStr.slice(11, 13),
-          +aStr.slice(14, 16),
-          +aStr.slice(17, 19),
-        );
-
-        // console.log(bb, aa, bb - aa);
-
-        return bb - aa;
-      });
+      sorted = state.chapters[d0][d1].child[d2].child.sort(sorter)
     } else {
-      sorted = state.originalChapters.slice()[d0][d1].child[d2].child;
+      sorted = state.originalChapters.slice()[d0][d1].child[d2].child
     }
 
-    state.chapters[d0][d1].child[d2].child = sorted;
+    state.chapters[d0][d1].child[d2].child = sorted
 
-    state.isNextSorted = !state.isNextSorted;
+    state.isNextSorted = !state.isNextSorted
   }),
 
   sortNext: thunk((actions, payload, { getState, getStoreState }) => {
-    const { coords } = getStoreState().swiper;
-    actions.sortNext_internal(coords.val);
+    const { coords } = getStoreState().swiper
+    actions.sortNext_internal(coords.val)
   }),
-};
+}
 
 export const selectors = {
   categories: state => state.data.categories,
@@ -424,6 +392,7 @@ export const selectors = {
 
   commentsUpdated: state => state.data.commentsUpdated,
 
+  isChaptersSorted: state => state.data.isChaptersSorted,
   isUserChaptersSorted: state => state.data.isUserChaptersSorted,
   isNextSorted: state => state.data.isNextSorted,
 
@@ -431,7 +400,7 @@ export const selectors = {
   hasNew: state => state.data.hasNew.val,
 
   isUpdatingAll: state => state.data.isUpdatingAll,
-};
+}
 
 export const actions = {
   updateComments: state => state.data.updateComments,
@@ -455,6 +424,7 @@ export const actions = {
   fetchOneUserChapter: actions => actions.data.fetchOneUserChapter,
   fetchOneNext: actions => actions.data.fetchOneNext,
 
+  sortChapters: actions => actions.data.sortChapters,
   sortUserChapters: actions => actions.data.sortUserChapters,
   sortNext: actions => actions.data.sortNext,
-};
+}
