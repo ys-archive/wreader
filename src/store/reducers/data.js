@@ -233,19 +233,24 @@ export default {
     async (actions, payload, { getState, getStoreState }) => {
       const { userId } = getStoreState().auth
 
+      // await delay(1000)
       const { data } = await ChapterService.GET_getChapter(0, userId)
 
       if (data.item.length === 0) return
 
+      // console.log(data.item);
+
       const { coords } = getStoreState().swiper
       const { d0, d1 } = coords.val
 
-      const filteredData = data.item.filter(i => +i.categoryId - 5 === d0)
+      // console.log(data.item);
+      const filteredData = data.item.filter(i => i.categoryId - 5 === 0)
+      console.log("filteredData", filteredData)
 
-      if (filteredData.length === getState().chapters[d0].length) {
-        await delay(1000)
-        await actions.fetchOneChapter()
-      }
+      // if (filteredData.length === getState().chapters[d0].length) {
+      //   await delay(1000)
+      //   await actions.fetchOneChapter()
+      // }
 
       // actions.addOneChapter({ d0, d1, card: filteredData[d1] });
       actions.addOneChapter({ d0, d1, card: filteredData })
