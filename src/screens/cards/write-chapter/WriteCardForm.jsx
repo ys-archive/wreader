@@ -88,7 +88,7 @@ const WriteCardForm = ({ chapterId, categoryId, depth, children }) => {
           value={sentence}
           onBlur={handleBlur('sentence')}
           multiline
-          maxHeight={500}
+          maxHeight={400}
           onChangeText={handleChange('sentence')}
           // if (e && e.length % 20 === 0) e = `${e}\n`;
           placeholder="Write a story for this chapter..."

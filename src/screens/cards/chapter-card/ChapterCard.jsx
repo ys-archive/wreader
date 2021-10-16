@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react"
 
 import {
   StyleSheet,
@@ -7,39 +7,40 @@ import {
   Image,
   TouchableWithoutFeedback,
   TouchableOpacity,
-} from 'react-native';
-import { Text, TextInput } from '#components';
-import { Like, Reply, NotLike } from '#components/icon';
+  Platform,
+} from "react-native"
+import { Text, TextInput } from "#components"
+import { Like, Reply, NotLike } from "#components/icon"
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+} from "react-native-responsive-screen"
 
-import { colors, StyleDefine } from '#constants';
+import { colors, StyleDefine } from "#constants"
 
-import { makeCategoryBGImagePath, dummyProfile } from '#constants/images';
+import { makeCategoryBGImagePath, dummyProfile } from "#constants/images"
 
-import { useStoreState } from 'easy-peasy';
-import { selImage, selSwiper } from '#store/selectors';
+import { useStoreState } from "easy-peasy"
+import { selImage, selSwiper } from "#store/selectors"
 
-import { useChapterCardLike } from './chapter-card.module/useChapterCardLike';
-import { useChapterCardComments } from './chapter-card.module/useChapterCardComments';
-import { useChapterCard_AddStory } from './chapter-card.module/useChapterCard_AddStory';
-import { useChapterCard_Labels } from './chapter-card.module/useChapterCard_Labels';
-import { useChapterCard_OtherProfile } from './chapter-card.module/useChapterCard_OtherProfile';
+import { useChapterCardLike } from "./chapter-card.module/useChapterCardLike"
+import { useChapterCardComments } from "./chapter-card.module/useChapterCardComments"
+import { useChapterCard_AddStory } from "./chapter-card.module/useChapterCard_AddStory"
+import { useChapterCard_Labels } from "./chapter-card.module/useChapterCard_Labels"
+import { useChapterCard_OtherProfile } from "./chapter-card.module/useChapterCard_OtherProfile"
 
 const initStates = () => {
-  const profile = useStoreState(selImage.profile);
-  const depth = useStoreState(selSwiper.depth);
+  const profile = useStoreState(selImage.profile)
+  const depth = useStoreState(selSwiper.depth)
 
   return {
     profile,
     depth,
-  };
-};
+  }
+}
 
 const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
-  const { profile, depth } = initStates();
+  const { profile, depth } = initStates()
 
   const {
     id: chapterId, // 현재 챕터 Id
@@ -53,7 +54,7 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
     userImg, // author profile image url
     userNick: authorNickName, // -> author
     isLike,
-  } = data;
+  } = data
 
   // console.log('\n');
   // console.log(
@@ -66,11 +67,11 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
   // );
   // console.log('\n');
 
-  const onPressLike = useChapterCardLike(chapterId, isLike, likeCount);
-  const onPressReply = useChapterCardComments(chapterId);
-  const AddStoryJSX = useChapterCard_AddStory();
-  const { TheEndLabelJSX, FullStoryJSX } = useChapterCard_Labels(order);
-  const onPressOtherProfile = useChapterCard_OtherProfile(otherUserId);
+  const onPressLike = useChapterCardLike(chapterId, isLike, likeCount)
+  const onPressReply = useChapterCardComments(chapterId)
+  const AddStoryJSX = useChapterCard_AddStory()
+  const { TheEndLabelJSX, FullStoryJSX } = useChapterCard_Labels(order)
+  const onPressOtherProfile = useChapterCard_OtherProfile(otherUserId)
 
   return (
     <View style={s.root}>
@@ -78,11 +79,11 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
 
       <ImageBackground
         style={{
-          width: wp('83.3%'),
-          height: hp('81.2%'),
+          width: wp("83.3%"),
+          height: hp("81.2%"),
           borderRadius: StyleDefine.borderRadiusOutside,
-          overflow: 'hidden',
-          alignItems: 'center',
+          overflow: "hidden",
+          alignItems: "center",
         }}
         source={
           chapterImg
@@ -102,7 +103,7 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
               source={userImg ? { uri: userImg } : dummyProfile}
             />
             <Text fontFamily="heavy" style={s.authorNameText}>
-              {authorNickName || 'Jessica Momo'}
+              {authorNickName || "Jessica Momo"}
             </Text>
           </View>
         </TouchableOpacity>
@@ -110,8 +111,8 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
         {/* 챕터 내부 */}
         <ImageBackground
           style={{
-            width: wp('75.6%'),
-            height: hp('69.7%'),
+            width: wp("75.6%"),
+            height: hp("69.7%"),
             backgroundColor: colors.light.whiteTransparent,
             borderRadius: StyleDefine.borderRadiusInside,
           }}
@@ -142,7 +143,7 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
           {/* 챕터 내용 */}
           <View style={s.contentSection}>
             <Text style={s.contentText} fontFamily="regular">
-              &nbsp;{content ?? ''}
+              &nbsp;{content ?? ""}
             </Text>
           </View>
 
@@ -153,7 +154,7 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
                 {isLike === 1 ? (
                   <Like
                     onPress={onPressLike}
-                    iconStyle={{ tintColor: '#e77' }}
+                    iconStyle={{ tintColor: "#e77" }}
                   />
                 ) : (
                   <NotLike onPress={onPressLike} />
@@ -174,7 +175,7 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
                     width: 24,
                     height: 24,
                     borderRadius: 100,
-                    backgroundColor: '#fff',
+                    backgroundColor: "#fff",
                   }}
                   source={profile ? { uri: profile } : dummyProfile}
                 />
@@ -199,37 +200,37 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
         </ImageBackground>
       </ImageBackground>
     </View>
-  );
-};
+  )
+}
 
-export default ChapterCard;
+export default ChapterCard
 
 const s = StyleSheet.create({
   root: {
-    minWidth: wp('100%'),
-    maxWidth: wp('100%'),
-    minHeight: hp('100%'),
-    maxHeight: hp('100%'),
+    minWidth: wp("100%"),
+    maxWidth: wp("100%"),
+    minHeight: hp("100%"),
+    maxHeight: hp("100%"),
     // flex: 1,
     backgroundColor: colors.light.primaryTransparent,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   authorSection: {
-    flexDirection: 'row',
-    minWidth: wp('83.3%'),
-    paddingLeft: wp('6.7%'),
-    minHeight: hp('9.5%'),
-    alignItems: 'center',
+    flexDirection: "row",
+    minWidth: wp("83.3%"),
+    paddingLeft: wp("6.7%"),
+    minHeight: hp("9.5%"),
+    alignItems: "center",
   },
   authorNameText: {
-    marginLeft: wp('2%'),
+    marginLeft: wp("2%"),
     fontSize: 15,
     color: colors.light.ivory3,
   },
   titleSection: {
-    marginLeft: wp('5.5%'),
-    marginTop: hp('4.2%'),
+    marginLeft: wp("5.5%"),
+    marginTop: hp("4.2%"),
   },
 
   title: {
@@ -239,15 +240,15 @@ const s = StyleSheet.create({
   separator: {
     maxWidth: 100,
     minHeight: 1,
-    backgroundColor: '#000',
-    marginLeft: wp('5.5%'),
-    marginTop: hp('1.3%'),
+    backgroundColor: "#000",
+    marginLeft: wp("5.5%"),
+    marginTop: hp("1.3%"),
   },
   chapterOrderSection: {
-    flexDirection: 'row',
-    paddingLeft: wp('5.5%'),
-    paddingTop: hp('2.6%'),
-    position: 'absolute',
+    flexDirection: "row",
+    paddingLeft: wp("5.5%"),
+    paddingTop: hp("2.6%"),
+    position: "absolute",
     // top: '32.6%',
     // top: 78.0,
   },
@@ -258,60 +259,62 @@ const s = StyleSheet.create({
   chapterOrderText: {
     fontSize: 22,
     color: colors.light.ivory5,
-    marginLeft: '8%',
-    marginTop: '-3%',
+    marginLeft: "8%",
+    marginTop: "-3%",
   },
   contentSection: {
-    paddingHorizontal: wp('5.5%'),
-    paddingVertical: hp('6.1%'),
+    paddingHorizontal: wp("5.5%"),
+    paddingVertical: hp("6.1%"),
+    // minHeight: '80%',
+    // maxHeight: '80%'
   },
   contentText: {
-    fontSize: 25,
+    fontSize: Platform.OS == "ios" ? 25 : 22,
     lineHeight: 35,
     // color: colors.light.ivory4
   },
   bottomSection: {
     // flexDirection: 'row',
-    position: 'absolute',
-    bottom: '0%',
-    minWidth: wp('75.6%'),
+    position: "absolute",
+    bottom: "0%",
+    minWidth: wp("75.6%"),
     minHeight: 72.2,
     borderBottomStartRadius: StyleDefine.borderRadiusInside,
     borderBottomEndRadius: StyleDefine.borderRadiusInside,
     backgroundColor: colors.light.ivory3,
     // minHeight: hp('12.2%'),
-    paddingTop: hp('2.4%'),
+    paddingTop: hp("2.4%"),
     // paddingLeft: wp('5.5%'),
   },
   bottomInfoPlacer: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    minWidth: wp('56.8%'),
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    minWidth: wp("56.8%"),
     // marginTop: hp('2.5%')
   },
   likeSection: {
-    flexDirection: 'row',
+    flexDirection: "row",
     // marginLeft: wp('8.8%'),
   },
   likeText: {
     color: colors.light.ivory1,
-    marginLeft: wp('1.8%'),
+    marginLeft: wp("1.8%"),
   },
   replySection: {
-    flexDirection: 'row',
+    flexDirection: "row",
     // marginLeft: wp('8.8%'),
   },
   replyText: {
     color: colors.light.ivory1,
-    marginLeft: wp('1.8%'),
+    marginLeft: wp("1.8%"),
   },
   bottomReplyPlacer: {
-    flexDirection: 'row',
-    paddingTop: hp('1.4%'),
-    paddingLeft: wp('9.5%'),
-    paddingBottom: hp('1.4%'),
-    maxWidth: wp('75%'),
-    width: '100%',
+    flexDirection: "row",
+    paddingTop: hp("1.4%"),
+    paddingLeft: wp("9.5%"),
+    paddingBottom: hp("1.4%"),
+    maxWidth: wp("75%"),
+    width: "100%",
     // backgroundColor: '#fff'
   },
   replyTextInput: {
@@ -319,15 +322,15 @@ const s = StyleSheet.create({
     margin: 0,
     marginLeft: 10,
     paddingLeft: 3,
-    minWidth: wp('50%'),
-    maxWidth: wp('50%'),
+    minWidth: wp("50%"),
+    maxWidth: wp("50%"),
     borderColor: colors.light.ivory1,
   },
   replyPostText: {
-    position: 'relative',
+    position: "relative",
     right: 45,
     top: 7,
     fontSize: 10,
     color: colors.light.ivory1,
   },
-});
+})
