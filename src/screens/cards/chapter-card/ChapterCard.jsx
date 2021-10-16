@@ -122,13 +122,13 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
           {FullStoryJSX}
 
           {/* 챕터 제목 */}
-          <View style={s.titleSection}>
+          {/* <View style={s.titleSection}>
             <Text fontFamily="semibold" style={s.title}>
               {categoryTitle}
             </Text>
-          </View>
+          </View> */}
 
-          <View style={s.separator}></View>
+          {/* <View style={s.separator}></View> */}
 
           <View style={s.chapterOrderSection}>
             <Text fontFamily="semibold" style={s.chapterOrderPlaceholder}>
@@ -249,7 +249,7 @@ const s = StyleSheet.create({
     paddingTop: hp('2.6%'),
     position: 'absolute',
     // top: '32.6%',
-    top: 78.0,
+    // top: 78.0,
   },
   chapterOrderPlaceholder: {
     fontSize: 15,
