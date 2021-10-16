@@ -1,31 +1,35 @@
-import { useEffect } from 'react';
-import { Platform } from 'react-native';
-import { Alert } from '#components/alert';
-import * as ImagePicker from 'expo-image-picker';
+import { useEffect } from "react"
+import { Platform } from "react-native"
+import { Alert } from "#components/alert"
+import * as ImagePicker from "expo-image-picker"
+import { useStoreActions } from "easy-peasy"
+import { actImage } from "../../store/actions"
 
 export const useImagePicker = (
-  uploadLocalImagePath,
-  uploadImageFile,
   widthRatio = 4,
   heightRatio = 3,
+  isCard = true,
 ) => {
+  const setBlob = useStoreActions(actImage.setTempBlob)
+  const setCard = useStoreActions(actImage.setCard)
+  const setProfile = useStoreActions(actImage.setProfile)
+
   useEffect(() => {
-    (async function requestMediaLibraryPermission() {
+    ;(async function requestMediaLibraryPermission() {
       if (
-        Platform.OS === 'web' ||
-        Platform.OS === 'macos' ||
-        Platform.OS === 'windows'
+        Platform.OS === "web" ||
+        Platform.OS === "macos" ||
+        Platform.OS === "windows"
       )
-        return;
+        return
 
-      const { status } =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync()
 
-      if (status !== 'granted') {
-        Alert('카메라 권한이 필요한 작업입니다.', '닫기');
+      if (status !== "granted") {
+        Alert("카메라 권한이 필요한 작업입니다.", "닫기")
       }
-    })();
-  }, []);
+    })()
+  }, [])
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -34,10 +38,10 @@ export const useImagePicker = (
       allowsEditing: true,
       aspect: [widthRatio, heightRatio],
       quality: 1,
-    });
+    })
 
     if (!result.cancelled) {
-      const { uri } = result;
+      const { uri } = result
       // console.log('result: ', uri);
 
       // if (uploadLocalImagePath && typeof uploadLocalImagePath === 'function') {
@@ -46,11 +50,18 @@ export const useImagePicker = (
 
       // if (uploadImageFile && typeof uploadImageFile === 'function') {
       // }
-      const response = await fetch(uri);
-      const blob = await response.blob();
-      await uploadImageFile(blob);
-    }
-  };
+      if (isCard) {
+        setCard(uri)
+      } else {
+        setProfile(uri)
+      }
 
-  return pickImage;
-};
+      const response = await fetch(uri)
+      setBlob(await response.blob())
+
+      // await uploadImageFile(blob)
+    }
+  }
+
+  return pickImage
+}

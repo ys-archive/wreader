@@ -1,96 +1,134 @@
-import React, { useState } from 'react';
-import { View, Image } from 'react-native';
-import { StyleSheet } from '#components';
-// import { Ionicons } from '@expo/vector-icons';
+import React, { useState, useCallback } from "react"
+import { View, Image, Platform } from "react-native"
+import { StyleSheet, Button } from "#components"
+import { colors } from "../../../../constants/colors"
 
-import { Photo } from '#components/icon';
-import { colors } from '#constants';
+import { Photo, Cancel } from "#components/icon"
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+} from "react-native-responsive-screen"
 
-import { useImagePicker, useProfileImageLoader } from '../../../../hooks';
+import { useImagePicker, useProfileImageLoader } from "../../../../hooks"
 
-import { useStoreState, useStoreActions } from 'easy-peasy';
-import { actImage } from '../../../../store/actions';
-import { selAuth, selImage } from '../../../../store/selectors';
+import { useStoreState, useStoreActions } from "easy-peasy"
+import { actImage } from "../../../../store/actions"
+import { selAuth, selImage } from "../../../../store/selectors"
 
-import { UserService } from '../../../../services';
-import { ImageService } from '../../../../services';
+import { UserService } from "../../../../services"
+import { ImageService } from "../../../../services"
 
-const uploadDirName = 'profileImage';
+const uploadDirName = "profileImage"
 
-const MyProfileImage = () => {
-  const userId = useStoreState(selAuth.userId);
+const initStates = () => {
+  const userId = useStoreState(selAuth.userId)
+  const tempBlob = useStoreState(selImage.tempBlob)
 
-  const setProfileImageUrl = useStoreActions(actImage.setProfile);
+  const setProfileImageUrl = useStoreActions(actImage.setProfile)
+  const startUploadingProfile = useStoreActions(actImage.startUploadingProfile)
   const completeUploadProfileImage = useStoreActions(
     actImage.completeUploadingProfile,
-  );
-  const uri = useStoreState(selImage.profile);
+  )
+  const profileImageUrl = useStoreState(selImage.profile)
+
+  return {
+    userId,
+    tempBlob,
+    setProfileImageUrl,
+    startUploadingProfile,
+    completeUploadProfileImage,
+    profileImageUrl,
+  }
+}
+
+const MyProfileImage = () => {
+  const {
+    userId,
+    tempBlob,
+    setProfileImageUrl,
+    startUploadingProfile,
+    completeUploadProfileImage,
+    profileImageUrl,
+  } = initStates()
+  const [isEditingProfileImage, setIsEditingProfileImage] = useState(false)
 
   // 프로필 이미지 로드
-  useProfileImageLoader();
+  useProfileImageLoader(true)
 
-  const pickImage = useImagePicker(
-    async uri => {
-      // 로컬 이미지 uri 저장 콜백
-      // setProfileLocalImagePath(await uploadLocalImagePath(uploadDirName, uri));
-    },
-    async blob => {
-      // 이미지 원본 먼저 업로드
-      const downloadUrl = await ImageService.uploadImageFile(
-        uploadDirName,
-        blob,
-      );
+  const pickImage = useImagePicker(4, 3, false)
 
-      // 이미지 원본을 스토리지 저장 후 post 로 유저 정보로 전송
-      await UserService.POST_registerUserProfilePhoto(userId, downloadUrl);
-      setProfileImageUrl(downloadUrl);
-      completeUploadProfileImage();
-    },
-  );
+  const onSave = useCallback(async () => {
+    startUploadingProfile()
 
-  const pickNewProfileImage = async () => await pickImage();
+    const downloadUrl = await ImageService.uploadImageFile(
+      uploadDirName,
+      tempBlob,
+    )
+
+    // 이미지 원본을 스토리지 저장 후 post 로 유저 정보로 전송
+    await UserService.POST_registerUserProfilePhoto(userId, downloadUrl)
+
+    completeUploadProfileImage()
+    setIsEditingProfileImage(false)
+  }, [tempBlob, userId])
+
+  const pickNewProfileImage = async () => {
+    setIsEditingProfileImage(true)
+    await pickImage()
+  }
 
   return (
     <View style={s.root}>
-      {uri ? (
+      {profileImageUrl ? (
         <Image
-          // style={{ width: wp('55%'), height: hp('25%'), borderRadius: 200 }}
-          style={{ width: wp('30%'), height: hp('15%'), borderRadius: 200 }}
+          style={{ width: wp("30%"), height: hp("13.5%"), borderRadius: 200 }}
           source={{
-            uri,
+            uri: profileImageUrl,
           }}
         />
       ) : (
         <View
           style={{
-            width: wp('33.3%'),
-            height: hp('15%'),
+            width: wp("33.3%"),
+            height: hp("15%"),
             borderRadius: 200,
-            backgroundColor: '#000',
+            backgroundColor: "#000",
           }}
         />
       )}
       <Photo
-        style={{ position: 'absolute', bottom: '6.4%', right: '32.3%' }}
+        style={{ position: "absolute", bottom: "6.4%", right: "32.3%" }}
         iconStyle={{ width: 23, height: 17 }}
         onPress={pickNewProfileImage}
       />
+      {isEditingProfileImage && (
+        <>
+          <Button
+            style={s.button}
+            isBold
+            textStyle={s.buttonText}
+            onPress={onSave}
+          >
+            UPDATE
+          </Button>
+          <Cancel
+            onPress={() => setIsEditingProfileImage(false)}
+            style={s.closeUpdate}
+          />
+        </>
+      )}
     </View>
-  );
-};
+  )
+}
 
-export default MyProfileImage;
+export default MyProfileImage
 
 const s = StyleSheet.create({
   root: {
     // flex: 1,
-    marginTop: hp('3.9%'),
-    alignItems: 'center',
-    marginBottom: hp('1.3%'),
+    marginTop: hp("3.9%"),
+    alignItems: "center",
+    marginBottom: hp("1.3%"),
   },
   profileImage: {
     maxWidth: 200,
@@ -100,9 +138,41 @@ const s = StyleSheet.create({
     borderRadius: 100,
   },
   cameraIcon: {
-    position: 'absolute',
-    right: wp('1.8%'),
+    position: "absolute",
+    right: wp("1.8%"),
     // top: ,
     // zIndex: -1,
   },
-});
+
+  button: {
+    position: "absolute",
+    right: 40,
+
+    ...Platform.select({
+      ios: {
+        top: 115,
+      },
+      android: {
+        right: 30,
+        top: 83,
+      },
+    }),
+  },
+
+  closeUpdate: {
+    ...Platform.select({
+      ios: {
+        top: 108,
+      },
+      android: {
+        top: 80,
+      },
+    }),
+    right: "5%",
+  },
+
+  buttonText: {
+    color: colors.light.white,
+    fontSize: 13,
+  },
+})

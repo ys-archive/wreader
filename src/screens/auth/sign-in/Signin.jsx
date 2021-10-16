@@ -1,14 +1,8 @@
 import React from "react"
 import { ImageBackground, View } from "react-native"
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import { StyleSheet } from "#components"
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen"
 
 import { useNavigation } from "@react-navigation/native"
-import * as ScreenNames from "../../../navigators/ScreenNames"
 
 import { bg } from "#constants/images"
 import { LogoSignin, Cancel } from "#components/icon"

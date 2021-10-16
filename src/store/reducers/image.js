@@ -2,22 +2,35 @@ import { action } from "easy-peasy"
 
 export default {
   // model,
+  tempImageBlob: undefined,
+
   profile: "",
   isProfileStartUploading: false,
   isProfileUploaded: false,
 
   card: "",
+
   isCardStartUploading: false,
   isCardUploaded: false,
 
   // actions
+  resetTempBlob: action(state => {
+    state.tempImageBlob = undefined
+  }),
+
+  setTempBlob: action((state, payload) => {
+    state.tempImageBlob = payload
+  }),
+
   resetProfile: action(state => {
     state.profile = ""
+    state.isProfileStartUploading = false
     state.isProfileUploaded = false
   }),
 
   resetCard: action(state => {
     state.card = ""
+    state.isCardStartUploading = false
     state.isCardUploaded = false
   }),
 
@@ -31,12 +44,12 @@ export default {
 
   startUploadingProfile: action(state => {
     state.isProfileUploaded = false
-    state.isProfileStartUploading = !state.isProfileStartUploading
+    state.isProfileStartUploading = true
   }),
 
   completeUploadingProfile: action(state => {
     state.isProfileStartUploading = false
-    state.isProfileUploaded = !state.isProfileUploaded
+    state.isProfileUploaded = true
   }),
 
   setCard: action((state, payload) => {
@@ -49,16 +62,18 @@ export default {
 
   startUploadingCard: action(state => {
     state.isCardUploaded = false
-    state.isCardStartUploading = !state.isCardStartUploading
+    state.isCardStartUploading = true
   }),
 
   completeUploadingCard: action(state => {
     state.isCardStartUploading = false
-    state.isCardUploaded = !state.isCardUploaded
+    state.isCardUploaded = true
   }),
 }
 
 export const selectors = {
+  tempBlob: state => state.image.tempImageBlob,
+
   profile: state => state.image.profile,
   isProfileStartUploading: state => state.image.isProfileStartUploading,
   isProfileUploaded: state => state.image.isProfileUploaded,
@@ -69,6 +84,9 @@ export const selectors = {
 }
 
 export const actions = {
+  resetTempBlob: actions => actions.image.resetTempBlob,
+  setTempBlob: actions => actions.image.setTempBlob,
+
   resetProfile: actions => actions.image.resetProfile,
   resetCard: actions => actions.image.resetCard,
 

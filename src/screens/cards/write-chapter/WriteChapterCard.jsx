@@ -1,7 +1,8 @@
-import React from "react"
+import React, { useCallback } from "react"
 import { View, Platform, ImageBackground } from "react-native"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import { StyleSheet, TextInput, Text } from "#components"
+import { Alert } from "../../../components/alert"
 
 import {
   widthPercentageToDP as wp,
@@ -15,60 +16,72 @@ import { makeCategoryBGImagePath } from "#constants/images"
 
 import { useImagePicker } from "../../../hooks"
 import { useStoreActions, useStoreState } from "easy-peasy"
-import { selImage, selSwiper, selAuth } from "../../../store/selectors"
-import { actData, actImage, actSwiper } from "../../../store/actions"
+import { selImage } from "../../../store/selectors"
+import { actImage } from "../../../store/actions"
 
 import uuid from "react-native-uuid"
 import WriteCardForm from "./WriteCardForm"
 
 import { ImageService } from "../../../services"
+import LoadingModal from "../../../components/modals/LoadingModal"
 
 const uploadDirName = `writeCardImage-${uuid.v4()}`
 
 const initStates = () => {
-  // const coords = useStoreState(selSwiper.coords);
+  // selectors
+  const cardImageUrl = useStoreState(selImage.card)
+  const isCardStartUploading = useStoreState(selImage.isCardStartUploading)
+  const tempBlob = useStoreState(selImage.tempBlob)
+
+  // actions
   const setCardImageUrl = useStoreActions(actImage.setCard)
+  const startUploadingCardImage = useStoreActions(actImage.startUploadingCard)
   const completeUploadCardImage = useStoreActions(
     actImage.completeUploadingCard,
   )
-  const cardImageUrl = useStoreState(selImage.card)
 
   return {
-    // coords,
     setCardImageUrl,
+    startUploadingCardImage,
+    tempBlob,
     completeUploadCardImage,
     cardImageUrl,
+    isCardStartUploading,
   }
 }
 
 const WriteChapterCard = ({ route }) => {
   const { categoryTitle, chapterId, categoryId, order, depth } = route.params
-  const { setCardImageUrl, completeUploadCardImage, cardImageUrl } =
-    initStates()
+  const {
+    setCardImageUrl,
+    startUploadingCardImage,
+    tempBlob,
+    completeUploadCardImage,
+    cardImageUrl,
+    isCardStartUploading,
+  } = initStates()
 
-  const pickImage = useImagePicker(
-    async uri => {
-      // 로컬 이미지 uri 저장 콜백
-      // setProfileLocalImagePath(await uploadLocalImagePath(uploadDirName, uri));
-    },
-    async blob => {
-      // 이미지 원본 먼저 업로드
-      const downloadUrl = await ImageService.uploadImageFile(
-        uploadDirName,
-        blob,
-      )
-      
-      setCardImageUrl(downloadUrl)
-      completeUploadCardImage()
-    },
-    9,
-    21,
-  )
+  const pickImage = useImagePicker(9, 21)
 
-  const onPickCardImage = async () => await pickImage()
+  const onSave = useCallback(async () => {
+    startUploadingCardImage()
+
+    const downloadUrl = await ImageService.uploadImageFile(
+      uploadDirName,
+      tempBlob,
+    )
+
+    setCardImageUrl(downloadUrl)
+    completeUploadCardImage()
+  }, [tempBlob])
+
+  const onPickCardImage = async () => {
+    await pickImage()
+  }
 
   return (
     <KeyboardAwareScrollView>
+      {isCardStartUploading && <LoadingModal />}
       <ImageBackground
         style={{
           width: wp("100%"),
@@ -118,6 +131,7 @@ const WriteChapterCard = ({ route }) => {
             chapterId={chapterId}
             categoryId={categoryId}
             depth={depth}
+            onSave={onSave}
           >
             <AddImage style={s.imageIcon} onPress={onPickCardImage} />
           </WriteCardForm>

@@ -43,5 +43,5 @@ export const useProfileImageLoader = isLoggedIn => {
     //     }
     //   });
     // })();
-  }, [setProfile, isProfileUploaded])
+  }, [setProfile, isProfileUploaded, isLoggedIn])
 }

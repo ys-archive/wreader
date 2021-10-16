@@ -10,7 +10,7 @@ import { colors } from "#constants"
 
 import { useStoreState, useStoreActions } from "easy-peasy"
 import { selAuth } from "../../../store/selectors"
-import { actData, actImage } from "../../../store/actions"
+import { actData } from "../../../store/actions"
 
 import { useWriteChapterCardForm } from "./useWriteChapterCardForm"
 
@@ -23,36 +23,22 @@ const initStates = () => {
   const userId = useStoreState(selAuth.userId)
   const updateHasNew = useStoreActions(actData.updateHasNew)
   const fetchOneChapter = useStoreActions(actData.fetchOneChapter)
-  const fetchOneUserChapter = useStoreActions(actData.fetchOneUserChapter)
-  const fetchOneNext = useStoreActions(actData.fetchOneNext)
-
-  const setCardImageUrl = useStoreActions(actImage.setCard)
 
   return {
     userId,
     updateHasNew,
     fetchOneChapter,
-    fetchOneUserChapter,
-    fetchOneNext,
-
-    setCardImageUrl,
   }
 }
 
-const WriteCardForm = ({ chapterId, categoryId, depth, children }) => {
+const WriteCardForm = ({ chapterId, categoryId, depth, onSave, children }) => {
   const nav = useNavigation()
 
-  const {
-    userId,
-    updateHasNew,
-    fetchOneChapter,
-    fetchOneUserChapter,
-    fetchOneNext,
-    setCardImageUrl,
-  } = initStates()
+  const { userId, updateHasNew, fetchOneChapter } = initStates()
 
-  const afterFormSubmitted = () => {
-    // console.log("depth in WriteCard -->", depth)
+  const afterFormSubmitted = async () => {
+    await onSave()
+
     switch (depth) {
       case DEPTH_NAME.CHAPTER:
         updateHasNew({ d0: true })
@@ -70,7 +56,6 @@ const WriteCardForm = ({ chapterId, categoryId, depth, children }) => {
         break
     }
 
-    setCardImageUrl("")
     nav.goBack()
   }
 

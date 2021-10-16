@@ -15,12 +15,16 @@ import { useCardResetToStartScreen } from "./cards/useCardResetToStartScreen"
 import SortIndicator from "./cards/SortIndicator"
 
 import { useStoreState } from "easy-peasy"
-import { selSwiper } from "../store/selectors"
+import { selImage, selSwiper } from "../store/selectors"
 
 const Main = () => {
   const nav = useNavigation()
   const depth = useStoreState(selSwiper.depth)
-  console.log(depth);
+  const isProfileStartUploading = useStoreState(
+    selImage.isProfileStartUploading,
+  )
+  const isCardStartUploading = useStoreState(selImage.isCardStartUploading)
+  console.log(depth)
 
   useAutoLogin()
 
