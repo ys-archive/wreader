@@ -57,6 +57,7 @@ const WriteChapterCard = ({ route }) => {
         uploadDirName,
         blob,
       )
+      
       setCardImageUrl(downloadUrl)
       completeUploadCardImage()
     },
