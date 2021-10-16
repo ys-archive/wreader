@@ -124,7 +124,7 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
           {/* 챕터 제목 */}
           <View style={s.titleSection}>
             <Text fontFamily="semibold" style={s.title}>
-              THE FIRST HEART
+              {categoryTitle}
             </Text>
           </View>
 
@@ -141,7 +141,7 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
 
           {/* 챕터 내용 */}
           <View style={s.contentSection}>
-            <Text style={s.contentText} fontFamily="light">
+            <Text style={s.contentText} fontFamily="regular">
               &nbsp;{content ?? ''}
             </Text>
           </View>
@@ -233,7 +233,7 @@ const s = StyleSheet.create({
   },
 
   title: {
-    fontSize: 22,
+    fontSize: 24,
     // color: colors.light.ivory4,
   },
   separator: {
