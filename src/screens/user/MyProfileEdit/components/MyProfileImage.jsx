@@ -81,7 +81,11 @@ const MyProfileImage = () => {
     <View style={s.root}>
       {profileImageUrl ? (
         <Image
-          style={{ width: wp("30%"), height: hp("13.5%"), borderRadius: 200 }}
+          style={{
+            width: Platform.OS === "ios" ? wp("30%") : wp("28"),
+            height: hp("13.5%"),
+            borderRadius: 200,
+          }}
           source={{
             uri: profileImageUrl,
           }}
