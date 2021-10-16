@@ -264,9 +264,7 @@ const s = StyleSheet.create({
   },
   contentSection: {
     paddingHorizontal: wp("5.5%"),
-    paddingVertical: hp("6.1%"),
-    // minHeight: '80%',
-    // maxHeight: '80%'
+    paddingTop: hp("6.1%"),
   },
   contentText: {
     fontSize: Platform.OS == "ios" ? 25 : 22,
