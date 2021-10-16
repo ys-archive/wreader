@@ -54,21 +54,14 @@ const MyProfile = () => {
       source={{ uri }}
     />
   ) : (
-    <Person
-      iconStyle={{
+    <View
+      style={{
         width: wp("55.6%"),
         height: Platform.OS === "ios" ? 230 : 220,
-        borderRadius: 50,
+        borderRadius: 200,
+        backgroundColor: "#000",
       }}
     />
-    // <View
-    //   style={{
-    //     width: wp("55.6%"),
-    //     height: 230,
-    //     borderRadius: 200,
-    //     backgroundColor: "#000",
-    //   }}
-    // />
   )
 
   const { intro, facebook, instagram, nick } = userInfo

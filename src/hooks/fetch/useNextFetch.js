@@ -21,6 +21,7 @@ const initStates = () => {
   // actions
   // - data
   const addChapterChild = useStoreActions(actData.addChapterChild);
+  const sortNext = useStoreActions(actData.sortNext)
   const startLoading = useStoreActions(actData.startLoading);
   const finishLoading = useStoreActions(actData.finishLoading);
   const updateHasNew = useStoreActions(actData.updateHasNew);
@@ -38,6 +39,8 @@ const initStates = () => {
     coords,
 
     addChapterChild,
+    sortNext,
+
     startLoading,
     finishLoading,
     updateHasNew,
@@ -57,6 +60,8 @@ export const useNextFetch = () => {
     coords,
 
     addChapterChild,
+    sortNext,
+
     startLoading,
     finishLoading,
     updateHasNew,
@@ -98,6 +103,8 @@ export const useNextFetch = () => {
     if (!isLoaded.d3) return;
 
     setMaxCoords({ d3: chapters });
+    sortNext()
+    sortNext()
   }, [isLoaded.d3]);
 };
 

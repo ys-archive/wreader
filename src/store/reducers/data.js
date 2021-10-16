@@ -258,12 +258,9 @@ export default {
   ),
 
   addOneUserChapter: action((state, payload) => {
-    const { d0, d1, d2, card } = payload
+    const { d0, d1, card } = payload
 
-    // state.chapters[d0][d1].child[d2].deck = card;
-    // state.originalChapters[d0][d1].child[d2].deck = card;
     card.forEach((c, i) => {
-      // console.log(c);
       state.chapters[d0][d1].child[i].deck = c
       state.originalChapters[d0][d1].child[i].deck = c
     })
@@ -287,16 +284,16 @@ export default {
 
       console.log("updated user card: ", filteredData)
 
-      // actions.addOneUserChapter({ d0, d1, d2, card: filteredData[d2] });
-      actions.addOneUserChapter({ d0, d1, d2, card: filteredData })
+      actions.addOneUserChapter({
+        d0,
+        d1,
+        card: filteredData,
+      })
     },
   ),
 
   addOneNext: action((state, payload) => {
     const { d0, d1, d2, card } = payload
-
-    // state.chapters[d0][d1].child[d2].child[d3].deck = card;
-    // state.originalChapters[d0][d1].child[d2].child[d3].deck = card;
 
     card.forEach((c, i) => {
       state.chapters[d0][d1].child[d2].child[i].deck = c
@@ -370,9 +367,8 @@ export default {
   }),
 
   sortNext_internal: action((state, payload) => {
-    const { d0, d1, d2, d3 } = payload
+    const { d0, d1, d2 } = payload
     let sorted = undefined
-    // console.log();
 
     if (!state.isNextSorted) {
       sorted = state.chapters[d0][d1].child[d2].child.sort(sorter)
