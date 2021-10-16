@@ -1,35 +1,32 @@
-import React, { useCallback, useRef } from 'react';
-import { View, Platform } from 'react-native';
-import {
-  StyleSheet,
-  TextInput,
-  Button,
-  RenderError,
-} from '../../../components';
+import React, { useCallback, useRef } from "react"
+import { View, Platform } from "react-native"
+import { StyleSheet, TextInput, Button, RenderError } from "../../../components"
 
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
-import { colors } from '#constants';
+} from "react-native-responsive-screen"
+import { colors } from "#constants"
 
-import { useStoreState, useStoreActions } from 'easy-peasy';
-import { selAuth } from '../../../store/selectors';
-import { actData } from '../../../store/actions';
+import { useStoreState, useStoreActions } from "easy-peasy"
+import { selAuth } from "../../../store/selectors"
+import { actData, actImage } from "../../../store/actions"
 
-import { useWriteChapterCardForm } from './useWriteChapterCardForm';
+import { useWriteChapterCardForm } from "./useWriteChapterCardForm"
 
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native"
 
-import { StyleDefine } from '../../../constants';
-import { DEPTH_NAME } from '../../../store/reducers/swiper.depth';
+import { StyleDefine } from "../../../constants"
+import { DEPTH_NAME } from "../../../store/reducers/swiper.depth"
 
 const initStates = () => {
-  const userId = useStoreState(selAuth.userId);
-  const updateHasNew = useStoreActions(actData.updateHasNew);
-  const fetchOneChapter = useStoreActions(actData.fetchOneChapter);
-  const fetchOneUserChapter = useStoreActions(actData.fetchOneUserChapter);
-  const fetchOneNext = useStoreActions(actData.fetchOneNext);
+  const userId = useStoreState(selAuth.userId)
+  const updateHasNew = useStoreActions(actData.updateHasNew)
+  const fetchOneChapter = useStoreActions(actData.fetchOneChapter)
+  const fetchOneUserChapter = useStoreActions(actData.fetchOneUserChapter)
+  const fetchOneNext = useStoreActions(actData.fetchOneNext)
+
+  const setCardImageUrl = useStoreActions(actImage.setCard)
 
   return {
     userId,
@@ -37,11 +34,13 @@ const initStates = () => {
     fetchOneChapter,
     fetchOneUserChapter,
     fetchOneNext,
-  };
-};
+
+    setCardImageUrl,
+  }
+}
 
 const WriteCardForm = ({ chapterId, categoryId, depth, children }) => {
-  const nav = useNavigation();
+  const nav = useNavigation()
 
   const {
     userId,
@@ -49,34 +48,36 @@ const WriteCardForm = ({ chapterId, categoryId, depth, children }) => {
     fetchOneChapter,
     fetchOneUserChapter,
     fetchOneNext,
-  } = initStates();
+    setCardImageUrl,
+  } = initStates()
 
   const afterFormSubmitted = () => {
-    console.log('depth in WriteCard -->', depth);
+    // console.log("depth in WriteCard -->", depth)
     switch (depth) {
       case DEPTH_NAME.CHAPTER:
-        updateHasNew({ d0: true });
-        fetchOneChapter();
-        break;
+        updateHasNew({ d0: true })
+        fetchOneChapter()
+        break
 
       case DEPTH_NAME.USER_CHAPTER:
-        updateHasNew({ d2: true });
+        updateHasNew({ d2: true })
         // fetchOneUserChapter();
-        break;
+        break
 
       case DEPTH_NAME.NEXT:
-        updateHasNew({ d3: true });
+        updateHasNew({ d3: true })
         // fetchOneNext();
-        break;
+        break
     }
 
-    nav.goBack();
-  };
+    setCardImageUrl("")
+    nav.goBack()
+  }
 
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
-    useWriteChapterCardForm(userId, chapterId, categoryId, afterFormSubmitted);
+    useWriteChapterCardForm(userId, chapterId, categoryId, afterFormSubmitted)
 
-  const { sentence } = values;
+  const { sentence } = values
 
   return (
     <>
@@ -86,10 +87,10 @@ const WriteCardForm = ({ chapterId, categoryId, depth, children }) => {
           maxLength={120}
           autoFocus
           value={sentence}
-          onBlur={handleBlur('sentence')}
+          onBlur={handleBlur("sentence")}
           multiline
           maxHeight={400}
-          onChangeText={handleChange('sentence')}
+          onChangeText={handleChange("sentence")}
           // if (e && e.length % 20 === 0) e = `${e}\n`;
           placeholder="Write a story for this chapter..."
           placeholderTextColor={colors.light.ivory4}
@@ -116,44 +117,44 @@ const WriteCardForm = ({ chapterId, categoryId, depth, children }) => {
         </Button>
       </View>
     </>
-  );
-};
+  )
+}
 
-export default WriteCardForm;
+export default WriteCardForm
 
 const s = StyleSheet.create({
   textInputSection: {
-    minHeight: Platform.OS === 'ios' ? wp('110%') : wp('90%'),
-    maxHeight: Platform.OS === 'ios' ? wp('110%') : wp('90%'),
+    minHeight: Platform.OS === "ios" ? wp("110%") : wp("90%"),
+    maxHeight: Platform.OS === "ios" ? wp("110%") : wp("90%"),
   },
   input: {
     borderBottomWidth: 0.3,
-    borderColor: '#000',
+    borderColor: "#000",
 
-    minWidth: '100%',
-    maxWidth: '100%',
+    minWidth: "100%",
+    maxWidth: "100%",
 
     margin: 0,
     padding: 0,
     paddingLeft: 0,
-    marginBottom: Platform.OS === 'ios' ? wp('4%') : wp('1.8%'),
+    marginBottom: Platform.OS === "ios" ? wp("4%") : wp("1.8%"),
 
     fontSize: 21,
-    fontWeight: '200',
-    color: 'rgba(0, 0, 0, 0.3)',
+    fontWeight: "200",
+    color: "rgba(0, 0, 0, 0.3)",
 
     // textDecorationLine: 'underline',
   },
 
   bottomSection: {
-    maxWidth: '120%',
-    minWidth: '120%',
+    maxWidth: "120%",
+    minWidth: "120%",
 
     // marginTop: hp('50%'),
-    flexDirection: 'row',
+    flexDirection: "row",
     // justifyContent: 'center',
     // justifyContent: 'space-around',
-    alignItems: 'center',
+    alignItems: "center",
     // backgroundColor: 'rgba(255, 255, 255, 0.6)',
   },
 
@@ -161,7 +162,7 @@ const s = StyleSheet.create({
     backgroundColor: colors.light.ivory5,
     paddingVertical: 11,
     paddingHorizontal: 15,
-    position: 'relative',
+    position: "relative",
     right: -135,
     bottom: -10,
     borderRadius: StyleDefine.borderRadiusInside - 6,
@@ -170,7 +171,7 @@ const s = StyleSheet.create({
     fontSize: 16,
     color: colors.light.ivory1,
   },
-});
+})
 
 // const textInputRef1 = useRef(null);
 // const textInputRef2 = useRef(null);
