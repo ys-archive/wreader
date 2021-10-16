@@ -14,19 +14,22 @@ import { DEPTH_NAME } from "../../store/reducers/swiper.depth"
 
 const SortIndicator = () => {
   const depth = useStoreState(selSwiper.depth)
+  const isChaptersSorted = useStoreState(selData.isChaptersSorted)
   const isUserChaptersSorted = useStoreState(selData.isUserChaptersSorted)
   const isNextSorted = useStoreState(selData.isNextSorted)
 
   let PopularTextJSX = null
   let NewTextJSX = null
 
-  console.log(`depth: ${depth}: ${isUserChaptersSorted} ${isNextSorted}`)
+  console.log(
+    `depth: ${depth}, ${isChaptersSorted} ${isUserChaptersSorted} ${isNextSorted}`,
+  )
 
   switch (depth) {
     case DEPTH_NAME.CHAPTER:
       PopularTextJSX = (
         <Text
-          fontFamily={!isUserChaptersSorted ? "heavy" : "xlight"}
+          fontFamily={!isChaptersSorted ? "heavy" : "xlight"}
           style={s.label}
         >
           POPULAR
@@ -34,7 +37,7 @@ const SortIndicator = () => {
       )
       NewTextJSX = (
         <Text
-          fontFamily={isUserChaptersSorted ? "heavy" : "xlight"}
+          fontFamily={isChaptersSorted ? "heavy" : "xlight"}
           style={s.label}
         >
           NEW
