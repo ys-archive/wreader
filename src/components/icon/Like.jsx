@@ -1,13 +1,13 @@
-import React from 'react';
-import { Image, TouchableOpacity } from 'react-native';
-import { likeIcon } from '#constants/images';
+import React from "react"
+import { Image, TouchableOpacity } from "react-native"
+import { likeIcon } from "#constants/images"
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+} from "react-native-responsive-screen"
 
-const Like = ({ style, iconStyle, onPress, isPressable = true }) =>
-  isPressable ? (
+const Like = ({ style, iconStyle, onPress, isPressable = true }) => {
+  return (
     <TouchableOpacity onPress={onPress} style={style}>
       <Image
         style={[
@@ -20,17 +20,7 @@ const Like = ({ style, iconStyle, onPress, isPressable = true }) =>
         source={likeIcon}
       />
     </TouchableOpacity>
-  ) : (
-    <Image
-      style={[
-        {
-          width: 16,
-          height: 15,
-        },
-        iconStyle,
-      ]}
-      source={likeIcon}
-    />
-  );
+  )
+}
 
-export default Like;
+export default Like
