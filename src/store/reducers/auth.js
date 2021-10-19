@@ -3,7 +3,7 @@ import { action } from 'easy-peasy';
 export default {
   // model
   isLoggedIn: false,
-  userId: 0,
+  userId: -999,
   email: '',
   password: '',
   info: null,

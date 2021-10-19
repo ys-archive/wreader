@@ -98,7 +98,7 @@ export const useChaptersFetch = () => {
     if (!isLoaded.d1) return
 
     updateHasNew({ d1: false })
-    sortChapters()
-    sortChapters()
+    // sortChapters()
+    // sortChapters()
   }, [isLoaded.d1, chapters])
 }

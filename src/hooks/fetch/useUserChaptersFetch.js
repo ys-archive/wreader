@@ -115,8 +115,8 @@ export const useUserChaptersFetch = () => {
 
     // console.log('UPDATE MAX WITH -->', chapters);
     setMaxCoords({ d2: chapters })
-    sortUserChapters()
-    sortUserChapters()
+    // sortUserChapters()
+    // sortUserChapters()
   }, [isLoaded.d2])
 }
 

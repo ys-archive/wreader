@@ -103,8 +103,8 @@ export const useNextFetch = () => {
     if (!isLoaded.d3) return;
 
     setMaxCoords({ d3: chapters });
-    sortNext()
-    sortNext()
+    // sortNext()
+    // sortNext()
   }, [isLoaded.d3]);
 };
 

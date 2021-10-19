@@ -1,8 +1,7 @@
 import React, { useCallback } from "react"
 import { View, Platform, ImageBackground } from "react-native"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
-import { StyleSheet, TextInput, Text } from "#components"
-import { Alert } from "../../../components/alert"
+import { StyleSheet, Text } from "#components"
 
 import {
   widthPercentageToDP as wp,
@@ -64,6 +63,11 @@ const WriteChapterCard = ({ route }) => {
   const pickImage = useImagePicker(9, 21)
 
   const onSave = useCallback(async () => {
+    if (tempBlob === "") {
+      console.log("No card image selected")
+      return
+    }
+    
     startUploadingCardImage()
 
     const downloadUrl = await ImageService.uploadImageFile(
@@ -73,7 +77,7 @@ const WriteChapterCard = ({ route }) => {
 
     setCardImageUrl(downloadUrl)
     completeUploadCardImage()
-  }, [tempBlob])
+  }, [tempBlob, cardImageUrl])
 
   const onPickCardImage = async () => {
     await pickImage()

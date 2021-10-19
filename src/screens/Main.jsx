@@ -2,6 +2,11 @@ import React from "react"
 import { View } from "react-native"
 import { Logo, Sort, Menu } from "../components/icon"
 
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen"
+
 import { useNavigation } from "@react-navigation/native"
 
 import { useAutoLogin } from "../hooks"
@@ -15,16 +20,11 @@ import { useCardResetToStartScreen } from "./cards/useCardResetToStartScreen"
 import SortIndicator from "./cards/SortIndicator"
 
 import { useStoreState } from "easy-peasy"
-import { selImage, selSwiper } from "../store/selectors"
+import { selSwiper } from "../store/selectors"
 
 const Main = () => {
   const nav = useNavigation()
   const depth = useStoreState(selSwiper.depth)
-  const isProfileStartUploading = useStoreState(
-    selImage.isProfileStartUploading,
-  )
-  const isCardStartUploading = useStoreState(selImage.isCardStartUploading)
-  console.log(depth)
 
   useAutoLogin()
 
@@ -33,7 +33,12 @@ const Main = () => {
   const onPressMenuIcon = () => nav.openDrawer()
 
   return (
-    <View>
+    <View style={{
+      minWidth: wp('100%'),
+      maxWidth: wp('100%'),
+      minHeight: hp('100%'),
+      maxHeight: hp('100%')
+    }}>
       <Logo onPress={returnToMain} />
       {depth !== 0 && <Sort onPress={onPressSortIcon} />}
       {isSorterOpen && <SortIndicator />}

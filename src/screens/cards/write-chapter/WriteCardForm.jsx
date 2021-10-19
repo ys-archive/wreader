@@ -36,9 +36,9 @@ const WriteCardForm = ({ chapterId, categoryId, depth, onSave, children }) => {
 
   const { userId, updateHasNew, fetchOneChapter } = initStates()
 
-  const afterFormSubmitted = async () => {
-    await onSave()
+  const beforeFormSubmitted = useCallback(async () => await onSave(), [])
 
+  const afterFormSubmitted = useCallback(async () => {
     switch (depth) {
       case DEPTH_NAME.CHAPTER:
         updateHasNew({ d0: true })
@@ -57,10 +57,16 @@ const WriteCardForm = ({ chapterId, categoryId, depth, onSave, children }) => {
     }
 
     nav.goBack()
-  }
+  }, [depth])
 
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
-    useWriteChapterCardForm(userId, chapterId, categoryId, afterFormSubmitted)
+    useWriteChapterCardForm(
+      userId,
+      chapterId,
+      categoryId,
+      beforeFormSubmitted,
+      afterFormSubmitted,
+    )
 
   const { sentence } = values
 

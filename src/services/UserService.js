@@ -1,32 +1,28 @@
-import { instance } from './AxiosInstance';
-// import { BASE_URL } from '@env';
-import md5 from 'md5';
-// import { useGetSWR } from '../hooks/useGetSWR';
-
-// https://app.gitbook.com/@wreader/s/wreader/untitled
+import { instance } from "./AxiosInstance"
 
 class UserService {
   static async POST_registerUserProfilePhoto(userId, path) {
-    console.log(`register User Profile Photo @ ${path}`);
+    console.log(`register User Profile Photo @ ${path}`)
+    
     const { data, status } = await instance.post(`user/img/${userId}`, {
       path,
-    });
-    const { code } = data;
-    return code;
+    })
+    const { code } = data
+    return code
   }
 
   static async GET_getUserInfo(userId) {
     const { data, status } = await instance
       .get(`user/${userId}`)
-      .catch(console.error);
-      return { data, status };
+      .catch(console.error)
+    return { data, status }
   }
 
   static async POST_dropUser(userId) {
     const { data, status } = await instance
       .post(`user/drop/${userId}`)
-      .catch(console.error);
-    return { data, user };
+      .catch(console.error)
+    return { data, user }
   }
 
   // static async PUT_updateUserPassword(userId, password) {
@@ -90,19 +86,19 @@ class UserService {
         instagram,
         nick: nickname,
       })
-      .catch(console.error);
+      .catch(console.error)
 
-    const { code } = data;
-    return code;
+    const { code } = data
+    return code
   }
 
   static async DELETE_DropCancel(userId) {
     const { data } = await instance
       .delete(`user/drop/${userId}`)
-      .catch(console.error);
-    const { code } = data;
-    return code;
+      .catch(console.error)
+    const { code } = data
+    return code
   }
 }
 
-export default UserService;
+export default UserService

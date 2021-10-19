@@ -35,26 +35,6 @@ export const useCardSorter = () => {
     }, duration * 1000)
   }, [])
 
-  // useEffect(() => {
-  //   switch (depth) {
-  //     case DEPTH_NAME.CHAPTER:
-  //       sortChapters()
-  //       break
-
-  //     case DEPTH_NAME.USER_CHAPTER:
-  //       sortUserChapters()
-  //       break
-
-  //     case DEPTH_NAME.NEXT:
-  //       sortNext()
-  //       break
-
-  //     default:
-  //       console.log("You can't sort due to the depth!")
-  //       break
-  //   }
-  // }, [isLoaded])
-
   return {
     callback: useCallback(() => {
       switch (depth) {

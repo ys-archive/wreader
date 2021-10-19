@@ -70,7 +70,6 @@ export const useSwipeLeft = swipe => {
             return
           }
 
-          // todo: 챕터는 유저가 직접 추가하지 않음
           if (
             coords.d1 < maxCoords.d1 - 2 &&
             coords.d1 + 1 === chapters[coords.d0].length

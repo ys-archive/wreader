@@ -35,7 +35,6 @@ const Reader = ({ children }) => {
         style={s.recognizer}
       >
         <Animated.View style={[getStyle()]}>{children}</Animated.View>
-        {/* <View style={s.swipeFiller} /> */}
       </GestureRecognizer>
     </View>
   );

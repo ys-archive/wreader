@@ -18,8 +18,6 @@ import { selAuth, selImage } from "../../../../store/selectors"
 import { UserService } from "../../../../services"
 import { ImageService } from "../../../../services"
 
-const uploadDirName = "profileImage"
-
 const initStates = () => {
   const userId = useStoreState(selAuth.userId)
   const tempBlob = useStoreState(selImage.tempBlob)
@@ -50,6 +48,7 @@ const MyProfileImage = () => {
     completeUploadProfileImage,
     profileImageUrl,
   } = initStates()
+  const uploadDirName = `profileImage-${userId}`
   const [isEditingProfileImage, setIsEditingProfileImage] = useState(false)
 
   // 프로필 이미지 로드
@@ -58,6 +57,11 @@ const MyProfileImage = () => {
   const pickImage = useImagePicker(4, 3, false)
 
   const onSave = useCallback(async () => {
+    if (tempBlob === "") {
+      console.log("No profile image selected")
+      return
+    }
+
     startUploadingProfile()
 
     const downloadUrl = await ImageService.uploadImageFile(
@@ -68,9 +72,10 @@ const MyProfileImage = () => {
     // 이미지 원본을 스토리지 저장 후 post 로 유저 정보로 전송
     await UserService.POST_registerUserProfilePhoto(userId, downloadUrl)
 
+    setProfileImageUrl(downloadUrl)
     completeUploadProfileImage()
     setIsEditingProfileImage(false)
-  }, [tempBlob, userId])
+  }, [tempBlob, userId, uploadDirName])
 
   const pickNewProfileImage = async () => {
     setIsEditingProfileImage(true)

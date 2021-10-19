@@ -3,19 +3,20 @@ import firebase from "firebase"
 import * as FileSystem from "expo-file-system"
 
 import { useStoreActions, useStoreState } from "easy-peasy"
-import { selImage } from "../../store/selectors"
+import { selAuth, selImage } from "../../store/selectors"
 import { actImage } from "../../store/actions"
 
 export const useProfileImageLoader = isLoggedIn => {
   const setProfile = useStoreActions(actImage.setProfile)
   const isProfileUploaded = useStoreState(selImage.isProfileUploaded)
+  const userId = useStoreState(selAuth.userId)
 
   useEffect(() => {
     async function loadProfileImage() {
-      const ref = firebase.storage().ref().child("profileImage")
+      const ref = firebase.storage().ref().child(`profileImage-${userId}`)
       setProfile(await ref.getDownloadURL())
     }
-
+    if (userId === -999) return
     if (isLoggedIn) loadProfileImage()
 
     // (async function loadLocalImage() {
@@ -43,5 +44,5 @@ export const useProfileImageLoader = isLoggedIn => {
     //     }
     //   });
     // })();
-  }, [setProfile, isProfileUploaded, isLoggedIn])
+  }, [setProfile, isProfileUploaded, isLoggedIn, userId])
 }
