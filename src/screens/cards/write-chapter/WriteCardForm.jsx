@@ -36,8 +36,6 @@ const WriteCardForm = ({ chapterId, categoryId, depth, onSave, children }) => {
 
   const { userId, updateHasNew, fetchOneChapter } = initStates()
 
-  const beforeFormSubmitted = useCallback(async () => await onSave(), [])
-
   const afterFormSubmitted = useCallback(async () => {
     switch (depth) {
       case DEPTH_NAME.CHAPTER:
@@ -64,7 +62,6 @@ const WriteCardForm = ({ chapterId, categoryId, depth, onSave, children }) => {
       userId,
       chapterId,
       categoryId,
-      beforeFormSubmitted,
       afterFormSubmitted,
     )
 

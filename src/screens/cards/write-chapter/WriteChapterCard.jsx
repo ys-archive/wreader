@@ -14,36 +14,18 @@ import { colors, StyleDefine } from "../../../constants"
 import { makeCategoryBGImagePath } from "#constants/images"
 
 import { useImagePicker } from "../../../hooks"
-import { useStoreActions, useStoreState } from "easy-peasy"
+import { useStoreState } from "easy-peasy"
 import { selImage } from "../../../store/selectors"
-import { actImage } from "../../../store/actions"
 
-import uuid from "react-native-uuid"
 import WriteCardForm from "./WriteCardForm"
 
-import { ImageService } from "../../../services"
 import LoadingModal from "../../../components/modals/LoadingModal"
-
-const uploadDirName = `writeCardImage-${uuid.v4()}`
 
 const initStates = () => {
   // selectors
   const cardImageUrl = useStoreState(selImage.card)
   const isCardStartUploading = useStoreState(selImage.isCardStartUploading)
-  const tempBlob = useStoreState(selImage.tempBlob)
-
-  // actions
-  const setCardImageUrl = useStoreActions(actImage.setCard)
-  const startUploadingCardImage = useStoreActions(actImage.startUploadingCard)
-  const completeUploadCardImage = useStoreActions(
-    actImage.completeUploadingCard,
-  )
-
   return {
-    setCardImageUrl,
-    startUploadingCardImage,
-    tempBlob,
-    completeUploadCardImage,
     cardImageUrl,
     isCardStartUploading,
   }
@@ -51,33 +33,9 @@ const initStates = () => {
 
 const WriteChapterCard = ({ route }) => {
   const { categoryTitle, chapterId, categoryId, order, depth } = route.params
-  const {
-    setCardImageUrl,
-    startUploadingCardImage,
-    tempBlob,
-    completeUploadCardImage,
-    cardImageUrl,
-    isCardStartUploading,
-  } = initStates()
+  const { cardImageUrl, isCardStartUploading } = initStates()
 
   const pickImage = useImagePicker(9, 21)
-
-  const onSave = useCallback(async () => {
-    if (tempBlob === "") {
-      console.log("No card image selected")
-      return
-    }
-    
-    startUploadingCardImage()
-
-    const downloadUrl = await ImageService.uploadImageFile(
-      uploadDirName,
-      tempBlob,
-    )
-
-    setCardImageUrl(downloadUrl)
-    completeUploadCardImage()
-  }, [tempBlob, cardImageUrl])
 
   const onPickCardImage = async () => {
     await pickImage()
@@ -135,7 +93,6 @@ const WriteChapterCard = ({ route }) => {
             chapterId={chapterId}
             categoryId={categoryId}
             depth={depth}
-            onSave={onSave}
           >
             <AddImage style={s.imageIcon} onPress={onPickCardImage} />
           </WriteCardForm>

@@ -21,6 +21,7 @@ export const useSwipeLeft = swipe => {
     decreaseCoords,
 
     setMaxCoords,
+    resetTempBlob,
     resetCard,
   } = useSwipeStates()
 
@@ -39,6 +40,7 @@ export const useSwipeLeft = swipe => {
               console.log(
                 "마지막 챕터!, 더이상 다음 챕터가 없어서 새 챕터 작성!",
               )
+              resetTempBlob()
               resetCard()
               nav.navigate(ScreenNames.MainWriteCard, {
                 categoryTitle: categories[coords.d0].title,
@@ -78,6 +80,7 @@ export const useSwipeLeft = swipe => {
               console.log(
                 "마지막 챕터!, 더이상 다음 챕터가 없어서 새 챕터 작성!",
               )
+              resetTempBlob()
               resetCard()
               nav.navigate(ScreenNames.MainWriteCard, {
                 categoryTitle: categories[coords.d0].title,
@@ -105,6 +108,7 @@ export const useSwipeLeft = swipe => {
             console.log(
               "해당 유저챕터의 유저 다음 챕터가 존재 하지 않음. 새로운 카드 작성",
             )
+            resetTempBlob()
             resetCard()
             nav.navigate(ScreenNames.MainWriteCard, {
               categoryTitle: categories[coords.d0].title,
@@ -140,6 +144,7 @@ export const useSwipeLeft = swipe => {
             }
 
             console.log("마지막인 유저 다음 챕터! 새로운 카드 작성")
+            resetTempBlob()
             resetCard()
             nav.navigate(ScreenNames.MainWriteCard, {
               categoryTitle: categories[coords.d0].title,

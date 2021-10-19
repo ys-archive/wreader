@@ -2,7 +2,7 @@ import { action } from "easy-peasy"
 
 export default {
   // model,
-  tempImageBlob: undefined,
+  tempImageBlob: null,
 
   profile: "",
   isProfileStartUploading: false,
@@ -15,7 +15,7 @@ export default {
 
   // actions
   resetTempBlob: action(state => {
-    state.tempImageBlob = undefined
+    state.tempImageBlob = null
   }),
 
   setTempBlob: action((state, payload) => {

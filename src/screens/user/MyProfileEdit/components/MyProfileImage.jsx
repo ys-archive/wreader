@@ -28,6 +28,7 @@ const initStates = () => {
     actImage.completeUploadingProfile,
   )
   const profileImageUrl = useStoreState(selImage.profile)
+  const resetTempBlob = useStoreActions(actImage.resetTempBlob)
 
   return {
     userId,
@@ -36,6 +37,7 @@ const initStates = () => {
     startUploadingProfile,
     completeUploadProfileImage,
     profileImageUrl,
+    resetTempBlob,
   }
 }
 
@@ -47,6 +49,7 @@ const MyProfileImage = () => {
     startUploadingProfile,
     completeUploadProfileImage,
     profileImageUrl,
+    resetTempBlob,
   } = initStates()
   const uploadDirName = `profileImage-${userId}`
   const [isEditingProfileImage, setIsEditingProfileImage] = useState(false)
@@ -57,7 +60,7 @@ const MyProfileImage = () => {
   const pickImage = useImagePicker(4, 3, false)
 
   const onSave = useCallback(async () => {
-    if (tempBlob === "") {
+    if (!tempBlob) {
       console.log("No profile image selected")
       return
     }
@@ -75,6 +78,7 @@ const MyProfileImage = () => {
     setProfileImageUrl(downloadUrl)
     completeUploadProfileImage()
     setIsEditingProfileImage(false)
+    resetTempBlob()
   }, [tempBlob, userId, uploadDirName])
 
   const pickNewProfileImage = async () => {

@@ -31,6 +31,7 @@ export const useSwipeStates = () => {
   const setMaxCoords = useStoreActions(actSwiper.setMaxCoords)
 
   // - image
+  const resetTempBlob = useStoreActions(actImage.resetTempBlob)
   const resetCard = useStoreActions(actImage.resetCard)
 
   return {
@@ -54,6 +55,7 @@ export const useSwipeStates = () => {
     increaseCoords,
     decreaseCoords,
 
+    resetTempBlob,
     resetCard,
   }
 }

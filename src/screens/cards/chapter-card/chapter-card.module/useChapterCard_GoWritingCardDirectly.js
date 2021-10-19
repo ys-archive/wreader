@@ -15,6 +15,7 @@ const initStates = () => {
   const coords = useStoreState(selSwiper.coords)
   const depth = useStoreState(selSwiper.depth)
   const isLoggedIn = useStoreState(selAuth.isLoggedIn)
+  const resetTempBlob = useStoreActions(actImage.resetTempBlob)
   const resetCard = useStoreActions(actImage.resetCard)
 
   return {
@@ -23,14 +24,22 @@ const initStates = () => {
     coords,
     depth,
     isLoggedIn,
+    resetTempBlob,
     resetCard,
   }
 }
 
 export const useChapterCard_GoWritingCardDirectly = () => {
   const nav = useNavigation()
-  const { categories, chapters, coords, depth, isLoggedIn, resetCard } =
-    initStates()
+  const {
+    categories,
+    chapters,
+    coords,
+    depth,
+    isLoggedIn,
+    resetTempBlob,
+    resetCard,
+  } = initStates()
 
   return useCallback(() => {
     if (!isLoggedIn) {
@@ -40,6 +49,7 @@ export const useChapterCard_GoWritingCardDirectly = () => {
       return
     }
 
+    resetTempBlob()
     resetCard()
 
     switch (depth) {
