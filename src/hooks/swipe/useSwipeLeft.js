@@ -10,12 +10,20 @@ export const useSwipeLeft = swipe => {
     isLoaded,
     hasNew,
 
+    isChaptersSorted,
+    isUserChaptersSorted,
+    isNextSorted,
+
     depth,
     coords,
     maxCoords,
 
     updateHasNew,
     increaseDepth,
+
+    sortChapters,
+    sortUserChapters,
+    sortNext,
 
     increaseCoords,
     decreaseCoords,
@@ -97,6 +105,8 @@ export const useSwipeLeft = swipe => {
             increaseCoords("d1")
             updateHasNew({ d2: true })
             setMaxCoords({ d2: chapters })
+
+            // sortChapters(!isChaptersSorted)
           })
         }
 

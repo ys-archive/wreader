@@ -72,7 +72,7 @@ const WriteCardForm = ({ chapterId, categoryId, depth, onSave, children }) => {
       <View style={s.textInputSection}>
         <TextInput
           style={s.input}
-          maxLength={120}
+          maxLength={165}
           autoFocus
           value={sentence}
           onBlur={handleBlur("sentence")}

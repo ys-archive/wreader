@@ -10,6 +10,10 @@ export const useSwipeStates = () => {
   const isLoaded = useStoreState(selData.isLoaded)
   const hasNew = useStoreState(selData.hasNew)
 
+  const isChaptersSorted = useStoreState(selData.isChaptersSorted)
+  const isUserChaptersSorted = useStoreState(selData.isUserChaptersSorted)
+  const isNextSorted = useStoreState(selData.isNextSorted)
+
   // - swiper
   const depth = useStoreState(selSwiper.depth)
   const coords = useStoreState(selSwiper.coords)
@@ -18,6 +22,10 @@ export const useSwipeStates = () => {
   // actions
   // - data
   const updateHasNew = useStoreActions(actData.updateHasNew)
+
+  const sortChapters = useStoreActions(actData.sortChapters)
+  const sortUserChapters = useStoreActions(actData.sortUserChapters)
+  const sortNext = useStoreActions(actData.sortNext)
 
   // - swiper
   const setDepth = useStoreActions(actSwiper.setDepth)
@@ -40,11 +48,19 @@ export const useSwipeStates = () => {
     isLoaded,
     hasNew,
 
+    isChaptersSorted,
+    isUserChaptersSorted,
+    isNextSorted,
+
     depth,
     coords,
     maxCoords,
 
     updateHasNew,
+
+    sortChapters,
+    sortUserChapters,
+    sortNext,
 
     setDepth,
     increaseDepth,

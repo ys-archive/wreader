@@ -11,6 +11,7 @@ import { colors } from "../../constants/colors"
 import { useStoreState } from "easy-peasy"
 import { selData, selSwiper } from "../../store/selectors"
 import { DEPTH_NAME } from "../../store/reducers/swiper.depth"
+import { actSwiper } from "../../store/actions"
 
 const SortIndicator = () => {
   const depth = useStoreState(selSwiper.depth)
