@@ -18,7 +18,6 @@ const initStates = () => {
   const profile = useStoreState(selImage.profile)
 
   const depth = useStoreState(selSwiper.depth)
-  const coords = useStoreState(selSwiper.coords)
 
   // actions
   const fetchOneChapter = useStoreActions(actData.fetchOneChapter)
@@ -30,7 +29,6 @@ const initStates = () => {
     userId,
     profile,
     depth,
-    coords,
     fetchOneChapter,
     fetchOneUserChapter,
     fetchOneNext,
@@ -41,7 +39,6 @@ export const useChapterCardLike = (chapterId, isLike, likeCount) => {
   const {
     isLoggedIn,
     userId,
-    coords,
     depth,
     fetchOneChapter,
     fetchOneUserChapter,
@@ -60,10 +57,14 @@ export const useChapterCardLike = (chapterId, isLike, likeCount) => {
 
     // 이미 좋아요 했음
     if (isLike === 1) {
-      console.log("UNLIKE! chapterID: ", chapterId, ", likeCount: ", likeCount)
+      console.log(
+        `\n\nUNLIKE! chapterID: ${chapterId}, likeCount: ${likeCount}\n\n`,
+      )
       await ChapterService.DELETE_unlikeChapter(chapterId, userId)
     } else {
-      console.log("LIKE! chapterID: ", chapterId, ", likeCount: ", likeCount)
+      console.log(
+        `\n\nLIKE! chapterID: ${chapterId}, likeCount: ${likeCount}\n\n`,
+      )
       await ChapterService.POST_likeChapter(chapterId, userId)
     }
 
@@ -72,22 +73,19 @@ export const useChapterCardLike = (chapterId, isLike, likeCount) => {
     switch (depth) {
       case DEPTH_NAME.CHAPTER:
         {
-          // const { d0, d1 } = coords
-          fetchOneChapter(coords)
+          fetchOneChapter()
         }
         break
 
       case DEPTH_NAME.USER_CHAPTER:
         {
-          // const { d0, d1, d2 } = coords
-          fetchOneUserChapter(coords)
+          fetchOneUserChapter()
         }
         break
 
       case DEPTH_NAME.NEXT:
         {
-          // const { d0, d1, d2, d3 } = coords
-          fetchOneNext(coords)
+          fetchOneNext()
         }
         break
     }

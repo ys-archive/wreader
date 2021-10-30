@@ -204,42 +204,33 @@ export default {
     state.originalChapters = state.chapters
   }),
 
-  addOneChapter: action((state, payload) => {
-    const { d0, newChapter } = payload
-
-    const origPos = state.chapters[d0].findIndex(
-      chapter => +chapter.deck.id === newChapter.id,
-    )
-    
-    console.log("\nnew chapter : ", newChapter)
-    console.log("found outdated chapter : ", state.chapters[d0][origPos].deck)
-
-    state.chapters[d0][origPos].deck = newChapter
-  }),
-
   fetchOneChapter: thunk(
     async (actions, payload, { getState, getStoreState }) => {
-      const { d0, d1 } = payload
+      const { coords } = getStoreState().swiper
+      const { d0, d1 } = coords.val
       const { userId } = getStoreState().auth
 
       const { data } = await ChapterService.GET_getChapter(0, userId)
-
       if (data.item.length === 0) return
 
       const filteredData = data.item.filter(i => i.categoryId - 5 === d0)
       const newChapter = filteredData[d1]
 
-      actions.addOneChapter({ d0, newChapter })
+      actions.updateNewChapter({ d0, newChapter })
     },
   ),
 
-  addOneUserChapter: action((state, payload) => {
-    const { d0, d1, card } = payload
+  updateNewChapter: action((state, payload) => {
+    const { d0, newChapter } = payload
 
-    card.forEach((c, i) => {
-      state.chapters[d0][d1].child[i].deck = c
-      state.originalChapters[d0][d1].child[i].deck = c
-    })
+    const origPos = state.chapters[d0].findIndex(
+      chapter => +chapter.deck.id === newChapter.id,
+    )
+
+    console.log("\nnew chapter : ", newChapter)
+    console.log("found outdated chapter : ", state.chapters[d0][origPos].deck)
+
+    state.chapters[d0][origPos].deck = newChapter
   }),
 
   fetchOneUserChapter: thunk(
@@ -257,24 +248,30 @@ export default {
       if (data.item.length === 0) return
 
       const filteredData = data.item.filter(i => +i.categoryId - 5 === d0)
+      const newUserChapter = filteredData[d2]
 
-      console.log("updated user card: ", filteredData)
-
-      actions.addOneUserChapter({
+      actions.updateUserChapter({
         d0,
         d1,
-        card: filteredData,
+        newUserChapter,
       })
     },
   ),
 
-  addOneNext: action((state, payload) => {
-    const { d0, d1, d2, card } = payload
+  updateUserChapter: action((state, payload) => {
+    const { d0, d1, newUserChapter } = payload
 
-    card.forEach((c, i) => {
-      state.chapters[d0][d1].child[d2].child[i].deck = c
-      state.originalChapters[d0][d1].child[d2].child[i].deck = c
-    })
+    const origPos = state.chapters[d0][d1].child.findIndex(
+      chapter => +chapter.deck.id === newUserChapter.id,
+    )
+
+    console.log("\nnew user chapter : ", newUserChapter)
+    console.log(
+      "found outdated user chapter : ",
+      state.chapters[d0][d1].child[origPos].deck,
+    )
+
+    state.chapters[d0][d1].child[origPos].deck = newUserChapter
   }),
 
   fetchOneNext: thunk(async (actions, payload, { getState, getStoreState }) => {
@@ -291,10 +288,25 @@ export default {
     if (data.item.length === 0) return
 
     const filteredData = data.item.filter(i => +i.categoryId - 5 === d0)
+    const newNext = filteredData[d3]
 
-    console.log("updated next: ", filteredData)
+    actions.updateNext({ d0, d1, d2, d3, newNext })
+  }),
 
-    actions.addOneNext({ d0, d1, d2, d3, card: filteredData })
+  updateNext: action((state, payload) => {
+    const { d0, d1, d2, newNext } = payload
+
+    const origPos = state.chapters[d0][d1].child[d2].child.findIndex(
+      chapter => +chapter.deck.id === newNext.id,
+    )
+
+    console.log("\nnew chapter : ", newNext)
+    console.log(
+      "found outdated chapter : ",
+      state.chapters[d0][d1].child[origPos].deck,
+    )
+
+    state.chapters[d0][d1].child[origPos].deck = newNext
   }),
 
   sortChapters_internal: action((state, payload) => {
