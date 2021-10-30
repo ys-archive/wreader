@@ -128,8 +128,6 @@ export default {
   moveToFirstInCurrentContext: thunk(
     (actions, payload, { getState, getStoreState }) => {
       const currentDepth = getState().depth.val
-      console.log(currentDepth)
-      // actions.depth.set(currentDepth)
 
       switch (currentDepth) {
         case DEPTH_NAME.CHAPTER:

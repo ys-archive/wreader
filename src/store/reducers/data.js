@@ -1,7 +1,6 @@
 import { action, computed, thunk } from "easy-peasy"
 import ChapterService from "../../services/ChapterService"
 import * as _ from "lodash"
-import { delay } from "../../utils"
 import { sorter } from "./data.logic"
 
 export default {
@@ -206,54 +205,31 @@ export default {
   }),
 
   addOneChapter: action((state, payload) => {
-    const { d0, d1, card } = payload
-    // console.log(card);
-    // state.chapters[d0][d1].deck = card;
-    // state.originalChapters[d0][d1].deck = card;
+    const { d0, newChapter } = payload
 
-    const lastLen = state.chapters[d0].length
-    card.forEach((c, i) => {
-      if (lastLen === i) {
-        console.log("새로운 카드중 마지막 추가! ", lastLen, i)
-        state.chapters[d0].push({ deck: c, child: [] })
-        const added = state.chapters[d0].shift()
-        state.chapters[d0].push(added)
+    const origPos = state.chapters[d0].findIndex(
+      chapter => +chapter.deck.id === newChapter.id,
+    )
+    
+    console.log("\nnew chapter : ", newChapter)
+    console.log("found outdated chapter : ", state.chapters[d0][origPos].deck)
 
-        state.originalChapters[d0].push({ deck: c, child: [] })
-        const addedOrig = state.originalChapters[d0].shift()
-        state.originalChapters[d0].push(addedOrig)
-      } else {
-        state.chapters[d0][i].deck = c
-        state.originalChapters[d0][i].deck = c
-      }
-    })
+    state.chapters[d0][origPos].deck = newChapter
   }),
 
   fetchOneChapter: thunk(
     async (actions, payload, { getState, getStoreState }) => {
+      const { d0, d1 } = payload
       const { userId } = getStoreState().auth
 
-      // await delay(1000)
       const { data } = await ChapterService.GET_getChapter(0, userId)
 
       if (data.item.length === 0) return
 
-      // console.log(data.item);
+      const filteredData = data.item.filter(i => i.categoryId - 5 === d0)
+      const newChapter = filteredData[d1]
 
-      const { coords } = getStoreState().swiper
-      const { d0, d1 } = coords.val
-
-      // console.log(data.item);
-      const filteredData = data.item.filter(i => i.categoryId - 5 === 0)
-      console.log("filteredData", filteredData)
-
-      // if (filteredData.length === getState().chapters[d0].length) {
-      //   await delay(1000)
-      //   await actions.fetchOneChapter()
-      // }
-
-      // actions.addOneChapter({ d0, d1, card: filteredData[d1] });
-      actions.addOneChapter({ d0, d1, card: filteredData })
+      actions.addOneChapter({ d0, newChapter })
     },
   ),
 

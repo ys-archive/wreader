@@ -9,6 +9,7 @@ import * as ScreenNames from "../../../../navigators/ScreenNames"
 
 import { ChapterService } from "#services"
 import { DEPTH_NAME } from "#store/reducers/swiper.depth"
+import { delay } from "../../../../utils"
 
 const initStates = () => {
   // selectors
@@ -40,6 +41,7 @@ export const useChapterCardLike = (chapterId, isLike, likeCount) => {
   const {
     isLoggedIn,
     userId,
+    coords,
     depth,
     fetchOneChapter,
     fetchOneUserChapter,
@@ -65,17 +67,28 @@ export const useChapterCardLike = (chapterId, isLike, likeCount) => {
       await ChapterService.POST_likeChapter(chapterId, userId)
     }
 
+    await delay(2)
+
     switch (depth) {
       case DEPTH_NAME.CHAPTER:
-        fetchOneChapter()
+        {
+          // const { d0, d1 } = coords
+          fetchOneChapter(coords)
+        }
         break
 
       case DEPTH_NAME.USER_CHAPTER:
-        fetchOneUserChapter()
+        {
+          // const { d0, d1, d2 } = coords
+          fetchOneUserChapter(coords)
+        }
         break
 
       case DEPTH_NAME.NEXT:
-        fetchOneNext()
+        {
+          // const { d0, d1, d2, d3 } = coords
+          fetchOneNext(coords)
+        }
         break
     }
   }

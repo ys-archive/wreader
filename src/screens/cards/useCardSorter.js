@@ -19,7 +19,7 @@ const initStates = () => {
     depth,
     sortChapters,
     sortUserChapters,
-    sortNext,
+    sortNext, 
     moveToFirstInCurrentContext,
   }
 }
