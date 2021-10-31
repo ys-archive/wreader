@@ -68,7 +68,7 @@ export const useChapterCardLike = (chapterId, isLike, likeCount) => {
       await ChapterService.POST_likeChapter(chapterId, userId)
     }
 
-    await delay(2)
+    await delay(0.3)
 
     switch (depth) {
       case DEPTH_NAME.CHAPTER:

@@ -6,6 +6,7 @@ import { sorter } from "./data.logic"
 export default {
   categories: [],
   chapters: [],
+  
   originalChapters: [],
 
   commentsUpdated: false,
@@ -303,10 +304,10 @@ export default {
     console.log("\nnew chapter : ", newNext)
     console.log(
       "found outdated chapter : ",
-      state.chapters[d0][d1].child[origPos].deck,
+      state.chapters[d0][d1].child[d2].child[origPos].deck,
     )
 
-    state.chapters[d0][d1].child[origPos].deck = newNext
+    state.chapters[d0][d1].child[d2].child[origPos].deck = newNext
   }),
 
   sortChapters_internal: action((state, payload) => {
