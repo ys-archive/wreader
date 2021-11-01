@@ -110,15 +110,15 @@ const Comments = ({ route }) => {
       // console.log('depth during COMMENT ===> ', depth);
       switch (depth) {
         case DEPTH_NAME.CHAPTER:
-          fetchOneChapter()
+          fetchOneChapter(chapterId)
           break
 
         case DEPTH_NAME.USER_CHAPTER:
-          fetchOneUserChapter()
+          fetchOneUserChapter(chapterId)
           break
 
         case DEPTH_NAME.NEXT:
-          fetchOneNext()
+          fetchOneNext(chapterId)
           break
       }
       updateComments()

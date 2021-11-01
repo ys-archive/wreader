@@ -1,4 +1,4 @@
-export const sorter = (a, b) => {
+export const sorterByDate = (a, b) => {
   const bStr = b.deck.updateDt
   const bb = new Date(
     +bStr.slice(0, 4),
@@ -23,3 +23,5 @@ export const sorter = (a, b) => {
 
   return bb - aa
 }
+
+export const sorterByLikeCount = (a, b) => b.deck.like_count - a.deck.like_count

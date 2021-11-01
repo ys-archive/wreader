@@ -1,12 +1,12 @@
 import { action, computed, thunk } from "easy-peasy"
 import ChapterService from "../../services/ChapterService"
 import * as _ from "lodash"
-import { sorter } from "./data.logic"
+import { sorterByDate, sorterByLikeCount } from "./data.logic"
 
 export default {
   categories: [],
   chapters: [],
-  
+
   originalChapters: [],
 
   commentsUpdated: false,
@@ -207,6 +207,7 @@ export default {
 
   fetchOneChapter: thunk(
     async (actions, payload, { getState, getStoreState }) => {
+      const chapterId = payload
       const { coords } = getStoreState().swiper
       const { d0, d1 } = coords.val
       const { userId } = getStoreState().auth
@@ -214,33 +215,30 @@ export default {
       const { data } = await ChapterService.GET_getChapter(0, userId)
       if (data.item.length === 0) return
 
-      const filteredData = data.item.filter(i => i.categoryId - 5 === d0)
-      const newChapter = filteredData[d1]
+      const targetIdx = data.item.findIndex(i => +i.id === +chapterId)
+      const newChapter = data.item[targetIdx]
 
-      actions.updateNewChapter({ d0, newChapter })
+      actions.updateNewChapter({ d0, d1, newChapter })
     },
   ),
 
   updateNewChapter: action((state, payload) => {
-    const { d0, newChapter } = payload
-
-    const origPos = state.chapters[d0].findIndex(
-      chapter => +chapter.deck.id === newChapter.id,
-    )
+    const { d0, d1, newChapter } = payload
 
     console.log("\nnew chapter : ", newChapter)
-    console.log("found outdated chapter : ", state.chapters[d0][origPos].deck)
+    console.log("found outdated chapter : ", state.chapters[d0][d1].deck)
 
-    state.chapters[d0][origPos].deck = newChapter
+    state.chapters[d0][d1].deck = newChapter
   }),
 
   fetchOneUserChapter: thunk(
     async (actions, payload, { getState, getStoreState }) => {
       const { userId } = getStoreState().auth
       const { coords } = getStoreState().swiper
-      const { chapters } = getState()
+      const { chapters, isUserChaptersSorted } = getState()
 
       const { d0, d1, d2 } = coords.val
+      // console.log(`Fetch One User Chapter id: ${chapters[d0][d1].deck.id}`);
       const { data } = await ChapterService.GET_getChapter(
         chapters[d0][d1].deck.id,
         userId,
@@ -248,7 +246,14 @@ export default {
 
       if (data.item.length === 0) return
 
-      const filteredData = data.item.filter(i => +i.categoryId - 5 === d0)
+      let filteredData = data.item.filter(i => +i.categoryId - 5 === d0)
+
+      if (!isUserChaptersSorted) {
+        filteredData = filteredData.sort(sorterFetchByDate)
+      } else {
+        filteredData = filteredData.sort(sorterFetchByLikeCount)
+      }
+
       const newUserChapter = filteredData[d2]
 
       actions.updateUserChapter({
@@ -278,7 +283,7 @@ export default {
   fetchOneNext: thunk(async (actions, payload, { getState, getStoreState }) => {
     const { userId } = getStoreState().auth
     const { coords } = getStoreState().swiper
-    const { chapters } = getState()
+    const { chapters, isNextSorted } = getState()
 
     const { d0, d1, d2, d3 } = coords.val
     const { data } = await ChapterService.GET_getChapter(
@@ -288,7 +293,12 @@ export default {
 
     if (data.item.length === 0) return
 
-    const filteredData = data.item.filter(i => +i.categoryId - 5 === d0)
+    let filteredData = data.item.filter(i => +i.categoryId - 5 === d0)
+    if (!isNextSorted) {
+      filteredData = filteredData.sort(sorterFetchByDate)
+    } else {
+      filteredData = filteredData.sort(sorterFetchByLikeCount)
+    }
     const newNext = filteredData[d3]
 
     actions.updateNext({ d0, d1, d2, d3, newNext })
@@ -315,9 +325,10 @@ export default {
     let sorted = undefined
 
     if (!state.isChaptersSorted) {
-      sorted = state.chapters[d0].sort(sorter)
+      sorted = state.chapters[d0].sort(sorterByDate)
     } else {
-      sorted = state.originalChapters.slice()[d0]
+      // sorted = state.originalChapters.slice()[d0]
+      sorted = state.chapters[d0].sort(sorterByLikeCount)
     }
 
     state.chapters[d0] = sorted
@@ -337,13 +348,15 @@ export default {
 
     if (!state.isUserChaptersSorted) {
       // 업데이트 날짜로 정렬
-      sorted = state.chapters[d0][d1].child.sort(sorter)
+      sorted = state.chapters[d0][d1].child.sort(sorterByDate)
     } else {
       // like count 로 정렬
-      sorted = state.originalChapters.slice()[d0][d1].child
+      sorted = state.chapters[d0][d1].child.sort(sorterByLikeCount)
+      // sorted = state.originalChapters.slice()[d0][d1].child
     }
 
     // console.log(sorted);
+    state.chapters[d0][d1].child = null
     state.chapters[d0][d1].child = sorted
 
     state.isUserChaptersSorted = !state.isUserChaptersSorted
@@ -360,9 +373,10 @@ export default {
     let sorted = undefined
 
     if (!state.isNextSorted) {
-      sorted = state.chapters[d0][d1].child[d2].child.sort(sorter)
+      sorted = state.chapters[d0][d1].child[d2].child.sort(sorterByDate)
     } else {
-      sorted = state.originalChapters.slice()[d0][d1].child[d2].child
+      // sorted = state.originalChapters.slice()[d0][d1].child[d2].child
+      sorted = state.chapters[d0][d1].child[d2].child.sort(sorterByLikeCount)
     }
 
     state.chapters[d0][d1].child[d2].child = sorted
