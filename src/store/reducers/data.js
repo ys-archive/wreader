@@ -233,51 +233,33 @@ export default {
 
   fetchOneUserChapter: thunk(
     async (actions, payload, { getState, getStoreState }) => {
+      const chapterId = payload
       const { userId } = getStoreState().auth
       const { coords } = getStoreState().swiper
-      const { chapters, isUserChaptersSorted } = getState()
-
       const { d0, d1, d2 } = coords.val
-      // console.log(`Fetch One User Chapter id: ${chapters[d0][d1].deck.id}`);
-      const { data } = await ChapterService.GET_getChapter(
-        chapters[d0][d1].deck.id,
-        userId,
-      )
+      const { chapters } = getState()
 
+      const fetchId = chapters[d0][d1].deck.id
+      const { data } = await ChapterService.GET_getChapter(+fetchId, userId)
       if (data.item.length === 0) return
 
-      let filteredData = data.item.filter(i => +i.categoryId - 5 === d0)
+      const targetIdx = data.item.findIndex(i => +i.id === +chapterId)
+      const newChapter = data.item[targetIdx]
 
-      if (!isUserChaptersSorted) {
-        filteredData = filteredData.sort(sorterFetchByDate)
-      } else {
-        filteredData = filteredData.sort(sorterFetchByLikeCount)
-      }
-
-      const newUserChapter = filteredData[d2]
-
-      actions.updateUserChapter({
-        d0,
-        d1,
-        newUserChapter,
-      })
+      actions.updateUserChapter({ d0, d1, d2, newChapter })
     },
   ),
 
   updateUserChapter: action((state, payload) => {
-    const { d0, d1, newUserChapter } = payload
+    const { d0, d1, d2, newChapter } = payload
 
-    const origPos = state.chapters[d0][d1].child.findIndex(
-      chapter => +chapter.deck.id === newUserChapter.id,
-    )
-
-    console.log("\nnew user chapter : ", newUserChapter)
+    console.log("\nnew user chapter : ", newChapter)
     console.log(
       "found outdated user chapter : ",
-      state.chapters[d0][d1].child[origPos].deck,
+      state.chapters[d0][d1].child[d2].deck,
     )
 
-    state.chapters[d0][d1].child[origPos].deck = newUserChapter
+    state.chapters[d0][d1].child[d2].deck = newChapter
   }),
 
   fetchOneNext: thunk(async (actions, payload, { getState, getStoreState }) => {
