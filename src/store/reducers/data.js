@@ -239,8 +239,8 @@ export default {
       const { d0, d1, d2 } = coords.val
       const { chapters } = getState()
 
-      const fetchId = chapters[d0][d1].deck.id
-      const { data } = await ChapterService.GET_getChapter(+fetchId, userId)
+      const fetchId = +chapters[d0][d1].deck.id
+      const { data } = await ChapterService.GET_getChapter(fetchId, userId)
       if (data.item.length === 0) return
 
       const targetIdx = data.item.findIndex(i => +i.id === +chapterId)
@@ -254,52 +254,38 @@ export default {
     const { d0, d1, d2, newChapter } = payload
 
     console.log("\nnew user chapter : ", newChapter)
-    console.log(
-      "found outdated user chapter : ",
-      state.chapters[d0][d1].child[d2].deck,
-    )
+    const origPos = state.chapters[d0][d1].child[d2]
+    console.log("found outdated user chapter : ", origPos.deck)
 
-    state.chapters[d0][d1].child[d2].deck = newChapter
+    origPos.deck = newChapter
   }),
 
   fetchOneNext: thunk(async (actions, payload, { getState, getStoreState }) => {
+    const chapterId = payload
     const { userId } = getStoreState().auth
     const { coords } = getStoreState().swiper
-    const { chapters, isNextSorted } = getState()
+    const { chapters } = getState()
 
     const { d0, d1, d2, d3 } = coords.val
-    const { data } = await ChapterService.GET_getChapter(
-      chapters[d0][d1].child[d2].deck.id,
-      userId,
-    )
 
+    const fetchId = +chapters[d0][d1].child[d2].deck.id
+    const { data } = await ChapterService.GET_getChapter(fetchId, userId)
     if (data.item.length === 0) return
 
-    let filteredData = data.item.filter(i => +i.categoryId - 5 === d0)
-    if (!isNextSorted) {
-      filteredData = filteredData.sort(sorterFetchByDate)
-    } else {
-      filteredData = filteredData.sort(sorterFetchByLikeCount)
-    }
-    const newNext = filteredData[d3]
+    const targetIdx = data.item.findIndex(i => +i.id === +chapterId)
+    const newChapter = data.item[targetIdx]
 
-    actions.updateNext({ d0, d1, d2, d3, newNext })
+    actions.updateNext({ d0, d1, d2, d3, newChapter })
   }),
 
   updateNext: action((state, payload) => {
-    const { d0, d1, d2, newNext } = payload
+    const { d0, d1, d2, d3, newChapter } = payload
 
-    const origPos = state.chapters[d0][d1].child[d2].child.findIndex(
-      chapter => +chapter.deck.id === newNext.id,
-    )
+    console.log("\nnew chapter : ", newChapter)
+    const origPos = state.chapters[d0][d1].child[d2].child[d3]
+    console.log("found outdated chapter : ", origPos.deck)
 
-    console.log("\nnew chapter : ", newNext)
-    console.log(
-      "found outdated chapter : ",
-      state.chapters[d0][d1].child[d2].child[origPos].deck,
-    )
-
-    state.chapters[d0][d1].child[d2].child[origPos].deck = newNext
+    origPos.deck = newChapter
   }),
 
   sortChapters_internal: action((state, payload) => {
