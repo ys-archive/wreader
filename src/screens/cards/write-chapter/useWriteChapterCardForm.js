@@ -19,7 +19,7 @@ const validationSchema = Yup.object({
     .min(4)
     .required("Min is 4")
     .max(120)
-    .required("Max is 120"),
+    .required("Max is 165"),
 })
 
 const uploadDirName = `writeCardImage-${uuid.v4()}`
