@@ -12,18 +12,19 @@ import { useStoreState } from "easy-peasy"
 import { selSort } from "../../store/selectors"
 
 const initStates = () => {
-  const isSortedByDate = useStoreState(selSort.isSortedByDate)
+  const isSortedByLikes = useStoreState(selSort.isSortedByLikes)
 
   return {
-    isSortedByDate,
+    isSortedByLikes,
   }
 }
 
 const SortIndicator = () => {
-  const { isSortedByDate } = initStates()
+  const { isSortedByLikes } = initStates()
 
-  const popularFontFamily = !isSortedByDate ? "heavy" : "xlight"
-  const dateFontFamily = isSortedByDate ? "heavy" : "xlight"
+  console.log(`is sorted by likes? : ${isSortedByLikes}`)
+  const popularFontFamily = isSortedByLikes ? "heavy" : "xlight"
+  const dateFontFamily = !isSortedByLikes ? "heavy" : "xlight"
 
   return (
     <>

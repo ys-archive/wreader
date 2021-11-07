@@ -1,44 +1,55 @@
-import { thunkOn, thunk, computed } from "easy-peasy"
-import { SortType, sorterByDate, sorterByLikeCount } from "./sort.type"
+import { thunkOn, thunk, computed, action } from "easy-peasy"
+import { SORT_TYPES, sorterByDate, sorterByLikeCount } from "./sort.type"
 
 export default {
-  currentSortType: new SortType(),
+  currentSortType: SORT_TYPES.ByLikes,
+
+  toggle: action((state, payload) => {
+    switch (state.currentSortType) {
+      case SORT_TYPES.ByDate:
+        state.currentSortType = SORT_TYPES.ByLikes
+        break
+
+      case SORT_TYPES.ByLikes:
+        state.currentSortType = SORT_TYPES.ByDate
+        break
+    }
+  }),
+
+  isSortedByLikes: computed(
+    state => state.currentSortType === SORT_TYPES.ByLikes,
+  ),
 
   onSorted: thunkOn(
     actions => actions.sort,
-    (state, target) => currentSortType.toggle(),
+    (actions, target) => {
+      actions.toggle()
+    },
   ),
 
   sort: thunk((actions, payload, { getState, getStoreState }) => {
     const { coords } = getStoreState().swiper
     const { chapters } = getStoreState().data
-    const { currentSortType } = getState()
+    const { isSortedByLikes } = getState()
     const { d0, d1 } = coords.val
 
     // 해당 챕터만 정렬
     // e.g. chapter1 -> chapter1 머릿글 + 나머지들
     const head = chapters[d0][d1].deck
-    const rests = chapters[d0][d1].child
-    const original = [head, ...rests]
+    const rests = chapters[d0][d1].child.map(e => e.deck)
+    const chaptersSlice = [head, ...rests]
 
-    const sorted = original.sort(
-      currentSortType.isSortedByLikes ? sorterByDate : sorterByLikeCount,
+    const sorted = chaptersSlice.sort(
+      isSortedByLikes ? sorterByDate : sorterByLikeCount,
     )
-
     const sortedHead = sorted.shift()
     chapters[d0][d1].deck = sortedHead
-    chapters[d0][d1].child = sorted
+    chapters[d0][d1].child.forEach(ch => (ch.deck = sorted.shift()))
   }),
-
-  isSortedByDate: computed(state => state.currentSortType.isSortedByDate),
-
-  isSortedByLikes: computed(state => state.currentSortType.isSortedByLikes),
 }
 
 export const selectors = {
-  currentSortType: state => state.sort.currentSortType,
   isSortedByLikes: state => state.sort.isSortedByLikes,
-  isSortedByDate: state => state.sort.isSortedByDate,
 }
 
 export const actions = {
