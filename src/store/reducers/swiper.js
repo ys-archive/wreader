@@ -127,20 +127,8 @@ export default {
 
   moveToFirstInCurrentContext: thunk(
     (actions, payload, { getState, getStoreState }) => {
-      actions.coords.set({ d2: 0, d3: 0 })
-
-      // const currentDepth = getState().depth.val
-      // switch (currentDepth) {
-      //   case DEPTH_NAME.CHAPTER:
-      //     actions.coords.set({ d1: 0 })
-      //     break
-      //   case DEPTH_NAME.USER_CHAPTER:
-      //     actions.coords.set({ d2: 0 })
-      //     break
-      //   case DEPTH_NAME.NEXT:
-      //     actions.coords.set({ d3: 0 })
-      //     break
-      // }
+      actions.depth.set(1)
+      actions.coords.set({ d1: 0, d2: 0, d3: 0 })
     },
   ),
 }

@@ -37,13 +37,17 @@ export default {
     // e.g. chapter1 -> chapter1 머릿글 + 나머지들
     const head = chapters[d0][d1].deck
     const rests = chapters[d0][d1].child.map(e => e.deck)
+    // 현재 chapter 의 모든 카드 정보를 array 로 병합
     const chaptersSlice = [head, ...rests]
 
+    // 현재 sort 기준에 따라서 sort
     const sorted = chaptersSlice.sort(
       isSortedByLikes ? sorterByDate : sorterByLikeCount,
     )
+    // 먼저 머릿글 하나 채움
     const sortedHead = sorted.shift()
     chapters[d0][d1].deck = sortedHead
+    // 이후는 그냥 넣기
     chapters[d0][d1].child.forEach(ch => (ch.deck = sorted.shift()))
   }),
 }
