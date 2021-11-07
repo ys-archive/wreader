@@ -40,8 +40,10 @@ const CardsRenderer = () => {
   // );
 
   const { d0, d1, d2, d3 } = coords
+
   // console.log(`    coords---> d0:${d0} | d1:${d1} | d2:${d2} | d3:${d3}`);
 
+  const currentCategoryTitle = categories[d0].title
   let CardJSX = null
 
   switch (depth) {
@@ -50,33 +52,42 @@ const CardsRenderer = () => {
       break
 
     case 1:
-      CardJSX = (
-        <ChapterCard
-          data={chapters[d0][d1].deck}
-          categoryTitle={categories[d0].title}
-          order={d1}
-        />
-      )
+      {
+        const chAtD1 = chapters[d0][d1].deck
+        CardJSX = (
+          <ChapterCard
+            data={chAtD1}
+            categoryTitle={currentCategoryTitle}
+            order={d1}
+          />
+        )
+      }
       break
 
     case 2:
-      CardJSX = (
-        <ChapterCard
-          data={chapters[d0][d1].child[d2].deck}
-          categoryTitle={categories[d0].title}
-          order={d1}
-        />
-      )
+      {
+        const chAtD2 = chapters[d0][d1].child[d2].deck
+        CardJSX = (
+          <ChapterCard
+            data={chAtD2}
+            categoryTitle={currentCategoryTitle}
+            order={d1}
+          />
+        )
+      }
       break
 
     case 3:
-      CardJSX = (
-        <ChapterCard
-          data={chapters[d0][d1].child[d2].child[d3].deck}
-          categoryTitle={categories[d0].title}
-          order={d3 + 1 + d1}
-        />
-      )
+      {
+        const chAtD3 = chapters[d0][d1].child[d2].child[d3].deck
+        CardJSX = (
+          <ChapterCard
+            data={chAtD3}
+            categoryTitle={currentCategoryTitle}
+            order={d3 + 1 + d1}
+          />
+        )
+      }
       break
   }
 

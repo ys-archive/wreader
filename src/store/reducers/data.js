@@ -1,19 +1,13 @@
 import { action, computed, thunk } from "easy-peasy"
 import ChapterService from "../../services/ChapterService"
 import * as _ from "lodash"
-import { sorterByDate, sorterByLikeCount } from "./data.logic"
 
 export default {
   categories: [],
   chapters: [],
 
   originalChapters: [],
-
   commentsUpdated: false,
-
-  isChaptersSorted: false,
-  isUserChaptersSorted: false,
-  isNextSorted: false,
 
   updateComments: action(state => {
     state.commentsUpdated = !state.commentsUpdated
@@ -204,158 +198,6 @@ export default {
 
     state.originalChapters = state.chapters
   }),
-
-  fetchOneChapter: thunk(
-    async (actions, payload, { getState, getStoreState }) => {
-      const chapterId = payload
-      const { coords } = getStoreState().swiper
-      const { d0, d1 } = coords.val
-      const { userId } = getStoreState().auth
-
-      const { data } = await ChapterService.GET_getChapter(0, userId)
-      if (data.item.length === 0) return
-
-      const targetIdx = data.item.findIndex(i => +i.id === +chapterId)
-      const newChapter = data.item[targetIdx]
-
-      actions.updateNewChapter({ d0, d1, newChapter })
-    },
-  ),
-
-  updateNewChapter: action((state, payload) => {
-    const { d0, d1, newChapter } = payload
-
-    console.log("\nnew chapter : ", newChapter)
-    console.log("found outdated chapter : ", state.chapters[d0][d1].deck)
-
-    state.chapters[d0][d1].deck = newChapter
-  }),
-
-  fetchOneUserChapter: thunk(
-    async (actions, payload, { getState, getStoreState }) => {
-      const chapterId = payload
-      const { userId } = getStoreState().auth
-      const { coords } = getStoreState().swiper
-      const { d0, d1, d2 } = coords.val
-      const { chapters } = getState()
-
-      const fetchId = +chapters[d0][d1].deck.id
-      const { data } = await ChapterService.GET_getChapter(fetchId, userId)
-      if (data.item.length === 0) return
-
-      const targetIdx = data.item.findIndex(i => +i.id === +chapterId)
-      const newChapter = data.item[targetIdx]
-
-      actions.updateUserChapter({ d0, d1, d2, newChapter })
-    },
-  ),
-
-  updateUserChapter: action((state, payload) => {
-    const { d0, d1, d2, newChapter } = payload
-
-    console.log("\nnew user chapter : ", newChapter)
-    const origPos = state.chapters[d0][d1].child[d2]
-    console.log("found outdated user chapter : ", origPos.deck)
-
-    origPos.deck = newChapter
-  }),
-
-  fetchOneNext: thunk(async (actions, payload, { getState, getStoreState }) => {
-    const chapterId = payload
-    const { userId } = getStoreState().auth
-    const { coords } = getStoreState().swiper
-    const { chapters } = getState()
-
-    const { d0, d1, d2, d3 } = coords.val
-
-    const fetchId = +chapters[d0][d1].child[d2].deck.id
-    const { data } = await ChapterService.GET_getChapter(fetchId, userId)
-    if (data.item.length === 0) return
-
-    const targetIdx = data.item.findIndex(i => +i.id === +chapterId)
-    const newChapter = data.item[targetIdx]
-
-    actions.updateNext({ d0, d1, d2, d3, newChapter })
-  }),
-
-  updateNext: action((state, payload) => {
-    const { d0, d1, d2, d3, newChapter } = payload
-
-    console.log("\nnew chapter : ", newChapter)
-    const origPos = state.chapters[d0][d1].child[d2].child[d3]
-    console.log("found outdated chapter : ", origPos.deck)
-
-    origPos.deck = newChapter
-  }),
-
-  sortChapters_internal: action((state, payload) => {
-    const { d0, d1, d2 } = payload
-    let sorted = undefined
-
-    if (!state.isChaptersSorted) {
-      sorted = state.chapters[d0].sort(sorterByDate)
-    } else {
-      // sorted = state.originalChapters.slice()[d0]
-      sorted = state.chapters[d0].sort(sorterByLikeCount)
-    }
-
-    state.chapters[d0] = sorted
-
-    state.isChaptersSorted = !state.isChaptersSorted
-  }),
-
-  sortChapters: thunk((actions, payload, { getState, getStoreState }) => {
-    const { coords } = getStoreState().swiper
-    const { d0, d1, d2 } = coords.val
-    actions.sortChapters_internal({ d0, d1, d2 })
-  }),
-
-  sortUserChapter_internal: action((state, payload) => {
-    const { d0, d1 } = payload
-    let sorted = undefined
-
-    if (!state.isUserChaptersSorted) {
-      // 업데이트 날짜로 정렬
-      sorted = state.chapters[d0][d1].child.sort(sorterByDate)
-    } else {
-      // like count 로 정렬
-      sorted = state.chapters[d0][d1].child.sort(sorterByLikeCount)
-      // sorted = state.originalChapters.slice()[d0][d1].child
-    }
-
-    // console.log(sorted);
-    state.chapters[d0][d1].child = null
-    state.chapters[d0][d1].child = sorted
-
-    state.isUserChaptersSorted = !state.isUserChaptersSorted
-  }),
-
-  sortUserChapters: thunk((actions, payload, { getState, getStoreState }) => {
-    const { coords } = getStoreState().swiper
-    const { d0, d1, d2 } = coords.val
-    actions.sortUserChapter_internal({ d0, d1, d2 })
-  }),
-
-  sortNext_internal: action((state, payload) => {
-    const { d0, d1, d2 } = payload
-    let sorted = undefined
-
-    if (!state.isNextSorted) {
-      sorted = state.chapters[d0][d1].child[d2].child.sort(sorterByDate)
-    } else {
-      // sorted = state.originalChapters.slice()[d0][d1].child[d2].child
-      sorted = state.chapters[d0][d1].child[d2].child.sort(sorterByLikeCount)
-    }
-
-    state.chapters[d0][d1].child[d2].child = sorted
-
-    state.isNextSorted = !state.isNextSorted
-  }),
-
-  sortNext: thunk((actions, payload, { getState, getStoreState }) => {
-    const { coords } = getStoreState().swiper
-    actions.sortNext_internal(coords.val)
-  }),
 }
 
 export const selectors = {
@@ -363,10 +205,6 @@ export const selectors = {
   chapters: state => state.data.chapters,
 
   commentsUpdated: state => state.data.commentsUpdated,
-
-  isChaptersSorted: state => state.data.isChaptersSorted,
-  isUserChaptersSorted: state => state.data.isUserChaptersSorted,
-  isNextSorted: state => state.data.isNextSorted,
 
   isLoaded: state => state.data.isLoaded.val,
   hasNew: state => state.data.hasNew.val,
@@ -391,12 +229,4 @@ export const actions = {
   updateHasNew: actions => actions.data.hasNew.update,
 
   updateAll: actions => actions.data.setUpdateAll,
-
-  fetchOneChapter: actions => actions.data.fetchOneChapter,
-  fetchOneUserChapter: actions => actions.data.fetchOneUserChapter,
-  fetchOneNext: actions => actions.data.fetchOneNext,
-
-  sortChapters: actions => actions.data.sortChapters,
-  sortUserChapters: actions => actions.data.sortUserChapters,
-  sortNext: actions => actions.data.sortNext,
 }

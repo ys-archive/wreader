@@ -2,7 +2,7 @@ import { Alert, AlertRequireLogin } from "../../../../components/alert"
 
 import { useStoreActions, useStoreState } from "easy-peasy"
 import { selAuth, selImage, selSwiper } from "#store/selectors"
-import { actData } from "#store/actions"
+import { actDataFetch } from "../../../../store/actions"
 
 import { useNavigation } from "@react-navigation/native"
 import * as ScreenNames from "../../../../navigators/ScreenNames"
@@ -20,9 +20,9 @@ const initStates = () => {
   const depth = useStoreState(selSwiper.depth)
 
   // actions
-  const fetchOneChapter = useStoreActions(actData.fetchOneChapter)
-  const fetchOneUserChapter = useStoreActions(actData.fetchOneUserChapter)
-  const fetchOneNext = useStoreActions(actData.fetchOneNext)
+  const fetchOneChapter = useStoreActions(actDataFetch.fetchOneChapter)
+  const fetchOneUserChapter = useStoreActions(actDataFetch.fetchOneUserChapter)
+  const fetchOneNext = useStoreActions(actDataFetch.fetchOneNext)
 
   return {
     isLoggedIn,

@@ -13,33 +13,23 @@ const initStates = () => {
 
   // actions
   // - data
-  const resetChapter = useStoreActions(actData.resetChapter)
   const addChapter = useStoreActions(actData.addChapter)
-  const sortChapters = useStoreActions(actData.sortChapters)
 
   const startLoading = useStoreActions(actData.startLoading)
   const finishLoading = useStoreActions(actData.finishLoading)
 
   const updateHasNew = useStoreActions(actData.updateHasNew)
 
-  // - swiper
-  const setMaxCoords = useStoreActions(actSwiper.setMaxCoords)
-
   return {
     categories,
     isLoaded,
     hasNew,
-
-    resetChapter,
     addChapter,
-    sortChapters,
 
     startLoading,
     finishLoading,
 
     updateHasNew,
-
-    setMaxCoords,
   }
 }
 
@@ -50,13 +40,10 @@ export const useChaptersFetch = () => {
     categories,
     isLoaded,
     hasNew,
-    resetChapter,
     addChapter,
-    sortChapters,
     startLoading,
     finishLoading,
     updateHasNew,
-    setMaxCoords,
   } = initStates()
 
   React.useEffect(() => {
@@ -98,7 +85,5 @@ export const useChaptersFetch = () => {
     if (!isLoaded.d1) return
 
     updateHasNew({ d1: false })
-    // sortChapters()
-    // sortChapters()
   }, [isLoaded.d1, chapters])
 }

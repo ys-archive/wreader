@@ -31,7 +31,7 @@ const initStates = () => {
   }
 }
 
-const WriteCardForm = ({ chapterId, categoryId, depth, onSave, children }) => {
+const WriteCardForm = ({ chapterId, categoryId, depth, children }) => {
   const nav = useNavigation()
 
   const { userId, updateHasNew, fetchOneChapter } = initStates()
@@ -40,6 +40,7 @@ const WriteCardForm = ({ chapterId, categoryId, depth, onSave, children }) => {
     switch (depth) {
       case DEPTH_NAME.CHAPTER:
         updateHasNew({ d0: true })
+        updateHasNew({ d1: true })
         fetchOneChapter()
         break
 

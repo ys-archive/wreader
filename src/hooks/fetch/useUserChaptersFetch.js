@@ -17,12 +17,9 @@ const initStates = () => {
 
   const coords = useStoreState(selSwiper.coords)
 
-  const isUserChaptersSorted = useStoreState(selData.isUserChaptersSorted)
-
   // actions
   // - data
   const addChapterChild = useStoreActions(actData.addChapterChild)
-  const sortUserChapters = useStoreActions(actData.sortUserChapters)
   const startLoading = useStoreActions(actData.startLoading)
   const finishLoading = useStoreActions(actData.finishLoading)
   const updateHasNew = useStoreActions(actData.updateHasNew)
@@ -39,10 +36,7 @@ const initStates = () => {
 
     coords,
 
-    isUserChaptersSorted,
-
     addChapterChild,
-    sortUserChapters,
 
     startLoading,
     finishLoading,
@@ -62,10 +56,7 @@ export const useUserChaptersFetch = () => {
 
     coords,
 
-    isUserChaptersSorted,
-
     addChapterChild,
-    sortUserChapters,
 
     startLoading,
     finishLoading,
@@ -115,8 +106,6 @@ export const useUserChaptersFetch = () => {
 
     // console.log('UPDATE MAX WITH -->', chapters);
     setMaxCoords({ d2: chapters })
-    // sortUserChapters()
-    // sortUserChapters()
   }, [isLoaded.d2])
 }
 

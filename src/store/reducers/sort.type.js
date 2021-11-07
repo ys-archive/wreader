@@ -1,3 +1,28 @@
+export const SORT_TYPES = {
+  ByDate: "ByDate",
+  ByLikes: "ByLikes",
+}
+
+export class SortType {
+  type = SORT_TYPES.ByLikes
+
+  setTypes(newType) {
+    type = newType
+  }
+
+  toggle() {
+    type = type === SORT_TYPES.ByDate ? SORT_TYPES.ByLikes : SORT_TYPES.ByDate
+  }
+
+  isSortedByDate() {
+    return type === SORT_TYPES.ByDate
+  }
+
+  isSortedByLikes() {
+    return type === SORT_TYPES.ByLikes
+  }
+}
+
 export const sorterByDate = (a, b) => {
   const bStr = b.deck.updateDt
   const bb = new Date(
