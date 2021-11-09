@@ -10,7 +10,7 @@ import { colors } from "#constants"
 
 import { useStoreState, useStoreActions } from "easy-peasy"
 import { selAuth } from "../../../store/selectors"
-import { actData } from "../../../store/actions"
+import { actDataFetch } from "../../../store/actions"
 
 import { useWriteChapterCardForm } from "./useWriteChapterCardForm"
 
@@ -22,7 +22,7 @@ import { DEPTH_NAME } from "../../../store/reducers/swiper.depth"
 const initStates = () => {
   const userId = useStoreState(selAuth.userId)
   const updateHasNew = useStoreActions(actData.updateHasNew)
-  const fetchOneChapter = useStoreActions(actData.fetchOneChapter)
+  const fetchOneChapter = useStoreActions(actDataFetch.fetchOneChapter)
 
   return {
     userId,
@@ -59,12 +59,7 @@ const WriteCardForm = ({ chapterId, categoryId, depth, children }) => {
   }, [depth])
 
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
-    useWriteChapterCardForm(
-      userId,
-      chapterId,
-      categoryId,
-      afterFormSubmitted,
-    )
+    useWriteChapterCardForm(userId, chapterId, categoryId, afterFormSubmitted)
 
   const { sentence } = values
 

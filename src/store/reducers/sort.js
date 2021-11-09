@@ -3,6 +3,11 @@ import { SORT_TYPES, sorterByDate, sorterByLikeCount } from "./sort.type"
 
 export default {
   currentSortType: SORT_TYPES.ByLikes,
+  savedChapterId: -11,
+
+  saveChapterId: action((state, payload) => {
+    state.savedChapterId = +payload
+  }),
 
   toggle: action((state, payload) => {
     switch (state.currentSortType) {
@@ -54,6 +59,7 @@ export default {
 
 export const selectors = {
   isSortedByLikes: state => state.sort.isSortedByLikes,
+  savedChapterId: state => state.sort.savedChapterId
 }
 
 export const actions = {

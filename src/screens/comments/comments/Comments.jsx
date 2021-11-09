@@ -17,7 +17,7 @@ import { dummyProfile } from "#constants/images"
 
 import { useStoreActions, useStoreState } from "easy-peasy"
 import { selAuth, selData, selImage, selSwiper } from "../../../store/selectors"
-import { actData } from "../../../store/actions"
+import { actData, actDataFetch } from "../../../store/actions"
 import { CommentsService } from "../../../services"
 
 import { useCommentsLogic } from "./useCommentsLogic"
@@ -38,9 +38,9 @@ const initStates = () => {
 
   // actions
   const updateHasNew = useStoreActions(actData.updateHasNew)
-  const fetchOneChapter = useStoreActions(actData.fetchOneChapter)
-  const fetchOneUserChapter = useStoreActions(actData.fetchOneUserChapter)
-  const fetchOneNext = useStoreActions(actData.fetchOneNext)
+  const fetchOneChapter = useStoreActions(actDataFetch.fetchOneChapter)
+  const fetchOneUserChapter = useStoreActions(actDataFetch.fetchOneUserChapter)
+  const fetchOneNext = useStoreActions(actDataFetch.fetchOneNext)
 
   const commentsUpdated = useStoreState(selData.commentsUpdated)
   const updateComments = useStoreActions(actData.updateComments)

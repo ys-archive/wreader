@@ -1,4 +1,4 @@
-import { action, computed, thunk } from "easy-peasy"
+import { action, computed, thunk, thunkOn } from "easy-peasy"
 import ChapterService from "../../services/ChapterService"
 import * as _ from "lodash"
 
@@ -6,7 +6,6 @@ export default {
   categories: [],
   chapters: [],
 
-  originalChapters: [],
   commentsUpdated: false,
 
   updateComments: action(state => {
@@ -120,7 +119,6 @@ export default {
   reset: action(state => {
     state.categories = []
     state.chapters = []
-    state.originalChapters = []
     state.isLoaded.val = state.isLoaded.default
     state.hasNew.val = state.hasNew.default
     state.isUpdatingAll = false
@@ -137,15 +135,8 @@ export default {
     }
   }),
 
-  // addCategory: thunk(async (actions, payload, { getState, getStoreState }) => {
-  //   actions.addCategory_intenal(payload);
-  //   const { setMaxCoords } = getStoreState().swiper;
-  //   setMaxCoords
-  // }),
-
   resetChapter: action((state, payload) => {
     state.chapters = []
-    state.originalChapters = []
   }),
 
   addChapter: action((state, payload) => {
@@ -160,7 +151,6 @@ export default {
           child: [],
         })),
       )
-      state.originalChapters = state.chapters
     }
   }),
 
@@ -195,8 +185,30 @@ export default {
       if (chapter.length === 0) return
       findRecursively(chapter)
     })
+  }),
 
-    state.originalChapters = state.chapters
+  fetchOneChapter_internal: action((state, payload) => {
+    const { d0, d1, newChapter } = payload
+    const origPos = state.chapters[d0][d1]
+    console.log("found outdated chapter : ", origPos.deck)
+
+    if (newChapter !== undefined) origPos.deck = newChapter
+  }),
+
+  fetchOneUserChapter_internal: action((state, payload) => {
+    const { d0, d1, d2, newChapter } = payload
+    const origPos = state.chapters[d0][d1].child[d2]
+    console.log("found outdated user chapter : ", origPos.deck)
+
+    if (newChapter !== undefined) origPos.deck = newChapter
+  }),
+
+  fetchOneNext_internal: action((state, payload) => {
+    const { d0, d1, d2, d3, newChapter } = payload
+    const origPos = state.chapters[d0][d1].child[d2].child[d3]
+    console.log("found outdated chapter : ", origPos.deck)
+
+    if (newChapter !== undefined) origPos.deck = newChapter
   }),
 }
 

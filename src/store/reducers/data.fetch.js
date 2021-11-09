@@ -1,8 +1,9 @@
 import { action, computed, thunk } from "easy-peasy"
+import ChapterService from "../../services/ChapterService"
 
 export default {
   fetchOneChapter: thunk(
-    async (actions, payload, { getState, getStoreState }) => {
+    async (actions, payload, { getState, getStoreState, getStoreActions }) => {
       const chapterId = payload
 
       const { coords } = getStoreState().swiper
@@ -14,19 +15,22 @@ export default {
       const { data } = await ChapterService.GET_getChapter(0, userId)
       if (data.item.length === 0) return
 
+      console.log(data.item)
+      console.log("chapterId: ", chapterId)
       const targetIdx = data.item.findIndex(i => +i.id === +chapterId)
       const newChapter = data.item[targetIdx]
       console.log("\nnew chapter : ", newChapter)
 
-      const origPos = chapters[d0][d1]
-      console.log("found outdated chapter : ", origPos.deck)
-
-      origPos.deck = newChapter
+      getStoreActions().data.fetchOneChapter_internal({
+        d0,
+        d1,
+        newChapter,
+      })
     },
   ),
 
   fetchOneUserChapter: thunk(
-    async (actions, payload, { getState, getStoreState }) => {
+    async (actions, payload, { getState, getStoreState, getStoreActions }) => {
       const chapterId = payload
 
       const { userId } = getStoreState().auth
@@ -36,42 +40,54 @@ export default {
       const { d0, d1, d2 } = coords.val
 
       const fetchId = +chapters[d0][d1].deck.id
+      console.log("fetch with ", fetchId)
       const { data } = await ChapterService.GET_getChapter(fetchId, userId)
       if (data.item.length === 0) return
 
+      console.log(data.item)
+      console.log("chapterId: ", chapterId)
       const targetIdx = data.item.findIndex(i => +i.id === +chapterId)
       const newChapter = data.item[targetIdx]
       console.log("\nnew user chapter : ", newChapter)
 
-      const origPos = chapters[d0][d1].child[d2]
-      console.log("found outdated user chapter : ", origPos.deck)
-
-      origPos.deck = newChapter
+      getStoreActions().data.fetchOneUserChapter_internal({
+        d0,
+        d1,
+        d2,
+        newChapter,
+      })
     },
   ),
 
-  fetchOneNext: thunk(async (actions, payload, { getState, getStoreState }) => {
-    const chapterId = payload
+  fetchOneNext: thunk(
+    async (actions, payload, { getState, getStoreState, getStoreActions }) => {
+      const chapterId = payload
 
-    const { userId } = getStoreState().auth
-    const { coords } = getStoreState().swiper
-    const { chapters } = getStoreState().data
+      const { userId } = getStoreState().auth
+      const { coords } = getStoreState().swiper
+      const { chapters } = getStoreState().data
 
-    const { d0, d1, d2, d3 } = coords.val
+      const { d0, d1, d2, d3 } = coords.val
 
-    const fetchId = +chapters[d0][d1].child[d2].deck.id
-    const { data } = await ChapterService.GET_getChapter(fetchId, userId)
-    if (data.item.length === 0) return
+      const fetchId = +chapters[d0][d1].child[d2].deck.id
+      console.log("fetch with ", fetchId)
+      const { data } = await ChapterService.GET_getChapter(fetchId, userId)
+      if (data.item.length === 0) return
 
-    const targetIdx = data.item.findIndex(i => +i.id === +chapterId)
-    const newChapter = data.item[targetIdx]
-    console.log("\nnew chapter : ", newChapter)
+      console.log("chapterId: ", chapterId)
+      const targetIdx = data.item.findIndex(i => +i.id === +chapterId)
+      const newChapter = data.item[targetIdx]
+      console.log("\nnew chapter : ", newChapter)
 
-    const origPos = state.chapters[d0][d1].child[d2].child[d3]
-    console.log("found outdated chapter : ", origPos.deck)
-
-    origPos.deck = newChapter
-  }),
+      getStoreActions().data.fetchOneNext_internal({
+        d0,
+        d1,
+        d2,
+        d3,
+        newChapter,
+      })
+    },
+  ),
 }
 
 export const selectors = {}

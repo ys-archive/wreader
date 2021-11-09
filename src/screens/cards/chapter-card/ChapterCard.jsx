@@ -21,7 +21,7 @@ import { colors, StyleDefine } from "#constants"
 import { makeCategoryBGImagePath, dummyProfile } from "#constants/images"
 
 import { useStoreState } from "easy-peasy"
-import { selImage, selSwiper } from "#store/selectors"
+import { selImage } from "#store/selectors"
 
 import { useChapterCardLike } from "./chapter-card.module/useChapterCardLike"
 import { useChapterCardComments } from "./chapter-card.module/useChapterCardComments"
@@ -31,16 +31,14 @@ import { useChapterCard_OtherProfile } from "./chapter-card.module/useChapterCar
 
 const initStates = () => {
   const profile = useStoreState(selImage.profile)
-  const depth = useStoreState(selSwiper.depth)
 
   return {
     profile,
-    depth,
   }
 }
 
 const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
-  const { profile, depth } = initStates()
+  const { profile } = initStates()
 
   const {
     id: chapterId, // 현재 챕터 Id
