@@ -1,5 +1,4 @@
 import React from "react"
-import { asyncForEach, delay, delayFinally } from "../../utils"
 
 import { useStoreState, useStoreActions } from "easy-peasy"
 import { selData, selAuth, selSwiper } from "../../store/selectors"

@@ -1,12 +1,10 @@
 import React from "react"
-import { asyncForEach } from "../../utils"
 
 import { useStoreState, useStoreActions } from "easy-peasy"
 import { selData, selAuth, selSwiper } from "../../store/selectors"
 import { actData, actSwiper } from "../../store/actions"
 
 import ChapterService from "../../services/ChapterService"
-import { Coordinates } from "../../store/reducers/swiper.coords"
 
 const initStates = () => {
   // selectors

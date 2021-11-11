@@ -1,9 +1,9 @@
 import React from "react"
 import { asyncForEach, delay } from "../../utils"
 
-import { useStoreState, useStoreActions, useStore } from "easy-peasy"
-import { selData, selAuth, selSwiper } from "../../store/selectors"
-import { actData, actSwiper } from "../../store/actions"
+import { useStoreState, useStoreActions } from "easy-peasy"
+import { selData } from "../../store/selectors"
+import { actData } from "../../store/actions"
 
 const initStates = () => {
   // selectors

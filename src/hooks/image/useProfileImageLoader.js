@@ -1,6 +1,5 @@
 import React, { useEffect } from "react"
 import firebase from "firebase"
-import * as FileSystem from "expo-file-system"
 
 import { useStoreActions, useStoreState } from "easy-peasy"
 import { selAuth, selImage } from "../../store/selectors"
