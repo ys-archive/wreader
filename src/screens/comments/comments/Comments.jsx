@@ -114,7 +114,7 @@ const Comments = ({ route }) => {
           break
 
         case DEPTH_NAME.USER_CHAPTER:
-          fetchOneUserChapter(chapterId)
+          fetchOneUserChapter({ chapterId })
           break
 
         case DEPTH_NAME.NEXT:

@@ -27,7 +27,8 @@ const initStates = () => {
 }
 
 const CardsRenderer = () => {
-  const { categories, chapters, isLoaded, depth, coords } = initStates()
+  const { categories, chapters, isLoaded, depth, coords } =
+    initStates()
 
   FetchBeforeRender()
 
@@ -51,33 +52,44 @@ const CardsRenderer = () => {
       break
 
     case 1:
-      CardJSX = (
-        <ChapterCard
-          data={chapters[d0][d1].deck}
-          categoryTitle={currentCategoryTitle}
-          order={d1}
-        />
-      )
+      {
+        const chDat = chapters[d0][d1].deck
+        CardJSX = (
+          <ChapterCard
+            data={chDat}
+            categoryTitle={currentCategoryTitle}
+            order={d1}
+          />
+        )
+      }
       break
 
     case 2:
-      CardJSX = (
-        <ChapterCard
-          data={chapters[d0][d1].child[d2].deck}
-          categoryTitle={currentCategoryTitle}
-          order={d1}
-        />
-      )
+      {
+        const chDat = chapters[d0][d1].child[d2].deck
+        // saveChapterId(+chDat.id)
+        CardJSX = (
+          <ChapterCard
+            data={chDat}
+            categoryTitle={currentCategoryTitle}
+            order={d1}
+          />
+        )
+      }
       break
 
     case 3:
-      CardJSX = (
-        <ChapterCard
-          data={chapters[d0][d1].child[d2].child[d3].deck}
-          categoryTitle={currentCategoryTitle}
-          order={d3 + 1 + d1}
-        />
-      )
+      {
+        const chDat = chapters[d0][d1].child[d2].child[d3].deck
+        // saveChapterId(+chDat.id)
+        CardJSX = (
+          <ChapterCard
+            data={chDat}
+            categoryTitle={currentCategoryTitle}
+            order={d3 + 1 + d1}
+          />
+        )
+      }
       break
   }
 

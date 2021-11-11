@@ -13,6 +13,7 @@ export const useSwipeRight = swipe => {
 
     setMaxCoords,
     decreaseCoords,
+    saveChapterId,
   } = useSwipeStates()
   if (!isLoaded) return null
 
@@ -34,6 +35,7 @@ export const useSwipeRight = swipe => {
           if (coords.d1 > 0) {
             swipe("right", () => {
               decreaseCoords("d1")
+              saveChapterId(+chapters[coords.d0][coords.d1].deck.id)
               setMaxCoords({ d2: chapters })
             })
           }

@@ -8,18 +8,33 @@ export default {
 
       const { coords } = getStoreState().swiper
       const { userId } = getStoreState().auth
-      const { chapters } = getStoreState().data
-
       const { d0, d1 } = coords.val
+      const { savedChapterId } = getStoreState().sort
 
+      console.log(
+        `\n[data.fetch.fetchOneChapter] @GET getChapter (parent chapterId: 0, chapterId: ${chapterId}, userId: ${userId})`,
+      )
       const { data } = await ChapterService.GET_getChapter(0, userId)
       if (data.item.length === 0) return
 
-      console.log(data.item)
-      console.log("chapterId: ", chapterId)
+      // console.log(data.item)
       const targetIdx = data.item.findIndex(i => +i.id === +chapterId)
+
+      // 0 번으로 찾지 못하면 -> 실패
+      // chapterId 로 찾기
+      if (targetIdx === -1) {
+        console.log(
+          `[data.fetch.fetchOneChapter] fetch fail with chapterId: 0 (retry with: ${savedChapterId})`,
+        )
+        await actions.fetchOneUserChapterRetry({
+          chapterId,
+          savedChapterId,
+        })
+        return
+      }
+
       const newChapter = data.item[targetIdx]
-      console.log("\nnew chapter : ", newChapter)
+      console.log(`[data.fetch.fetchOneChapter] NEW\n`, newChapter, "\n")
 
       getStoreActions().data.fetchOneChapter_internal({
         d0,
@@ -29,9 +44,47 @@ export default {
     },
   ),
 
+  fetchOneUserChapterRetry: thunk(
+    async (actions, payload, { getState, getStoreState, getStoreActions }) => {
+      const { chapterId, savedChapterId: retryId } = payload
+
+      const { userId } = getStoreState().auth
+      const { coords } = getStoreState().swiper
+      const { chapters } = getStoreState().data
+
+      const { d0, d1, d2 } = coords.val
+
+      const isRetry = retryId !== undefined
+      const fetchId = isRetry ? +retryId : +chapters[d0][d1].deck.id
+
+      // const fetchId = +chapters[d0][d1].deck.id
+
+      console.log(
+        `[data.fetch.fetchOneChapterRetry] @GET getChapter (parent chapterId: ${fetchId}, chapterId: ${chapterId}, userId: ${userId})`,
+      )
+      if (isRetry)
+        console.log(`[data.fetch.fetchOneChapterRetry] retryId: ${retryId}`)
+
+      const { data } = await ChapterService.GET_getChapter(fetchId, userId)
+      if (data.item.length === 0) return
+
+      const targetIdx = data.item.findIndex(i => +i.id === +chapterId)
+      const newChapter = data.item[targetIdx]
+      console.log(`[data.fetch.fetchOneChapterRetry] NEW\n`, newChapter, "\n")
+
+      getStoreActions().data.fetchOneUserChapter_internal({
+        d0,
+        d1,
+        d2,
+        newChapter,
+        retryId,
+      })
+    },
+  ),
+
   fetchOneUserChapter: thunk(
     async (actions, payload, { getState, getStoreState, getStoreActions }) => {
-      const chapterId = payload
+      const { chapterId, savedChapterId: retryId } = payload
 
       const { userId } = getStoreState().auth
       const { coords } = getStoreState().swiper
@@ -40,22 +93,52 @@ export default {
       const { d0, d1, d2 } = coords.val
 
       const fetchId = +chapters[d0][d1].deck.id
-      console.log("fetch with ", fetchId)
+
+      // const fetchId = +chapters[d0][d1].deck.id
+
+      console.log(
+        `[data.fetch.fetchOneUserChapter] @GET getChapter (parent chapterId: ${fetchId}, chapterId: ${chapterId}, userId: ${userId})`,
+      )
+
       const { data } = await ChapterService.GET_getChapter(fetchId, userId)
-      if (data.item.length === 0) return
 
-      console.log(data.item)
-      console.log("chapterId: ", chapterId)
-      const targetIdx = data.item.findIndex(i => +i.id === +chapterId)
-      const newChapter = data.item[targetIdx]
-      console.log("\nnew user chapter : ", newChapter)
+      const isFailed = data.item.length === 0
 
-      getStoreActions().data.fetchOneUserChapter_internal({
-        d0,
-        d1,
-        d2,
-        newChapter,
-      })
+      let targetIdx = undefined
+      let newChapter = undefined
+
+      if (isFailed) {
+        console.log(
+          `[data.fetch.fetchOneUserChapter] fetch fail with chapterId: ${chapterId} (retry with: ${retryId})`,
+        )
+        const { data: retryData } = await ChapterService.GET_getChapter(
+          retryId,
+          userId,
+        )
+
+        targetIdx = retryData.item.findIndex(i => +i.id === +chapterId)
+        newChapter = retryData.item[targetIdx]
+
+        console.log(`[data.fetch.fetchOneUserChapter] NEW\n`, newChapter, "\n")
+        getStoreActions().data.fetchOneUserChapter_internal({
+          d0,
+          d1,
+          d2,
+          newChapter,
+          retryId,
+        })
+      } else {
+        targetIdx = data.item.findIndex(i => +i.id === +chapterId)
+        newChapter = data.item[targetIdx]
+
+        console.log(`[data.fetch.fetchOneUserChapter] NEW\n`, newChapter, "\n")
+        getStoreActions().data.fetchOneUserChapter_internal({
+          d0,
+          d1,
+          d2,
+          newChapter,
+        })
+      }
     },
   ),
 
@@ -70,14 +153,16 @@ export default {
       const { d0, d1, d2, d3 } = coords.val
 
       const fetchId = +chapters[d0][d1].child[d2].deck.id
-      console.log("fetch with ", fetchId)
+
+      console.log(
+        `[data.fetch.fetchOneChapter] @GET getChapter (parent chapterId: ${fetchId}, chapterId: ${chapterId}, userId: ${userId})`,
+      )
       const { data } = await ChapterService.GET_getChapter(fetchId, userId)
       if (data.item.length === 0) return
 
-      console.log("chapterId: ", chapterId)
       const targetIdx = data.item.findIndex(i => +i.id === +chapterId)
       const newChapter = data.item[targetIdx]
-      console.log("\nnew chapter : ", newChapter)
+      console.log(`[data.fetch.fetchOneChapter] NEW\n`, newChapter, "\n")
 
       getStoreActions().data.fetchOneNext_internal({
         d0,

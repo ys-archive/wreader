@@ -21,7 +21,8 @@ export const useAutoLogin = () => {
 
       const email = await SecureStore.getItemAsync("email")
       const password = await SecureStore.getItemAsync("password")
-      console.log("auto login email: ", email, ", password: ", password)
+      console.log(`\n[useAutoLogin] Auto-Login ENABLED!\n`)
+      // console.log("auto login email: ", email, ", password: ", password)
 
       if (!email || !password) {
         return

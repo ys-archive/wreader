@@ -79,7 +79,7 @@ export const useSwipeUp = swipe => {
 
           swipe("up", () => {
             increaseDepth()
-            console.log("ENTER INTO USER CHAPTERS")
+            // console.log("ENTER INTO USER CHAPTERS")
             updateHasNew({ d3: true })
           })
         }

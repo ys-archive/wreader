@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from "react"
+import React, { useCallback } from "react"
 import { View, Platform } from "react-native"
 import { StyleSheet, TextInput, Button, RenderError } from "../../../components"
 
@@ -10,7 +10,7 @@ import { colors } from "#constants"
 
 import { useStoreState, useStoreActions } from "easy-peasy"
 import { selAuth } from "../../../store/selectors"
-import { actDataFetch } from "../../../store/actions"
+import { actDataFetch, actData } from "../../../store/actions"
 
 import { useWriteChapterCardForm } from "./useWriteChapterCardForm"
 

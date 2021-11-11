@@ -1,17 +1,30 @@
 import React, { useState } from "react"
 
-import { useStoreActions } from "easy-peasy"
+import { useStoreState, useStoreActions } from "easy-peasy"
 import { actSort, actSwiper } from "../../store/actions"
+import { selData, selSwiper } from "../../store/selectors"
 
 const initStates = () => {
+  const chapters = useStoreState(selData.chapters)
+  const categories = useStoreState(selData.categories)
+  const coords = useStoreState(selSwiper.coords)
+  const isLoaded = useStoreState(selData.isLoaded)
+
   const sort = useStoreActions(actSort.sort)
   const moveToFirstInCurrentContext = useStoreActions(
     actSwiper.moveToFirstInCurrentContext,
   )
 
+  const saveChapterId = useStoreActions(actSort.saveChapterId)
+
   return {
+    chapters,
+    categories,
+    coords,
+    isLoaded,
     sort,
     moveToFirstInCurrentContext,
+    saveChapterId,
   }
 }
 
@@ -36,27 +49,3 @@ export const useCardSorter = () => {
     isSorterOpen,
   }
 }
-
-// switch (depth) {
-//   case DEPTH_NAME.CHAPTER:
-//     moveToFirstInCurrentContext()
-//     sortChapters()
-//     openSorterForSecs(2)
-//     break
-
-//   case DEPTH_NAME.USER_CHAPTER:
-//     moveToFirstInCurrentContext()
-//     sortUserChapters()
-//     openSorterForSecs(2)
-//     break
-
-//   case DEPTH_NAME.NEXT:
-//     moveToFirstInCurrentContext()
-//     sortNext()
-//     openSorterForSecs(2)
-//     break
-
-//   default:
-//     console.log("You can't sort due to the depth!")
-//     break
-// }

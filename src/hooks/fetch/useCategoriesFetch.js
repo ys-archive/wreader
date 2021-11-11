@@ -66,7 +66,7 @@ export const useCategoriesFetch = () => {
 
       await delay(1)
 
-      console.log("start fetching CATEGORY")
+      console.log("[useCategoriesFetch] fetching CATEGORY")
       startLoading("d0")
 
       resetCategory()
@@ -92,7 +92,6 @@ export const useCategoriesFetch = () => {
     updateHasNew({ d0: false })
     setMaxCoords({ d0: categories })
     if (coords.d0 === 0) {
-      console.log("initial category maxLength: ", categories[0].maxLength)
       setMaxCoords({ d1: categories[0].maxLength })
     }
 

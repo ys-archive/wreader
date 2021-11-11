@@ -1,7 +1,7 @@
-import { Alert, AlertRequireLogin } from "../../../../components/alert"
+import { Alert } from "../../../../components/alert"
 
 import { useStoreActions, useStoreState } from "easy-peasy"
-import { selAuth, selImage, selSwiper } from "#store/selectors"
+import { selAuth, selImage, selSwiper, selSort } from "#store/selectors"
 import { actDataFetch } from "../../../../store/actions"
 
 import { useNavigation } from "@react-navigation/native"
@@ -24,6 +24,9 @@ const initStates = () => {
   const fetchOneUserChapter = useStoreActions(actDataFetch.fetchOneUserChapter)
   const fetchOneNext = useStoreActions(actDataFetch.fetchOneNext)
 
+  // sort
+  const savedChapterId = useStoreState(selSort.savedChapterId)
+
   return {
     isLoggedIn,
     userId,
@@ -32,6 +35,7 @@ const initStates = () => {
     fetchOneChapter,
     fetchOneUserChapter,
     fetchOneNext,
+    savedChapterId,
   }
 }
 
@@ -43,6 +47,7 @@ export const useChapterCardLike = (chapterId, isLike, likeCount) => {
     fetchOneChapter,
     fetchOneUserChapter,
     fetchOneNext,
+    savedChapterId,
   } = initStates()
 
   const nav = useNavigation()
@@ -58,12 +63,12 @@ export const useChapterCardLike = (chapterId, isLike, likeCount) => {
     // 이미 좋아요 했음
     if (isLike === 1) {
       console.log(
-        `\n\nUNLIKE! chapterID: ${chapterId}, likeCount: ${likeCount}\n\n`,
+        `\n[useChapterCardLike] UNLIKE (chapterID: ${chapterId}, likeCount: ${likeCount})`,
       )
       await ChapterService.DELETE_unlikeChapter(chapterId, userId)
     } else {
       console.log(
-        `\n\nLIKE! chapterID: ${chapterId}, likeCount: ${likeCount}\n\n`,
+        `\n[useChapterCardLike] LIKE (chapterID: ${chapterId}, likeCount: ${likeCount})`,
       )
       await ChapterService.POST_likeChapter(chapterId, userId)
     }
@@ -79,7 +84,7 @@ export const useChapterCardLike = (chapterId, isLike, likeCount) => {
 
       case DEPTH_NAME.USER_CHAPTER:
         {
-          fetchOneUserChapter(chapterId)
+          fetchOneUserChapter({ chapterId, savedChapterId })
         }
         break
 

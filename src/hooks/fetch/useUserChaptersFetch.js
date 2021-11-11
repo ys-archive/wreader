@@ -72,7 +72,7 @@ export const useUserChaptersFetch = () => {
 
       // await delay(1);
 
-      console.log("fetching USER CHAPTERS")
+      console.log("[useUserChapterFetch] fetching USER CHAPTERS")
 
       startLoading("d2")
 

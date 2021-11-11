@@ -65,12 +65,12 @@ export const useNextFetch = () => {
   } = initStates()
 
   React.useEffect(() => {
-    ;(async function fetchNext() {
+    (async function fetchNext() {
       if (!isLoaded.d2) return
       if (!hasNew.d3) return
       if (!chapters || chapters.length === 0) return
 
-      console.log("fetching NEXT CHAPTERS")
+      console.log("[useNextFetch] fetching NEXT CHAPTERS")
       startLoading("d3")
 
       const target = chapters[coords.d0][coords.d1].child[coords.d2]

@@ -2,10 +2,17 @@ import { thunkOn, thunk, computed, action } from "easy-peasy"
 import { SORT_TYPES, sorterByDate, sorterByLikeCount } from "./sort.type"
 
 export default {
+  isSortedOnce: false,
+
+  sortOnce: action((state, _) => {
+    state.isSortedOnce = true
+  }),
+
   currentSortType: SORT_TYPES.ByLikes,
-  savedChapterId: -11,
+  savedChapterId: -999,
 
   saveChapterId: action((state, payload) => {
+    console.log(`[sort.saveChapterId] chapter Id is saved!: ${+payload}`)
     state.savedChapterId = +payload
   }),
 
@@ -59,11 +66,14 @@ export default {
 
 export const selectors = {
   isSortedByLikes: state => state.sort.isSortedByLikes,
-  savedChapterId: state => state.sort.savedChapterId
+  savedChapterId: state => state.sort.savedChapterId,
+  isSortedOnce: state => state.sort.isSortedOnce,
 }
 
 export const actions = {
   sort: actions => actions.sort.sort,
+  saveChapterId: actions => actions.sort.saveChapterId,
+  sortOnce: actions => actions.sort.sortOnce,
 }
 
 //   sortChapters: thunk((actions, payload, { getState, getStoreState }) => {

@@ -1,5 +1,5 @@
 import { useCallback } from "react"
-import { Alert, AlertRequireLogin } from "#components/alert"
+import { Alert } from "#components/alert"
 
 import { useNavigation } from "@react-navigation/native"
 import * as ScreenNames from "#navigators/ScreenNames"

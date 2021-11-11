@@ -29,7 +29,7 @@ class ChapterService {
   }
 
   static async GET_getChapter(chapterOrder, userId) {
-    console.log('get Chapter with userID: ', userId);
+    // console.log('get Chapter with userID: ', userId);
     const { data, status } = await axios.instance
       .get(`chapter/${chapterOrder}`, { params: { userId: +userId } })
       .catch(console.error);
@@ -37,7 +37,7 @@ class ChapterService {
   }
 
   static async GET_getCategory(userId) {
-    console.log('get Category with userID: ', userId);
+    // console.log('get Category with userID: ', userId);
     const { data, status } = await axios.instance
       .get('category', { params: { userId: +userId } })
       .catch(console.error);

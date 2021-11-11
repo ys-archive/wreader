@@ -53,7 +53,7 @@ export const useChaptersFetch = () => {
       if (!hasNew.d1) return
       if (!categories || categories.length === 0) return
 
-      console.log("fetching CHAPTERS")
+      console.log("[useChaptersFetch] fetching CHAPTERS")
 
       await delay(0.5)
 

@@ -190,15 +190,32 @@ export default {
   fetchOneChapter_internal: action((state, payload) => {
     const { d0, d1, newChapter } = payload
     const origPos = state.chapters[d0][d1]
-    console.log("found outdated chapter : ", origPos.deck)
+
+    console.log("[data.fetchOneChapter] OUTDATED\n", origPos.deck, "\n")
 
     if (newChapter !== undefined) origPos.deck = newChapter
   }),
 
   fetchOneUserChapter_internal: action((state, payload) => {
-    const { d0, d1, d2, newChapter } = payload
-    const origPos = state.chapters[d0][d1].child[d2]
-    console.log("found outdated user chapter : ", origPos.deck)
+    const { d0, d1, d2, newChapter, retryId } = payload
+
+    let origPos = undefined
+
+    if (retryId !== undefined) {
+      const origPosIdx = state.chapters[d0][d1].child.findIndex(
+        i => +i.id === +retryId,
+      )
+
+      if (origPosIdx === -1) {
+        origPos = state.chapters[d0][d1]
+      } else {
+        origPos = state.chapters[d0][d1].child[origPosIdx]
+      }
+    } else {
+      origPos = state.chapters[d0][d1].child[d2]
+    }
+
+    console.log("[data.fetchOneUserChapter] OUTDATED\n", origPos.deck, "\n")
 
     if (newChapter !== undefined) origPos.deck = newChapter
   }),
@@ -206,7 +223,8 @@ export default {
   fetchOneNext_internal: action((state, payload) => {
     const { d0, d1, d2, d3, newChapter } = payload
     const origPos = state.chapters[d0][d1].child[d2].child[d3]
-    console.log("found outdated chapter : ", origPos.deck)
+
+    console.log("[data.fetchOneNext] OUTDATED\n", origPos.deck, "\n")
 
     if (newChapter !== undefined) origPos.deck = newChapter
   }),
