@@ -34,9 +34,6 @@ export const useSwipeStates = () => {
   const resetTempBlob = useStoreActions(actImage.resetTempBlob)
   const resetCard = useStoreActions(actImage.resetCard)
 
-  // - sort
-  const saveChapterId = useStoreActions(actSort.saveChapterId)
-
   return {
     categories,
     chapters,
@@ -60,7 +57,5 @@ export const useSwipeStates = () => {
 
     resetTempBlob,
     resetCard,
-
-    saveChapterId,
   }
 }

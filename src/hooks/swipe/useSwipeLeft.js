@@ -22,7 +22,6 @@ export const useSwipeLeft = swipe => {
     setMaxCoords,
     resetTempBlob,
     resetCard,
-    saveChapterId,
   } = useSwipeStates()
 
   const nav = useNavigation()
@@ -59,7 +58,6 @@ export const useSwipeLeft = swipe => {
             // 각 챕터에 맞게 최대 챕터 설정 (d1)
             console.log("ENTER INTO CHAPTERS")
             // updateHasNew({ d2: true });
-            saveChapterId(+chapters[coords.d0][0].deck.id)
           })
         }
 
@@ -98,7 +96,6 @@ export const useSwipeLeft = swipe => {
             increaseCoords("d1")
             updateHasNew({ d2: true })
             setMaxCoords({ d2: chapters })
-            saveChapterId(+chapters[coords.d0][coords.d1].deck.id)
           })
         }
 

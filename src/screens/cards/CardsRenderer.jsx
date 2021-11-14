@@ -27,8 +27,7 @@ const initStates = () => {
 }
 
 const CardsRenderer = () => {
-  const { categories, chapters, isLoaded, depth, coords } =
-    initStates()
+  const { categories, chapters, isLoaded, depth, coords } = initStates()
 
   FetchBeforeRender()
 
@@ -67,7 +66,6 @@ const CardsRenderer = () => {
     case 2:
       {
         const chDat = chapters[d0][d1].child[d2].deck
-        // saveChapterId(+chDat.id)
         CardJSX = (
           <ChapterCard
             data={chDat}
@@ -81,7 +79,6 @@ const CardsRenderer = () => {
     case 3:
       {
         const chDat = chapters[d0][d1].child[d2].child[d3].deck
-        // saveChapterId(+chDat.id)
         CardJSX = (
           <ChapterCard
             data={chDat}

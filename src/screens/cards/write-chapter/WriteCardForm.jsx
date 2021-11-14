@@ -22,41 +22,46 @@ import { DEPTH_NAME } from "../../../store/reducers/swiper.depth"
 const initStates = () => {
   const userId = useStoreState(selAuth.userId)
   const updateHasNew = useStoreActions(actData.updateHasNew)
-  const fetchOneChapter = useStoreActions(actDataFetch.fetchOneChapter)
+  const fetchOne = useStoreActions(actDataFetch.fetchOne)
 
   return {
     userId,
     updateHasNew,
-    fetchOneChapter,
+    fetchOne,
   }
 }
 
-const WriteCardForm = ({ chapterId, categoryId, depth, children }) => {
+const WriteCardForm = ({
+  chapterId,
+  categoryId,
+  parentId,
+  depth,
+  children,
+}) => {
   const nav = useNavigation()
 
-  const { userId, updateHasNew, fetchOneChapter } = initStates()
+  const { userId, updateHasNew, fetchOne } = initStates()
 
-  const afterFormSubmitted = useCallback(async () => {
+  const afterFormSubmitted = async () => {
     switch (depth) {
       case DEPTH_NAME.CHAPTER:
         updateHasNew({ d0: true })
         updateHasNew({ d1: true })
-        fetchOneChapter()
         break
 
       case DEPTH_NAME.USER_CHAPTER:
         updateHasNew({ d2: true })
-        // fetchOneUserChapter();
         break
 
       case DEPTH_NAME.NEXT:
         updateHasNew({ d3: true })
-        // fetchOneNext();
         break
     }
 
+    // fetchOne({ curId: chapterId, parentId, depth, userId })
+
     nav.goBack()
-  }, [depth])
+  }
 
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
     useWriteChapterCardForm(userId, chapterId, categoryId, afterFormSubmitted)
@@ -76,7 +81,7 @@ const WriteCardForm = ({ chapterId, categoryId, depth, children }) => {
           maxHeight={400}
           onChangeText={handleChange("sentence")}
           // if (e && e.length % 20 === 0) e = `${e}\n`;
-          placeholder="Write a story for this chapter..."
+          placeholder='Write a story for this chapter...'
           placeholderTextColor={colors.light.ivory4}
         />
         <RenderError

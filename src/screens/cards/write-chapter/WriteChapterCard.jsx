@@ -32,7 +32,9 @@ const initStates = () => {
 }
 
 const WriteChapterCard = ({ route }) => {
-  const { categoryTitle, chapterId, categoryId, order, depth } = route.params
+  const {
+    params: { categoryTitle, chapterId, categoryId, parentId, order, depth },
+  } = route
   const { cardImageUrl, isCardStartUploading } = initStates()
 
   const pickImage = useImagePicker(9, 21)
@@ -70,7 +72,7 @@ const WriteChapterCard = ({ route }) => {
           }}
         >
           {/* todo: 현재 새 카드의 title 은 사용하지 않음 */}
-          <Text fontFamily="heavy" style={s.categoryTitle}>
+          <Text fontFamily='heavy' style={s.categoryTitle}>
             {categoryTitle}
           </Text>
           <View
@@ -82,9 +84,9 @@ const WriteChapterCard = ({ route }) => {
             }}
           />
 
-          <Text fontFamily="semibold" style={s.chapterText}>
+          <Text fontFamily='semibold' style={s.chapterText}>
             CHAPTER&nbsp;&nbsp;
-            <Text fontFamily="regular" style={s.chapterNumberText}>
+            <Text fontFamily='regular' style={s.chapterNumberText}>
               {order}
             </Text>
           </Text>
@@ -92,6 +94,7 @@ const WriteChapterCard = ({ route }) => {
           <WriteCardForm
             chapterId={chapterId}
             categoryId={categoryId}
+            parentId={parentId}
             depth={depth}
           >
             <AddImage style={s.imageIcon} onPress={onPickCardImage} />

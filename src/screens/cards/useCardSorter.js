@@ -15,8 +15,6 @@ const initStates = () => {
     actSwiper.moveToFirstInCurrentContext,
   )
 
-  const saveChapterId = useStoreActions(actSort.saveChapterId)
-
   return {
     chapters,
     categories,
@@ -24,7 +22,6 @@ const initStates = () => {
     isLoaded,
     sort,
     moveToFirstInCurrentContext,
-    saveChapterId,
   }
 }
 
