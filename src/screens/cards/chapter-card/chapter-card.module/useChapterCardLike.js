@@ -21,12 +21,6 @@ const initStates = () => {
 
   // actions
   const fetchOne = useStoreActions(actDataFetch.fetchOne)
-  // const fetchOneChapter = useStoreActions(actDataFetch.fetchOneChapter)
-  // const fetchOneUserChapter = useStoreActions(actDataFetch.fetchOneUserChapter)
-  // const fetchOneNext = useStoreActions(actDataFetch.fetchOneNext)
-
-  // sort
-  // const savedChapterId = useStoreState(selSort.savedChapterId)
 
   return {
     isLoggedIn,
@@ -34,24 +28,11 @@ const initStates = () => {
     profile,
     depth,
     fetchOne,
-    // fetchOneChapter,
-    // fetchOneUserChapter,
-    // fetchOneNext,
-    // savedChapterId,
   }
 }
 
 export const useChapterCardLike = (chapterId, parentId, isLike, likeCount) => {
-  const {
-    isLoggedIn,
-    userId,
-    depth,
-    fetchOne,
-    // fetchOneChapter,
-    // fetchOneUserChapter,
-    // fetchOneNext,
-    // savedChapterId,
-  } = initStates()
+  const { isLoggedIn, userId, depth, fetchOne } = initStates()
 
   const nav = useNavigation()
 
