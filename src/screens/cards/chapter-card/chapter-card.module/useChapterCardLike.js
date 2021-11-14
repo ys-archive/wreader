@@ -20,34 +20,37 @@ const initStates = () => {
   const depth = useStoreState(selSwiper.depth)
 
   // actions
-  const fetchOneChapter = useStoreActions(actDataFetch.fetchOneChapter)
-  const fetchOneUserChapter = useStoreActions(actDataFetch.fetchOneUserChapter)
-  const fetchOneNext = useStoreActions(actDataFetch.fetchOneNext)
+  const fetchOne = useStoreActions(actDataFetch.fetchOne)
+  // const fetchOneChapter = useStoreActions(actDataFetch.fetchOneChapter)
+  // const fetchOneUserChapter = useStoreActions(actDataFetch.fetchOneUserChapter)
+  // const fetchOneNext = useStoreActions(actDataFetch.fetchOneNext)
 
   // sort
-  const savedChapterId = useStoreState(selSort.savedChapterId)
+  // const savedChapterId = useStoreState(selSort.savedChapterId)
 
   return {
     isLoggedIn,
     userId,
     profile,
     depth,
-    fetchOneChapter,
-    fetchOneUserChapter,
-    fetchOneNext,
-    savedChapterId,
+    fetchOne,
+    // fetchOneChapter,
+    // fetchOneUserChapter,
+    // fetchOneNext,
+    // savedChapterId,
   }
 }
 
-export const useChapterCardLike = (chapterId, isLike, likeCount) => {
+export const useChapterCardLike = (chapterId, parentId, isLike, likeCount) => {
   const {
     isLoggedIn,
     userId,
     depth,
-    fetchOneChapter,
-    fetchOneUserChapter,
-    fetchOneNext,
-    savedChapterId,
+    fetchOne,
+    // fetchOneChapter,
+    // fetchOneUserChapter,
+    // fetchOneNext,
+    // savedChapterId,
   } = initStates()
 
   const nav = useNavigation()
@@ -74,25 +77,26 @@ export const useChapterCardLike = (chapterId, isLike, likeCount) => {
     }
 
     await delay(1)
+    fetchOne({ curId: chapterId, parentId, depth, userId })
+    
+    // switch (depth) {
+    //   case DEPTH_NAME.CHAPTER:
+    //     {
+    //       fetchOneChapter(chapterId)
+    //     }
+    //     break
 
-    switch (depth) {
-      case DEPTH_NAME.CHAPTER:
-        {
-          fetchOneChapter(chapterId)
-        }
-        break
+    //   case DEPTH_NAME.USER_CHAPTER:
+    //     {
+    //       fetchOneUserChapter({ chapterId, savedChapterId })
+    //     }
+    //     break
 
-      case DEPTH_NAME.USER_CHAPTER:
-        {
-          fetchOneUserChapter({ chapterId, savedChapterId })
-        }
-        break
-
-      case DEPTH_NAME.NEXT:
-        {
-          fetchOneNext(chapterId)
-        }
-        break
-    }
+    //   case DEPTH_NAME.NEXT:
+    //     {
+    //       fetchOneNext(chapterId)
+    //     }
+    //     break
+    // }
   }
 }

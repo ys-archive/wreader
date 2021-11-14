@@ -47,7 +47,7 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
     content,
     replyCount, // -> reply
     like_count: likeCount, // -> like
-    // group_index: groupIdx, // candiate 붙이는 용도 (검사값)
+    group_index: parentId, // candiate 붙이는 용도 (검사값)
     chapterImg, // -> cover image url
     userImg, // author profile image url
     userNick: authorNickName, // -> author
@@ -65,7 +65,7 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
   // );
   // console.log('\n');
 
-  const onPressLike = useChapterCardLike(chapterId, isLike, likeCount)
+  const onPressLike = useChapterCardLike(chapterId, parentId, isLike, likeCount)
   const onPressReply = useChapterCardComments(chapterId)
   const AddStoryJSX = useChapterCard_AddStory()
   const { TheEndLabelJSX, FullStoryJSX } = useChapterCard_Labels(order)
@@ -100,7 +100,7 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
               }}
               source={userImg ? { uri: userImg } : dummyProfile}
             />
-            <Text fontFamily="heavy" style={s.authorNameText}>
+            <Text fontFamily='heavy' style={s.authorNameText}>
               {authorNickName || "Jessica Momo"}
             </Text>
           </View>
@@ -130,17 +130,17 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
           {/* <View style={s.separator}></View> */}
 
           <View style={s.chapterOrderSection}>
-            <Text fontFamily="semibold" style={s.chapterOrderPlaceholder}>
+            <Text fontFamily='semibold' style={s.chapterOrderPlaceholder}>
               CHAPTER
             </Text>
-            <Text fontFamily="regular" style={s.chapterOrderText}>
+            <Text fontFamily='regular' style={s.chapterOrderText}>
               {order + 1}
             </Text>
           </View>
 
           {/* 챕터 내용 */}
           <View style={s.contentSection}>
-            <Text style={s.contentText} fontFamily="regular">
+            <Text style={s.contentText} fontFamily='regular'>
               &nbsp;{content ?? ""}
             </Text>
           </View>
@@ -180,7 +180,7 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
 
                 <TextInput
                   style={s.replyTextInput}
-                  placeholder="Add a comment ..."
+                  placeholder='Add a comment ...'
                   editable={false}
                   placeholderTextColor={colors.light.text2}
                 />
