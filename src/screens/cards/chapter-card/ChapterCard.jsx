@@ -66,7 +66,7 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
   // console.log('\n');
 
   const onPressLike = useChapterCardLike(chapterId, parentId, isLike, likeCount)
-  const onPressReply = useChapterCardComments(chapterId)
+  const onPressReply = useChapterCardComments(chapterId, parentId)
   const AddStoryJSX = useChapterCard_AddStory()
   const { TheEndLabelJSX, FullStoryJSX } = useChapterCard_Labels(order)
   const onPressOtherProfile = useChapterCard_OtherProfile(otherUserId)

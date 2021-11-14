@@ -78,25 +78,5 @@ export const useChapterCardLike = (chapterId, parentId, isLike, likeCount) => {
 
     await delay(1)
     fetchOne({ curId: chapterId, parentId, depth, userId })
-    
-    // switch (depth) {
-    //   case DEPTH_NAME.CHAPTER:
-    //     {
-    //       fetchOneChapter(chapterId)
-    //     }
-    //     break
-
-    //   case DEPTH_NAME.USER_CHAPTER:
-    //     {
-    //       fetchOneUserChapter({ chapterId, savedChapterId })
-    //     }
-    //     break
-
-    //   case DEPTH_NAME.NEXT:
-    //     {
-    //       fetchOneNext(chapterId)
-    //     }
-    //     break
-    // }
   }
 }

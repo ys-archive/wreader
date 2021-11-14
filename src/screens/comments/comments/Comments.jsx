@@ -23,39 +23,27 @@ import { CommentsService } from "../../../services"
 import { useCommentsLogic } from "./useCommentsLogic"
 import CommentItem_Me from "../comment-item/CommentItem_Me"
 import CommentItem_Other from "../comment-item/CommentItem_Other"
-import { DEPTH_NAME } from "../../../store/reducers/swiper.depth"
 
 const initStates = () => {
   const [contents, setContents] = useState("")
 
   // selectors
   const userId = useStoreState(selAuth.userId)
-
-  const hasNew = useStoreState(selData.hasNew)
   const depth = useStoreState(selSwiper.depth)
-
   const profileUrl = useStoreState(selImage.profile)
 
   // actions
-  const updateHasNew = useStoreActions(actData.updateHasNew)
-  const fetchOneChapter = useStoreActions(actDataFetch.fetchOneChapter)
-  const fetchOneUserChapter = useStoreActions(actDataFetch.fetchOneUserChapter)
-  const fetchOneNext = useStoreActions(actDataFetch.fetchOneNext)
-
+  const fetchOne = useStoreActions(actDataFetch.fetchOne)
   const commentsUpdated = useStoreState(selData.commentsUpdated)
   const updateComments = useStoreActions(actData.updateComments)
 
   return {
     userId,
-    hasNew,
     depth,
     profileUrl,
     contents,
     setContents,
-    updateHasNew,
-    fetchOneChapter,
-    fetchOneUserChapter,
-    fetchOneNext,
+    fetchOne,
     commentsUpdated,
     updateComments,
   }
@@ -67,25 +55,21 @@ const Comments = ({ route }) => {
     profileUrl,
     userId,
     contents,
-    hasNew,
     depth,
     setContents,
-    updateHasNew,
-    fetchOneChapter,
-    fetchOneUserChapter,
-    fetchOneNext,
+    fetchOne,
     commentsUpdated,
     updateComments,
   } = initStates()
 
-  const { chapterId } = route.params
+  const { chapterId, parentId } = route.params
 
   const data = useCommentsLogic(chapterId, commentsUpdated)
 
   if (!data) {
     return (
       <View>
-        <ActivityIndicator size="large" />
+        <ActivityIndicator size='large' />
       </View>
     )
   }
@@ -107,20 +91,7 @@ const Comments = ({ route }) => {
     if (status === 200) {
       await delay(0.3)
       // 성공했으니깐 다시 fetch
-      // console.log('depth during COMMENT ===> ', depth);
-      switch (depth) {
-        case DEPTH_NAME.CHAPTER:
-          fetchOneChapter(chapterId)
-          break
-
-        case DEPTH_NAME.USER_CHAPTER:
-          fetchOneUserChapter({ chapterId })
-          break
-
-        case DEPTH_NAME.NEXT:
-          fetchOneNext(chapterId)
-          break
-      }
+      fetchOne({ curId: chapterId, parentId, depth, userId })
       updateComments()
     }
 
@@ -159,7 +130,7 @@ const Comments = ({ route }) => {
       <View style={s.root}>
         {/* Title */}
         <View style={s.topSection}>
-          <Text fontFamily="heavy" style={s.title}>
+          <Text fontFamily='heavy' style={s.title}>
             COMMENTS
           </Text>
         </View>
@@ -198,7 +169,7 @@ const Comments = ({ route }) => {
             style={s.replyTextInput}
             value={contents}
             onChangeText={setContents}
-            placeholder="Add a comment ..."
+            placeholder='Add a comment ...'
             placeholderTextColor={colors.light.text2}
           />
 
