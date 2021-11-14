@@ -140,13 +140,12 @@ export default {
   }),
 
   addChapter: action((state, payload) => {
-    const hasFound = state.chapters.findIndex(ch =>
-      _.isEqual(ch.deck, payload.deck),
-    )
+    const { deck } = payload
+    const hasFound = state.chapters.findIndex(ch => _.isEqual(ch.deck, deck))
 
     if (hasFound === -1) {
       state.chapters.push(
-        payload.deck.map(d => ({
+        deck.map(d => ({
           deck: d,
           child: [],
         })),

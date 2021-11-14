@@ -1,4 +1,4 @@
-import React, { useCallback } from "react"
+import React from "react"
 import { View, Platform } from "react-native"
 import { StyleSheet, TextInput, Button, RenderError } from "../../../components"
 
@@ -18,6 +18,7 @@ import { useNavigation } from "@react-navigation/native"
 
 import { StyleDefine } from "../../../constants"
 import { DEPTH_NAME } from "../../../store/reducers/swiper.depth"
+import { delay } from "../../../utils"
 
 const initStates = () => {
   const userId = useStoreState(selAuth.userId)
@@ -39,14 +40,16 @@ const WriteCardForm = ({
   children,
 }) => {
   const nav = useNavigation()
-
   const { userId, updateHasNew, fetchOne } = initStates()
 
   const afterFormSubmitted = async () => {
     switch (depth) {
       case DEPTH_NAME.CHAPTER:
-        updateHasNew({ d0: true })
+        // updateHasNew({ d0: true })
+        // await delay(2)
+
         updateHasNew({ d1: true })
+        // fetchOne({ curId: chapterId, parentId: 0, depth, userId })
         break
 
       case DEPTH_NAME.USER_CHAPTER:
@@ -57,8 +60,6 @@ const WriteCardForm = ({
         updateHasNew({ d3: true })
         break
     }
-
-    // fetchOne({ curId: chapterId, parentId, depth, userId })
 
     nav.goBack()
   }
