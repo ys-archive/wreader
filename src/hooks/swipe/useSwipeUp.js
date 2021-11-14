@@ -16,6 +16,8 @@ export const useSwipeUp = swipe => {
 
     increaseDepth,
 
+    fetchChapters,
+
     setMaxCoords,
 
     updateHasNew,
@@ -80,7 +82,8 @@ export const useSwipeUp = swipe => {
           swipe("up", () => {
             increaseDepth()
             // console.log("ENTER INTO USER CHAPTERS")
-            updateHasNew({ d3: true })
+            // updateHasNew({ d3: true })
+            fetchChapters(3)
           })
         }
 
@@ -90,7 +93,7 @@ export const useSwipeUp = swipe => {
             console.log(
               "해당 챕터의 유저 챕터가 존재 하지 않음. 새로운 카드 작성",
             )
-            
+
             resetCard()
             nav.navigate(ScreenNames.MainWriteCard, {
               categoryTitle: categories[coords.d0].title,
@@ -104,8 +107,9 @@ export const useSwipeUp = swipe => {
 
           swipe("up", () => {
             increaseCoords("d2")
-            updateHasNew({ d3: true })
+            // updateHasNew({ d3: true })
             setMaxCoords({ d3: chapters })
+            fetchChapters(3)
           })
         }
 

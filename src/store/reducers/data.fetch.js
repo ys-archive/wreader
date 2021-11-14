@@ -10,9 +10,10 @@ export default {
       } = getStoreState()
       const {
         data: { resetCategory, addCategory },
+        swiper: { setMaxCoords },
       } = getStoreActions()
 
-      console.log("[useCategoriesFetch] fetching CATEGORY")
+      console.log("[dataFetch] fetching CATEGORY")
       const { data } = await ChapterService.GET_getCategory(userId)
       if (data.item.length === 0) return
 
@@ -32,19 +33,22 @@ export default {
         auth: { userId },
         swiper: {
           depth,
-          coords: { d0, d1, d2, d3 },
+          coords: {
+            val: { d0, d1, d2, d3 },
+          },
         },
+        data: { chapters },
       } = getStoreState()
 
       const {
-        data: { addChapter },
+        data: { addChapter, addChapterChild },
       } = getStoreActions()
 
       console.log(depth.val)
       switch (overriderDepth !== undefined ? overriderDepth : depth.val) {
         case DEPTH_NAME.CHAPTER:
           {
-            console.log("[useChaptersFetch] fetching CHAPTERS")
+            console.log("[dataFetch] fetching CHAPTERS")
             const { data } = await ChapterService.GET_getChapter(0, userId)
             if (data.item.length === 0) return
 
@@ -57,19 +61,24 @@ export default {
               }
               transformed[curId].push(ch)
             })
-            Object.values(transformed).forEach(deck => addChapter({ deck }))
+
+            Object.values(transformed).forEach(deck =>
+              addChapter({ deck: deck.sort((a, b) => +a.id - +b.id) }),
+            )
           }
           break
 
         case DEPTH_NAME.USER_CHAPTER:
           {
-            console.log("[useUserChapterFetch] fetching USER CHAPTERS")
+            console.log("[dataFetch] fetching USER CHAPTERS")
             const target = chapters[d0][d1].deck
             const { data } = await ChapterService.GET_getChapter(
               +target.id,
               userId,
             )
             if (data.item.length === 0) return
+
+            data.item = data.item.sort((a, b) => +a.id - +b.id)
 
             if (data.item.length === 1) {
               addChapterChild({ deck: data.item[0] })
@@ -85,7 +94,7 @@ export default {
 
         case DEPTH_NAME.NEXT:
           {
-            console.log("[useNextFetch] fetching NEXT CHAPTERS")
+            console.log("[dataFetch] fetching NEXT CHAPTERS")
 
             const target = chapters[d0][d1].child[d2]
 

@@ -14,6 +14,7 @@ export const useSwipeLeft = swipe => {
     maxCoords,
 
     updateHasNew,
+    fetchChapters,
     increaseDepth,
 
     increaseCoords,
@@ -57,6 +58,7 @@ export const useSwipeLeft = swipe => {
             increaseDepth()
             // 각 챕터에 맞게 최대 챕터 설정 (d1)
             console.log("ENTER INTO CHAPTERS")
+            fetchChapters(2)
             // updateHasNew({ d2: true });
           })
         }
@@ -96,6 +98,7 @@ export const useSwipeLeft = swipe => {
             increaseCoords("d1")
             updateHasNew({ d2: true })
             setMaxCoords({ d2: chapters })
+            fetchChapters(2)
           })
         }
 

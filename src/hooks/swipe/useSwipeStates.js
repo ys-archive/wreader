@@ -1,6 +1,6 @@
 import { useStoreState, useStoreActions } from "easy-peasy"
 import { selData, selSwiper } from "../../store/selectors"
-import { actData, actImage, actSort, actSwiper } from "../../store/actions"
+import { actData, actDataFetch, actImage, actSort, actSwiper } from "../../store/actions"
 
 export const useSwipeStates = () => {
   // selectors
@@ -18,6 +18,7 @@ export const useSwipeStates = () => {
   // actions
   // - data
   const updateHasNew = useStoreActions(actData.updateHasNew)
+  const fetchChapters = useStoreActions(actDataFetch.fetchChapters)
 
   // - swiper
   const setDepth = useStoreActions(actSwiper.setDepth)
@@ -45,6 +46,7 @@ export const useSwipeStates = () => {
     maxCoords,
 
     updateHasNew,
+    fetchChapters,
 
     setDepth,
     increaseDepth,
