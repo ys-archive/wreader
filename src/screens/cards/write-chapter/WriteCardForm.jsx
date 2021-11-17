@@ -18,6 +18,7 @@ import { useNavigation } from "@react-navigation/native"
 
 import { StyleDefine } from "../../../constants"
 import { DEPTH_NAME } from "../../../store/reducers/swiper.depth"
+import { delay } from "../../../utils/time"
 
 const initStates = () => {
   const userId = useStoreState(selAuth.userId)
@@ -46,6 +47,7 @@ const WriteCardForm = ({
     switch (depth) {
       case DEPTH_NAME.CHAPTER:
         updateHasNew({ d0: true })
+        await delay(2)
         updateHasNew({ d1: true })
         break
 

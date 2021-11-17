@@ -34,6 +34,8 @@ const CardsRenderer = () => {
   if (!isLoaded.d0) return null
   if (!isLoaded.d1) return null
 
+  if (!chapters || chapters.length === 0) return null
+
   // const { d0: md0, d1: md1, d2: md2, d3: md3 } = maxCoords;
   // console.log(
   //   `max coords---> md0:${md0} | md1:${md1} | md2:${md2} | md3:${md3}`,

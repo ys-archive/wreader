@@ -13,6 +13,7 @@ const initStates = () => {
 
   // actions
   // - data
+  const resetChapters = useStoreActions(actData.resetChapter)
   const addChapter = useStoreActions(actData.addChapter)
 
   const startLoading = useStoreActions(actData.startLoading)
@@ -24,6 +25,8 @@ const initStates = () => {
     categories,
     isLoaded,
     hasNew,
+
+    resetChapters,
     addChapter,
 
     startLoading,
@@ -40,6 +43,7 @@ export const useChaptersFetch = () => {
     categories,
     isLoaded,
     hasNew,
+    resetChapters,
     addChapter,
     startLoading,
     finishLoading,
@@ -54,7 +58,7 @@ export const useChaptersFetch = () => {
       if (!categories || categories.length === 0) return
 
       console.log("[useChaptersFetch] fetching CHAPTERS")
-
+      resetChapters()
       await delay(0.5)
 
       startLoading("d1")
