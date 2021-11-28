@@ -13,7 +13,7 @@ import {
 
 const swipeConfig = {
   velocityThreshold: Platform.select({ ios: 0.4, android: 0.2 }),
-  directionalOffsetThreshold: 60,
+  directionalOffsetThreshold: 35,
 };
 
 const Reader = ({ children }) => {
