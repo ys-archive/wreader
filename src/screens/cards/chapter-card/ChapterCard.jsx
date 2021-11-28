@@ -131,10 +131,10 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
 
           <View style={s.chapterOrderSection}>
             <Text fontFamily='semibold' style={s.chapterOrderPlaceholder}>
-              CHAPTER
+              Scene Card&nbsp;
             </Text>
             <Text fontFamily='regular' style={s.chapterOrderText}>
-              {order + 1}
+              #{order + 1}
             </Text>
           </View>
 
