@@ -3,8 +3,11 @@ import { useFormik } from "formik"
 import * as Yup from "yup"
 import uuid from "react-native-uuid"
 
+import { useNavigation } from "@react-navigation/native"
+import * as ScreenNames from "../../../navigators/ScreenNames"
+
 import { useStoreState, useStoreActions } from "easy-peasy"
-import { selImage } from "../../../store/selectors"
+import { selAuth, selImage } from "../../../store/selectors"
 import { actImage } from "../../../store/actions"
 
 import { ChapterService } from "../../../services"
@@ -29,6 +32,7 @@ const initStates = () => {
   const cardImageUrl = useStoreState(selImage.card)
   const isCardStartUploading = useStoreState(selImage.isCardStartUploading)
   const tempBlob = useStoreState(selImage.tempBlob)
+  const isLoggedIn = useStoreState(selAuth.isLoggedIn)
 
   // actions
   const setCardImageUrl = useStoreActions(actImage.setCard)
@@ -42,6 +46,7 @@ const initStates = () => {
     setCardImageUrl,
     startUploadingCardImage,
     tempBlob,
+    isLoggedIn,
     completeUploadCardImage,
     cardImageUrl,
     isCardStartUploading,
@@ -59,12 +64,21 @@ export const useWriteChapterCardForm = (
     setCardImageUrl,
     startUploadingCardImage,
     tempBlob,
+    isLoggedIn,
     completeUploadCardImage,
     cardImageUrl,
     resetTempBlob,
   } = initStates()
+  const nav = useNavigation()
 
   const onSubmit = async values => {
+    if (!isLoggedIn) {
+      Alert("Need to login to write a new card!", "close", () =>
+        nav.navigate(ScreenNames.SigninStack),
+      )
+      return
+    }
+
     let downloadUrl = ""
 
     if (tempBlob !== null) {
