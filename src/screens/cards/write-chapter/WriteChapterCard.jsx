@@ -85,9 +85,9 @@ const WriteChapterCard = ({ route }) => {
           />
 
           <Text fontFamily='semibold' style={s.chapterText}>
-            CHAPTER&nbsp;&nbsp;
+            Scene Card&nbsp;
             <Text fontFamily='regular' style={s.chapterNumberText}>
-              {order}
+              #{order}
             </Text>
           </Text>
 
