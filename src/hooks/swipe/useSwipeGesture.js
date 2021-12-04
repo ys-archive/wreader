@@ -39,6 +39,7 @@ export const useSwipeGesture = () => {
     if (after) {
       setTimeout(() => after(), SWIPE_OUT_DURATION - 80);
     }
+    
     Animated.timing(position, {
       toValue: delta,
       duration: SWIPE_OUT_DURATION,
