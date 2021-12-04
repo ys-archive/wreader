@@ -9,13 +9,13 @@ import {
 const AddStory = ({ style = {}, iconStyle = {}, onPress }) => (
   <TouchableOpacity
     onPress={onPress}
-    style={[{ position: 'absolute', right: '5%', bottom: '3%' }, style]}
+    style={[{ position: 'absolute', right: '4%', bottom: '5%', zIndex: 15, }, style]}
   >
     <Image
       style={[
         {
-          width: Platform.OS === 'android' ? wp('24%') : wp('25%'),
-          height: hp('12%'),
+          maxWidth: Platform.OS === 'android' ? wp('24%') : wp('25%'),
+          maxHeight: hp('11.5%'),
         },
         iconStyle,
       ]}

@@ -61,6 +61,7 @@ const SignupInput = ({
             maxLength={35}
             style={{
               marginHorizontal: 0,
+              marginLeft: '5%',
               ...Platform.select({ android: { marginVertical: 0 } }),
               minWidth: "96.7%",
               maxWidth: "96.7%",
@@ -89,6 +90,7 @@ const SignupInput = ({
           placeholder="PASSWORD"
           style={{
             marginHorizontal: 0,
+            marginLeft: '5%',
             ...Platform.select({ android: { marginVertical: 0 } }),
             minWidth: "96.7%",
             maxWidth: "96.7%",
@@ -110,6 +112,7 @@ const SignupInput = ({
             placeholder="REPEAT THE PASSWORD"
             style={{
               marginHorizontal: 0,
+              marginLeft: '5%',
               ...Platform.select({ android: { marginVertical: 0 } }),
               minWidth: "96.7%",
               maxWidth: "96.7%",

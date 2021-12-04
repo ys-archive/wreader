@@ -121,11 +121,9 @@ const s = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: "#000",
 
-    padding: 0,
-    margin: 0,
     marginTop: "15%",
-    marginBottom: hp("4%"),
-    paddingLeft: 0,
+    // marginBottom: hp("4%"),
+    // paddingLeft: 0,
 
     fontSize: 28,
     fontWeight: "200",
@@ -143,8 +141,6 @@ const s = StyleSheet.create({
   imageIcon: {
     color: colors.light.ivory1,
     position: "relative",
-    right: 1,
-    bottom: -7,
-    // marginRight: 150,
+    right: -10,  
   },
 })

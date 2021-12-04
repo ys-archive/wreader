@@ -71,7 +71,7 @@ const WriteCardForm = ({
   const { sentence } = values
 
   return (
-    <>
+    <View>
       <View style={s.textInputSection}>
         <TextInput
           style={s.input}
@@ -107,7 +107,7 @@ const WriteCardForm = ({
           SAVE
         </Button>
       </View>
-    </>
+    </View>
   )
 }
 
@@ -119,7 +119,6 @@ const s = StyleSheet.create({
     maxHeight: Platform.OS === "ios" ? wp("110%") : wp("90%"),
   },
   input: {
-    borderBottomWidth: 0.3,
     borderColor: "#000",
 
     minWidth: "100%",
@@ -138,28 +137,25 @@ const s = StyleSheet.create({
   },
 
   bottomSection: {
-    maxWidth: "120%",
-    minWidth: "120%",
+    // marginTop: "30%",
 
-    // marginTop: hp('50%'),
     flexDirection: "row",
-    // justifyContent: 'center',
-    // justifyContent: 'space-around',
+    justifyContent: "space-between",
     alignItems: "center",
-    // backgroundColor: 'rgba(255, 255, 255, 0.6)',
   },
 
   summitButton: {
     backgroundColor: colors.light.ivory5,
     paddingVertical: 11,
-    paddingHorizontal: 15,
-    position: "relative",
-    right: -135,
-    bottom: -10,
+    // paddingHorizontal: 15,
+    // position: "relative",
+    // right: -135,
+    // bottom: -5,
     borderRadius: StyleDefine.borderRadiusInside - 6,
   },
   summitInsideText: {
     fontSize: 16,
+    paddingHorizontal: 20,
     color: colors.light.ivory1,
   },
 })
