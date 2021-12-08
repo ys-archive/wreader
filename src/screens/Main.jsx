@@ -21,6 +21,7 @@ import SortIndicator from "./cards/SortIndicator"
 
 import { useStoreState } from "easy-peasy"
 import { selSwiper } from "../store/selectors"
+import ArrowReader from "./reader/ArrowReader"
 
 const Main = () => {
   const nav = useNavigation()
@@ -33,12 +34,14 @@ const Main = () => {
   const onPressMenuIcon = () => nav.openDrawer()
 
   return (
-    <View style={{
-      minWidth: wp('100%'),
-      maxWidth: wp('100%'),
-      minHeight: hp('100%'),
-      maxHeight: hp('100%')
-    }}>
+    <View
+      style={{
+        minWidth: wp("100%"),
+        maxWidth: wp("100%"),
+        minHeight: hp("100%"),
+        maxHeight: hp("100%"),
+      }}
+    >
       <Logo onPress={returnToMain} />
       {depth !== 0 && <Sort onPress={onPressSortIcon} />}
       {isSorterOpen && <SortIndicator />}
@@ -46,9 +49,12 @@ const Main = () => {
 
       {/* <EventModal /> */}
 
-      <Reader>
+      {/* <Reader>
         <CardsRenderer />
-      </Reader>
+      </Reader> */}
+      <ArrowReader>
+        <CardsRenderer />
+      </ArrowReader>
     </View>
   )
 }

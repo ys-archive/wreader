@@ -10,7 +10,6 @@ import {
   renderWithDepth2,
   renderWithDepth3,
 } from "./CardIndicator.render"
-import { useForceUpdate } from "../../hooks/unused/useForceUpdate"
 
 const initStates = () => {
   const coords = useStoreState(selSwiper.coords)

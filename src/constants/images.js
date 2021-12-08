@@ -1,80 +1,80 @@
 // dummy
-export const dummyProfile = require('!images/dummy-image.jpg');
+export const dummyProfile = require("!images/dummy-image.jpg")
 
 // Background
-export const romanceCategoryBG = require('!images/romance-category-bg.png');
-export const fantasyCategoryBG = require('!images/fantasy-category-bg.png');
-export const thrillerCategoryBG = require('!images/thriller-category-bg.png');
-export const adultCategoryBG = require('!images/adult-category-bg.png');
-export const crimeCategoryBG = require('!images/crime-category-bg.png');
-export const bg = require('!images/bg.png');
+export const romanceCategoryBG = require("!images/romance-category-bg.png")
+export const fantasyCategoryBG = require("!images/fantasy-category-bg.png")
+export const thrillerCategoryBG = require("!images/thriller-category-bg.png")
+export const adultCategoryBG = require("!images/adult-category-bg.png")
+export const crimeCategoryBG = require("!images/crime-category-bg.png")
+export const bg = require("!images/bg.png")
 
 // layout
-export const signupCheckboxOutline = require('!images/signup-checkbox-outline.png');
+export const signupCheckboxOutline = require("!images/signup-checkbox-outline.png")
 
 // icon
-export const logoIcon = require('!images/app-logo-icon.png');
-export const menuIcon = require('!images/menu-icon.png');
-export const likeIcon = require('!images/like-icon.png');
-export const viewCountIcon = require('!images/view-count-icon.png');
-export const replyIcon = require('!images/reply-icon.png');
-export const addImageIcon = require('!images/add-image-icon.png');
-export const addStoryIcon = require('!images/plus-button.png');
-export const cancelIcon = require('!images/cancel-icon.png');
-export const commentBox = require('!images/comment-box.png');
-export const commentBox2 = require('!images/comment-box2.png');
-export const drawerCancelIcon = require('!images/drawer-cancel-icon.png');
-export const editIcon = require('!images/edit-icon.png');
-export const edit2Icon = require('!images/edit2-icon.png');
-export const emailIcon = require('!images/email-icon.png');
-export const filterBox = require('!images/filter-box.png');
-export const facebookIcon = require('!images/facebook-icon.png');
-export const instagramIcon = require('!images/instagram-icon.png');
-export const lockIcon = require('!images/lock-icon.png');
-export const meIcon = require('!images/me-icon.png');
-export const passwordLockIcon = require('!images/password-lock-icon.png');
-export const personIcon = require('!images/person-icon.png');
-export const person2Icon = require('!images/person2-icon.png');
-export const photoIcon = require('!images/photo-icon.png');
-export const sortIcon = require('!images/sort-icon.png');
-export const unlikeIcon = require('!images/unlike-icon.png');
-export const notlikeIcon = require('!images/not-like.png');
-export const wreaderCircleLogo = require('!images/wreader-circle-logo.png');
-export const plusIcon = require('!images/plus.png');
+export const logoIcon = require("!images/app-logo-icon.png")
+export const menuIcon = require("!images/menu-icon.png")
+export const likeIcon = require("!images/like-icon.png")
+export const viewCountIcon = require("!images/view-count-icon.png")
+export const replyIcon = require("!images/reply-icon.png")
+export const addImageIcon = require("!images/add-image-icon.png")
+export const addStoryIcon = require("!images/plus-button.png")
+export const cancelIcon = require("!images/cancel-icon.png")
+export const commentBox = require("!images/comment-box.png")
+export const commentBox2 = require("!images/comment-box2.png")
+export const drawerCancelIcon = require("!images/drawer-cancel-icon.png")
+export const editIcon = require("!images/edit-icon.png")
+export const edit2Icon = require("!images/edit2-icon.png")
+export const emailIcon = require("!images/email-icon.png")
+export const filterBox = require("!images/filter-box.png")
+export const facebookIcon = require("!images/facebook-icon.png")
+export const instagramIcon = require("!images/instagram-icon.png")
+export const lockIcon = require("!images/lock-icon.png")
+export const meIcon = require("!images/me-icon.png")
+export const passwordLockIcon = require("!images/password-lock-icon.png")
+export const personIcon = require("!images/person-icon.png")
+export const person2Icon = require("!images/person2-icon.png")
+export const photoIcon = require("!images/photo-icon.png")
+export const sortIcon = require("!images/sort-icon.png")
+export const unlikeIcon = require("!images/unlike-icon.png")
+export const notlikeIcon = require("!images/not-like.png")
+export const wreaderCircleLogo = require("!images/wreader-circle-logo.png")
+export const plusIcon = require("!images/plus.png")
 
 // arrow
-export const leftArrow = require('!images/left-arrow.png');
-export const rightArrow = require('!images/right-arrow.png');
-export const upArrow = require('!images/up-arrow.png');
-export const downArrow = require('!images/down-arrow.png');
+export const leftArrow = require("!images/left-arrow.png")
+export const rightArrow = require("!images/right-arrow.png")
+export const upArrow = require("!images/up-arrow.png")
+export const downArrow = require("!images/down-arrow.png")
 
 export const makeCategoryBGImagePath = title => {
-  if (!title) return '';
+  if (!title) return ""
 
-  const id = title.toLowerCase().trim();
-  if (id === 'romance') {
-    return romanceCategoryBG;
+  const id = title.toLowerCase().trim()
+  if (id === "romance") {
+    return romanceCategoryBG
   }
 
-  if (id === 'crime') {
-    return crimeCategoryBG;
+  if (id === "crime") {
+    return crimeCategoryBG
   }
 
-  if (id === 'fantasy') {
-    return fantasyCategoryBG;
+  if (id === "fantasy") {
+    return fantasyCategoryBG
   }
 
-  if (id === 'thriller') {
-    return thrillerCategoryBG;
+  if (id === "thriller") {
+    return thrillerCategoryBG
   }
 
-  if (id === 'adult') {
-    return adultCategoryBG;
+  if (id === "adult") {
+    return adultCategoryBG
   }
 
   // default 는 fantasy category bg
-  return fantasyCategoryBG;
-};
+  return fantasyCategoryBG
+}
 
 // import {
 //   getImagePathByScreenResolution,

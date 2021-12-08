@@ -54,7 +54,6 @@ export const renderWithDepth0 = (coords, maxCoords) => {
 
 export const renderWithDepth1 = (coords, maxCoords, chapters) => {
   const { d0, d1 } = coords
-  const { d1: md1, d2: md2 } = maxCoords
 
   const hasCategory = d1 === 0
   const hasPrvChapter = d1 !== 0
@@ -75,7 +74,7 @@ export const renderWithDepth1 = (coords, maxCoords, chapters) => {
 
 export const renderWithDepth2 = (coords, maxCoords, chapters) => {
   const { d0, d1, d2 } = coords
-  const { d2: md2, d3: md3 } = maxCoords
+  const { d2: md2 } = maxCoords
 
   const hasChapter = d2 === 0
   const hasPrvUserChapter = d2 !== 0
@@ -95,7 +94,7 @@ export const renderWithDepth2 = (coords, maxCoords, chapters) => {
 }
 
 export const renderWithDepth3 = (coords, maxCoords) => {
-  const { d0, d1, d2, d3 } = coords
+  const { d3 } = coords
   const { d3: md3 } = maxCoords
 
   const hasUserChapter = d3 === 0
