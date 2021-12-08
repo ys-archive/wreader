@@ -47,10 +47,10 @@ const ArrowReader = ({ children }) => {
   let IndicatorJSX = null
 
   const onPresseds = {
-    top: swipeUp,
-    right: swipeRight,
-    bottom: swipeDown,
-    left: swipeLeft,
+    bottom: swipeUp,
+    left: swipeRight,
+    top: swipeDown,
+    right: swipeLeft,
   }
 
   switch (depth) {
@@ -77,10 +77,10 @@ const ArrowReader = ({ children }) => {
   }
 
   return (
-    <View>
+    <>
       {IndicatorJSX}
       <Animated.View style={[getStyle()]}>{children}</Animated.View>
-    </View>
+    </>
   )
 }
 

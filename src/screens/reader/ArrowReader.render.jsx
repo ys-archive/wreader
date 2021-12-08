@@ -6,57 +6,68 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen"
 
-const indicatorPos = {
-  top: { right: wp("50%"), top: 0 },
-  left: { top: hp("50%"), left: 0 },
-  bottom: { right: wp("50%"), bottom: 0 },
-  right: { top: hp("50%"), right: 0 },
-}
-
 const MakeArrows = (dir, callbacks) => (
   <>
     {Object.entries(dir).map((d, i) => {
-      console.log(d, `count: ${i}\n`)
+      // console.log(d, `count: ${i}\n`)
       const [direction, has] = d
 
       if (has) {
+        console.log(`direction ---> ${direction}`)
+        console.log("------------------------------------------------")
         let arrowName = undefined
+        let style = undefined
 
         switch (direction) {
           case "top":
             arrowName = `arrowup`
+            style = {
+              position: "absolute",
+              alignSelf: "center",
+              top: hp("4%"),
+            }
             break
 
           case "bottom":
             arrowName = `arrowdown`
+            style = {
+              position: "absolute",
+              top: hp("90%"),
+              alignSelf: "center",
+            }
             break
 
           case "left":
             arrowName = `arrowleft`
+            style = {
+              position: "absolute",
+              top: hp("45%"),
+              right: wp("80%"),
+            }
             break
 
           case "right":
             arrowName = `arrowright`
+            style = {
+              position: "absolute",
+              top: hp("45%"),
+              right: 0,
+            }
             break
         }
 
-        // console.log(`arrowName: ${arrowName}\n`)
+        // console.log(style)
 
         return (
           <TouchableOpacity
-            key={i}
-            onPress={callbacks[direction]}
+            key={`${direction}-${i}`}
+            onPress={e => {
+              console.log(`${direction} arrow is pressed!`)
+              callbacks[direction]()(direction)
+            }}
             style={{ zIndex: 500 }}
           >
-            <AntDesign
-              name={arrowName}
-              style={{
-                position: "absolute",
-                ...indicatorPos[direction],
-              }}
-              size={50}
-              color='#000'
-            />
+            <AntDesign name={arrowName} style={style} size={75} color='#000' />
           </TouchableOpacity>
         )
       }
@@ -97,7 +108,7 @@ export const renderWithDepth1Arrow = (
 
   return MakeArrows(
     {
-      left: hasCategory ?? hasPrvChapter,
+      left: hasCategory ? hasCategory : hasPrvChapter,
       right: hasNextChapter,
       bottom: hasUserChapter,
     },
@@ -121,7 +132,7 @@ export const renderWithDepth2Arrow = (
 
   return MakeArrows(
     {
-      top: hasChapter ?? hasPrvUserChapter,
+      top: hasChapter ? hasChapter : hasPrvUserChapter,
       right: hasUserNext,
       bottom: hasNextUserChapter,
     },
@@ -139,7 +150,7 @@ export const renderWithDepth3Arrow = (coords, maxCoords, callbacks) => {
 
   return MakeArrows(
     {
-      left: hasUserChapter ?? hasPrvUserNext,
+      left: hasUserChapter ? hasUserChapter : hasPrvUserNext,
       right: hasNextUserNext,
     },
     callbacks,

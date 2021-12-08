@@ -8,11 +8,11 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const SWIPE_OUT_DURATION = 350;
 
 export const useSwipeGesture = () => {
-  const setSwiping = useStoreActions(actSwiper.setSwiping);
+  // const setSwiping = useStoreActions(actSwiper.setSwiping);
   let position = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current;
 
   const swipe = (dir, after) => {
-    setSwiping(true);
+    // setSwiping(true);
 
     const delta = { x: 0, y: 0 };
     switch (dir) {
@@ -51,7 +51,7 @@ export const useSwipeGesture = () => {
   };
 
   const onSwipeComplete = dir => {
-    setSwiping(false);
+    // setSwiping(false);
     position.setValue({ x: 0, y: 0 });
     LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
   };
