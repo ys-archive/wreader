@@ -1,7 +1,8 @@
 import React, { useMemo } from "react"
 import { View, TouchableOpacity } from "react-native"
 
-import { AntDesign } from "@expo/vector-icons"
+import { MaterialIcons } from "@expo/vector-icons"
+import { colors } from "../../constants"
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -17,7 +18,7 @@ const MakeArrows = (dir, callbacks, clicker) => {
 
       switch (direction) {
         case "top":
-          arrowName = `arrowup`
+          arrowName = `keyboard-arrow-up`
           style = {
             position: "absolute",
             alignSelf: "center",
@@ -26,7 +27,7 @@ const MakeArrows = (dir, callbacks, clicker) => {
           break
 
         case "bottom":
-          arrowName = `arrowdown`
+          arrowName = `keyboard-arrow-down`
           style = {
             position: "absolute",
             top: hp("90%"),
@@ -35,7 +36,7 @@ const MakeArrows = (dir, callbacks, clicker) => {
           break
 
         case "left":
-          arrowName = `arrowleft`
+          arrowName = `keyboard-arrow-left`
           style = {
             position: "absolute",
             top: hp("45%"),
@@ -44,7 +45,7 @@ const MakeArrows = (dir, callbacks, clicker) => {
           break
 
         case "right":
-          arrowName = `arrowright`
+          arrowName = `keyboard-arrow-right`
           style = {
             position: "absolute",
             top: hp("45%"),
@@ -62,7 +63,8 @@ const MakeArrows = (dir, callbacks, clicker) => {
               clicker(true)
             }}
           >
-            <AntDesign name={arrowName} size={75} color='#36332F' />
+            {/* colors.light.ivory2 */}
+            <MaterialIcons name={arrowName} size={75} color='#36332F' />
           </TouchableOpacity>
         </View>
       )
