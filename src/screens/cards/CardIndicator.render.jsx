@@ -17,8 +17,6 @@ const MakeIndicators = (dir, coords) => {
     const [has, isCategory] = set
 
     if (has) {
-      console.log(d0)
-
       let order = d0
 
       switch (direction) {
@@ -56,7 +54,6 @@ export const renderWithDepth0 = (coords, maxCoords) => {
   const hasNextCategory = d0 < md0 - 1
   const hasChapter = md1 > 0
 
-  console.log(hasPrvCategory, hasNextCategory)
 
   return MakeIndicators(
     {

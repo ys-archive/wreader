@@ -7,14 +7,11 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen"
 
-const MakeArrows = (dir, callbacks) => {
+const MakeArrows = (dir, callbacks, clicker) => {
   return Object.entries(dir).map((d, i) => {
-    // console.log(d, `count: ${i}\n`)
     const [direction, has] = d
 
     if (has) {
-      // console.log(`direction ---> ${direction}`)
-      // console.log("------------------------------------------------")
       let arrowName = undefined
       let style = undefined
 
@@ -62,6 +59,7 @@ const MakeArrows = (dir, callbacks) => {
             onPress={e => {
               console.log(`${direction} arrow is pressed!`)
               callbacks[direction]()(direction)
+              clicker(true)
             }}
           >
             <AntDesign name={arrowName} size={75} color='#36332F' />
@@ -72,7 +70,12 @@ const MakeArrows = (dir, callbacks) => {
   })
 }
 
-export const renderWithDepth0Arrow = (coords, maxCoords, callbacks) => {
+export const renderWithDepth0Arrow = (
+  coords,
+  maxCoords,
+  callbacks,
+  clicker,
+) => {
   const { d0 } = coords
   const { d0: md0, d1: md1 } = maxCoords
 
@@ -87,15 +90,11 @@ export const renderWithDepth0Arrow = (coords, maxCoords, callbacks) => {
       right: hasChapter,
     },
     callbacks,
+    clicker,
   )
 }
 
-export const renderWithDepth1Arrow = (
-  coords,
-  maxCoords,
-  chapters,
-  callbacks,
-) => {
+export const renderWithDepth1Arrow = (coords, chapters, callbacks, clicker) => {
   const { d0, d1 } = coords
 
   const hasCategory = d1 === 0
@@ -110,6 +109,7 @@ export const renderWithDepth1Arrow = (
       bottom: hasUserChapter,
     },
     callbacks,
+    clicker,
   )
 }
 
@@ -118,6 +118,7 @@ export const renderWithDepth2Arrow = (
   maxCoords,
   chapters,
   callbacks,
+  clicker,
 ) => {
   const { d0, d1, d2 } = coords
   const { d2: md2 } = maxCoords
@@ -134,10 +135,16 @@ export const renderWithDepth2Arrow = (
       bottom: hasNextUserChapter,
     },
     callbacks,
+    clicker,
   )
 }
 
-export const renderWithDepth3Arrow = (coords, maxCoords, callbacks) => {
+export const renderWithDepth3Arrow = (
+  coords,
+  maxCoords,
+  callbacks,
+  clicker,
+) => {
   const { d0, d1, d2, d3 } = coords
   const { d3: md3 } = maxCoords
 
@@ -151,5 +158,6 @@ export const renderWithDepth3Arrow = (coords, maxCoords, callbacks) => {
       right: hasNextUserNext,
     },
     callbacks,
+    clicker,
   )
 }

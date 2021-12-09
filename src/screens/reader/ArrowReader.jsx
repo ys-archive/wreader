@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Animated, View, Platform } from "react-native"
 import { useStoreState } from "easy-peasy"
 import { selSwiper, selData } from "../../store/selectors"
@@ -18,6 +18,7 @@ import {
   renderWithDepth2Arrow,
   renderWithDepth3Arrow,
 } from "./ArrowReader.render"
+import { useEffect } from "react"
 
 const initStates = () => {
   const coords = useStoreState(selSwiper.coords)
@@ -37,12 +38,29 @@ const initStates = () => {
 
 const ArrowReader = ({ children }) => {
   const { swipe, getStyle } = useSwipeGesture()
+  const [isArrowClicked, clickArrow] = useState(false)
+
   const { coords, maxCoords, depth, chapters, isLoaded } = initStates()
 
   const swipeLeft = useSwipeLeft(swipe)
   const swipeRight = useSwipeRight(swipe)
   const swipeUp = useSwipeUp(swipe)
   const swipeDown = useSwipeDown(swipe)
+
+  useEffect(() => {
+    let timer = null
+    if (clickArrow) {
+      timer = setTimeout(() => {
+        clickArrow(false)
+      }, 1000)
+    }
+
+    return () => {
+      if (timer) {
+        clearTimeout(timer)
+      }
+    }
+  }, [isArrowClicked === true])
 
   let IndicatorJSX = null
 
@@ -56,29 +74,46 @@ const ArrowReader = ({ children }) => {
   switch (depth) {
     case DEPTH_NAME.CATEGORY:
       IndicatorJSX =
-        isLoaded.d1 && renderWithDepth0Arrow(coords, maxCoords, onPresseds)
+        isLoaded.d1 &&
+        renderWithDepth0Arrow(coords, maxCoords, onPresseds, clickArrow)
       break
 
     case DEPTH_NAME.CHAPTER:
       IndicatorJSX =
         isLoaded.d2 &&
-        renderWithDepth1Arrow(coords, maxCoords, chapters, onPresseds)
+        renderWithDepth1Arrow(
+          coords,
+          chapters,
+          onPresseds,
+          clickArrow,
+        )
       break
 
     case DEPTH_NAME.USER_CHAPTER:
       IndicatorJSX =
         isLoaded.d3 &&
-        renderWithDepth2Arrow(coords, maxCoords, chapters, onPresseds)
+        renderWithDepth2Arrow(
+          coords,
+          maxCoords,
+          chapters,
+          onPresseds,
+          clickArrow,
+        )
       break
 
     case DEPTH_NAME.NEXT:
-      IndicatorJSX = renderWithDepth3Arrow(coords, maxCoords, onPresseds)
+      IndicatorJSX = renderWithDepth3Arrow(
+        coords,
+        maxCoords,
+        onPresseds,
+        clickArrow,
+      )
       break
   }
 
   return (
     <>
-      {IndicatorJSX}
+      {!isArrowClicked && IndicatorJSX}
       <Animated.View style={[getStyle()]}>{children}</Animated.View>
     </>
   )
