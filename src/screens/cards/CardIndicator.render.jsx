@@ -17,11 +17,25 @@ const MakeIndicators = (dir, coords) => {
     const [has, isCategory] = set
 
     if (has) {
+      console.log(d0)
+
+      let order = d0
+
+      switch (direction) {
+        case "top":
+          order = d0 - 1
+          break
+
+        case "bottom":
+          order = d0 + 1
+          break
+      }
+
       return isCategory === 0 ? (
         <CategoryIndicatorCard
           key={i}
           pos={{ position: "absolute", [direction]: indicatorPos[direction] }}
-          order={direction === "top" ? d0 - 1 : d0}
+          order={order}
         />
       ) : (
         <ChapterIndicatorCard
@@ -41,6 +55,8 @@ export const renderWithDepth0 = (coords, maxCoords) => {
   const hasPrvCategory = d0 !== 0 && d0 < md0
   const hasNextCategory = d0 < md0 - 1
   const hasChapter = md1 > 0
+
+  console.log(hasPrvCategory, hasNextCategory)
 
   return MakeIndicators(
     {

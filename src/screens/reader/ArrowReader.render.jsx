@@ -1,79 +1,76 @@
 import React, { useMemo } from "react"
-import { TouchableOpacity } from "react-native"
+import { View, TouchableOpacity } from "react-native"
+
 import { AntDesign } from "@expo/vector-icons"
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen"
 
-const MakeArrows = (dir, callbacks) => (
-  <>
-    {Object.entries(dir).map((d, i) => {
-      // console.log(d, `count: ${i}\n`)
-      const [direction, has] = d
+const MakeArrows = (dir, callbacks) => {
+  return Object.entries(dir).map((d, i) => {
+    // console.log(d, `count: ${i}\n`)
+    const [direction, has] = d
 
-      if (has) {
-        console.log(`direction ---> ${direction}`)
-        console.log("------------------------------------------------")
-        let arrowName = undefined
-        let style = undefined
+    if (has) {
+      // console.log(`direction ---> ${direction}`)
+      // console.log("------------------------------------------------")
+      let arrowName = undefined
+      let style = undefined
 
-        switch (direction) {
-          case "top":
-            arrowName = `arrowup`
-            style = {
-              position: "absolute",
-              alignSelf: "center",
-              top: hp("4%"),
-            }
-            break
+      switch (direction) {
+        case "top":
+          arrowName = `arrowup`
+          style = {
+            position: "absolute",
+            alignSelf: "center",
+            top: hp("4%"),
+          }
+          break
 
-          case "bottom":
-            arrowName = `arrowdown`
-            style = {
-              position: "absolute",
-              top: hp("90%"),
-              alignSelf: "center",
-            }
-            break
+        case "bottom":
+          arrowName = `arrowdown`
+          style = {
+            position: "absolute",
+            top: hp("90%"),
+            alignSelf: "center",
+          }
+          break
 
-          case "left":
-            arrowName = `arrowleft`
-            style = {
-              position: "absolute",
-              top: hp("45%"),
-              right: wp("80%"),
-            }
-            break
+        case "left":
+          arrowName = `arrowleft`
+          style = {
+            position: "absolute",
+            top: hp("45%"),
+            right: wp("80%"),
+          }
+          break
 
-          case "right":
-            arrowName = `arrowright`
-            style = {
-              position: "absolute",
-              top: hp("45%"),
-              right: 0,
-            }
-            break
-        }
+        case "right":
+          arrowName = `arrowright`
+          style = {
+            position: "absolute",
+            top: hp("45%"),
+            right: 0,
+          }
+          break
+      }
 
-        // console.log(style)
-
-        return (
+      return (
+        <View style={{ ...style, zIndex: 10 }} key={`${direction}-${i}`}>
           <TouchableOpacity
-            key={`${direction}-${i}`}
             onPress={e => {
               console.log(`${direction} arrow is pressed!`)
               callbacks[direction]()(direction)
             }}
-            style={{ zIndex: 500 }}
           >
-            <AntDesign name={arrowName} style={style} size={75} color='#000' />
+            <AntDesign name={arrowName} size={75} color='#36332F' />
           </TouchableOpacity>
-        )
-      }
-    })}
-  </>
-)
+        </View>
+      )
+    }
+  })
+}
 
 export const renderWithDepth0Arrow = (coords, maxCoords, callbacks) => {
   const { d0 } = coords
