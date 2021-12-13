@@ -1,76 +1,76 @@
-import React, { useMemo } from "react"
-import { View, TouchableOpacity } from "react-native"
+import React, { useMemo } from "react";
+import { View, TouchableOpacity } from "react-native";
 
-import { MaterialIcons } from "@expo/vector-icons"
-import { colors } from "../../constants"
+import { MaterialIcons } from "@expo/vector-icons";
+import { colors } from "../../constants";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from "react-native-responsive-screen"
+} from "react-native-responsive-screen";
 
 const MakeArrows = (dir, callbacks, clicker) => {
   return Object.entries(dir).map((d, i) => {
-    const [direction, has] = d
+    const [direction, has] = d;
 
     if (has) {
-      let arrowName = undefined
-      let style = undefined
+      let arrowName = undefined;
+      let style = undefined;
 
       switch (direction) {
         case "top":
-          arrowName = `keyboard-arrow-up`
+          arrowName = `keyboard-arrow-up`;
           style = {
             position: "absolute",
             alignSelf: "center",
             top: hp("4%"),
-          }
-          break
+          };
+          break;
 
         case "bottom":
-          arrowName = `keyboard-arrow-down`
+          arrowName = `keyboard-arrow-down`;
           style = {
             position: "absolute",
             top: hp("90%"),
             alignSelf: "center",
-          }
-          break
+          };
+          break;
 
         case "left":
-          arrowName = `keyboard-arrow-left`
+          arrowName = `keyboard-arrow-left`;
           style = {
             position: "absolute",
             top: hp("45%"),
             right: wp("80%"),
-          }
-          break
+          };
+          break;
 
         case "right":
-          arrowName = `keyboard-arrow-right`
+          arrowName = `keyboard-arrow-right`;
           style = {
             position: "absolute",
             top: hp("45%"),
             right: 0,
-          }
-          break
+          };
+          break;
       }
 
       return (
         <View style={{ ...style, zIndex: 10 }} key={`${direction}-${i}`}>
           <TouchableOpacity
             onPress={e => {
-              console.log(`${direction} arrow is pressed!`)
-              callbacks[direction]()(direction)
-              clicker(true)
+              console.log(`${direction} arrow is pressed!`);
+              callbacks[direction]()(direction);
+              clicker(true);
             }}
           >
             {/* colors.light.ivory2 */}
             <MaterialIcons name={arrowName} size={75} color='#36332F' />
           </TouchableOpacity>
         </View>
-      )
+      );
     }
-  })
-}
+  });
+};
 
 export const renderWithDepth0Arrow = (
   coords,
@@ -78,12 +78,12 @@ export const renderWithDepth0Arrow = (
   callbacks,
   clicker,
 ) => {
-  const { d0 } = coords
-  const { d0: md0, d1: md1 } = maxCoords
+  const { d0 } = coords;
+  const { d0: md0, d1: md1 } = maxCoords;
 
-  const hasPrvCategory = d0 !== 0 && d0 < md0
-  const hasNextCategory = d0 < md0 - 1
-  const hasChapter = md1 > 0
+  const hasPrvCategory = d0 !== 0 && d0 < md0;
+  const hasNextCategory = d0 < md0 - 1;
+  const hasChapter = md1 > 0;
 
   return MakeArrows(
     {
@@ -93,28 +93,36 @@ export const renderWithDepth0Arrow = (
     },
     callbacks,
     clicker,
-  )
-}
+  );
+};
 
-export const renderWithDepth1Arrow = (coords, chapters, callbacks, clicker) => {
-  const { d0, d1 } = coords
+export const renderWithDepth1Arrow = (
+  coords,
+  maxCoords,
+  chapters,
+  callbacks,
+  clicker,
+) => {
+  const { d0, d1 } = coords;
+  const { d1: md1 } = maxCoords;
 
-  const hasCategory = d1 === 0
-  const hasPrvChapter = d1 !== 0
-  const hasNextChapter = chapters[d0][d1 + 1] !== undefined
-  const hasUserChapter = chapters[d0][d1].child.length > 0
+  const hasCategory = d1 === 0;
+  const hasPrvChapter = d1 !== 0;
+  // const hasNextChapter = chapters[d0][d1 + 1] !== undefined;
+  const isNotYetMaxD1 = d1 < md1;
+  const hasUserChapter = d1 < md1;
 
   return MakeArrows(
     {
       left: hasCategory,
       top: hasPrvChapter,
-      bottom: hasNextChapter,
+      bottom: isNotYetMaxD1,
       right: hasUserChapter,
     },
     callbacks,
     clicker,
-  )
-}
+  );
+};
 
 export const renderWithDepth2Arrow = (
   coords,
@@ -123,24 +131,25 @@ export const renderWithDepth2Arrow = (
   callbacks,
   clicker,
 ) => {
-  const { d0, d1, d2 } = coords
-  const { d2: md2 } = maxCoords
+  const { d0, d1, d2 } = coords;
+  const { d2: md2 } = maxCoords;
 
-  const hasChapter = d2 === 0
-  const hasPrvUserChapter = d2 !== 0
-  const hasNextUserChapter = d2 < md2 - 1
-  const hasUserNext = chapters[d0][d1].child[d2].child.length > 0
+  const hasChapter = d2 === 0;
+  const hasPrvUserChapter = d2 !== 0;
+  const hasNextUserChapter = d2 < md2;
+  // const hasUserNext = chapters[d0][d1].child[d2].child.length > 0;
+  const hasUserNext = d2 < md2;
 
   return MakeArrows(
     {
       left: hasChapter ? hasChapter : hasPrvUserChapter,
-      right: hasUserNext,
-      bottom: hasNextUserChapter,
+      right: hasNextUserChapter,
+      bottom: hasUserNext,
     },
     callbacks,
     clicker,
-  )
-}
+  );
+};
 
 export const renderWithDepth3Arrow = (
   coords,
@@ -148,12 +157,12 @@ export const renderWithDepth3Arrow = (
   callbacks,
   clicker,
 ) => {
-  const { d0, d1, d2, d3 } = coords
-  const { d3: md3 } = maxCoords
+  const { d0, d1, d2, d3 } = coords;
+  const { d3: md3 } = maxCoords;
 
-  const hasUserChapter = d3 === 0
-  const hasPrvUserNext = d3 !== 0
-  const hasNextUserNext = d3 < md3 - 1
+  const hasUserChapter = d3 === 0;
+  const hasPrvUserNext = d3 !== 0;
+  const hasNextUserNext = d3 < md3;
 
   return MakeArrows(
     {
@@ -162,5 +171,5 @@ export const renderWithDepth3Arrow = (
     },
     callbacks,
     clicker,
-  )
-}
+  );
+};

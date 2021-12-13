@@ -83,6 +83,7 @@ const ArrowReader = ({ children }) => {
         isLoaded.d2 &&
         renderWithDepth1Arrow(
           coords,
+          maxCoords,
           chapters,
           onPresseds,
           clickArrow,

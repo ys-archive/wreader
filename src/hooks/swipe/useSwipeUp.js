@@ -1,8 +1,8 @@
-import { DEPTH_NAME } from "../../store/reducers/swiper.depth"
-import { Alert } from "../../components/alert"
-import { useSwipeStates } from "./useSwipeStates"
-import { useNavigation } from "@react-navigation/native"
-import * as ScreenNames from "../../navigators/ScreenNames"
+import { DEPTH_NAME } from "../../store/reducers/swiper.depth";
+import { Alert } from "../../components/alert";
+import { useSwipeStates } from "./useSwipeStates";
+import { useNavigation } from "@react-navigation/native";
+import * as ScreenNames from "../../navigators/ScreenNames";
 
 export const useSwipeUp = swipe => {
   const {
@@ -23,11 +23,11 @@ export const useSwipeUp = swipe => {
     setMaxCoords,
     resetTempBlob,
     resetCard,
-  } = useSwipeStates()
+  } = useSwipeStates();
 
-  const nav = useNavigation()
+  const nav = useNavigation();
 
-  if (!isLoaded) return null
+  if (!isLoaded) return null;
 
   return () => {
     switch (depth) {
@@ -40,36 +40,33 @@ export const useSwipeUp = swipe => {
                 "Go Previous Category",
                 () =>
                   swipe("down", () => {
-                    console.log("마지막 카테고리!, 이전 카드로 돌아감!")
-                    decreaseCoords("d0")
+                    console.log("마지막 카테고리!, 이전 카드로 돌아감!");
+                    decreaseCoords("d0");
                   }),
-              )
+              );
             } else {
               console.log(
                 "마지막 카테고리!, 첫 카테고리라 이전으로 돌아가진 않음",
-              )
+              );
             }
-            return
+            return;
           }
 
           swipe("up", () => {
-            increaseCoords("d0")
-            // setMaxCoords({ d1: chapters });
-            setMaxCoords({ d1: categories[coords.d0].maxLength })
-            if (coords.d0 < 2) {
-              updateHasNew({ d2: chapters })
-            }
-          })
-        }
+            increaseCoords("d0");
+            setMaxCoords({ d1: categories[coords.d0].maxLength });
+            updateHasNew({ d2: chapters });
+          });
+        };
 
       case DEPTH_NAME.CHAPTER:
         return state => {
           if (coords.d1 === maxCoords.d1 - 1 && coords.d1 > 0) {
             swipe("down", () => {
-              console.log("마지막 챕터!, 이전 챕터로 돌아감")
-              decreaseCoords("d1")
-            })
-            return
+              console.log("마지막 챕터!, 이전 챕터로 돌아감");
+              decreaseCoords("d1");
+            });
+            return;
           }
 
           if (
@@ -79,140 +76,92 @@ export const useSwipeUp = swipe => {
             swipe("up", () => {
               console.log(
                 "마지막 챕터!, 더이상 다음 챕터가 없어서 새 챕터 작성!",
-              )
-              resetTempBlob()
-              resetCard()
+              );
+              resetTempBlob();
+              resetCard();
               nav.navigate(ScreenNames.MainWriteCard, {
                 categoryTitle: categories[coords.d0].title,
                 categoryId: coords.d0,
                 chapterId: 0,
-                order: coords.d1 + 2,
+                // order: coords.d1 + 2,
+                order: 1,
                 depth: DEPTH_NAME.CHAPTER,
-              })
-            })
-            return
+              });
+            });
+            return;
           }
 
           swipe("up", () => {
-            increaseCoords("d1")
-            updateHasNew({ d2: true })
-            setMaxCoords({ d2: chapters })
-          })
-
-          // return state => {
-          //   // 현재 카테고리의 현재 챕터의 유저 챕터
-          //   if (chapters[coords.d0][coords.d1].child.length === 0) {
-          //     resetCard()
-          //     nav.navigate(ScreenNames.MainWriteCard, {
-          //       categoryTitle: categories[coords.d0].title,
-          //       categoryId: coords.d0,
-          //       chapterId: +chapters[coords.d0][coords.d1].deck.id,
-          //       order: coords.d1 + 1,
-          //       depth: DEPTH_NAME.USER_CHAPTER,
-          //     })
-          //     return
-          //   }
-
-          //   swipe("up", () => {
-          //     increaseDepth()
-          //     // console.log("ENTER INTO USER CHAPTERS")
-          //     updateHasNew({ d3: true })
-          //   })
-          // }
-        }
+            increaseCoords("d1");
+            updateHasNew({ d2: true });
+            setMaxCoords({ d2: chapters });
+          });
+        };
 
       case DEPTH_NAME.USER_CHAPTER:
-        // return state => {
-        //   if (maxCoords.d2 !== 0 && coords.d2 === maxCoords.d2 - 1) {
-        //     console.log(
-        //       "해당 챕터의 유저 챕터가 존재 하지 않음. 새로운 카드 작성",
-        //     )
-
-        //     resetCard()
-        //     nav.navigate(ScreenNames.MainWriteCard, {
-        //       categoryTitle: categories[coords.d0].title,
-        //       categoryId: coords.d0,
-        //       chapterId: +chapters[coords.d0][coords.d1].deck.id,
-        //       order: coords.d1 + 1,
-        //       depth: DEPTH_NAME.USER_CHAPTER,
-        //     })
-        //     return
-        //   }
-
-        //   swipe("up", () => {
-        //     increaseCoords("d2")
-        //     updateHasNew({ d3: true })
-        //     setMaxCoords({ d3: chapters })
-        //   })
-        // }
-
         return state => {
           if (
             chapters[coords.d0][coords.d1].child[coords.d2].child.length === 0
           ) {
             console.log(
               "해당 유저챕터의 유저 다음 챕터가 존재 하지 않음. 새로운 카드 작성",
-            )
-            resetTempBlob()
-            resetCard()
+            );
+            resetTempBlob();
+            resetCard();
             nav.navigate(ScreenNames.MainWriteCard, {
               categoryTitle: categories[coords.d0].title,
               categoryId: coords.d0,
               chapterId:
                 +chapters[coords.d0][coords.d1].child[coords.d2].deck.id,
-              order: coords.d3 + 2 + coords.d1,
+              order: coords.d2 + 2,
               depth: DEPTH_NAME.NEXT,
-            })
-            return
+            });
+            return;
           }
 
           swipe("up", () => {
-            increaseDepth()
-            setMaxCoords({ d3: chapters })
-          })
-        }
+            increaseDepth();
+            setMaxCoords({ d3: chapters });
+          });
+        };
 
       case DEPTH_NAME.NEXT:
-        // return state => {
-        //   console.log("유저 다음 카드에서는 위로 스와이프 금지")
-        // }
-
         return state => {
           if (coords.d3 === maxCoords.d1) {
-            console.log("해당 카드가 마지막 챕터입니다!")
-            return
+            console.log("해당 카드가 마지막 챕터입니다!");
+            return;
           }
 
           if (coords.d3 === maxCoords.d3 - 1) {
             if (maxCoords.d3 === 10) {
               swipe("down", () => {
-                console.log("마지막인 유저 다음 챕터!, 이전 챕터로 돌아감")
-                decreaseCoords("d3")
-              })
-              return
+                console.log("마지막인 유저 다음 챕터!, 이전 챕터로 돌아감");
+                decreaseCoords("d3");
+              });
+              return;
             }
 
-            console.log("마지막인 유저 다음 챕터! 새로운 카드 작성")
-            resetTempBlob()
-            resetCard()
+            console.log("마지막인 유저 다음 챕터! 새로운 카드 작성");
+            resetTempBlob();
+            resetCard();
             nav.navigate(ScreenNames.MainWriteCard, {
               categoryTitle: categories[coords.d0].title,
               categoryId: +coords.d0,
               chapterId:
                 +chapters[coords.d0][coords.d1].child[coords.d2].deck.id,
-              order: coords.d3 + 2 + coords.d1,
+              order: coords.d2 + 2,
               depth: DEPTH_NAME.NEXT,
-            })
-            return
+            });
+            return;
           }
 
           swipe("up", () => {
-            increaseCoords("d3")
-          })
-        }
+            increaseCoords("d3");
+          });
+        };
 
       default:
-        throw new Error("depth 는 0~3 사이만 가능 depth: ", depth)
+        throw new Error("depth 는 0~3 사이만 가능 depth: ", depth);
     }
-  }
-}
+  };
+};

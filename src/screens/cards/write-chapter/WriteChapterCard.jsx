@@ -140,7 +140,7 @@ const s = StyleSheet.create({
 
   imageIcon: {
     color: colors.light.ivory1,
-    position: "relative",
-    right: -10,  
+    // position: "relative",
+    // right: -10,  
   },
 })

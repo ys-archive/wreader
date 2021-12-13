@@ -1,36 +1,41 @@
-import React, { useCallback } from "react"
-import { View, Platform } from "react-native"
-import { StyleSheet, TextInput, Button, RenderError } from "../../../components"
+import React, { useCallback } from "react";
+import { View, Platform } from "react-native";
+import {
+  StyleSheet,
+  TextInput,
+  Button,
+  RenderError,
+} from "../../../components";
 
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from "react-native-responsive-screen"
-import { colors } from "#constants"
+} from "react-native-responsive-screen";
+import { colors } from "#constants";
 
-import { useStoreState, useStoreActions } from "easy-peasy"
-import { selAuth } from "../../../store/selectors"
-import { actDataFetch, actData } from "../../../store/actions"
+import { useStoreState, useStoreActions } from "easy-peasy";
+import { selAuth } from "../../../store/selectors";
+import { actDataFetch, actData } from "../../../store/actions";
 
-import { useWriteChapterCardForm } from "./useWriteChapterCardForm"
+import { useWriteChapterCardForm } from "./useWriteChapterCardForm";
 
-import { useNavigation } from "@react-navigation/native"
+import { useNavigation } from "@react-navigation/native";
 
-import { StyleDefine } from "../../../constants"
-import { DEPTH_NAME } from "../../../store/reducers/swiper.depth"
-import { delay } from "../../../utils/time"
+import { StyleDefine } from "../../../constants";
+import { DEPTH_NAME } from "../../../store/reducers/swiper.depth";
+import { delay } from "../../../utils/time";
 
 const initStates = () => {
-  const userId = useStoreState(selAuth.userId)
-  const updateHasNew = useStoreActions(actData.updateHasNew)
-  const fetchOne = useStoreActions(actDataFetch.fetchOne)
+  const userId = useStoreState(selAuth.userId);
+  const updateHasNew = useStoreActions(actData.updateHasNew);
+  const fetchOne = useStoreActions(actDataFetch.fetchOne);
 
   return {
     userId,
     updateHasNew,
     fetchOne,
-  }
-}
+  };
+};
 
 const WriteCardForm = ({
   chapterId,
@@ -39,36 +44,36 @@ const WriteCardForm = ({
   depth,
   children,
 }) => {
-  const nav = useNavigation()
+  const nav = useNavigation();
 
-  const { userId, updateHasNew, fetchOne } = initStates()
+  const { userId, updateHasNew, fetchOne } = initStates();
 
   const afterFormSubmitted = async () => {
     switch (depth) {
       case DEPTH_NAME.CHAPTER:
-        updateHasNew({ d0: true })
-        await delay(2)
-        updateHasNew({ d1: true })
-        break
+        updateHasNew({ d0: true });
+        await delay(2);
+        updateHasNew({ d1: true });
+        break;
 
       case DEPTH_NAME.USER_CHAPTER:
-        updateHasNew({ d2: true })
-        break
+        updateHasNew({ d2: true });
+        break;
 
       case DEPTH_NAME.NEXT:
-        updateHasNew({ d3: true })
-        break
+        updateHasNew({ d3: true });
+        break;
     }
 
     // fetchOne({ curId: chapterId, parentId, depth, userId })
 
-    nav.goBack()
-  }
+    nav.goBack();
+  };
 
   const { handleChange, handleBlur, handleSubmit, values, errors, touched } =
-    useWriteChapterCardForm(userId, chapterId, categoryId, afterFormSubmitted)
+    useWriteChapterCardForm(userId, chapterId, categoryId, afterFormSubmitted);
 
-  const { sentence } = values
+  const { sentence } = values;
 
   return (
     <View>
@@ -108,10 +113,10 @@ const WriteCardForm = ({
         </Button>
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default WriteCardForm
+export default WriteCardForm;
 
 const s = StyleSheet.create({
   textInputSection: {
@@ -137,8 +142,6 @@ const s = StyleSheet.create({
   },
 
   bottomSection: {
-    // marginTop: "30%",
-
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -148,8 +151,8 @@ const s = StyleSheet.create({
     backgroundColor: colors.light.ivory5,
     paddingVertical: 11,
     // paddingHorizontal: 15,
-    // position: "relative",
-    // right: -135,
+    position: "relative",
+    right: -20,
     // bottom: -5,
     borderRadius: StyleDefine.borderRadiusInside - 6,
   },
@@ -158,7 +161,7 @@ const s = StyleSheet.create({
     paddingHorizontal: 20,
     color: colors.light.ivory1,
   },
-})
+});
 
 // const textInputRef1 = useRef(null);
 // const textInputRef2 = useRef(null);
