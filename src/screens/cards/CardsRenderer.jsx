@@ -56,11 +56,7 @@ const CardsRenderer = () => {
       {
         const chDat = chapters[d0][d1].deck
         CardJSX = (
-          <ChapterCard
-            data={chDat}
-            categoryTitle={currentCategoryTitle}
-            order={d1}
-          />
+          <ChapterCard data={chDat} categoryTitle={currentCategoryTitle} />
         )
       }
       break
@@ -72,7 +68,7 @@ const CardsRenderer = () => {
           <ChapterCard
             data={chDat}
             categoryTitle={currentCategoryTitle}
-            order={d1}
+            order={d2 + 2}
           />
         )
       }
@@ -85,7 +81,7 @@ const CardsRenderer = () => {
           <ChapterCard
             data={chDat}
             categoryTitle={currentCategoryTitle}
-            order={d3 + 1 + d1}
+            order={d2 + 2}
           />
         )
       }
@@ -93,7 +89,6 @@ const CardsRenderer = () => {
   }
 
   return <CardIndicator>{CardJSX}</CardIndicator>
-  // return <>{CardJSX}</>
 }
 
 export default CardsRenderer

@@ -37,7 +37,7 @@ const initStates = () => {
   }
 }
 
-const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
+const ChapterCard = ({ data, categoryTitle, order = 1 }) => {
   const { profile } = initStates()
 
   const {
@@ -134,7 +134,7 @@ const ChapterCard = ({ data, categoryTitle, order = 0 }) => {
               Scene Card&nbsp;
             </Text>
             <Text fontFamily='regular' style={s.chapterOrderText}>
-              #{order + 1}
+              #{order}
             </Text>
           </View>
 
