@@ -16,33 +16,31 @@ export default {
     }
 
     const head = state.chapters[state.pos];
-    let cur = head[head.pos];
-    if (!cur) {
-      return null;
-    }
-
-    let i = 0;
     if (state.depth === 0) {
       if (head.pos === 0) {
         return null;
       }
 
       return head[head.pos - 1];
-    } else {
-      while (i < state.depth - 1) {
-        cur = cur.chapters[cur.chapters.pos];
-        ++i;
-      }
-
-      const prv = cur.chapters[cur.chapters.pos - 1];
-      if (!prv) {
-        return null;
-      }
-
-      cur = prv;
     }
 
-    return cur;
+    let prv = head[head.pos];
+    if (!prv) {
+      return null;
+    }
+
+    let i = 0;
+    while (i < state.depth - 1) {
+      prv = prv.chapters[prv.chapters.pos];
+      ++i;
+    }
+
+    prv = prv.chapters[prv.chapters.pos - 1];
+    if (!prv) {
+      return null;
+    }
+
+    return prv;
   }),
 
   current: computed(state => {
@@ -56,14 +54,14 @@ export default {
       return null;
     }
 
-    let i = 0;
     if (state.depth === 0) {
       return head[head.pos];
-    } else {
-      while (i < state.depth) {
-        cur = cur.chapters[cur.chapters.pos];
-        ++i;
-      }
+    }
+
+    let i = 0;
+    while (i < state.depth) {
+      cur = cur.chapters[cur.chapters.pos];
+      ++i;
     }
 
     return cur;
@@ -75,33 +73,31 @@ export default {
     }
 
     const head = state.chapters[state.pos];
-    let cur = head[head.pos];
-    if (!cur) {
-      return null;
-    }
-
-    let i = 0;
     if (state.depth === 0) {
       if (head.length < head.pos) {
         return null;
       }
 
       return head[head.pos + 1];
-    } else {
-      while (i < state.depth - 1) {
-        cur = cur.chapters[cur.chapters.pos];
-        ++i;
-      }
-
-      const nxt = cur.chapters[cur.chapters.pos + 1];
-      if (!nxt) {
-        return null;
-      }
-
-      cur = nxt;
     }
 
-    return cur;
+    let nxt = head[head.pos];
+    if (!nxt) {
+      return null;
+    }
+
+    let i = 0;
+    while (i < state.depth - 1) {
+      nxt = nxt.chapters[nxt.chapters.pos];
+      ++i;
+    }
+
+    nxt = nxt.chapters[nxt.chapters.pos + 1];
+    if (!nxt) {
+      return null;
+    }
+
+    return nxt;
   }),
 
   commentsUpdated: false,
@@ -218,8 +214,8 @@ export default {
     state.categories = [];
     state.chapters = [];
     // state.isLoaded.val = state.isLoaded.default;
-    state.hasNew.val = state.hasNew.default;
-    state.isUpdatingAll = false;
+    // state.hasNew.val = state.hasNew.default;
+    // state.isUpdatingAll = false;
   }),
 
   resetCategory: action(state => {
@@ -238,6 +234,39 @@ export default {
     // if (hasFound === -1) {
     // }
   }),
+
+  addChapterNextTo: thunk(
+    (actions, payload, { getState, getStoreState, getStoreActions }) => {
+      const chapters = payload;
+      // 다음 children prop + 상태 추가 하여 배열로 map
+      const newChapters = chapters.map(chapter =>
+        Object.assign(
+          {
+            chapters: [],
+            isNextFetched: false,
+            nextDirection: "vertical",
+          },
+          chapter,
+        ),
+      );
+
+      // map 된 배열의 기초에 현재 축의 위치 추가
+      const card = Object.assign(
+        {
+          pos: 0,
+        },
+        newChapters,
+      );
+
+      const next = actions.next();
+      if (!next) {
+        return;
+      }
+
+      const nextPos = next.chapters;
+      nextPos.push(card);
+    },
+  ),
 
   addChapter: action((state, payload) => {
     const chapters = payload;
