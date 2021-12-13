@@ -35,9 +35,9 @@ export const useSwipeDown = swipe => {
           })
         }
 
-        // return state => {
-        //   console.log("카테고리에서 우측 스와이프는 허용되지 않음.")
-        // }
+      // return state => {
+      //   console.log("카테고리에서 우측 스와이프는 허용되지 않음.")
+      // }
 
       case DEPTH_NAME.CHAPTER:
         // return state => {

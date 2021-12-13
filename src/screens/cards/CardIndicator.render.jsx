@@ -54,7 +54,6 @@ export const renderWithDepth0 = (coords, maxCoords) => {
   const hasNextCategory = d0 < md0 - 1
   const hasChapter = md1 > 0
 
-
   return MakeIndicators(
     {
       top: [hasPrvCategory, 0],
@@ -75,11 +74,10 @@ export const renderWithDepth1 = (coords, maxCoords, chapters) => {
 
   return MakeIndicators(
     {
-      left: hasCategory
-        ? [hasCategory, 0]
-        : hasPrvChapter && [hasPrvChapter, 1],
-      right: [hasNextChapter, 1],
-      bottom: [hasUserChapter, 1],
+      left: [hasCategory, 0],
+      top: [hasPrvChapter, 1],
+      bottom: [hasNextChapter, 1],
+      right: [hasUserChapter, 1],
     },
     coords,
   )
@@ -96,7 +94,7 @@ export const renderWithDepth2 = (coords, maxCoords, chapters) => {
 
   return MakeIndicators(
     {
-      top: hasChapter
+      left: hasChapter
         ? [hasChapter, 1]
         : hasPrvUserChapter && [hasPrvUserChapter, 1],
       right: [hasUserNext, 1],
@@ -116,10 +114,10 @@ export const renderWithDepth3 = (coords, maxCoords) => {
 
   return MakeIndicators(
     {
-      left: hasUserChapter
+      top: hasUserChapter
         ? [hasUserChapter, 1]
         : hasPrvUserNext && [hasPrvUserNext, 1],
-      right: [hasNextUserNext, 1],
+      bottom: [hasNextUserNext, 1],
     },
     coords,
   )

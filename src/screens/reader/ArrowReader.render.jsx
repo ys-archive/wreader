@@ -106,9 +106,10 @@ export const renderWithDepth1Arrow = (coords, chapters, callbacks, clicker) => {
 
   return MakeArrows(
     {
-      left: hasCategory ? hasCategory : hasPrvChapter,
-      right: hasNextChapter,
-      bottom: hasUserChapter,
+      left: hasCategory,
+      top: hasPrvChapter,
+      bottom: hasNextChapter,
+      right: hasUserChapter,
     },
     callbacks,
     clicker,
@@ -132,7 +133,7 @@ export const renderWithDepth2Arrow = (
 
   return MakeArrows(
     {
-      top: hasChapter ? hasChapter : hasPrvUserChapter,
+      left: hasChapter ? hasChapter : hasPrvUserChapter,
       right: hasUserNext,
       bottom: hasNextUserChapter,
     },
@@ -156,8 +157,8 @@ export const renderWithDepth3Arrow = (
 
   return MakeArrows(
     {
-      left: hasUserChapter ? hasUserChapter : hasPrvUserNext,
-      right: hasNextUserNext,
+      top: hasUserChapter ? hasUserChapter : hasPrvUserNext,
+      bottom: hasNextUserNext,
     },
     callbacks,
     clicker,

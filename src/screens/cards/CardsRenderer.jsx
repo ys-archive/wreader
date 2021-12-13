@@ -92,8 +92,8 @@ const CardsRenderer = () => {
       break
   }
 
-  // return <CardIndicator>{CardJSX}</CardIndicator>
-  return <>{CardJSX}</>
+  return <CardIndicator>{CardJSX}</CardIndicator>
+  // return <>{CardJSX}</>
 }
 
 export default CardsRenderer

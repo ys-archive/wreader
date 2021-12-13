@@ -172,43 +172,43 @@ export const useSwipeLeft = swipe => {
         }
 
       case DEPTH_NAME.NEXT:
-        // return state => {
-        //   if (coords.d3 === maxCoords.d1) {
-        //     console.log("해당 카드가 마지막 챕터입니다!")
-        //     return
-        //   }
-
-        //   if (coords.d3 === maxCoords.d3 - 1) {
-        //     if (maxCoords.d3 === 10) {
-        //       swipe("right", () => {
-        //         console.log("마지막인 유저 다음 챕터!, 이전 챕터로 돌아감")
-        //         decreaseCoords("d3")
-        //       })
-        //       return
-        //     }
-
-        //     console.log("마지막인 유저 다음 챕터! 새로운 카드 작성")
-        //     resetTempBlob()
-        //     resetCard()
-        //     nav.navigate(ScreenNames.MainWriteCard, {
-        //       categoryTitle: categories[coords.d0].title,
-        //       categoryId: +coords.d0,
-        //       chapterId:
-        //         +chapters[coords.d0][coords.d1].child[coords.d2].deck.id,
-        //       order: coords.d3 + 2 + coords.d1,
-        //       depth: DEPTH_NAME.NEXT,
-        //     })
-        //     return
-        //   }
-
-        //   swipe("left", () => {
-        //     increaseCoords("d3")
-        //   })
-        // }
-
         return state => {
-          console.log("유저 다음 카드에서는 위로 스와이프 금지")
+          if (coords.d3 === maxCoords.d1) {
+            console.log("해당 카드가 마지막 챕터입니다!")
+            return
+          }
+
+          if (coords.d3 === maxCoords.d3 - 1) {
+            if (maxCoords.d3 === 10) {
+              swipe("right", () => {
+                console.log("마지막인 유저 다음 챕터!, 이전 챕터로 돌아감")
+                decreaseCoords("d3")
+              })
+              return
+            }
+
+            console.log("마지막인 유저 다음 챕터! 새로운 카드 작성")
+            resetTempBlob()
+            resetCard()
+            nav.navigate(ScreenNames.MainWriteCard, {
+              categoryTitle: categories[coords.d0].title,
+              categoryId: +coords.d0,
+              chapterId:
+                +chapters[coords.d0][coords.d1].child[coords.d2].deck.id,
+              order: coords.d3 + 2 + coords.d1,
+              depth: DEPTH_NAME.NEXT,
+            })
+            return
+          }
+
+          swipe("left", () => {
+            increaseCoords("d3")
+          })
         }
+
+      // return state => {
+      //   console.log("유저 다음 카드에서는 위로 스와이프 금지")
+      // }
 
       default:
         throw new Error("depth 는 0~3 사이만 가능 depth: ", depth)
