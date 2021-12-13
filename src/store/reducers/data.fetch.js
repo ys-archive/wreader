@@ -1,15 +1,74 @@
-import { action, computed, thunk } from "easy-peasy"
-import ChapterService from "../../services/ChapterService"
-import { DEPTH_NAME } from "./swiper.depth"
+import { action, computed, thunk, thunkOn } from "easy-peasy";
+import ChapterService from "../../services/ChapterService";
+import { DEPTH_NAME } from "./swiper.depth";
 
 export default {
+  //
+  //
+  fetchCategories: thunk(
+    async (actions, payload, { getState, getStoreState, getStoreActions }) => {
+      const { userId } = payload;
+      const {
+        data: { addCategory },
+        swiper: { setMaxCoords },
+      } = getStoreActions();
+      const { data } = await ChapterService.GET_getCategory(userId);
+
+      if (data.item.length === 0) {
+        return;
+      }
+
+      // 카테고리 데이터 정제 및 저장
+      const categories = Object.values(data.item);
+
+      // category 에서 chapters 따로 빼서
+      // 해당 category 에 딸린 chapter 가 존재하면 넣기
+      const chapters = Object.values(categories)
+        .map(category => category.chapter)
+        .filter(chapter => chapter.length > 0);
+
+      // 카테고리 저장된 값 업데이트 - d0
+      const refinedCategories = categories.map(category => {
+        const refined = category;
+        delete refined.chapter;
+        return refined;
+      });
+
+      addCategory(Object.assign({ current: 0 }, refinedCategories));
+
+      // todo: 카테고리 max Length 설정
+
+      if (chapters.length === 0) {
+        return;
+      }
+
+      // category 에서 chapters 을 떼어내서 따로 구성
+      chapters.forEach(chapter => {
+        actions.getChaptersFromCategory(chapter);
+      });
+    },
+  ),
+
+  getChaptersFromCategory: thunk(
+    (actions, payload, { getState, getStoreState, getStoreActions }) => {
+      const chapters = payload;
+
+      const {
+        data: { addChapter },
+      } = getStoreActions();
+      addChapter(chapters);
+    },
+  ),
+
+  //
+  //
   fetchOne: thunk(
     async (actions, payload, { getState, getStoreState, getStoreActions }) => {
-      const { curId, parentId, depth, userId } = payload
+      const { curId, parentId, depth, userId } = payload;
 
       const {
         swiper: { coords },
-      } = getStoreState()
+      } = getStoreState();
 
       const {
         data: {
@@ -17,47 +76,48 @@ export default {
           fetchOneUserChapter_internal,
           fetchOneNext_internal,
         },
-      } = getStoreActions()
+      } = getStoreActions();
 
       console.log(
         `\n[data.fetch.fetchOne] @GET getChapter (parentId : ${parentId}, current Id: ${curId}, userId: ${userId})`,
-      )
+      );
 
-      const { data } = await ChapterService.GET_getChapter(+parentId, userId)
-      if (data.item.length === 0) return
+      const { data } = await ChapterService.GET_getChapter(+parentId, userId);
+      if (data.item.length === 0) return;
 
-      const targetIdx = data.item.findIndex(i => +i.id === +curId)
+      const targetIdx = data.item.findIndex(i => +i.id === +curId);
 
-      const newChapter = data.item[targetIdx]
-      console.log(`[data.fetch.fetchOne] NEW\n`, newChapter, "\n")
+      const newChapter = data.item[targetIdx];
+      console.log(`[data.fetch.fetchOne] NEW\n`, newChapter, "\n");
 
-      const payload_internal = { coords: coords.val, newChapter }
+      const payload_internal = { coords: coords.val, newChapter };
 
       switch (depth) {
         case DEPTH_NAME.CHAPTER:
-          fetchOneChapter_internal(payload_internal)
-          break
+          fetchOneChapter_internal(payload_internal);
+          break;
 
         case DEPTH_NAME.USER_CHAPTER:
-          fetchOneUserChapter_internal(payload_internal)
-          break
+          fetchOneUserChapter_internal(payload_internal);
+          break;
 
         case DEPTH_NAME.NEXT:
-          fetchOneNext_internal(payload_internal)
-          break
+          fetchOneNext_internal(payload_internal);
+          break;
       }
     },
   ),
-}
+};
 
-export const selectors = {}
+export const selectors = {};
 
 export const actions = {
+  fetchCategories: actions => actions.dataFetch.fetchCategories,
   fetchOne: actions => actions.dataFetch.fetchOne,
   // fetchOneChapter: actions => actions.dataFetch.fetchOneChapter,
   // fetchOneUserChapter: actions => actions.dataFetch.fetchOneUserChapter,
   // fetchOneNext: actions => actions.dataFetch.fetchOneNext,
-}
+};
 
 // fetchOneChapter: thunk(
 //   async (actions, payload, { getState, getStoreState, getStoreActions }) => {

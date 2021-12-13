@@ -1,214 +1,298 @@
-import { action, computed, thunk, thunkOn } from "easy-peasy"
-import ChapterService from "../../services/ChapterService"
-import * as _ from "lodash"
+import { action, computed, thunk, thunkOn } from "easy-peasy";
+import ChapterService from "../../services/ChapterService";
+import * as _ from "lodash";
 
 export default {
   categories: [],
   chapters: [],
+  pos: 0,
+  isNextFetched: false,
+  nextDirection: "vertical",
+  depth: 0,
+
+  previous: computed(state => {
+    if (state.chapters.length === 0) {
+      return null;
+    }
+
+    const head = state.chapters[state.pos];
+    let cur = head[head.pos];
+    if (!cur) {
+      return null;
+    }
+
+    let i = 0;
+    if (state.depth === 0) {
+      if (head.pos === 0) {
+        return null;
+      }
+
+      return head[head.pos - 1];
+    } else {
+      while (i < state.depth - 1) {
+        cur = cur.chapters[cur.chapters.pos];
+        ++i;
+      }
+
+      const prv = cur.chapters[cur.chapters.pos - 1];
+      if (!prv) {
+        return null;
+      }
+
+      cur = prv;
+    }
+
+    return cur;
+  }),
+
+  current: computed(state => {
+    if (state.chapters.length === 0) {
+      return null;
+    }
+
+    const head = state.chapters[state.pos];
+    let cur = head[head.pos];
+    if (!cur) {
+      return null;
+    }
+
+    let i = 0;
+    if (state.depth === 0) {
+      return head[head.pos];
+    } else {
+      while (i < state.depth) {
+        cur = cur.chapters[cur.chapters.pos];
+        ++i;
+      }
+    }
+
+    return cur;
+  }),
+
+  next: computed(state => {
+    if (state.chapters.length === 0) {
+      return null;
+    }
+
+    const head = state.chapters[state.pos];
+    let cur = head[head.pos];
+    if (!cur) {
+      return null;
+    }
+
+    let i = 0;
+    if (state.depth === 0) {
+      if (head.length < head.pos) {
+        return null;
+      }
+
+      return head[head.pos + 1];
+    } else {
+      while (i < state.depth - 1) {
+        cur = cur.chapters[cur.chapters.pos];
+        ++i;
+      }
+
+      const nxt = cur.chapters[cur.chapters.pos + 1];
+      if (!nxt) {
+        return null;
+      }
+
+      cur = nxt;
+    }
+
+    return cur;
+  }),
 
   commentsUpdated: false,
 
   updateComments: action(state => {
-    state.commentsUpdated = !state.commentsUpdated
+    state.commentsUpdated = !state.commentsUpdated;
   }),
 
-  isLoaded: {
-    default: {
-      d0: false,
-      d1: false,
-      d2: false,
-      d3: false,
-    },
+  // isLoaded: {
+  //   default: {
+  //     d0: false,
+  //     d1: false,
+  //     d2: false,
+  //     d3: false,
+  //   },
 
-    val: {
-      d0: false,
-      d1: false,
-      d2: false,
-      d3: false,
-    },
+  //   val: {
+  //     d0: false,
+  //     d1: false,
+  //     d2: false,
+  //     d3: false,
+  //   },
 
-    startLoading: action((state, payload) => {
-      if ("d0" === payload) {
-        state.val.d0 = false
-        return
-      }
+  //   startLoading: action((state, payload) => {
+  //     if ("d0" === payload) {
+  //       state.val.d0 = false;
+  //       return;
+  //     }
 
-      if ("d1" === payload) {
-        state.val.d1 = false
-        return
-      }
+  //     if ("d1" === payload) {
+  //       state.val.d1 = false;
+  //       return;
+  //     }
 
-      if ("d2" === payload) {
-        state.val.d2 = false
-        return
-      }
+  //     if ("d2" === payload) {
+  //       state.val.d2 = false;
+  //       return;
+  //     }
 
-      if ("d3" === payload) {
-        state.val.d3 = false
-        return
-      }
-    }),
+  //     if ("d3" === payload) {
+  //       state.val.d3 = false;
+  //       return;
+  //     }
+  //   }),
 
-    finishLoading: action((state, payload) => {
-      if ("d0" === payload) {
-        state.val.d0 = true
-        return
-      }
+  //   finishLoading: action((state, payload) => {
+  //     if ("d0" === payload) {
+  //       state.val.d0 = true;
+  //       return;
+  //     }
 
-      if ("d1" === payload) {
-        state.val.d1 = true
-        return
-      }
+  //     if ("d1" === payload) {
+  //       state.val.d1 = true;
+  //       return;
+  //     }
 
-      if ("d2" === payload) {
-        state.val.d2 = true
-        return
-      }
+  //     if ("d2" === payload) {
+  //       state.val.d2 = true;
+  //       return;
+  //     }
 
-      if ("d3" === payload) {
-        state.val.d3 = true
-        return
-      }
-    }),
-  },
+  //     if ("d3" === payload) {
+  //       state.val.d3 = true;
+  //       return;
+  //     }
+  //   }),
+  // },
 
-  hasNew: {
-    default: {
-      d0: false,
-      d1: false,
-      d2: false,
-      d3: false,
-    },
+  // hasNew: {
+  //   default: {
+  //     d0: false,
+  //     d1: false,
+  //     d2: false,
+  //     d3: false,
+  //   },
 
-    val: {
-      d0: false,
-      d1: false,
-      d2: false,
-      d3: false,
-    },
+  //   val: {
+  //     d0: false,
+  //     d1: false,
+  //     d2: false,
+  //     d3: false,
+  //   },
 
-    update: action((state, payload) => {
-      if ("d0" in payload) {
-        state.val.d0 = payload.d0
-        return
-      }
+  //   update: action((state, payload) => {
+  //     if ("d0" in payload) {
+  //       state.val.d0 = payload.d0;
+  //       return;
+  //     }
 
-      if ("d1" in payload) {
-        state.val.d1 = payload.d1
-        return
-      }
+  //     if ("d1" in payload) {
+  //       state.val.d1 = payload.d1;
+  //       return;
+  //     }
 
-      if ("d2" in payload) {
-        state.val.d2 = payload.d2
-        return
-      }
+  //     if ("d2" in payload) {
+  //       state.val.d2 = payload.d2;
+  //       return;
+  //     }
 
-      if ("d3" in payload) {
-        state.val.d3 = payload.d3
-        return
-      }
-    }),
-  },
+  //     if ("d3" in payload) {
+  //       state.val.d3 = payload.d3;
+  //       return;
+  //     }
+  //   }),
+  // },
 
-  isUpdatingAll: false,
+  // isUpdatingAll: false,
 
-  setUpdateAll: action((state, payload) => {
-    state.isUpdatingAll = payload
-  }),
+  // setUpdateAll: action((state, payload) => {
+  //   state.isUpdatingAll = payload;
+  // }),
 
   reset: action(state => {
-    state.categories = []
-    state.chapters = []
-    state.isLoaded.val = state.isLoaded.default
-    state.hasNew.val = state.hasNew.default
-    state.isUpdatingAll = false
+    state.categories = [];
+    state.chapters = [];
+    // state.isLoaded.val = state.isLoaded.default;
+    state.hasNew.val = state.hasNew.default;
+    state.isUpdatingAll = false;
   }),
 
   resetCategory: action(state => {
-    state.categories = []
+    state.categories = [];
   }),
 
   addCategory: action((state, payload) => {
-    const hasFound = state.categories.findIndex(cat => _.isEqual(cat, payload))
-    if (hasFound === -1) {
-      state.categories.push(payload)
-    }
-  }),
+    const category = payload;
+    state.categories = category;
 
-  resetChapter: action((state, payload) => {
-    state.chapters = []
+    // 기존 카테고리에 존재 중복 검사
+    // const hasFound = state.categories.findIndex(lastCategory =>
+    //   _.isEqual(lastCategory.id, category.id),
+    // );
+
+    // if (hasFound === -1) {
+    // }
   }),
 
   addChapter: action((state, payload) => {
-    const hasFound = state.chapters.findIndex(ch =>
-      _.isEqual(ch.deck, payload.deck),
-    )
+    const chapters = payload;
+    // 다음 children prop + 상태 추가 하여 배열로 map
+    const newChapters = chapters.map(chapter =>
+      Object.assign(
+        {
+          chapters: [],
+          isNextFetched: false,
+          nextDirection: "vertical",
+        },
+        chapter,
+      ),
+    );
 
-    if (hasFound === -1) {
-      state.chapters.push(
-        payload.deck.map(d => ({
-          deck: d,
-          child: [],
-        })),
-      )
-    }
-  }),
+    // map 된 배열의 기초에 현재 축의 위치 추가
+    const card = Object.assign(
+      {
+        pos: 0,
+      },
+      newChapters,
+    );
 
-  addChapterChild: action((state, payload) => {
-    // 아무 부모 챕터 하나라도 있어야함
-    if (state.chapters.length === 0) return
+    state.chapters.push(card);
 
-    // 비교용 index 찾아오기
-    const comparer = +payload.deck.group_index
+    // const hasFound = state.chapters.findIndex(ch =>
+    //   _.isEqual(ch.chapter.Id, payload.chapter.Id),
+    // );
 
-    // undefined
-    if (!comparer) return
-
-    const findRecursively = arr => {
-      arr.forEach(item => {
-        if (+item.deck.id === comparer) {
-          if (
-            item.child.findIndex(f => _.isEqual(f.deck, payload.deck)) === -1
-          ) {
-            item.child.push({ deck: payload.deck, child: [] })
-          }
-          return
-        }
-
-        if (item.child.length > 0) {
-          findRecursively(item.child)
-        }
-      })
-    }
-
-    state.chapters.forEach(chapter => {
-      if (chapter.length === 0) return
-      findRecursively(chapter)
-    })
+    // if (hasFound === -1) {
+    // }
   }),
 
   fetchOneChapter_internal: action((state, payload) => {
     const {
       coords: { d0, d1 },
       newChapter,
-    } = payload
-    const origPos = state.chapters[d0][d1]
+    } = payload;
+    const origPos = state.chapters[d0][d1];
 
-    console.log("[data.fetchOneChapter] OUTDATED\n", origPos.deck, "\n")
+    console.log("[data.fetchOneChapter] OUTDATED\n", origPos.deck, "\n");
 
-    if (newChapter !== undefined) origPos.deck = newChapter
+    if (newChapter !== undefined) origPos.deck = newChapter;
   }),
 
   fetchOneUserChapter_internal: action((state, payload) => {
     const {
       coords: { d0, d1, d2 },
       newChapter,
-    } = payload
+    } = payload;
 
-    const origPos = state.chapters[d0][d1].child[d2]
-    console.log("found outdated user chapter : ", origPos.deck)
+    const origPos = state.chapters[d0][d1].child[d2];
+    console.log("found outdated user chapter : ", origPos.deck);
 
-    if (newChapter !== undefined) origPos.deck = newChapter
+    if (newChapter !== undefined) origPos.deck = newChapter;
 
     // let origPos = undefined
 
@@ -231,42 +315,28 @@ export default {
     const {
       coords: { d0, d1, d2, d3 },
       newChapter,
-    } = payload
-    const origPos = state.chapters[d0][d1].child[d2].child[d3]
+    } = payload;
+    const origPos = state.chapters[d0][d1].child[d2].child[d3];
 
-    console.log("[data.fetchOneNext] OUTDATED\n", origPos.deck, "\n")
+    console.log("[data.fetchOneNext] OUTDATED\n", origPos.deck, "\n");
 
-    if (newChapter !== undefined) origPos.deck = newChapter
+    if (newChapter !== undefined) origPos.deck = newChapter;
   }),
-}
+};
 
 export const selectors = {
   categories: state => state.data.categories,
   chapters: state => state.data.chapters,
-
+  previous: state => state.data.previous,
+  current: state => state.data.current,
+  depth: state => state.data.depth,
+  next: state => state.data.next,
   commentsUpdated: state => state.data.commentsUpdated,
-
-  isLoaded: state => state.data.isLoaded.val,
-  hasNew: state => state.data.hasNew.val,
-
-  isUpdatingAll: state => state.data.isUpdatingAll,
-}
+};
 
 export const actions = {
   updateComments: state => state.data.updateComments,
-
   reset: actions => actions.data.reset,
-
-  resetCategory: actions => actions.data.resetCategory,
   addCategory: actions => actions.data.addCategory,
-
-  resetChapter: actions => actions.data.resetChapter,
   addChapter: actions => actions.data.addChapter,
-  addChapterChild: actions => actions.data.addChapterChild,
-
-  startLoading: actions => actions.data.isLoaded.startLoading,
-  finishLoading: actions => actions.data.isLoaded.finishLoading,
-  updateHasNew: actions => actions.data.hasNew.update,
-
-  updateAll: actions => actions.data.setUpdateAll,
-}
+};

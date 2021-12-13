@@ -1,98 +1,113 @@
-import React from "react"
+import React, { useEffect } from "react";
 
-import { useStoreState } from "easy-peasy"
-import { selData, selSwiper } from "../../store/selectors"
+import { useStoreState, useStoreActions } from "easy-peasy";
+import { selAuth, selData, selSwiper } from "../../store/selectors";
+import { actDataFetch } from "../../store/actions";
 
-import CategoryCard from "./category/CategoryCard"
-import ChapterCard from "./chapter-card/ChapterCard"
+import CategoryCard from "./category/CategoryCard";
+import ChapterCard from "./chapter-card/ChapterCard";
 
-import FetchBeforeRender from "./CardsRenderer.fetch"
-import CardIndicator from "./CardIndicator"
+// import FetchBeforeRender from "./CardsRenderer.fetch";
+import CardIndicator from "./CardIndicator";
 
 const initStates = () => {
-  const categories = useStoreState(selData.categories)
-  const chapters = useStoreState(selData.chapters)
-  const isLoaded = useStoreState(selData.isLoaded)
+  const categories = useStoreState(selData.categories);
+  const chapters = useStoreState(selData.chapters);
+  const depth = useStoreState(selData.depth);
 
-  const depth = useStoreState(selSwiper.depth)
-  const coords = useStoreState(selSwiper.coords)
+  const userId = useStoreState(selAuth.userId);
+
+  // const depth = useStoreState(selSwiper.depth);
+  const coords = useStoreState(selSwiper.coords);
+
+  const fetchCategories = useStoreActions(actDataFetch.fetchCategories);
 
   return {
     categories,
     chapters,
-    isLoaded,
+    userId,
     depth,
     coords,
-  }
-}
+    fetchCategories,
+  };
+};
 
 const CardsRenderer = () => {
-  const { categories, chapters, isLoaded, depth, coords } = initStates()
+  const { categories, chapters, userId, depth, coords, fetchCategories } =
+    initStates();
 
-  FetchBeforeRender()
+  useEffect(() => {
+    fetchCategories(userId);
+  }, [userId]);
 
-  if (!isLoaded.d0) return null
-  if (!isLoaded.d1) return null
+  // if (!isLoaded.d0) return null;
+  // if (!isLoaded.d1) return null;
 
-  if (!chapters || chapters.length === 0) return null
+  if (!chapters || chapters.length === 0) return null;
 
-  // const { d0: md0, d1: md1, d2: md2, d3: md3 } = maxCoords;
-  // console.log(
-  //   `max coords---> md0:${md0} | md1:${md1} | md2:${md2} | md3:${md3}`,
-  // );
+  let CardJSX = null;
 
-  const { d0, d1, d2, d3 } = coords
+  // if (depth ===0) {
+  //   CardJSX = <CategoryCard data={} />
+  // } else {
+  //   CardJSX = <ChapterCard />
+  // }
 
-  // console.log(`    coords---> d0:${d0} | d1:${d1} | d2:${d2} | d3:${d3}`);
-  const currentCategoryTitle = categories[d0].title
-  let CardJSX = null
+  // switch (depth) {
+  //   case 0:
+  //     CardJSX = <CategoryCard data={categories[d0]} />;
+  //     break;
 
-  switch (depth) {
-    case 0:
-      CardJSX = <CategoryCard data={categories[d0]} />
-      break
+  //   case 1:
+  //     {
+  //       // if (chapters[d0][d1].child.length === 0) return null;
+  //       // const chDat =
+  //       //   d1 === 0
+  //       //     ? chapters[d0][d1].child[0].deck
+  //       //     : chapters[d0][0].child[0].child.length > 0
+  //       //     ? chapters[d0][0].child[0].child[d1 - 1].deck
+  //       //     : null;
+  //       const chDat = chapters[d0][d1].deck;
+  //       // console.log(chapters[d0][0].child[0].child[d1 + 1]);
+  //       CardJSX = (
+  //         <ChapterCard
+  //           data={chDat}
+  //           categoryTitle={currentCategoryTitle}
+  //           order={d1}
+  //         />
+  //       );
+  //     }
+  //     break;
 
-    case 1:
-      {
-        const chDat = chapters[d0][d1].deck
-        CardJSX = (
-          <ChapterCard
-            data={chDat}
-            categoryTitle={currentCategoryTitle}
-            order={d1}
-          />
-        )
-      }
-      break
+  //   case 2:
+  //     {
+  //       // if (chapters[d0][d1].child.length === 0) return null;
+  //       const chDat = chapters[d0][d1].child[d2].deck;
+  //       CardJSX = (
+  //         <ChapterCard
+  //           data={chDat}
+  //           categoryTitle={currentCategoryTitle}
+  //           order={d1}
+  //         />
+  //       );
+  //     }
+  //     break;
 
-    case 2:
-      {
-        const chDat = chapters[d0][d1].child[d2].deck
-        CardJSX = (
-          <ChapterCard
-            data={chDat}
-            categoryTitle={currentCategoryTitle}
-            order={d1}
-          />
-        )
-      }
-      break
+  //   case 3:
+  //     {
+  //       const chDat = chapters[d0][d1].child[d2].child[d3].deck;
+  //       CardJSX = (
+  //         <ChapterCard
+  //           data={chDat}
+  //           categoryTitle={currentCategoryTitle}
+  //           order={d3 + 1 + d1}
+  //         />
+  //       );
+  //     }
+  //     break;
+  // }
 
-    case 3:
-      {
-        const chDat = chapters[d0][d1].child[d2].child[d3].deck
-        CardJSX = (
-          <ChapterCard
-            data={chDat}
-            categoryTitle={currentCategoryTitle}
-            order={d3 + 1 + d1}
-          />
-        )
-      }
-      break
-  }
+  return <CardIndicator>{CardJSX}</CardIndicator>;
+};
 
-  return <CardIndicator>{CardJSX}</CardIndicator>
-}
-
-export default CardsRenderer
+export default CardsRenderer;
