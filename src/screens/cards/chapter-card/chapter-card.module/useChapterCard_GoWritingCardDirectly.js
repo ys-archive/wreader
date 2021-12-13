@@ -54,13 +54,23 @@ export const useChapterCard_GoWritingCardDirectly = () => {
 
     switch (depth) {
       case DEPTH_NAME.CHAPTER:
+        // 챕터 맨뒤에 직접 쓰기
+        // nav.navigate(ScreenNames.MainWriteCard, {
+        //   categoryTitle: categories[coords.d0].title,
+        //   categoryId: coords.d0,
+        //   chapterId: 0,
+        //   order: 1,
+        //   depth: DEPTH_NAME.CHAPTER,
+        // });
+        // break;
+
       case DEPTH_NAME.USER_CHAPTER:
         nav.navigate(ScreenNames.MainWriteCard, {
           categoryTitle: categories[coords.d0].title,
           categoryId: coords.d0,
           chapterId: +chapters[coords.d0][coords.d1].deck.id,
-          order: coords.d1 + 1,
-          depth: 2,
+          order: coords.d2 + 2 + 1,
+          depth: DEPTH_NAME.USER_CHAPTER,
         });
         break;
 
@@ -69,9 +79,9 @@ export const useChapterCard_GoWritingCardDirectly = () => {
         nav.navigate(ScreenNames.MainWriteCard, {
           categoryTitle: categories[coords.d0].title,
           categoryId: +coords.d0,
-          chapterId: +chapters[coords.d0][coords.d1 + 1 + coords.d3].deck.id,
-          order: coords.d3 + 2 + coords.d1,
-          depth: 3,
+          chapterId: +chapters[coords.d0][coords.d1].child[coords.d2].deck.id,
+          order: coords.d2 + 2,
+          depth: DEPTH_NAME.NEXT,
         });
         break;
     }
