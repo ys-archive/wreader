@@ -35,30 +35,73 @@ export const useSwipeDown = swipe => {
           })
         }
 
-      case DEPTH_NAME.CHAPTER:
-        return state => {
-          console.log("챕터에서는 하방 스와이프는 허용되지 않음")
-        }
+        // return state => {
+        //   console.log("카테고리에서 우측 스와이프는 허용되지 않음.")
+        // }
 
-      case DEPTH_NAME.USER_CHAPTER:
+      case DEPTH_NAME.CHAPTER:
+        // return state => {
+        //   console.log("챕터에서는 하방 스와이프는 허용되지 않음")
+        // }
+
         return state => {
-          if (coords.d2 === 0) {
+          if (coords.d1 === 0) {
             swipe("down", () => {
               decreaseDepth()
             })
-            return
           }
 
-          swipe("down", () => {
-            decreaseCoords("d2")
-            updateHasNew({ d3: true })
-            setMaxCoords({ d3: chapters })
-          })
+          if (coords.d1 > 0) {
+            swipe("down", () => {
+              decreaseCoords("d1")
+              setMaxCoords({ d2: chapters })
+            })
+          }
+        }
+
+      case DEPTH_NAME.USER_CHAPTER:
+        // return state => {
+        //   if (coords.d2 === 0) {
+        //     swipe("down", () => {
+        //       decreaseDepth()
+        //     })
+        //     return
+        //   }
+
+        //   swipe("down", () => {
+        //     decreaseCoords("d2")
+        //     updateHasNew({ d3: true })
+        //     setMaxCoords({ d3: chapters })
+        //   })
+        // }
+
+        return state => {
+          // console.log('유저 챕터에서 우측 스와이프는 허용되지 않음.');
+          if (coords.d1 === 0) {
+            swipe("down", () => {
+              decreaseDepth()
+              decreaseDepth()
+            })
+          }
         }
 
       case DEPTH_NAME.NEXT:
+        // return state => {
+        //   console.log("유저 다음 카드에서는 아래로 스와이프 금지")
+        // }
+
         return state => {
-          console.log("유저 다음 카드에서는 아래로 스와이프 금지")
+          if (coords.d3 === 0) {
+            swipe("down", () => {
+              decreaseDepth()
+            })
+          }
+
+          if (coords.d3 > 0) {
+            swipe("down", () => {
+              decreaseCoords("d3")
+            })
+          }
         }
 
       default:
