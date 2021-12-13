@@ -4,7 +4,7 @@ export const SORT_TYPES = {
 }
 
 export const sorterByDate = (a, b) => {
-  const bStr = b.updateDt
+  const bStr = b.deck.updateDt
   const bb = new Date(
     +bStr.slice(0, 4),
     +bStr.slice(5, 7),
@@ -14,7 +14,7 @@ export const sorterByDate = (a, b) => {
     +bStr.slice(17, 19),
   )
 
-  const aStr = a.updateDt
+  const aStr = a.deck.updateDt
   const aa = new Date(
     +aStr.slice(0, 4),
     +aStr.slice(5, 7),
@@ -29,4 +29,4 @@ export const sorterByDate = (a, b) => {
   return bb - aa
 }
 
-export const sorterByLikeCount = (a, b) => b.like_count - a.like_count
+export const sorterByLikeCount = (a, b) => b.deck.like_count - a.deck.like_count

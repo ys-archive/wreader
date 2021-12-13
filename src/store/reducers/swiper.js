@@ -128,7 +128,7 @@ export default {
   moveToFirstInCurrentContext: thunk(
     (actions, payload, { getState, getStoreState }) => {
       actions.depth.set(1)
-      actions.coords.set({ d2: 0, d3: 0 })
+      actions.coords.set({ d1: 0, d2: 0, d3: 0 })
     },
   ),
 }
