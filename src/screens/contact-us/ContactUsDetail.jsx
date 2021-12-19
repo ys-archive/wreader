@@ -1,22 +1,22 @@
-import React, { useRef } from 'react';
-import { View, Platform } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { AlertWithValue } from '#components/alert';
-import { RenderError } from '#components';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { useNavigation } from '@react-navigation/native';
+import React, { useRef } from "react";
+import { View, Platform } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { AlertWithValue } from "#components/alert";
+import { RenderError } from "#components";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { useNavigation } from "@react-navigation/native";
 
-import { colors } from '#constants';
-import { StyleSheet, Text, TextInput, Button } from '#components';
+import { colors } from "#constants";
+import { StyleSheet, Text, TextInput, Button } from "#components";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+} from "react-native-responsive-screen";
 
 const initialValues = {
-  title: '',
-  sentence: '',
+  title: "",
+  sentence: "",
 };
 
 const validationSchema = Yup.object({
@@ -28,13 +28,13 @@ const validationSchema = Yup.object({
 const ContactUsDetail = () => {
   const nav = useNavigation();
 
-  const textInputRef1 = useRef(null);
-  const textInputRef2 = useRef(null);
-  const textInputRef3 = useRef(null);
-  const textInputRef4 = useRef(null);
+  // const textInputRef1 = useRef(null);
+  // const textInputRef2 = useRef(null);
+  // const textInputRef3 = useRef(null);
+  // const textInputRef4 = useRef(null);
 
   const onSubmit = async values => {
-    AlertWithValue('문의 등록', '닫기', JSON.stringify(values, null, 2));
+    AlertWithValue("문의 등록", "닫기", JSON.stringify(values, null, 2));
     // TODO: POST - 새로운 Contact Us 생성
     nav?.goBack();
   };
@@ -52,17 +52,17 @@ const ContactUsDetail = () => {
     <KeyboardAwareScrollView>
       <View style={s.root}>
         <View style={s.placer}>
-          <Text isBold style={s.title}>
+          <Text fontFamily='bold' style={s.title}>
             CONTACT US
           </Text>
           <View style={s.separator} />
           <View
             style={[
               s.titleSection,
-              { width: wp('84.7%'), minHeight: hp('6.2%') },
+              { width: wp("84.7%"), minHeight: hp("6.2%") },
             ]}
           >
-            <Text isBold style={s.subtitle}>
+            <Text fontFamily='bold' style={s.subtitle}>
               TELL US MORE
             </Text>
           </View>
@@ -72,20 +72,20 @@ const ContactUsDetail = () => {
               going to reply you as soon as possible. Thank you.
             </Text>
           </View>
-          <Text isBold style={s.underTitle}>
+          <Text fontFamily='bold' style={s.underTitle}>
             THEME
           </Text>
           <View style={[s.inputView, { marginBottom: 48 }]}>
             <TextInput
               style={s.input}
               value={title}
-              onBlur={handleBlur('title')}
-              onChangeText={handleChange('title')}
-              placeholder="Write down a theme of your inquery"
+              onBlur={handleBlur("title")}
+              onChangeText={handleChange("title")}
+              placeholder='Write down a theme of your inquery'
             />
             <RenderError touched={touched.title} errors={errors.title} />
           </View>
-          <Text isBold style={s.underTitle}>
+          <Text fontFamily='bold' style={s.underTitle}>
             CONTENTS
           </Text>
           <View style={s.inputView}>
@@ -97,16 +97,16 @@ const ContactUsDetail = () => {
               // minHeight={300}
               maxHeight={300}
               numberOfLines={12}
-              onBlur={handleBlur('sentence')}
-              onChangeText={handleChange('sentence')}
-              placeholder="Write down sentence of your inquery"
+              onBlur={handleBlur("sentence")}
+              onChangeText={handleChange("sentence")}
+              placeholder='Write down sentence of your inquery'
             />
           </View>
           <View>
             <Button
               style={s.summitButton}
               textStyle={s.summitText}
-              isBold
+              fontFamily='bold'
               onPress={handleSubmit}
             >
               SEND
@@ -123,40 +123,40 @@ export default ContactUsDetail;
 const s = StyleSheet.create({
   root: {
     flex: 1,
-    minHeight: hp('100%'),
+    minHeight: hp("100%"),
     backgroundColor: colors.light.background,
   },
   placer: {
-    marginHorizontal: '8.3%',
+    marginHorizontal: "8.3%",
   },
   title: {
     marginTop: 45.6,
     fontSize: 21,
-    color: '#fff',
+    color: "#fff",
   },
   separator: {
-    maxWidth: '50%',
+    maxWidth: "50%",
     minHeight: 1,
     backgroundColor: colors.light.ivory5,
-    marginTop: '2%',
-    marginBottom: '10.8%',
+    marginTop: "2%",
+    marginBottom: "10.8%",
   },
   titleSection: {
     borderLeftWidth: 0.5,
     borderBottomWidth: 0.5,
     borderBottomStartRadius: 17,
     borderColor: colors.light.ivory5,
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
   },
   subtitle: {
     color: colors.light.ivory5,
-    marginLeft: '2.8%',
+    marginLeft: "2.8%",
     marginBottom: 10.4,
     fontSize: 17,
   },
   descriptionView: {
     marginTop: 10.1,
-    marginLeft: '3.2%',
+    marginLeft: "3.2%",
   },
   descriptionText: {
     fontSize: 10,
@@ -165,9 +165,9 @@ const s = StyleSheet.create({
     color: colors.light.ivory5,
   },
   underTitle: {
-    marginTop: Platform.OS === 'android' ? 10.7 : 24.7,
+    marginTop: Platform.OS === "android" ? 10.7 : 24.7,
     fontSize: 17,
-    color: '#fff',
+    color: "#fff",
     marginLeft: 5.9,
   },
 
@@ -189,9 +189,9 @@ const s = StyleSheet.create({
     paddingLeft: 10,
     paddingBottom: 4,
 
-    minWidth: '101%',
-    maxWidth: '101%',
-    fontSize: Platform.OS === 'android' ? 13 : 12,
+    minWidth: "101%",
+    maxWidth: "101%",
+    fontSize: Platform.OS === "android" ? 13 : 12,
 
     // textDecorationLine: 'underline',
   },
@@ -209,7 +209,7 @@ const s = StyleSheet.create({
     maxWidth: 305,
     minHeight: 33.8,
     paddingVertical: 13,
-    marginTop: Platform.OS === 'android' ? 30 : 37.7,
+    marginTop: Platform.OS === "android" ? 30 : 37.7,
     borderRadius: 13,
     backgroundColor: colors.light.ivory5,
   },
@@ -221,10 +221,10 @@ const s = StyleSheet.create({
 
 /* <TextInput
               style={s.input}
-              ref={textInputRef1}
-              value={sentence}
-              maxLength={20}
-              onBlur={handleBlur('sentence')}
+              // ref={textInputRef1}
+              // value={sentence}
+              // maxLength={20}
+              // onBlur={handleBlur('sentence')}
               onChangeText={e => {
                 handleChange('sentence')(e);
                 if (e && e.length === 20) {

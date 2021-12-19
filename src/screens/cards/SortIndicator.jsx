@@ -1,30 +1,30 @@
-import React from "react"
-import { StyleSheet, Text } from "#components"
-import { filterBox } from "../../constants/images"
-import { View, Image } from "react-native"
+import React from "react";
+import { StyleSheet, Text } from "#components";
+import { filterBox } from "../../constants/images";
+import { View, Image } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from "react-native-responsive-screen"
-import { colors } from "../../constants/colors"
+} from "react-native-responsive-screen";
+import { colors } from "../../constants/colors";
 
-import { useStoreState } from "easy-peasy"
-import { selSort } from "../../store/selectors"
+import { useStoreState } from "easy-peasy";
+import { selSort } from "../../store/selectors";
 
 const initStates = () => {
-  const isSortedByLikes = useStoreState(selSort.isSortedByLikes)
+  const isSortedByLikes = useStoreState(selSort.isSortedByLikes);
 
   return {
     isSortedByLikes,
-  }
-}
+  };
+};
 
 const SortIndicator = () => {
-  const { isSortedByLikes } = initStates()
+  const { isSortedByLikes } = initStates();
 
-  console.log(`is sorted by likes? : ${isSortedByLikes}`)
-  const popularFontFamily = isSortedByLikes ? "heavy" : "xlight"
-  const dateFontFamily = !isSortedByLikes ? "heavy" : "xlight"
+  console.log(`is sorted by likes? : ${isSortedByLikes}`);
+  const popularFontFamily = isSortedByLikes ? "bold" : "regular";
+  const dateFontFamily = !isSortedByLikes ? "bold" : "regular";
 
   return (
     <>
@@ -47,10 +47,10 @@ const SortIndicator = () => {
         </Text>
       </View>
     </>
-  )
-}
+  );
+};
 
-export default SortIndicator
+export default SortIndicator;
 
 const s = StyleSheet.create({
   labelView: {
@@ -69,57 +69,4 @@ const s = StyleSheet.create({
     minHeight: 1,
     marginVertical: 5,
   },
-})
-
-// switch (depth) {
-//   case DEPTH_NAME.CHAPTER:
-//     PopularTextJSX = (
-//       <Text
-//         fontFamily={!isChaptersSorted ? "heavy" : "xlight"}
-//         style={s.label}
-//       >
-//         POPULAR
-//       </Text>
-//     )
-//     NewTextJSX = (
-//       <Text
-//         fontFamily={isChaptersSorted ? "heavy" : "xlight"}
-//         style={s.label}
-//       >
-//         NEW
-//       </Text>
-//     )
-//     break
-
-//   case DEPTH_NAME.USER_CHAPTER:
-//     PopularTextJSX = (
-//       <Text
-//         fontFamily={!isUserChaptersSorted ? "heavy" : "xlight"}
-//         style={s.label}
-//       >
-//         POPULAR
-//       </Text>
-//     )
-//     NewTextJSX = (
-//       <Text
-//         fontFamily={isUserChaptersSorted ? "heavy" : "xlight"}
-//         style={s.label}
-//       >
-//         NEW
-//       </Text>
-//     )
-//     break
-
-//   case DEPTH_NAME.NEXT:
-//     PopularTextJSX = (
-//       <Text fontFamily={!isNextSorted ? "heavy" : "xlight"} style={s.label}>
-//         POPULAR
-//       </Text>
-//     )
-//     NewTextJSX = (
-//       <Text fontFamily={isNextSorted ? "heavy" : "xlight"} style={s.label}>
-//         NEW
-//       </Text>
-//     )
-//     break
-// }
+});

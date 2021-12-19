@@ -1,22 +1,14 @@
-import * as Font from 'expo-font';
+import * as Font from "expo-font";
 
-// www.dafont.com/mont.font
+// https://noonnu.cc/font_page/733
 export const fonts = {
-  xlight: 'mont-extra-light',
-  light: 'mont-light',
-  thin: 'mont-thin',
-  regular: 'mont-regular',
-  semibold: 'mont-semi-bold',
-  heavy: 'mont-heavy',
+  regular: "GowunBatang-Regular",
+  bold: "GowunBatang-Bold",
 };
 
 export const loadFontsAsync = async () => {
   return await Font.loadAsync({
-    'mont-extra-light': require('!fonts/Mont-ExtraLight.otf'),
-    'mont-light': require('!fonts/Mont-Light.otf'),
-    'mont-thin': require('!fonts/Mont-Thin.otf'),
-    'mont-regular': require('!fonts/Mont-Regular.otf'),
-    'mont-semi-bold': require('!fonts/Mont-SemiBold.otf'),
-    'mont-heavy': require('!fonts/Mont-Heavy.otf'),
+    "GowunBatang-Regular": require("!fonts/GowunBatang-Regular.ttf"),
+    "GowunBatang-Bold": require("!fonts/GowunBatang-Bold.ttf"),
   });
 };

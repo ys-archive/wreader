@@ -1,41 +1,46 @@
-import React, { useState } from "react"
-import { View, FlatList, Image, ActivityIndicator } from "react-native"
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
-import { Alert } from "../../../components/alert"
-import { StyleSheet, Text, TextInput, Button } from "#components"
-import { Cancel } from "#components/icon"
+import React, { useState } from "react";
+import { View, FlatList, Image, ActivityIndicator } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { Alert } from "../../../components/alert";
+import { StyleSheet, Text, TextInput, Button } from "#components";
+import { Cancel } from "#components/icon";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from "react-native-responsive-screen"
+} from "react-native-responsive-screen";
 
-import { useNavigation } from "@react-navigation/native"
-import { delay } from "../../../utils"
+import { useNavigation } from "@react-navigation/native";
+import { delay } from "../../../utils";
 
-import { colors } from "../../../constants"
-import { dummyProfile } from "#constants/images"
+import { colors } from "../../../constants";
+import { dummyProfile } from "#constants/images";
 
-import { useStoreActions, useStoreState } from "easy-peasy"
-import { selAuth, selData, selImage, selSwiper } from "../../../store/selectors"
-import { actData, actDataFetch } from "../../../store/actions"
-import { CommentsService } from "../../../services"
+import { useStoreActions, useStoreState } from "easy-peasy";
+import {
+  selAuth,
+  selData,
+  selImage,
+  selSwiper,
+} from "../../../store/selectors";
+import { actData, actDataFetch } from "../../../store/actions";
+import { CommentsService } from "../../../services";
 
-import { useCommentsLogic } from "./useCommentsLogic"
-import CommentItem_Me from "../comment-item/CommentItem_Me"
-import CommentItem_Other from "../comment-item/CommentItem_Other"
+import { useCommentsLogic } from "./useCommentsLogic";
+import CommentItem_Me from "../comment-item/CommentItem_Me";
+import CommentItem_Other from "../comment-item/CommentItem_Other";
 
 const initStates = () => {
-  const [contents, setContents] = useState("")
+  const [contents, setContents] = useState("");
 
   // selectors
-  const userId = useStoreState(selAuth.userId)
-  const depth = useStoreState(selSwiper.depth)
-  const profileUrl = useStoreState(selImage.profile)
+  const userId = useStoreState(selAuth.userId);
+  const depth = useStoreState(selSwiper.depth);
+  const profileUrl = useStoreState(selImage.profile);
 
   // actions
-  const fetchOne = useStoreActions(actDataFetch.fetchOne)
-  const commentsUpdated = useStoreState(selData.commentsUpdated)
-  const updateComments = useStoreActions(actData.updateComments)
+  const fetchOne = useStoreActions(actDataFetch.fetchOne);
+  const commentsUpdated = useStoreState(selData.commentsUpdated);
+  const updateComments = useStoreActions(actData.updateComments);
 
   return {
     userId,
@@ -46,11 +51,11 @@ const initStates = () => {
     fetchOne,
     commentsUpdated,
     updateComments,
-  }
-}
+  };
+};
 
 const Comments = ({ route }) => {
-  const nav = useNavigation()
+  const nav = useNavigation();
   const {
     profileUrl,
     userId,
@@ -60,53 +65,53 @@ const Comments = ({ route }) => {
     fetchOne,
     commentsUpdated,
     updateComments,
-  } = initStates()
+  } = initStates();
 
-  const { chapterId, parentId } = route.params
+  const { chapterId, parentId } = route.params;
 
-  const data = useCommentsLogic(chapterId, commentsUpdated)
+  const data = useCommentsLogic(chapterId, commentsUpdated);
 
   if (!data) {
     return (
       <View>
         <ActivityIndicator size='large' />
       </View>
-    )
+    );
   }
 
   const postNewComment = async () => {
     if (contents === "") {
-      Alert("Comments can not be empty!")
-      return
+      Alert("Comments can not be empty!");
+      return;
     }
 
     const status = await CommentsService.POST_createComment(
       chapterId,
       contents,
       userId,
-    )
+    );
 
-    console.log("comment fetch result: ", status)
+    console.log("comment fetch result: ", status);
 
     if (status === 200) {
-      await delay(0.3)
+      await delay(0.3);
       // 성공했으니깐 다시 fetch
-      fetchOne({ curId: chapterId, parentId, depth, userId })
-      updateComments()
+      fetchOne({ curId: chapterId, parentId, depth, userId });
+      updateComments();
     }
 
     // 새 댓글 입력 후 입력창 비우기
-    setContents("")
-  }
+    setContents("");
+  };
 
-  const onCloseComment = () => nav.goBack()
+  const onCloseComment = () => nav.goBack();
 
   const renderComments = comments => {
-    const { id, user_id: otherId, reply, userImg, usreNick } = comments.item
+    const { id, user_id: otherId, reply, userImg, usreNick } = comments.item;
     // console.log(comments.item);
 
     if (+otherId === userId) {
-      return <CommentItem_Me key={id} contents={reply} />
+      return <CommentItem_Me key={id} contents={reply} />;
     } else {
       return (
         <CommentItem_Other
@@ -116,9 +121,9 @@ const Comments = ({ route }) => {
           userName={usreNick}
           contents={reply}
         />
-      )
+      );
     }
-  }
+  };
 
   return (
     <KeyboardAwareScrollView
@@ -130,7 +135,7 @@ const Comments = ({ route }) => {
       <View style={s.root}>
         {/* Title */}
         <View style={s.topSection}>
-          <Text fontFamily='heavy' style={s.title}>
+          <Text fontFamily='bold' style={s.title}>
             COMMENTS
           </Text>
         </View>
@@ -179,10 +184,10 @@ const Comments = ({ route }) => {
         </View>
       </View>
     </KeyboardAwareScrollView>
-  )
-}
+  );
+};
 
-export default Comments
+export default Comments;
 
 const s = StyleSheet.create({
   root: {
@@ -240,4 +245,4 @@ const s = StyleSheet.create({
     color: colors.light.ivory1,
     // zIndex: 50,
   },
-})
+});

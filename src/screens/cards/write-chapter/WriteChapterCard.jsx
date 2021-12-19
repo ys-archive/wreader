@@ -1,47 +1,47 @@
-import React, { useCallback } from "react"
-import { View, Platform, ImageBackground } from "react-native"
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
-import { StyleSheet, Text } from "#components"
+import React, { useCallback } from "react";
+import { View, Platform, ImageBackground } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { StyleSheet, Text } from "#components";
 
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from "react-native-responsive-screen"
+} from "react-native-responsive-screen";
 
-import AddImage from "../../../components/icon/AddImage"
-import { colors, StyleDefine } from "../../../constants"
+import AddImage from "../../../components/icon/AddImage";
+import { colors, StyleDefine } from "../../../constants";
 
-import { makeCategoryBGImagePath } from "#constants/images"
+import { makeCategoryBGImagePath } from "#constants/images";
 
-import { useImagePicker } from "../../../hooks"
-import { useStoreState } from "easy-peasy"
-import { selImage } from "../../../store/selectors"
+import { useImagePicker } from "../../../hooks";
+import { useStoreState } from "easy-peasy";
+import { selImage } from "../../../store/selectors";
 
-import WriteCardForm from "./WriteCardForm"
+import WriteCardForm from "./WriteCardForm";
 
-import LoadingModal from "../../../components/modals/LoadingModal"
+import LoadingModal from "../../../components/modals/LoadingModal";
 
 const initStates = () => {
   // selectors
-  const cardImageUrl = useStoreState(selImage.card)
-  const isCardStartUploading = useStoreState(selImage.isCardStartUploading)
+  const cardImageUrl = useStoreState(selImage.card);
+  const isCardStartUploading = useStoreState(selImage.isCardStartUploading);
   return {
     cardImageUrl,
     isCardStartUploading,
-  }
-}
+  };
+};
 
 const WriteChapterCard = ({ route }) => {
   const {
     params: { categoryTitle, chapterId, categoryId, parentId, order, depth },
-  } = route
-  const { cardImageUrl, isCardStartUploading } = initStates()
+  } = route;
+  const { cardImageUrl, isCardStartUploading } = initStates();
 
-  const pickImage = useImagePicker(9, 21)
+  const pickImage = useImagePicker(9, 21);
 
   const onPickCardImage = async () => {
-    await pickImage()
-  }
+    await pickImage();
+  };
 
   return (
     <KeyboardAwareScrollView>
@@ -72,7 +72,7 @@ const WriteChapterCard = ({ route }) => {
           }}
         >
           {/* todo: 현재 새 카드의 title 은 사용하지 않음 */}
-          <Text fontFamily='heavy' style={s.categoryTitle}>
+          <Text fontFamily='bold' style={s.categoryTitle}>
             {categoryTitle}
           </Text>
           <View
@@ -84,7 +84,7 @@ const WriteChapterCard = ({ route }) => {
             }}
           />
 
-          <Text fontFamily='semibold' style={s.chapterText}>
+          <Text fontFamily='bold' style={s.chapterText}>
             Scene Card&nbsp;
             <Text fontFamily='regular' style={s.chapterNumberText}>
               #{order}
@@ -102,10 +102,10 @@ const WriteChapterCard = ({ route }) => {
         </View>
       </ImageBackground>
     </KeyboardAwareScrollView>
-  )
-}
+  );
+};
 
-export default WriteChapterCard
+export default WriteChapterCard;
 
 const s = StyleSheet.create({
   categoryTitle: {
@@ -141,6 +141,6 @@ const s = StyleSheet.create({
   imageIcon: {
     color: colors.light.ivory1,
     // position: "relative",
-    // right: -10,  
+    // right: -10,
   },
-})
+});

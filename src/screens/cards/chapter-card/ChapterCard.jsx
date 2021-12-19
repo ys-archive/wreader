@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 
 import {
   StyleSheet,
@@ -8,37 +8,37 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
   Platform,
-} from "react-native"
-import { Text, TextInput } from "#components"
-import { Like, Reply, NotLike } from "#components/icon"
+} from "react-native";
+import { Text, TextInput } from "#components";
+import { Like, Reply, NotLike } from "#components/icon";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from "react-native-responsive-screen"
+} from "react-native-responsive-screen";
 
-import { colors, StyleDefine } from "#constants"
+import { colors, StyleDefine } from "#constants";
 
-import { makeCategoryBGImagePath, dummyProfile } from "#constants/images"
+import { makeCategoryBGImagePath, dummyProfile } from "#constants/images";
 
-import { useStoreState } from "easy-peasy"
-import { selImage } from "#store/selectors"
+import { useStoreState } from "easy-peasy";
+import { selImage } from "#store/selectors";
 
-import { useChapterCardLike } from "./chapter-card.module/useChapterCardLike"
-import { useChapterCardComments } from "./chapter-card.module/useChapterCardComments"
-import { useChapterCard_AddStory } from "./chapter-card.module/useChapterCard_AddStory"
-import { useChapterCard_Labels } from "./chapter-card.module/useChapterCard_Labels"
-import { useChapterCard_OtherProfile } from "./chapter-card.module/useChapterCard_OtherProfile"
+import { useChapterCardLike } from "./chapter-card.module/useChapterCardLike";
+import { useChapterCardComments } from "./chapter-card.module/useChapterCardComments";
+import { useChapterCard_AddStory } from "./chapter-card.module/useChapterCard_AddStory";
+import { useChapterCard_Labels } from "./chapter-card.module/useChapterCard_Labels";
+import { useChapterCard_OtherProfile } from "./chapter-card.module/useChapterCard_OtherProfile";
 
 const initStates = () => {
-  const profile = useStoreState(selImage.profile)
+  const profile = useStoreState(selImage.profile);
 
   return {
     profile,
-  }
-}
+  };
+};
 
 const ChapterCard = ({ data, categoryTitle, order = 1 }) => {
-  const { profile } = initStates()
+  const { profile } = initStates();
 
   const {
     id: chapterId, // 현재 챕터 Id
@@ -52,7 +52,7 @@ const ChapterCard = ({ data, categoryTitle, order = 1 }) => {
     userImg, // author profile image url
     userNick: authorNickName, // -> author
     isLike,
-  } = data
+  } = data;
 
   // console.log('\n');
   // console.log(
@@ -65,11 +65,16 @@ const ChapterCard = ({ data, categoryTitle, order = 1 }) => {
   // );
   // console.log('\n');
 
-  const onPressLike = useChapterCardLike(chapterId, parentId, isLike, likeCount)
-  const onPressReply = useChapterCardComments(chapterId, parentId)
-  const AddStoryJSX = useChapterCard_AddStory()
-  const { TheEndLabelJSX, FullStoryJSX } = useChapterCard_Labels(order)
-  const onPressOtherProfile = useChapterCard_OtherProfile(otherUserId)
+  const onPressLike = useChapterCardLike(
+    chapterId,
+    parentId,
+    isLike,
+    likeCount,
+  );
+  const onPressReply = useChapterCardComments(chapterId, parentId);
+  const AddStoryJSX = useChapterCard_AddStory();
+  const { TheEndLabelJSX, FullStoryJSX } = useChapterCard_Labels(order);
+  const onPressOtherProfile = useChapterCard_OtherProfile(otherUserId);
 
   return (
     <View style={s.root}>
@@ -100,7 +105,7 @@ const ChapterCard = ({ data, categoryTitle, order = 1 }) => {
               }}
               source={userImg ? { uri: userImg } : dummyProfile}
             />
-            <Text fontFamily='heavy' style={s.authorNameText}>
+            <Text fontFamily='bold' style={s.authorNameText}>
               {authorNickName || "Jessica Momo"}
             </Text>
           </View>
@@ -186,7 +191,7 @@ const ChapterCard = ({ data, categoryTitle, order = 1 }) => {
                 />
 
                 {/* <Button
-                  fontFamily="heavy"
+                  fontFamily="bold"
                   textStyle={s.replyPostText}
                   onPress={onPressReply}
                 >
@@ -198,10 +203,10 @@ const ChapterCard = ({ data, categoryTitle, order = 1 }) => {
         </ImageBackground>
       </ImageBackground>
     </View>
-  )
-}
+  );
+};
 
-export default ChapterCard
+export default ChapterCard;
 
 const s = StyleSheet.create({
   root: {
@@ -329,4 +334,4 @@ const s = StyleSheet.create({
     fontSize: 10,
     color: colors.light.ivory1,
   },
-})
+});

@@ -9,7 +9,7 @@ export const RenderError = ({
 }) =>
   touched && errors ? (
     <View>
-      <Text fontFamily="heavy" style={{ color, textAlign: 'center' }}>
+      <Text fontFamily="bold" style={{ color, textAlign: 'center' }}>
         {errors}
       </Text>
     </View>

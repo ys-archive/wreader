@@ -1,38 +1,38 @@
-import React from "react"
-import { SafeAreaView, View, TouchableOpacity, Image } from "react-native"
-import { Alert, AlertRequireLogin } from "#components/alert"
-import { colors } from "#constants"
-import { Cancel, Arrow, Person2 } from "#components/icon"
+import React from "react";
+import { SafeAreaView, View, TouchableOpacity, Image } from "react-native";
+import { Alert, AlertRequireLogin } from "#components/alert";
+import { colors } from "#constants";
+import { Cancel, Arrow, Person2 } from "#components/icon";
 import {
   // widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from "react-native-responsive-screen"
+} from "react-native-responsive-screen";
 import {
   DrawerContentScrollView,
   // DrawerItemList,
   // DrawerItem,
-} from "@react-navigation/drawer"
-import { StyleSheet, Text } from "#components"
-import * as ScreenNames from "../ScreenNames"
+} from "@react-navigation/drawer";
+import { StyleSheet, Text } from "#components";
+import * as ScreenNames from "../ScreenNames";
 
-import { useStoreActions, useStoreState } from "easy-peasy"
-import { actAuth, actImage } from "../../store/actions"
-import { selImage, selAuth } from "../../store/selectors"
+import { useStoreActions, useStoreState } from "easy-peasy";
+import { actAuth, actImage } from "../../store/actions";
+import { selImage, selAuth } from "../../store/selectors";
 
-import { useProfileImageLoader } from "../../hooks"
-import { useCardResetToStartScreen } from "../../screens/cards/useCardResetToStartScreen"
+import { useProfileImageLoader } from "../../hooks";
+import { useCardResetToStartScreen } from "../../screens/cards/useCardResetToStartScreen";
 
 const initStates = () => {
-  const isLoggedIn = useStoreState(selAuth.isLoggedIn)
-  const userInfo = useStoreState(selAuth.info)
-  const profileImageUrl = useStoreState(selImage.profile)
+  const isLoggedIn = useStoreState(selAuth.isLoggedIn);
+  const userInfo = useStoreState(selAuth.info);
+  const profileImageUrl = useStoreState(selImage.profile);
 
-  const nick = userInfo?.nick || "SIGN IN"
+  const nick = userInfo?.nick || "SIGN IN";
 
-  const logout = useStoreActions(actAuth.logout)
-  const resetProfile = useStoreActions(actImage.resetProfile)
+  const logout = useStoreActions(actAuth.logout);
+  const resetProfile = useStoreActions(actImage.resetProfile);
 
-  const resetMain = useCardResetToStartScreen()
+  const resetMain = useCardResetToStartScreen();
 
   return {
     isLoggedIn,
@@ -42,11 +42,11 @@ const initStates = () => {
     logout,
     resetProfile,
     resetMain,
-  }
-}
+  };
+};
 
 const DrawerTop = props => {
-  const { navigation: nav } = props
+  const { navigation: nav } = props;
   const {
     isLoggedIn,
     userInfo,
@@ -55,36 +55,36 @@ const DrawerTop = props => {
     logout,
     resetProfile,
     resetMain,
-  } = initStates()
+  } = initStates();
 
   // 프로필 이미지 로드
-  useProfileImageLoader(isLoggedIn)
+  useProfileImageLoader(isLoggedIn);
 
   const onPressProfileImage = () => {
     isLoggedIn
       ? nav.navigate(ScreenNames.MyProfileStack) // true -> 프로필 스크린으로 이동
       : Alert("Need login to see your profile", "close", () =>
           nav.navigate(ScreenNames.SigninStack),
-        ) // false -> 로그인 확인 메시지
-  }
+        ); // false -> 로그인 확인 메시지
+  };
 
   const onPressUserName = () => {
     if (nick === "SIGN IN") {
-      nav.navigate(ScreenNames.SigninStack)
+      nav.navigate(ScreenNames.SigninStack);
     }
-  }
+  };
 
   const onLogout = () => {
-    Alert("You've logged out")
-    resetProfile()
-    logout()
-    nav.closeDrawer()
-  }
+    Alert("You've logged out");
+    resetProfile();
+    logout();
+    nav.closeDrawer();
+  };
 
   return (
     <DrawerContentScrollView {...props} contentContainerStyle={s.root}>
       <SafeAreaView>
-        <View style={s.elementPlacer} pointerEvents="box-none">
+        <View style={s.elementPlacer} pointerEvents='box-none'>
           {/* 드로어 닫기 */}
           <Cancel
             style={s.closeDrawerPlacer}
@@ -110,7 +110,7 @@ const DrawerTop = props => {
           {/* 유저 이름 */}
           <TouchableOpacity onPress={onPressUserName}>
             <Text
-              fontFamily="heavy"
+              fontFamily='bold'
               style={[s.userName, { marginLeft: 8, marginBottom: 9 }]}
             >
               {nick}
@@ -127,18 +127,18 @@ const DrawerTop = props => {
           <TouchableOpacity
             style={s.drawerItem}
             onPress={() => {
-              nav.navigate(ScreenNames.MainStack)
-              resetMain()
+              nav.navigate(ScreenNames.MainStack);
+              resetMain();
             }}
           >
-            <Text fontFamily="heavy" style={s.drawerItemText}>
+            <Text fontFamily='bold' style={s.drawerItemText}>
               HOME
             </Text>
             <Arrow
               style={s.drawerItemArrowPlacer}
               iconStyle={s.drawerItemArrow}
               onPress={() => {}}
-              direction="right"
+              direction='right'
             />
           </TouchableOpacity>
 
@@ -151,14 +151,14 @@ const DrawerTop = props => {
                 style={s.drawerItem}
                 onPress={() => nav.navigate(ScreenNames.ContactUsStack)}
               >
-                <Text fontFamily="heavy" style={s.drawerItemText}>
+                <Text fontFamily='bold' style={s.drawerItemText}>
                   HELP & FEEDBACK
                 </Text>
                 <Arrow
                   style={s.drawerItemArrowPlacer}
                   iconStyle={s.drawerItemArrow}
                   onPress={() => {}}
-                  direction="right"
+                  direction='right'
                 />
               </TouchableOpacity>
               <View style={s.separator} />
@@ -170,14 +170,14 @@ const DrawerTop = props => {
             style={s.drawerItem}
             onPress={() => nav.navigate(ScreenNames.PolicyAndConditionStack)}
           >
-            <Text fontFamily="heavy" style={s.drawerItemText}>
+            <Text fontFamily='bold' style={s.drawerItemText}>
               TERMS OF USE
             </Text>
             <Arrow
               style={s.drawerItemArrowPlacer}
               iconStyle={s.drawerItemArrow}
               onPress={() => {}}
-              direction="right"
+              direction='right'
             />
           </TouchableOpacity>
 
@@ -190,7 +190,7 @@ const DrawerTop = props => {
             //   style={s.drawerItem}
             //   onPress={() => nav.navigate(ScreenNames.SigninStack)}
             // >
-            //   <Text fontFamily="heavy" style={s.drawerItemText}>
+            //   <Text fontFamily="bold" style={s.drawerItemText}>
             //     LOG IN
             //   </Text>
             // </TouchableOpacity>
@@ -198,7 +198,7 @@ const DrawerTop = props => {
             // 로그인 되어있으면 -> 로그아웃 실행
             <>
               <TouchableOpacity style={s.drawerItem} onPress={onLogout}>
-                <Text fontFamily="heavy" style={s.drawerItemText}>
+                <Text fontFamily='bold' style={s.drawerItemText}>
                   LOGOUT
                 </Text>
               </TouchableOpacity>
@@ -210,10 +210,10 @@ const DrawerTop = props => {
         {/* <DrawerItem label="help" onPress={() => console.log('help clicked')} /> */}
       </SafeAreaView>
     </DrawerContentScrollView>
-  )
-}
+  );
+};
 
-export default DrawerTop
+export default DrawerTop;
 
 const s = StyleSheet.create({
   root: {
@@ -287,4 +287,4 @@ const s = StyleSheet.create({
     marginTop: "2%",
     marginBottom: "10.8%",
   },
-})
+});

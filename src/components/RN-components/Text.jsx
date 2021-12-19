@@ -1,10 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Text as OrigText } from 'react-native';
-import { StyleSheet } from './StyleSheet';
-import { fonts } from '#constants';
+import React from "react";
+import PropTypes from "prop-types";
+import { Text as OrigText } from "react-native";
+import { StyleSheet } from "./StyleSheet";
+import { fonts } from "#constants";
 
-export const Text = ({ style, fontFamily = 'xlight', children }) => {
+export const Text = ({ style, fontFamily = "regular", children }) => {
   return (
     <OrigText style={[{ fontFamily: fonts[fontFamily] }, style]}>
       {children}
@@ -13,19 +13,12 @@ export const Text = ({ style, fontFamily = 'xlight', children }) => {
 };
 
 Text.propTypes = {
-  fontFamily: PropTypes.oneOf([
-    'xlight',
-    'light',
-    'thin',
-    'regular',
-    'semibold',
-    'heavy',
-  ]),
+  fontFamily: PropTypes.oneOf(["regular", "bold"]),
   children: PropTypes.any,
 };
 
 Text.defaultProps = {
-  fontSize: 'xlight',
+  fontSize: "regular",
   children: undefined,
 };
 

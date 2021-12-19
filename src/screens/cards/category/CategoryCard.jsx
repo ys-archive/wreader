@@ -28,7 +28,7 @@ const CategoryCard = ({ data }) => {
         resizeMode='cover'
       >
         <View style={s.cardTitleView}>
-          <Text fontFamily='heavy' style={s.title}>
+          <Text fontFamily='bold' style={s.title}>
             {title}
           </Text>
         </View>

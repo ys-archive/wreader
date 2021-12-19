@@ -1,13 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { View, ScrollView } from 'react-native';
-import { CheckBox, Button, StyleSheet, Text } from '#components';
-import { colors } from '#constants';
-import { Arrow } from '#components/icon';
+import React from "react";
+import PropTypes from "prop-types";
+import { View, ScrollView } from "react-native";
+import { CheckBox, Button, StyleSheet, Text } from "#components";
+import { colors } from "#constants";
+import { Arrow } from "#components/icon";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+} from "react-native-responsive-screen";
 
 const SignupPolicyAndConditions = ({ onSubmit, values, setFieldValue }) => {
   const {
@@ -24,16 +24,16 @@ const SignupPolicyAndConditions = ({ onSubmit, values, setFieldValue }) => {
           isChecked={isAllAllowed}
           onChange={() => {
             const res = !isAllAllowed;
-            setFieldValue('isAllAllowed', res);
-            setFieldValue('isAgreementAllowed', res);
-            setFieldValue('isPrivacyPolicyAllowed', res);
-            setFieldValue('isMarketingAllowedOptional', res);
+            setFieldValue("isAllAllowed", res);
+            setFieldValue("isAgreementAllowed", res);
+            setFieldValue("isPrivacyPolicyAllowed", res);
+            setFieldValue("isMarketingAllowedOptional", res);
           }}
           borderColor={colors.light.ivory5}
           highlightColor={colors.light.transparent}
           checkColor={colors.light.ivory5}
         />
-        <Text style={s.autoLoginText} fontFamily="heavy">
+        <Text style={s.autoLoginText} fontFamily='bold'>
           AGREE TO ALL TERMS
         </Text>
       </View>
@@ -42,19 +42,19 @@ const SignupPolicyAndConditions = ({ onSubmit, values, setFieldValue }) => {
         <CheckBox
           isChecked={isAgreementAllowed}
           onChange={() =>
-            setFieldValue('isAgreementAllowed', !isAgreementAllowed)
+            setFieldValue("isAgreementAllowed", !isAgreementAllowed)
           }
           borderColor={colors.light.ivory5}
           highlightColor={colors.light.transparent}
           checkColor={colors.light.ivory5}
         />
-        <Text fontFamily="heavy" style={s.autoLoginText}>
+        <Text fontFamily='bold' style={s.autoLoginText}>
           TERMS OF USE
         </Text>
 
         {/* TODO: 내용 열기 */}
         <Arrow
-          direction="down"
+          direction='down'
           style={s.policyArrow}
           iconStyle={{ width: 18, height: 10 }}
         />
@@ -64,19 +64,19 @@ const SignupPolicyAndConditions = ({ onSubmit, values, setFieldValue }) => {
         <CheckBox
           isChecked={isPrivacyPolicyAllowed}
           onChange={() =>
-            setFieldValue('isPrivacyPolicyAllowed', !isPrivacyPolicyAllowed)
+            setFieldValue("isPrivacyPolicyAllowed", !isPrivacyPolicyAllowed)
           }
           borderColor={colors.light.ivory5}
           highlightColor={colors.light.transparent}
           checkColor={colors.light.ivory5}
         />
-        <Text fontFamily="heavy" style={s.autoLoginText}>
+        <Text fontFamily='bold' style={s.autoLoginText}>
           PRIVACY POLICY
         </Text>
 
         {/* TODO: 내용 열기 */}
         <Arrow
-          direction="down"
+          direction='down'
           style={s.policyArrow}
           iconStyle={{ width: 18, height: 10 }}
         />
@@ -87,7 +87,7 @@ const SignupPolicyAndConditions = ({ onSubmit, values, setFieldValue }) => {
           isChecked={isMarketingAllowedOptional}
           onChange={() =>
             setFieldValue(
-              'isMarketingAllowedOptional',
+              "isMarketingAllowedOptional",
               !isMarketingAllowedOptional,
             )
           }
@@ -95,20 +95,20 @@ const SignupPolicyAndConditions = ({ onSubmit, values, setFieldValue }) => {
           highlightColor={colors.light.transparent}
           checkColor={colors.light.ivory5}
         />
-        <Text fontFamily="heavy" style={s.autoLoginText}>
+        <Text fontFamily='bold' style={s.autoLoginText}>
           MARKETING
         </Text>
 
         {/* TODO: 내용 열기 */}
         <Arrow
-          direction="down"
+          direction='down'
           style={s.policyArrow}
           iconStyle={{ width: 18, height: 10 }}
         />
       </View>
 
       <Button
-        fontFamily="heavy"
+        fontFamily='bold'
         style={s.nextButton}
         textStyle={s.nextButtonText}
         onPress={onSubmit}
@@ -116,9 +116,9 @@ const SignupPolicyAndConditions = ({ onSubmit, values, setFieldValue }) => {
         NEXT
       </Button>
       <Arrow
-        direction="right"
-        style={{ position: 'absolute', right: 10, bottom: 60 }}
-        iconStyle={{ width: 10, height: 20, tintColor: 'white' }}
+        direction='right'
+        style={{ position: "absolute", right: 10, bottom: 60 }}
+        iconStyle={{ width: 10, height: 20, tintColor: "white" }}
       />
     </View>
   );
@@ -139,14 +139,14 @@ const s = StyleSheet.create({
     // marginTop: 20,
   },
   policyCheckBoxItem: {
-    flexDirection: 'row',
+    flexDirection: "row",
     // marginVertical: 15,
     marginHorizontal: 10,
     paddingLeft: 15,
     // paddingBottom: 15,
   },
   policyCheckBoxItemOutline: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginHorizontal: 0,
     paddingLeft: 25,
     paddingBottom: 15,
@@ -155,7 +155,7 @@ const s = StyleSheet.create({
     borderBottomWidth: 0.5,
     borderBottomStartRadius: 24,
     borderColor: colors.light.ivory5,
-    alignItems: 'center',
+    alignItems: "center",
   },
   nextButton: {
     marginTop: 48,
@@ -163,7 +163,7 @@ const s = StyleSheet.create({
     // width: '120%',
     // paddingHorizontal: '40%',
     marginHorizontal: 0,
-    paddingVertical: '3.5%',
+    paddingVertical: "3.5%",
     borderRadius: 11,
     backgroundColor: colors.light.ivory5,
   },
@@ -172,21 +172,21 @@ const s = StyleSheet.create({
     fontSize: 18,
   },
   nextButtonArrow: {
-    position: 'absolute',
+    position: "absolute",
     right: -100,
     top: 0,
   },
   policyDetailText: {
-    position: 'absolute',
-    right: '0%',
+    position: "absolute",
+    right: "0%",
   },
   autoLoginText: {
     fontSize: 13,
-    marginLeft: '3%',
+    marginLeft: "3%",
     color: colors.light.ivory5,
   },
   policyArrow: {
-    position: 'absolute',
+    position: "absolute",
     right: 8,
     bottom: 20,
   },

@@ -1,12 +1,12 @@
-import React from 'react';
-import { View, ScrollView } from 'react-native';
-import { StyleSheet, Text } from '#components';
-import { colors } from '#constants';
+import React from "react";
+import { View, ScrollView } from "react-native";
+import { StyleSheet, Text } from "#components";
+import { colors } from "#constants";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
-import { Arrow } from '#components/icon';
+} from "react-native-responsive-screen";
+import { Arrow } from "#components/icon";
 
 const PolicyAndCondition = () => {
   return (
@@ -15,15 +15,15 @@ const PolicyAndCondition = () => {
         <View
           style={[
             s.titleSection,
-            { width: wp('84.7%'), minHeight: hp('71.4%') },
+            { width: wp("84.7%"), minHeight: hp("71.4%") },
           ]}
         >
-          <Text isBold style={s.titleText}>
+          <Text fontFamily='bold' style={s.titleText}>
             TERMS OF USE
           </Text>
 
           <View style={s.descriptionSection}>
-            <Text isBold style={[s.headerText]}>
+            <Text fontFamily='bold' style={[s.headerText]}>
               Composition of Terms
             </Text>
 
@@ -33,7 +33,7 @@ const PolicyAndCondition = () => {
               sure to read the full terms and conditions as well.
             </Text>
 
-            <Text isBold style={[s.headerText]}>
+            <Text fontFamily='bold' style={[s.headerText]}>
               Welcome to YouTube
             </Text>
 
@@ -43,7 +43,7 @@ const PolicyAndCondition = () => {
               contract, and identifies the service provider.
             </Text>
 
-            <Text isBold style={[s.headerText]}>
+            <Text fontFamily='bold' style={[s.headerText]}>
               Who can use the service
             </Text>
 
@@ -52,7 +52,7 @@ const PolicyAndCondition = () => {
               service and defines user classifications.
             </Text>
 
-            <Text isBold style={[s.headerText]}>
+            <Text fontFamily='bold' style={[s.headerText]}>
               use of the service
             </Text>
 
@@ -62,7 +62,7 @@ const PolicyAndCondition = () => {
               that the Services are subject to change.
             </Text>
 
-            <Text isBold style={[s.headerText]}>
+            <Text fontFamily='bold' style={[s.headerText]}>
               Your Content and Operations
             </Text>
 
@@ -73,7 +73,7 @@ const PolicyAndCondition = () => {
               the rights of others.
             </Text>
 
-            <Text isBold style={[s.headerText]}>
+            <Text fontFamily='bold' style={[s.headerText]}>
               Account Suspension and Termination
             </Text>
 
@@ -81,7 +81,7 @@ const PolicyAndCondition = () => {
               This section explains how you and YouTube can end a relationship.
             </Text>
 
-            <Text isBold style={[s.headerText]}>
+            <Text fontFamily='bold' style={[s.headerText]}>
               About the software included in the service
             </Text>
 
@@ -90,7 +90,7 @@ const PolicyAndCondition = () => {
               service.
             </Text>
 
-            <Text isBold style={[s.headerText]}>
+            <Text fontFamily='bold' style={[s.headerText]}>
               Other legal provisions
             </Text>
 
@@ -100,7 +100,7 @@ const PolicyAndCondition = () => {
               for.
             </Text>
 
-            <Text isBold style={[s.headerText]}>
+            <Text fontFamily='bold' style={[s.headerText]}>
               About this Agreement
             </Text>
 
@@ -109,44 +109,44 @@ const PolicyAndCondition = () => {
               contract, such as changes to the terms and the applicable law.
             </Text>
             <Arrow
-              direction="up"
+              direction='up'
               iconStyle={{ width: 16, height: 10 }}
-              style={{ position: 'absolute', right: '5.1%', bottom: -10 }}
+              style={{ position: "absolute", right: "5.1%", bottom: -10 }}
             />
           </View>
         </View>
         <View
           style={[
             s.titleSection,
-            { width: wp('84.7%'), minHeight: hp('4.7%') },
+            { width: wp("84.7%"), minHeight: hp("4.7%") },
           ]}
         >
-          <Text isBold style={[s.titleText]}>
+          <Text fontFamily='bold' style={[s.titleText]}>
             PRIVACY POLICY
           </Text>
           <Arrow
-            direction="down"
+            direction='down'
             iconStyle={{ width: 16, height: 10 }}
-            style={{ position: 'absolute', right: '5.1%', bottom: 17 }}
+            style={{ position: "absolute", right: "5.1%", bottom: 17 }}
           />
         </View>
         <View
           style={[
             s.titleSection,
-            { width: wp('84.7%'), minHeight: hp('4.7%') },
+            { width: wp("84.7%"), minHeight: hp("4.7%") },
           ]}
         >
-          <Text isBold style={[s.titleText]}>
+          <Text fontFamily='bold' style={[s.titleText]}>
             MARKETING
           </Text>
           <Arrow
-            direction="down"
+            direction='down'
             iconStyle={{ width: 16, height: 10 }}
-            style={{ position: 'absolute', right: '5.1%', bottom: 17 }}
+            style={{ position: "absolute", right: "5.1%", bottom: 17 }}
           />
         </View>
         <View style={s.copyright}>
-          <Text style={s.copyrightText}>{'\u00A9'}&nbsp;</Text>
+          <Text style={s.copyrightText}>{"\u00A9"}&nbsp;</Text>
           <Text style={s.copyrightText}>
             2021 W.READER. ALL rights reserved.
           </Text>
@@ -172,12 +172,12 @@ const s = StyleSheet.create({
   titleSection: {
     marginTop: 28.2,
     paddingLeft: 8.6,
-    height: hp('7.9%'),
+    height: hp("7.9%"),
     borderLeftWidth: 0.5,
     borderBottomWidth: 0.5,
     borderBottomStartRadius: 17,
     borderColor: colors.light.ivory5,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   titleText: {
     fontSize: 25,
@@ -199,10 +199,10 @@ const s = StyleSheet.create({
     fontSize: 13,
   },
   copyright: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginTop: 40,
     marginBottom: 30,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   copyrightText: {
     fontSize: 10,
