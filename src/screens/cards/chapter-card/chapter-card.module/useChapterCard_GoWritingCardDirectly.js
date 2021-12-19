@@ -55,14 +55,14 @@ export const useChapterCard_GoWritingCardDirectly = () => {
     switch (depth) {
       case DEPTH_NAME.CHAPTER:
         // 챕터 맨뒤에 직접 쓰기
-        // nav.navigate(ScreenNames.MainWriteCard, {
-        //   categoryTitle: categories[coords.d0].title,
-        //   categoryId: coords.d0,
-        //   chapterId: 0,
-        //   order: 1,
-        //   depth: DEPTH_NAME.CHAPTER,
-        // });
-        // break;
+        nav.navigate(ScreenNames.MainWriteCard, {
+          categoryTitle: categories[coords.d0].title,
+          categoryId: coords.d0,
+          chapterId: 0,
+          order: 1,
+          depth: DEPTH_NAME.CHAPTER,
+        });
+        break;
 
       case DEPTH_NAME.USER_CHAPTER:
         nav.navigate(ScreenNames.MainWriteCard, {
