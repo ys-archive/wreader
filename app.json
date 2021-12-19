@@ -2,7 +2,7 @@
   "expo": {
     "name": "Outliners",
     "slug": "Outliners",
-    "version": "1.1.5",
+    "version": "1.1.6",
     "orientation": "portrait",
     "icon": "./assets/images/app-icon.png",
     "assetBundlePatterns": [
@@ -12,7 +12,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.wreader.wreader-resource",
-      "buildNumber": "1.1.5",
+      "buildNumber": "1.1.6",
       "googleServicesFile": "./GoogleService-Info.plist",
       "splash": {
         "image": "./assets/images/splash@2x.png",
