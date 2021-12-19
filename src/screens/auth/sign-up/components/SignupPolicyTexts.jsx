@@ -32,13 +32,13 @@ const SignupPolicyTexts = ({
       <View style={s.root}>
         <Cancel onPress={onPressGoBackIcon} />
         <View style={s.topSection}>
-          <Text fontFamily="bold" style={s.titleText}>
+          <Text fontFamily="regular" style={s.titleText}>
             {title}
           </Text>
         </View>
 
         <View style={[s.titleSection, { width: wp('84.7%') }]}>
-          <Text fontFamily="bold" style={s.subtitleText}>
+          <Text fontFamily="regular" style={s.subtitleText}>
             {subtitle}
           </Text>
           <View style={s.subtitleDetailsView}>
@@ -52,7 +52,7 @@ const SignupPolicyTexts = ({
 
         {basicInfo && (
           <View style={s.basicInfoSection}>
-            <Text fontFamily="bold" style={s.basicInfo}>
+            <Text fontFamily="regular" style={s.basicInfo}>
               {basicInfo}
             </Text>
           </View>

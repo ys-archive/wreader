@@ -190,7 +190,7 @@ const DrawerTop = props => {
             //   style={s.drawerItem}
             //   onPress={() => nav.navigate(ScreenNames.SigninStack)}
             // >
-            //   <Text fontFamily="bold" style={s.drawerItemText}>
+            //   <Text fontFamily="regular" style={s.drawerItemText}>
             //     LOG IN
             //   </Text>
             // </TouchableOpacity>

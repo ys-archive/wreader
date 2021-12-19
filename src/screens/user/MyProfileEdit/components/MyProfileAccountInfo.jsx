@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import { View } from 'react-native';
-import { StyleSheet, Text, TextInput } from '#components';
+import React, { useState } from "react";
+import { View } from "react-native";
+import { StyleSheet, Text, TextInput } from "#components";
 
-import { useStoreState } from 'easy-peasy';
-import { selectEmail, selectUserInfo } from '#store/selectors';
-import { selAuth } from '../../../../store/selectors';
-import { Edit2 } from '#components/icon';
-import { colors } from '#constants';
+import { useStoreState } from "easy-peasy";
+import { selectEmail, selectUserInfo } from "#store/selectors";
+import { selAuth } from "../../../../store/selectors";
+import { Edit2 } from "#components/icon";
+import { colors } from "#constants";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+} from "react-native-responsive-screen";
 
-import MyProfilePassword from './MyProfilePassword';
-import MyProfileUserName from './MyProfileUserName';
+import MyProfilePassword from "./MyProfilePassword";
+import MyProfileUserName from "./MyProfileUserName";
 
 const MyProfileAccountInfo = () => {
   const email = useStoreState(selAuth.email);
@@ -29,16 +29,16 @@ const MyProfileAccountInfo = () => {
       <MyProfileUserName isEditingUserName={isEditingUserName} />
 
       <Edit2
-        style={{ position: 'absolute', right: -10, top: 0 }}
+        style={{ position: "absolute", right: -10, top: 0 }}
         onPress={toggleEditingUserName}
       />
 
-      <Text fontFamily="bold" style={s.title}>
+      <Text fontFamily='bold' style={s.title}>
         ACCOUNT INFO
       </Text>
 
       <Edit2
-        style={{ position: 'absolute', right: -10, top: 60 }}
+        style={{ position: "absolute", right: -10, top: 60 }}
         onPress={toggleEditingPassword}
       />
 
@@ -46,8 +46,12 @@ const MyProfileAccountInfo = () => {
 
       <View style={s.accountInfoSection}>
         <View style={s.emailView}>
-          <Text fontFamily="regular" style={s.infoPlaceholder}>E-MAIL</Text>
-          <Text fontFamily="regular" style={s.emailText}>{email}</Text>
+          <Text fontFamily='regular' style={s.infoPlaceholder}>
+            E-MAIL
+          </Text>
+          <Text fontFamily='regular' style={s.emailText}>
+            {email}
+          </Text>
         </View>
         <View style={s.passwordView}>
           <MyProfilePassword isEditingPassword={isEditingPassword} />
@@ -63,34 +67,34 @@ const s = StyleSheet.create({
   title: {
     marginTop: 45.6,
     fontSize: 21,
-    color: '#fff',
+    color: "#fff",
     // textSpacing: -0.7
   },
   separator: {
-    maxWidth: '55%',
+    maxWidth: "55%",
     minHeight: 1,
     backgroundColor: colors.light.ivory5,
-    marginTop: '2%',
+    marginTop: "2%",
   },
 
   accountInfoSection: {
-    marginTop: hp('3.5%'),
+    marginTop: hp("3.5%"),
   },
 
   emailView: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   infoPlaceholder: {
     color: colors.light.white,
     fontSize: 15,
   },
   emailText: {
-    marginLeft: wp('14.4%'),
+    marginLeft: wp("14.4%"),
     color: colors.light.white,
     fontSize: 15,
   },
 
   passwordView: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
 });

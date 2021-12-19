@@ -1,10 +1,10 @@
-import React from "react"
-import { View, SafeAreaView, Image } from "react-native"
+import React from "react";
+import { View, SafeAreaView, Image } from "react-native";
 // import { KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
-import { StyleSheet, Text } from "#components"
+import { StyleSheet, Text } from "#components";
 
-import { useNavigation } from "@react-navigation/native"
-import * as ScreenNames from "#navigators/ScreenNames"
+import { useNavigation } from "@react-navigation/native";
+import * as ScreenNames from "#navigators/ScreenNames";
 
 import {
   Cancel,
@@ -13,36 +13,36 @@ import {
   Instagram,
   Facebook,
   Person,
-} from "#components/icon"
-import { colors } from "#constants"
+} from "#components/icon";
+import { colors } from "#constants";
 
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from "react-native-responsive-screen"
+} from "react-native-responsive-screen";
 
-import { useProfileImageLoader } from "../../hooks"
+import { useProfileImageLoader } from "../../hooks";
 
-import { useStoreState } from "easy-peasy"
-import { selAuth, selImage } from "../../store/selectors"
+import { useStoreState } from "easy-peasy";
+import { selAuth, selImage } from "../../store/selectors";
 
 const MyProfile = () => {
-  const nav = useNavigation()
+  const nav = useNavigation();
 
   const onPressGoBackIcon = () => {
-    nav.goBack()
-  }
+    nav.goBack();
+  };
 
   const onPressEditIcon = () => {
-    nav.navigate(ScreenNames.MyProfileEdit)
-  }
+    nav.navigate(ScreenNames.MyProfileEdit);
+  };
 
-  useProfileImageLoader()
+  useProfileImageLoader();
 
-  const uri = useStoreState(selImage.profile)
-  const userInfo = useStoreState(selAuth.info)
+  const uri = useStoreState(selImage.profile);
+  const userInfo = useStoreState(selAuth.info);
 
-  if (!userInfo) return null
+  if (!userInfo) return null;
 
   const profileImage = uri ? (
     <Image
@@ -62,9 +62,9 @@ const MyProfile = () => {
         backgroundColor: "#000",
       }}
     />
-  )
+  );
 
-  const { intro, facebook, instagram, nick } = userInfo
+  const { intro, facebook, instagram, nick } = userInfo;
   return (
     <SafeAreaView style={s.root}>
       <View style={s.placer}>
@@ -82,7 +82,7 @@ const MyProfile = () => {
 
         {/* 닉네임 */}
         <View style={s.userNamePlacer}>
-          <Text fontFamily="semibold" style={s.userName}>
+          <Text fontFamily='bold' style={s.userName}>
             {nick}
           </Text>
         </View>
@@ -91,7 +91,7 @@ const MyProfile = () => {
           {/* 좋아요 */}
           <View style={s.social}>
             <Like style={s.socialIcon} />
-            <Text fontFamily="regular" style={s.socialText}>
+            <Text fontFamily='regular' style={s.socialText}>
               1500
             </Text>
           </View>
@@ -99,7 +99,7 @@ const MyProfile = () => {
           {/* 인스타그램 링크 */}
           <View style={s.social}>
             <Instagram style={s.socialIcon} />
-            <Text fontFamily="regular" style={s.socialText}>
+            <Text fontFamily='regular' style={s.socialText}>
               {instagram || "NONE"}
             </Text>
           </View>
@@ -107,7 +107,7 @@ const MyProfile = () => {
           {/* 페이스북 링크 */}
           <View style={s.social}>
             <Facebook style={s.socialIcon} />
-            <Text fontFamily="regular" style={s.socialText}>
+            <Text fontFamily='regular' style={s.socialText}>
               {facebook || "NONE"}
             </Text>
           </View>
@@ -115,16 +115,16 @@ const MyProfile = () => {
 
         {/* 자기 소개 */}
         <View style={s.introductionSection}>
-          <Text fontFamily="regular" style={s.introductionText}>
+          <Text fontFamily='regular' style={s.introductionText}>
             {intro || "NONE"}
           </Text>
         </View>
       </View>
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default MyProfile
+export default MyProfile;
 
 const s = StyleSheet.create({
   root: {
@@ -199,4 +199,4 @@ const s = StyleSheet.create({
     color: colors.light.white,
     textAlign: "justify",
   },
-})
+});

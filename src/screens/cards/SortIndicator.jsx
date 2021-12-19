@@ -23,8 +23,8 @@ const SortIndicator = () => {
   const { isSortedByLikes } = initStates();
 
   console.log(`is sorted by likes? : ${isSortedByLikes}`);
-  const popularFontFamily = isSortedByLikes ? "bold" : "regular";
-  const dateFontFamily = !isSortedByLikes ? "bold" : "regular";
+  const popularFontFamily = isSortedByLikes ? "regular" : "regular";
+  const dateFontFamily = !isSortedByLikes ? "regular" : "regular";
 
   return (
     <>

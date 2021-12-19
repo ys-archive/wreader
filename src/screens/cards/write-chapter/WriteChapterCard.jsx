@@ -85,10 +85,11 @@ const WriteChapterCard = ({ route }) => {
           />
 
           <Text fontFamily='bold' style={s.chapterText}>
-            Scene Card&nbsp;
+            {/* Scene Card&nbsp; */}
             <Text fontFamily='regular' style={s.chapterNumberText}>
-              #{order}
+              #{order}&nbsp;
             </Text>
+            번째 카드
           </Text>
 
           <WriteCardForm

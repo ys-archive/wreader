@@ -127,7 +127,7 @@ const ChapterCard = ({ data, categoryTitle, order = 1 }) => {
 
           {/* 챕터 제목 */}
           {/* <View style={s.titleSection}>
-            <Text fontFamily="semibold" style={s.title}>
+            <Text fontFamily="regular" style={s.title}>
               {categoryTitle}
             </Text>
           </View> */}
@@ -135,11 +135,11 @@ const ChapterCard = ({ data, categoryTitle, order = 1 }) => {
           {/* <View style={s.separator}></View> */}
 
           <View style={s.chapterOrderSection}>
-            <Text fontFamily='semibold' style={s.chapterOrderPlaceholder}>
-              Scene Card&nbsp;
-            </Text>
-            <Text fontFamily='regular' style={s.chapterOrderText}>
-              #{order}
+            <Text fontFamily='regular' style={s.chapterOrderPlaceholder}>
+              <Text fontFamily='regular' style={s.chapterOrderText}>
+                #{order}&nbsp;
+              </Text>
+              번째 카드
             </Text>
           </View>
 
@@ -191,7 +191,7 @@ const ChapterCard = ({ data, categoryTitle, order = 1 }) => {
                 />
 
                 {/* <Button
-                  fontFamily="bold"
+                  fontFamily="regular"
                   textStyle={s.replyPostText}
                   onPress={onPressReply}
                 >

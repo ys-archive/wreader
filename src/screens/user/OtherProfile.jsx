@@ -72,7 +72,7 @@ const OtherProfile = ({ route }) => {
 
         {/* 닉네임 */}
         <View style={s.userNamePlacer}>
-          <Text fontFamily="semibold" style={s.userName}>
+          <Text fontFamily="regular" style={s.userName}>
             {nick}
           </Text>
         </View>
