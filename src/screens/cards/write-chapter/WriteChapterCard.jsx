@@ -72,7 +72,7 @@ const WriteChapterCard = ({ route }) => {
           }}
         >
           {/* todo: 현재 새 카드의 title 은 사용하지 않음 */}
-          <Text fontFamily='bold' style={s.categoryTitle}>
+          <Text fontFamily='regular' style={s.categoryTitle}>
             {categoryTitle}
           </Text>
           <View
@@ -84,7 +84,7 @@ const WriteChapterCard = ({ route }) => {
             }}
           />
 
-          <Text fontFamily='bold' style={s.chapterText}>
+          <Text fontFamily='regular' style={s.chapterText}>
             {/* Scene Card&nbsp; */}
             <Text fontFamily='regular' style={s.chapterNumberText}>
               #{order}&nbsp;
@@ -116,25 +116,26 @@ const s = StyleSheet.create({
   },
 
   titleInput: {
-    maxWidth: "50%",
-    minWidth: "50%",
+    // maxWidth: "50%",
+    // minWidth: "50%",
 
-    borderBottomWidth: 1,
-    borderColor: "#000",
+    // borderBottomWidth: 1,
+    // borderColor: "#000",
 
-    marginTop: "15%",
+    // marginTop: "15%",
     // marginBottom: hp("4%"),
     // paddingLeft: 0,
 
-    fontSize: 28,
-    fontWeight: "200",
-    color: "rgba(0, 0, 0, 0.3)",
+    // fontSize: 28,
+    // fontWeight: "200",
+    // color: "rgba(0, 0, 0, 0.3)",
   },
 
   chapterText: {
     fontSize: 17,
-    marginBottom: hp("9%"),
+    marginBottom: hp("3%"),
   },
+
   chapterNumberText: {
     fontSize: 28,
   },

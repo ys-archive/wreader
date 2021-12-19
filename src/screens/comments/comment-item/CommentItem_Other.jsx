@@ -36,7 +36,7 @@ const CommentItem_Other = ({ userId, profileImage, userName, contents }) => {
               }}
             />
           )}
-          <Text fontFamily='bold' style={s.userName}>
+          <Text fontFamily="regular" style={s.userName}>
             {userName}
           </Text>
         </View>

@@ -82,7 +82,7 @@ const MyProfile = () => {
 
         {/* 닉네임 */}
         <View style={s.userNamePlacer}>
-          <Text fontFamily='bold' style={s.userName}>
+          <Text fontFamily="regular" style={s.userName}>
             {nick}
           </Text>
         </View>

@@ -135,7 +135,7 @@ const Comments = ({ route }) => {
       <View style={s.root}>
         {/* Title */}
         <View style={s.topSection}>
-          <Text fontFamily='bold' style={s.title}>
+          <Text fontFamily="regular" style={s.title}>
             COMMENTS
           </Text>
         </View>

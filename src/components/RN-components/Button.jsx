@@ -15,7 +15,7 @@ export const Button = ({
     <TouchableOpacity style={{ ...s.root, ...style }} onPress={onPress}>
       <View style={s.view}>
         <Text
-          fontFamily={isBold ? 'bold' : 'regular'}
+          fontFamily={isBold ? "regular" : 'regular'}
           style={{ ...s.text, ...textStyle }}
         >
           {children}

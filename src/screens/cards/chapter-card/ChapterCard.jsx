@@ -105,7 +105,7 @@ const ChapterCard = ({ data, categoryTitle, order = 1 }) => {
               }}
               source={userImg ? { uri: userImg } : dummyProfile}
             />
-            <Text fontFamily='bold' style={s.authorNameText}>
+            <Text fontFamily="regular" style={s.authorNameText}>
               {authorNickName || "Jessica Momo"}
             </Text>
           </View>

@@ -25,6 +25,6 @@ Text.defaultProps = {
 const s = StyleSheet.create({
   root: {
     fontSize: 16,
-    // fontWeight: 'bold'
+    // fontWeight: "regular"
   },
 });

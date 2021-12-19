@@ -110,7 +110,7 @@ const DrawerTop = props => {
           {/* 유저 이름 */}
           <TouchableOpacity onPress={onPressUserName}>
             <Text
-              fontFamily='bold'
+              fontFamily="regular"
               style={[s.userName, { marginLeft: 8, marginBottom: 9 }]}
             >
               {nick}
@@ -131,7 +131,7 @@ const DrawerTop = props => {
               resetMain();
             }}
           >
-            <Text fontFamily='bold' style={s.drawerItemText}>
+            <Text fontFamily="regular" style={s.drawerItemText}>
               HOME
             </Text>
             <Arrow
@@ -151,7 +151,7 @@ const DrawerTop = props => {
                 style={s.drawerItem}
                 onPress={() => nav.navigate(ScreenNames.ContactUsStack)}
               >
-                <Text fontFamily='bold' style={s.drawerItemText}>
+                <Text fontFamily="regular" style={s.drawerItemText}>
                   HELP & FEEDBACK
                 </Text>
                 <Arrow
@@ -170,7 +170,7 @@ const DrawerTop = props => {
             style={s.drawerItem}
             onPress={() => nav.navigate(ScreenNames.PolicyAndConditionStack)}
           >
-            <Text fontFamily='bold' style={s.drawerItemText}>
+            <Text fontFamily="regular" style={s.drawerItemText}>
               TERMS OF USE
             </Text>
             <Arrow
@@ -198,7 +198,7 @@ const DrawerTop = props => {
             // 로그인 되어있으면 -> 로그아웃 실행
             <>
               <TouchableOpacity style={s.drawerItem} onPress={onLogout}>
-                <Text fontFamily='bold' style={s.drawerItemText}>
+                <Text fontFamily="regular" style={s.drawerItemText}>
                   LOGOUT
                 </Text>
               </TouchableOpacity>
