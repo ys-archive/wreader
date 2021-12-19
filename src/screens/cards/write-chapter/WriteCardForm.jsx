@@ -76,7 +76,7 @@ const WriteCardForm = ({
   const { sentence } = values;
 
   return (
-    <View>
+    <>
       <View style={s.textInputSection}>
         <TextInput
           style={s.input}
@@ -112,7 +112,7 @@ const WriteCardForm = ({
           SAVE
         </Button>
       </View>
-    </View>
+    </>
   );
 };
 
@@ -144,7 +144,7 @@ const s = StyleSheet.create({
   bottomSection: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
+    // // alignItems: "center",
   },
 
   summitButton: {
@@ -153,7 +153,7 @@ const s = StyleSheet.create({
     // paddingHorizontal: 15,
     position: "relative",
     right: -20,
-    // bottom: -5,
+    bottom: 5,
     borderRadius: StyleDefine.borderRadiusInside - 6,
   },
   summitInsideText: {
