@@ -1,18 +1,18 @@
-import React from "react"
-import { View, ImageBackground, Platform } from "react-native"
-import { StyleSheet, Text } from "#components"
+import React from "react";
+import { View, ImageBackground, Platform } from "react-native";
+import { StyleSheet, Text } from "#components";
 // import AddStory from '../../icon/AddStory';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from "react-native-responsive-screen"
-import { colors } from "#constants"
-import { StyleDefine } from "../../../constants"
+} from "react-native-responsive-screen";
+import { colors } from "#constants";
+import { StyleDefine } from "../../../constants";
 
-import { makeCategoryBGImagePath } from "#constants/images"
+import { makeCategoryBGImagePath } from "#constants/images";
 
 const CategoryCard = ({ data }) => {
-  const { title, subTitle, imageUri } = data
+  const { title, subTitle, imageUri } = data;
 
   return (
     <View style={s.root}>
@@ -22,13 +22,14 @@ const CategoryCard = ({ data }) => {
           height: hp("78.2%"),
           borderRadius: StyleDefine.borderRadiusOutside,
           overflow: "hidden",
+          paddingHorizontal: "10.6%",
         }}
         source={makeCategoryBGImagePath(title)}
         // source={{ uri: bgImgUri }}
         resizeMode='cover'
       >
         <View style={s.cardTitleView}>
-          <Text fontFamily='bold' style={s.title}>
+          <Text fontFamily='regular' style={s.title}>
             {title}
           </Text>
         </View>
@@ -38,10 +39,10 @@ const CategoryCard = ({ data }) => {
         </View>
       </ImageBackground>
     </View>
-  )
-}
+  );
+};
 
-export default CategoryCard
+export default CategoryCard;
 
 const s = StyleSheet.create({
   root: {
@@ -64,8 +65,7 @@ const s = StyleSheet.create({
     justifyContent: "center",
   },
   title: {
-    position: "relative",
-    left: "10.6%",
+    paddingHorizontal: "10.6%",
     color: colors.light.ivory4,
     fontSize: 25,
   },
@@ -79,4 +79,4 @@ const s = StyleSheet.create({
     color: "#fff",
     fontSize: Platform.OS === "IOS" ? 25 : 22,
   },
-})
+});
