@@ -18,12 +18,12 @@ const PolicyAndCondition = () => {
             { width: wp("84.7%"), minHeight: hp("71.4%") },
           ]}
         >
-          <Text fontFamily="regular" style={s.titleText}>
+          <Text fontFamily='bold' style={s.titleText}>
             TERMS OF USE
           </Text>
 
           <View style={s.descriptionSection}>
-            <Text fontFamily="regular" style={[s.headerText]}>
+            <Text fontFamily='bold' style={[s.headerText]}>
               Composition of Terms
             </Text>
 
@@ -33,7 +33,7 @@ const PolicyAndCondition = () => {
               sure to read the full terms and conditions as well.
             </Text>
 
-            <Text fontFamily="regular" style={[s.headerText]}>
+            <Text fontFamily='bold' style={[s.headerText]}>
               Welcome to YouTube
             </Text>
 
@@ -43,7 +43,7 @@ const PolicyAndCondition = () => {
               contract, and identifies the service provider.
             </Text>
 
-            <Text fontFamily="regular" style={[s.headerText]}>
+            <Text fontFamily='bold' style={[s.headerText]}>
               Who can use the service
             </Text>
 
@@ -52,7 +52,7 @@ const PolicyAndCondition = () => {
               service and defines user classifications.
             </Text>
 
-            <Text fontFamily="regular" style={[s.headerText]}>
+            <Text fontFamily='bold' style={[s.headerText]}>
               use of the service
             </Text>
 
@@ -62,7 +62,7 @@ const PolicyAndCondition = () => {
               that the Services are subject to change.
             </Text>
 
-            <Text fontFamily="regular" style={[s.headerText]}>
+            <Text fontFamily='bold' style={[s.headerText]}>
               Your Content and Operations
             </Text>
 
@@ -73,7 +73,7 @@ const PolicyAndCondition = () => {
               the rights of others.
             </Text>
 
-            <Text fontFamily="regular" style={[s.headerText]}>
+            <Text fontFamily='bold' style={[s.headerText]}>
               Account Suspension and Termination
             </Text>
 
@@ -81,7 +81,7 @@ const PolicyAndCondition = () => {
               This section explains how you and YouTube can end a relationship.
             </Text>
 
-            <Text fontFamily="regular" style={[s.headerText]}>
+            <Text fontFamily='bold' style={[s.headerText]}>
               About the software included in the service
             </Text>
 
@@ -90,7 +90,7 @@ const PolicyAndCondition = () => {
               service.
             </Text>
 
-            <Text fontFamily="regular" style={[s.headerText]}>
+            <Text fontFamily='bold' style={[s.headerText]}>
               Other legal provisions
             </Text>
 
@@ -100,7 +100,7 @@ const PolicyAndCondition = () => {
               for.
             </Text>
 
-            <Text fontFamily="regular" style={[s.headerText]}>
+            <Text fontFamily='bold' style={[s.headerText]}>
               About this Agreement
             </Text>
 
@@ -121,7 +121,7 @@ const PolicyAndCondition = () => {
             { width: wp("84.7%"), minHeight: hp("4.7%") },
           ]}
         >
-          <Text fontFamily="regular" style={[s.titleText]}>
+          <Text fontFamily='bold' style={[s.titleText]}>
             PRIVACY POLICY
           </Text>
           <Arrow
@@ -136,7 +136,7 @@ const PolicyAndCondition = () => {
             { width: wp("84.7%"), minHeight: hp("4.7%") },
           ]}
         >
-          <Text fontFamily="regular" style={[s.titleText]}>
+          <Text fontFamily='bold' style={[s.titleText]}>
             MARKETING
           </Text>
           <Arrow

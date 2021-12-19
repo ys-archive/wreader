@@ -33,7 +33,7 @@ const MyProfileAccountInfo = () => {
         onPress={toggleEditingUserName}
       />
 
-      <Text fontFamily="regular" style={s.title}>
+      <Text fontFamily='bold' style={s.title}>
         ACCOUNT INFO
       </Text>
 

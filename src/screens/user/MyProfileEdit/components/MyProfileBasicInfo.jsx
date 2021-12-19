@@ -114,7 +114,7 @@ const MyProfileBasicInfo = () => {
 
   return (
     <View style={s.root}>
-      <Text fontFamily="regular" style={s.title}>
+      <Text fontFamily='bold' style={s.title}>
         INFORMATION
       </Text>
 

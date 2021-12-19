@@ -31,7 +31,7 @@ const SigninAutoLogin = () => {
           onChange={toggleAutoLogin}
           highlightColor={colors.light.transparent}
         />
-        <Text fontFamily="regular" style={s.autoLoginText}>
+        <Text fontFamily='bold' style={s.autoLoginText}>
           STAY SIGNED IN
         </Text>
       </View>

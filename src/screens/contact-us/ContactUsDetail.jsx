@@ -52,7 +52,7 @@ const ContactUsDetail = () => {
     <KeyboardAwareScrollView>
       <View style={s.root}>
         <View style={s.placer}>
-          <Text fontFamily="regular" style={s.title}>
+          <Text fontFamily='bold' style={s.title}>
             CONTACT US
           </Text>
           <View style={s.separator} />
@@ -62,7 +62,7 @@ const ContactUsDetail = () => {
               { width: wp("84.7%"), minHeight: hp("6.2%") },
             ]}
           >
-            <Text fontFamily="regular" style={s.subtitle}>
+            <Text fontFamily='bold' style={s.subtitle}>
               TELL US MORE
             </Text>
           </View>
@@ -72,7 +72,7 @@ const ContactUsDetail = () => {
               going to reply you as soon as possible. Thank you.
             </Text>
           </View>
-          <Text fontFamily="regular" style={s.underTitle}>
+          <Text fontFamily='bold' style={s.underTitle}>
             THEME
           </Text>
           <View style={[s.inputView, { marginBottom: 48 }]}>
@@ -85,7 +85,7 @@ const ContactUsDetail = () => {
             />
             <RenderError touched={touched.title} errors={errors.title} />
           </View>
-          <Text fontFamily="regular" style={s.underTitle}>
+          <Text fontFamily='bold' style={s.underTitle}>
             CONTENTS
           </Text>
           <View style={s.inputView}>
@@ -106,7 +106,7 @@ const ContactUsDetail = () => {
             <Button
               style={s.summitButton}
               textStyle={s.summitText}
-              fontFamily="regular"
+              fontFamily='bold'
               onPress={handleSubmit}
             >
               SEND

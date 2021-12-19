@@ -33,7 +33,7 @@ const SignupPolicyAndConditions = ({ onSubmit, values, setFieldValue }) => {
           highlightColor={colors.light.transparent}
           checkColor={colors.light.ivory5}
         />
-        <Text style={s.autoLoginText} fontFamily="regular">
+        <Text style={s.autoLoginText} fontFamily='bold'>
           AGREE TO ALL TERMS
         </Text>
       </View>
@@ -48,7 +48,7 @@ const SignupPolicyAndConditions = ({ onSubmit, values, setFieldValue }) => {
           highlightColor={colors.light.transparent}
           checkColor={colors.light.ivory5}
         />
-        <Text fontFamily="regular" style={s.autoLoginText}>
+        <Text fontFamily='bold' style={s.autoLoginText}>
           TERMS OF USE
         </Text>
 
@@ -70,7 +70,7 @@ const SignupPolicyAndConditions = ({ onSubmit, values, setFieldValue }) => {
           highlightColor={colors.light.transparent}
           checkColor={colors.light.ivory5}
         />
-        <Text fontFamily="regular" style={s.autoLoginText}>
+        <Text fontFamily='bold' style={s.autoLoginText}>
           PRIVACY POLICY
         </Text>
 
@@ -95,7 +95,7 @@ const SignupPolicyAndConditions = ({ onSubmit, values, setFieldValue }) => {
           highlightColor={colors.light.transparent}
           checkColor={colors.light.ivory5}
         />
-        <Text fontFamily="regular" style={s.autoLoginText}>
+        <Text fontFamily='bold' style={s.autoLoginText}>
           MARKETING
         </Text>
 
@@ -108,7 +108,7 @@ const SignupPolicyAndConditions = ({ onSubmit, values, setFieldValue }) => {
       </View>
 
       <Button
-        fontFamily="regular"
+        fontFamily='bold'
         style={s.nextButton}
         textStyle={s.nextButtonText}
         onPress={onSubmit}
