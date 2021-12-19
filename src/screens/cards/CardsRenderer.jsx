@@ -63,6 +63,9 @@ const CardsRenderer = () => {
 
     case 2:
       {
+        if (!chapters[d0][d1] || chapters[d0][d1].child.length === 0) {
+          return null;
+        }
         const chDat = chapters[d0][d1].child[d2].deck;
         CardJSX = (
           <ChapterCard
@@ -76,6 +79,13 @@ const CardsRenderer = () => {
 
     case 3:
       {
+        if (
+          !chapters[d0][d1] ||
+          chapters[d0][d1].child.length === 0 ||
+          chapters[d0][d1].child[d2].child.length === 0
+        ) {
+          return null;
+        }
         const chDat = chapters[d0][d1].child[d2].child[d3].deck;
         CardJSX = (
           <ChapterCard

@@ -69,7 +69,7 @@ export const useChapterCard_GoWritingCardDirectly = () => {
           categoryTitle: categories[coords.d0].title,
           categoryId: coords.d0,
           chapterId: +chapters[coords.d0][coords.d1].deck.id,
-          order: coords.d2 + 2 + 1,
+          order: chapters[coords.d0][coords.d1].child.length + 2,
           depth: DEPTH_NAME.USER_CHAPTER,
         });
         break;
