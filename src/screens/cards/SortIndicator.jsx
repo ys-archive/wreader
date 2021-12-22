@@ -23,8 +23,8 @@ const SortIndicator = () => {
   const { isSortedByLikes } = initStates();
 
   console.log(`is sorted by likes? : ${isSortedByLikes}`);
-  const popularFontFamily = isSortedByLikes ? "regular" : "regular";
-  const dateFontFamily = !isSortedByLikes ? "regular" : "regular";
+  const popularFontFamily = isSortedByLikes ? "bold" : "regular";
+  const dateFontFamily = !isSortedByLikes ? "bold" : "regular";
 
   return (
     <>
@@ -32,7 +32,7 @@ const SortIndicator = () => {
         style={{
           position: "absolute",
           top: hp("8%"),
-          right: wp("6%"),
+          right: wp("5%"),
           zIndex: 1000,
         }}
         source={filterBox}
@@ -55,18 +55,19 @@ export default SortIndicator;
 const s = StyleSheet.create({
   labelView: {
     position: "absolute",
-    top: hp("11%"),
+    top: hp("10.5%"),
     right: wp("12%"),
     zIndex: 1001,
+    paddingBottom: 5 
   },
   label: {
-    fontSize: 18,
+    fontSize: 16,
     textAlign: "center",
     color: colors.light.ivory2,
   },
   separator: {
     backgroundColor: colors.light.ivory2,
     minHeight: 1,
-    marginVertical: 5,
+    marginVertical: 3,
   },
 });
