@@ -65,14 +65,14 @@ export const useChapterCard_GoWritingCardDirectly = () => {
         break;
 
       case DEPTH_NAME.USER_CHAPTER:
-        nav.navigate(ScreenNames.MainWriteCard, {
-          categoryTitle: categories[coords.d0].title,
-          categoryId: coords.d0,
-          chapterId: +chapters[coords.d0][coords.d1].deck.id,
-          order: chapters[coords.d0][coords.d1].child.length + 2,
-          depth: DEPTH_NAME.USER_CHAPTER,
-        });
-        break;
+        // nav.navigate(ScreenNames.MainWriteCard, {
+        //   categoryTitle: categories[coords.d0].title,
+        //   categoryId: coords.d0,
+        //   chapterId: +chapters[coords.d0][coords.d1].deck.id,
+        //   order: coords.d2 + 2,
+        //   depth: DEPTH_NAME.USER_CHAPTER,
+        // });
+        // break;
 
       case DEPTH_NAME.NEXT:
         // d3 는 0 부터 시작!
