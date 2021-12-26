@@ -126,7 +126,7 @@ export default {
   }),
 
   moveToFirstInCurrentContext: thunk(
-    (actions, payload, { getState, getStoreState }) => {
+    (actions, _, { getState }) => {
       const {
         depth: { val },
       } = getState();
