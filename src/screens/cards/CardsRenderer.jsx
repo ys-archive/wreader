@@ -9,6 +9,8 @@ import ChapterCard from "./chapter-card/ChapterCard";
 import FetchBeforeRender from "./CardsRenderer.fetch";
 import CardIndicator from "./CardIndicator";
 
+import LoadingModal from "../../components/modals/LoadingModal";
+
 const initStates = () => {
   const categories = useStoreState(selData.categories);
   const chapters = useStoreState(selData.chapters);
@@ -31,10 +33,12 @@ const CardsRenderer = () => {
 
   FetchBeforeRender();
 
-  if (!isLoaded.d0) return null;
-  if (!isLoaded.d1) return null;
+  if (!isLoaded.d0) return <LoadingModal />;
+  if (!isLoaded.d1) return <LoadingModal />;
+  if (!isLoaded.d2) return <LoadingModal />;
+  if (!isLoaded.d3) return <LoadingModal />;
 
-  if (!chapters || chapters.length === 0) return null;
+  if (!chapters || chapters.length === 0) return <LoadingModal />;
 
   // const { d0: md0, d1: md1, d2: md2, d3: md3 } = maxCoords;
   // console.log(
