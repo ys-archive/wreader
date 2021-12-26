@@ -35,9 +35,9 @@ export default {
 
     // 해당 챕터만 정렬
     // e.g. chapter1 -> chapter1 머릿글 + 나머지들
-    chapters[d0] = chapters[d0].sort(
-      isSortedByLikes ? sorterByDate : sorterByLikeCount,
-    );
+    // chapters[d0] = chapters[d0].sort(
+    //   isSortedByLikes ? sorterByDate : sorterByLikeCount,
+    // );
     // const head = chapters[d0][d1].deck;
     // const rests = chapters[d0][d1].child.map(e => e.deck);
     // 현재 chapter 의 모든 카드 정보를 array 로 병합
