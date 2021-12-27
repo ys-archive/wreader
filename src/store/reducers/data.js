@@ -41,6 +41,15 @@ export default {
     state.isLoaded = true;
   }),
 
+  // card
+  // getCurrent: thunk(
+  //   (actions, payload, { getState, getStoreState, getStoreActions }) => {
+  //     const {
+  //       swiper: { pos },
+  //     } = getStoreState();
+  //   },
+  // ),
+
   // categories: [],
   // resetCategory: action(state => {
   //   state.categories = [];
@@ -174,8 +183,8 @@ export const selectors = {
 
 export const actions = {
   loadRootAsync: actions => actions.data.loadRootAsync,
-  startLoading: actions => actions.data.startLoading,
-  finishLoading: actions => actions.data.finishLoading,
+  // startLoading: actions => actions.data.startLoading,
+  // finishLoading: actions => actions.data.finishLoading,
 
   // reset: actions => actions.data.reset,
 

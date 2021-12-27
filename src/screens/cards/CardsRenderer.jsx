@@ -1,7 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { View } from "react-native";
+import { Text } from "../../components/RN-components/Text";
 
 import { useStoreActions, useStoreState } from "easy-peasy";
-import { selData, selSwiper } from "../../store/selectors";
+import { selAuth, selData, selSwiper } from "../../store/selectors";
+
+import ChapterService from "../../services/ChapterService";
 
 import CategoryCard from "./category/CategoryCard";
 import ChapterCard from "./chapter-card/ChapterCard";
@@ -13,91 +17,71 @@ import LoadingModal from "../../components/modals/LoadingModal";
 import { actData } from "../../store/actions";
 
 const initStates = () => {
+  // selectors
+  const userId = useStoreState(selAuth.userId);
+
+  const root = useStoreState(selData.root);
+  const isLoaded = useStoreState(selData.isLoaded);
+
+  const depth = useStoreState(selSwiper.depth);
+  const curPos = useStoreState(selSwiper.curPos);
+
+  // actions
   const loadRootAsync = useStoreActions(actData.loadRootAsync);
 
   return {
+    userId,
+
+    root,
+    isLoaded,
+
+    depth,
+    curPos,
+
     loadRootAsync,
   };
 };
 
 const CardsRenderer = () => {
-  const { loadRootAsync } = initStates();
+  const { userId, root, isLoaded, depth, curPos, loadRootAsync } = initStates();
+  const [chapters, setChapters] = useState(null);
 
   useEffect(() => {
     loadRootAsync();
   }, []);
 
-  // if (!isLoaded.d0) return <LoadingModal />;
-  // if (!isLoaded.d1) return <LoadingModal />;
-  // if (!isLoaded.d2) return <LoadingModal />;
-  // if (!isLoaded.d3) return <LoadingModal />;
+  const category = root[curPos];
 
-  // if (!chapters || chapters.length === 0) return <LoadingModal />;
+  useEffect(() => {
+    async function fetchChapter() {
+      const { data } = await ChapterService.GET_getChapter(0, userId);
 
-  // const { d0: md0, d1: md1, d2: md2, d3: md3 } = maxCoords;
-  // console.log(
-  //   `max coords---> md0:${md0} | md1:${md1} | md2:${md2} | md3:${md3}`,
-  // );
+      const currentChapters = data.item.filter(
+        item => +item.categoryId - 5 === curPos,
+      );
+      setChapters(currentChapters);
+    }
 
-  // const { d0, d1, d2, d3 } = coords;
+    fetchChapter();
+  }, [depth, userId]);
 
-  // // console.log(`    coords---> d0:${d0} | d1:${d1} | d2:${d2} | d3:${d3}`);
-  // const currentCategoryTitle = categories[d0].title;
-  // let CardJSX = null;
+  if (!isLoaded) {
+    return <LoadingModal />;
+  }
 
-  // switch (depth) {
-  //   case 0:
-  //     CardJSX = <CategoryCard data={categories[d0]} />;
-  //     break;
+  const categoryTitle = category.title;
+  let CardJSX = null;
 
-  //   case 1:
-  //     {
-  //       const chDat = chapters[d0][d1].deck;
-  //       CardJSX = (
-  //         <ChapterCard data={chDat} categoryTitle={currentCategoryTitle} />
-  //       );
-  //     }
-  //     break;
-
-  //   case 2:
-  //     {
-  //       if (!chapters[d0][d1] || chapters[d0][d1].child.length === 0) {
-  //         return null;
-  //       }
-  //       const chDat = chapters[d0][d1].child[d2].deck;
-  //       CardJSX = (
-  //         <ChapterCard
-  //           data={chDat}
-  //           categoryTitle={currentCategoryTitle}
-  //           order={d2 + 2}
-  //         />
-  //       );
-  //     }
-  //     break;
-
-  //   case 3:
-  //     {
-  //       if (
-  //         !chapters[d0][d1] ||
-  //         chapters[d0][d1].child.length === 0 ||
-  //         chapters[d0][d1].child[d2].child.length === 0
-  //       ) {
-  //         return null;
-  //       }
-  //       const chDat = chapters[d0][d1].child[d2].child[d3].deck;
-  //       CardJSX = (
-  //         <ChapterCard
-  //           data={chDat}
-  //           categoryTitle={currentCategoryTitle}
-  //           order={d2 + 2}
-  //         />
-  //       );
-  //     }
-  //     break;
-  // }
+  if (depth === 0) {
+    CardJSX = <CategoryCard data={category} />;
+  } else {
+    CardJSX = (
+      <ChapterCard data={chapters[curPos]} categoryTitle={categoryTitle} />
+    );
+  }
 
   // return <CardIndicator>{CardJSX}</CardIndicator>;
-  return null;
+  return <View>{isLoaded && CardJSX}</View>;
 };
 
 export default CardsRenderer;

@@ -1,6 +1,4 @@
-import { action, computed, thunk } from "easy-peasy";
-import { Coordinates } from "./swiper.coords";
-import { DEPTH_NAME } from "./swiper.depth";
+import { action, actionOn, computed, thunk } from "easy-peasy";
 
 export default {
   // swipe status
@@ -38,11 +36,28 @@ export default {
   hasPrv: computed(state => state.pos - 1 > 0),
 
   // current position on the current depth
-  pos: 0,
+  curPos: 0,
+  setCurPos: action((state, payload) => {
+    state.curPos = payload;
+  }),
 
   // next position on the current depth
   nextPos: computed(state => state.pos + 1),
   hasNext: computed(state => state.pos + 1 > state.maxPos),
+
+  onUpdateDepth: actionOn(
+    (actions, storeActions) => [
+      actions.increaseDepth,
+      actions.decreaseDepth,
+      actions.setDepth,
+    ],
+    (state, target) => {
+      const { type, payload, result, error, resolvedTargets } = target;
+      state.pos = 0;
+      state.prvPos = 0;
+      state.nextPos = 0;
+    },
+  ),
 
   // max position on the current depth
   maxPos: 0,
@@ -161,28 +176,28 @@ export default {
   // },
 
   resetToStartScreen: thunk((actions, payload, { getState, getStoreState }) => {
-    actions.depth.set(0);
-    actions.coords.set({ d0: 0, d1: 0, d2: 0, d3: 0 });
+    actions.setDepth(0);
+    actions.setPos(0);
   }),
 
   moveToFirstInCurrentContext: thunk((actions, _, { getState }) => {
-    const {
-      depth: { val },
-    } = getState();
-    switch (val) {
-      case 1:
-        {
-          actions.coords.set({ d1: 0 });
-        }
-        break;
-      case 2:
-      case 3:
-        {
-          actions.depth.set(2);
-          actions.coords.set({ d3: 0 });
-        }
-        break;
-    }
+    // const {
+    //   depth: { val },
+    // } = getState();
+    // switch (val) {
+    //   case 1:
+    //     {
+    //       actions.coords.set({ d1: 0 });
+    //     }
+    //     break;
+    //   case 2:
+    //   case 3:
+    //     {
+    //       actions.depth.set(2);
+    //       actions.coords.set({ d3: 0 });
+    //     }
+    //     break;
+    // }
     // actions.depth.set(1);
     // actions.coords.set({ d1: 0 });
   }),
@@ -221,7 +236,7 @@ export const actions = {
   decreaseDepth: actions => actions.swiper.depth.decrement,
   setMaxDepth: actions => actions.swiper.setMaxDepth,
 
-  setPos: actions => actions.swiper.setPos,
+  setCurPos: actions => actions.swiper.setCurPos,
   increasePos: actions => actions.swiper.increasePos,
   decreasePos: actions => actions.swiper.decreasePos,
 
