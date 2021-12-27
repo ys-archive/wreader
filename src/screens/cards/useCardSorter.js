@@ -5,8 +5,6 @@ import { actSort, actSwiper } from "../../store/actions";
 import { selData, selSwiper } from "../../store/selectors";
 
 const initStates = () => {
-  const chapters = useStoreState(selData.chapters);
-  const categories = useStoreState(selData.categories);
   const coords = useStoreState(selSwiper.coords);
   const isLoaded = useStoreState(selData.isLoaded);
 
@@ -16,8 +14,6 @@ const initStates = () => {
   );
 
   return {
-    chapters,
-    categories,
     coords,
     isLoaded,
     sort,

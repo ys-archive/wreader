@@ -1,37 +1,37 @@
-import React from "react"
-import { View } from "react-native"
-import { Logo, Sort, Menu } from "../components/icon"
+import React from "react";
+import { View } from "react-native";
+import { Logo, Sort, Menu } from "../components/icon";
 
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from "react-native-responsive-screen"
+} from "react-native-responsive-screen";
 
-import { useNavigation } from "@react-navigation/native"
+import { useNavigation } from "@react-navigation/native";
 
-import { useAutoLogin } from "../hooks"
+import { useAutoLogin } from "../hooks";
 
-import EventModal from "#components/modals/EventModal"
-import Reader from "./reader/Reader"
-import CardsRenderer from "./cards/CardsRenderer"
+import EventModal from "#components/modals/EventModal";
+import Reader from "./reader/Reader";
+import CardsRenderer from "./cards/CardsRenderer";
 
-import { useCardSorter } from "./cards/useCardSorter"
-import { useCardResetToStartScreen } from "./cards/useCardResetToStartScreen"
-import SortIndicator from "./cards/SortIndicator"
+import { useCardSorter } from "./cards/useCardSorter";
+import { useCardResetToStartScreen } from "./cards/useCardResetToStartScreen";
+import SortIndicator from "./cards/SortIndicator";
 
-import { useStoreState } from "easy-peasy"
-import { selSwiper } from "../store/selectors"
-import ArrowReader from "./reader/ArrowReader"
+import { useStoreState } from "easy-peasy";
+import { selSwiper } from "../store/selectors";
+import ArrowReader from "./reader/ArrowReader";
 
 const Main = () => {
-  const nav = useNavigation()
-  const depth = useStoreState(selSwiper.depth)
+  const nav = useNavigation();
+  const depth = useStoreState(selSwiper.depth);
 
-  useAutoLogin()
+  useAutoLogin();
 
-  const returnToMain = useCardResetToStartScreen()
-  const { callback: onPressSortIcon, isSorterOpen } = useCardSorter()
-  const onPressMenuIcon = () => nav.openDrawer()
+  const returnToMain = useCardResetToStartScreen();
+  const { callback: onPressSortIcon, isSorterOpen } = useCardSorter();
+  const onPressMenuIcon = () => nav.openDrawer();
 
   return (
     <View
@@ -52,11 +52,13 @@ const Main = () => {
       {/* <Reader>
         <CardsRenderer />
       </Reader> */}
-      <ArrowReader>
+      {/* <ArrowReader>
         <CardsRenderer />
-      </ArrowReader>
-    </View>
-  )
-}
+      </ArrowReader> */}
 
-export default Main
+      <CardsRenderer />
+    </View>
+  );
+};
+
+export default Main;

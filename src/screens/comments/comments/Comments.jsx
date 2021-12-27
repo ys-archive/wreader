@@ -18,11 +18,12 @@ import { dummyProfile } from "#constants/images";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import {
   selAuth,
+  selComments,
   selData,
   selImage,
   selSwiper,
 } from "../../../store/selectors";
-import { actData, actDataFetch } from "../../../store/actions";
+import { actComments, actData, actDataFetch } from "../../../store/actions";
 import { CommentsService } from "../../../services";
 
 import { useCommentsLogic } from "./useCommentsLogic";
@@ -39,8 +40,8 @@ const initStates = () => {
 
   // actions
   const fetchOne = useStoreActions(actDataFetch.fetchOne);
-  const commentsUpdated = useStoreState(selData.commentsUpdated);
-  const updateComments = useStoreActions(actData.updateComments);
+  const commentsUpdated = useStoreState(selComments.commentsUpdated);
+  const updateComments = useStoreActions(actComments.updateComments);
 
   return {
     userId,

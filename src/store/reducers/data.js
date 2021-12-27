@@ -3,270 +3,190 @@ import ChapterService from "../../services/ChapterService";
 import * as _ from "lodash";
 
 export default {
-  categories: [],
-  chapters: [],
-
-  commentsUpdated: false,
-
-  updateComments: action(state => {
-    state.commentsUpdated = !state.commentsUpdated;
+  // root
+  root: [],
+  setRoot: action((state, payload) => {
+    state.root = payload;
   }),
-
-  isLoaded: {
-    default: {
-      d0: false,
-      d1: false,
-      d2: false,
-      d3: false,
-    },
-
-    val: {
-      d0: false,
-      d1: false,
-      d2: false,
-      d3: false,
-    },
-
-    startLoading: action((state, payload) => {
-      if ("d0" === payload) {
-        state.val.d0 = false;
-        return;
-      }
-
-      if ("d1" === payload) {
-        state.val.d1 = false;
-        return;
-      }
-
-      if ("d2" === payload) {
-        state.val.d2 = false;
-        return;
-      }
-
-      if ("d3" === payload) {
-        state.val.d3 = false;
-        return;
-      }
-    }),
-
-    finishLoading: action((state, payload) => {
-      if ("d0" === payload) {
-        state.val.d0 = true;
-        return;
-      }
-
-      if ("d1" === payload) {
-        state.val.d1 = true;
-        return;
-      }
-
-      if ("d2" === payload) {
-        state.val.d2 = true;
-        return;
-      }
-
-      if ("d3" === payload) {
-        state.val.d3 = true;
-        return;
-      }
-    }),
-  },
-
-  hasNew: {
-    default: {
-      d0: false,
-      d1: false,
-      d2: false,
-      d3: false,
-    },
-
-    val: {
-      d0: false,
-      d1: false,
-      d2: false,
-      d3: false,
-    },
-
-    update: action((state, payload) => {
-      if ("d0" in payload) {
-        state.val.d0 = payload.d0;
-        return;
-      }
-
-      if ("d1" in payload) {
-        state.val.d1 = payload.d1;
-        return;
-      }
-
-      if ("d2" in payload) {
-        state.val.d2 = payload.d2;
-        return;
-      }
-
-      if ("d3" in payload) {
-        state.val.d3 = payload.d3;
-        return;
-      }
-    }),
-  },
-
-  isUpdatingAll: false,
-
-  setUpdateAll: action((state, payload) => {
-    state.isUpdatingAll = payload;
-  }),
-
   reset: action(state => {
-    state.categories = [];
-    state.chapters = [];
-    state.isLoaded.val = state.isLoaded.default;
-    state.hasNew.val = state.hasNew.default;
-    state.isUpdatingAll = false;
+    state.root = [];
+  }),
+  loadRootAsync: thunk(
+    async (actions, payload, { getState, getStoreState, getStoreActions }) => {
+      const { startLoading, finishLoading, reset, setRoot } = actions;
+
+      reset();
+      startLoading();
+
+      const userId = payload;
+      const { data } = await ChapterService.GET_getCategory(userId);
+      if (!data || !data.item || data.item.length === 0) return;
+
+      setRoot(Object.values(data.item));
+    },
+  ),
+  onFinishLoadRoot: thunkOn(
+    actions => actions.loadRootAsync,
+    (actions, target) => {
+      actions.finishLoading();
+    },
+  ),
+
+  // fetch status
+  isLoaded: false,
+  startLoading: action(state => {
+    state.isLoaded = false;
+  }),
+  finishLoading: action(state => {
+    state.isLoaded = true;
   }),
 
-  resetCategory: action(state => {
-    state.categories = [];
-  }),
+  // categories: [],
+  // resetCategory: action(state => {
+  //   state.categories = [];
+  // }),
 
-  addCategory: action((state, payload) => {
-    const hasFound = state.categories.findIndex(cat => _.isEqual(cat, payload));
-    if (hasFound === -1) {
-      state.categories.push(payload);
-    }
-  }),
+  // chapters: [],
+  // resetChapters: action((state, payload) => {
+  //   state.chapters = [];
+  // }),
 
-  resetChapter: action((state, payload) => {
-    state.chapters = [];
-  }),
+  // addCategory: action((state, payload) => {
+  //   const hasFound = state.categories.findIndex(cat => _.isEqual(cat, payload));
+  //   if (hasFound === -1) {
+  //     state.categories.push(payload);
+  //   }
+  // }),
 
-  addChapter: action((state, payload) => {
-    const hasFound = state.chapters.findIndex(ch =>
-      _.isEqual(ch.deck, payload.deck),
-    );
+  // addChapter: action((state, payload) => {
+  //   const hasFound = state.chapters.findIndex(ch =>
+  //     _.isEqual(ch.deck, payload.deck),
+  //   );
 
-    if (hasFound === -1) {
-      state.chapters.push(
-        payload.deck.map(d => ({
-          deck: d,
-          child: [],
-        })),
-      );
-    }
-  }),
+  //   if (hasFound === -1) {
+  //     state.chapters.push(
+  //       payload.deck.map(d => ({
+  //         deck: d,
+  //         child: [],
+  //       })),
+  //     );
+  //   }
+  // }),
 
-  addChapterChild: action((state, payload) => {
-    // 아무 부모 챕터 하나라도 있어야함
-    if (state.chapters.length === 0) return;
+  // addChapterChild: action((state, payload) => {
+  //   // 아무 부모 챕터 하나라도 있어야함
+  //   if (state.chapters.length === 0) return;
 
-    // 비교용 index 찾아오기
-    const comparer = +payload.deck.group_index;
+  //   // 비교용 index 찾아오기
+  //   const comparer = +payload.deck.group_index;
 
-    // undefined
-    if (!comparer) return;
+  //   // undefined
+  //   if (!comparer) return;
 
-    const findRecursively = arr => {
-      arr.forEach(item => {
-        if (+item.deck.id === comparer) {
-          if (
-            item.child.findIndex(f => _.isEqual(f.deck, payload.deck)) === -1
-          ) {
-            item.child.push({ deck: payload.deck, child: [] });
-          }
-          return;
-        }
+  //   const findRecursively = arr => {
+  //     arr.forEach(item => {
+  //       if (+item.deck.id === comparer) {
+  //         if (
+  //           item.child.findIndex(f => _.isEqual(f.deck, payload.deck)) === -1
+  //         ) {
+  //           item.child.push({ deck: payload.deck, child: [] });
+  //         }
+  //         return;
+  //       }
 
-        if (item.child.length > 0) {
-          findRecursively(item.child);
-        }
-      });
-    };
+  //       if (item.child.length > 0) {
+  //         findRecursively(item.child);
+  //       }
+  //     });
+  //   };
 
-    state.chapters.forEach(chapter => {
-      if (chapter.length === 0) return;
-      findRecursively(chapter);
-    });
-  }),
+  //   state.chapters.forEach(chapter => {
+  //     if (chapter.length === 0) return;
+  //     findRecursively(chapter);
+  //   });
+  // }),
 
-  fetchOneChapter_internal: action((state, payload) => {
-    const {
-      coords: { d0, d1 },
-      newChapter,
-    } = payload;
-    const origPos = state.chapters[d0][d1];
+  // fetchOneChapter_internal: action((state, payload) => {
+  //   const {
+  //     coords: { d0, d1 },
+  //     newChapter,
+  //   } = payload;
+  //   const origPos = state.chapters[d0][d1];
 
-    console.log("[data.fetchOneChapter] OUTDATED\n", origPos.deck, "\n");
+  //   console.log("[data.fetchOneChapter] OUTDATED\n", origPos.deck, "\n");
 
-    if (newChapter !== undefined) origPos.deck = newChapter;
-  }),
+  //   if (newChapter !== undefined) origPos.deck = newChapter;
+  // }),
 
-  fetchOneUserChapter_internal: action((state, payload) => {
-    const {
-      coords: { d0, d1, d2 },
-      newChapter,
-    } = payload;
+  // fetchOneUserChapter_internal: action((state, payload) => {
+  //   const {
+  //     coords: { d0, d1, d2 },
+  //     newChapter,
+  //   } = payload;
 
-    const origPos = state.chapters[d0][d1].child[d2];
-    console.log("found outdated user chapter : ", origPos.deck);
+  //   const origPos = state.chapters[d0][d1].child[d2];
+  //   console.log("found outdated user chapter : ", origPos.deck);
 
-    if (newChapter !== undefined) origPos.deck = newChapter;
+  //   if (newChapter !== undefined) origPos.deck = newChapter;
 
-    // let origPos = undefined
+  //   // let origPos = undefined
 
-    // const origPosIdx = state.chapters[d0][d1].child.findIndex(
-    //   i => +i.id === +retryId,
-    // )
+  //   // const origPosIdx = state.chapters[d0][d1].child.findIndex(
+  //   //   i => +i.id === +retryId,
+  //   // )
 
-    // origPos = state.chapters[d0][d1].child[origPosIdx]
-    // // if (origPosIdx === -1) {
-    // //   origPos = state.chapters[d0][d1]
-    // // } else {
-    // // }
+  //   // origPos = state.chapters[d0][d1].child[origPosIdx]
+  //   // // if (origPosIdx === -1) {
+  //   // //   origPos = state.chapters[d0][d1]
+  //   // // } else {
+  //   // // }
 
-    // console.log("[data.fetchOneUserChapter] OUTDATED\n", origPos.deck, "\n")
+  //   // console.log("[data.fetchOneUserChapter] OUTDATED\n", origPos.deck, "\n")
 
-    // if (newChapter !== undefined) origPos.deck = newChapter
-  }),
+  //   // if (newChapter !== undefined) origPos.deck = newChapter
+  // }),
 
-  fetchOneNext_internal: action((state, payload) => {
-    const {
-      coords: { d0, d1, d2, d3 },
-      newChapter,
-    } = payload;
-    const origPos = state.chapters[d0][d1].child[d2].child[d3];
+  // fetchOneNext_internal: action((state, payload) => {
+  //   const {
+  //     coords: { d0, d1, d2, d3 },
+  //     newChapter,
+  //   } = payload;
+  //   const origPos = state.chapters[d0][d1].child[d2].child[d3];
 
-    console.log("[data.fetchOneNext] OUTDATED\n", origPos.deck, "\n");
+  //   console.log("[data.fetchOneNext] OUTDATED\n", origPos.deck, "\n");
 
-    if (newChapter !== undefined) origPos.deck = newChapter;
-  }),
+  //   if (newChapter !== undefined) origPos.deck = newChapter;
+  // }),
 };
 
 export const selectors = {
-  categories: state => state.data.categories,
-  chapters: state => state.data.chapters,
+  root: state => state.data.root,
+  isLoaded: state => state.data.isLoaded,
 
-  commentsUpdated: state => state.data.commentsUpdated,
+  // categories: state => state.data.categories,
+  // chapters: state => state.data.chapters,
 
-  isLoaded: state => state.data.isLoaded.val,
-  hasNew: state => state.data.hasNew.val,
+  // isLoaded: state => state.data.isLoaded.val,
+  // hasNew: state => state.data.hasNew.val,
 
-  isUpdatingAll: state => state.data.isUpdatingAll,
+  // isUpdatingAll: state => state.data.isUpdatingAll,
 };
 
 export const actions = {
-  updateComments: state => state.data.updateComments,
+  loadRootAsync: actions => actions.data.loadRootAsync,
+  startLoading: actions => actions.data.startLoading,
+  finishLoading: actions => actions.data.finishLoading,
 
-  reset: actions => actions.data.reset,
+  // reset: actions => actions.data.reset,
 
-  resetCategory: actions => actions.data.resetCategory,
-  addCategory: actions => actions.data.addCategory,
+  // resetCategory: actions => actions.data.resetCategory,
+  // addCategory: actions => actions.data.addCategory,
 
-  resetChapter: actions => actions.data.resetChapter,
-  addChapter: actions => actions.data.addChapter,
-  addChapterChild: actions => actions.data.addChapterChild,
+  // resetChapters: actions => actions.data.resetChapters,
+  // addChapter: actions => actions.data.addChapter,
+  // addChapterChild: actions => actions.data.addChapterChild,
 
-  startLoading: actions => actions.data.isLoaded.startLoading,
-  finishLoading: actions => actions.data.isLoaded.finishLoading,
-  updateHasNew: actions => actions.data.hasNew.update,
+  // updateHasNew: actions => actions.data.hasNew.update,
 
-  updateAll: actions => actions.data.setUpdateAll,
+  // updateAll: actions => actions.data.setUpdateAll,
 };
