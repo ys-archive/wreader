@@ -32,6 +32,15 @@ export default {
     },
   ),
 
+  // data accessor
+  currentCategory: computed(
+    [state => state.root, (state, storeState) => storeState.swiper.curPos],
+    (root, curPos) => root[curPos],
+  ),
+  currentCategoryTitle: computed(
+    state => state.currentCategory && state.currentCategory.title,
+  ),
+
   // fetch status
   isLoaded: false,
   startLoading: action(state => {
@@ -41,14 +50,35 @@ export default {
     state.isLoaded = true;
   }),
 
+  // fetch
+  chapters: [],
+  setChapters: action((state, payload) => {
+    state.chapters = payload;
+  }),
+  loadChapterAsync: thunk(
+    async (actions, payload, { getState, getStoreState, getStoreActions }) => {
+      const { fetchId } = getState();
+      const {
+        auth: { userId },
+      } = getStoreState();
+
+      const { data } = await ChapterService.GET_getChapter(fetchId, userId);
+      actions.setChapters(Object.values(data)[2]);
+    },
+  ),
+
   // card
-  // getCurrent: thunk(
-  //   (actions, payload, { getState, getStoreState, getStoreActions }) => {
-  //     const {
-  //       swiper: { pos },
-  //     } = getStoreState();
-  //   },
-  // ),
+  currentFetchId: 0,
+  setFetchId: action((state, payload) => {}),
+  onSwipe: thunkOn(
+    (actions, storeActions) => [
+      storeActions.swiper.swipeLeft,
+      storeActions.swiper.swipeRight,
+      storeActions.swiper.swipeUp,
+      storeActions.swiper.swipeDown,
+    ],
+    (actions, target) => {},
+  ),
 
   // categories: [],
   // resetCategory: action(state => {
@@ -83,13 +113,13 @@ export default {
   // }),
 
   // addChapterChild: action((state, payload) => {
-  //   // 아무 부모 챕터 하나라도 있어야함
+  // 아무 부모 챕터 하나라도 있어야함
   //   if (state.chapters.length === 0) return;
 
-  //   // 비교용 index 찾아오기
+  // 비교용 index 찾아오기
   //   const comparer = +payload.deck.group_index;
 
-  //   // undefined
+  // undefined
   //   if (!comparer) return;
 
   //   const findRecursively = arr => {
@@ -138,21 +168,21 @@ export default {
 
   //   if (newChapter !== undefined) origPos.deck = newChapter;
 
-  //   // let origPos = undefined
+  // let origPos = undefined
 
-  //   // const origPosIdx = state.chapters[d0][d1].child.findIndex(
-  //   //   i => +i.id === +retryId,
-  //   // )
+  // const origPosIdx = state.chapters[d0][d1].child.findIndex(
+  //   i => +i.id === +retryId,
+  // )
 
-  //   // origPos = state.chapters[d0][d1].child[origPosIdx]
-  //   // // if (origPosIdx === -1) {
-  //   // //   origPos = state.chapters[d0][d1]
-  //   // // } else {
-  //   // // }
+  // origPos = state.chapters[d0][d1].child[origPosIdx]
+  // if (origPosIdx === -1) {
+  //   origPos = state.chapters[d0][d1]
+  // } else {
+  // }
 
-  //   // console.log("[data.fetchOneUserChapter] OUTDATED\n", origPos.deck, "\n")
+  // console.log("[data.fetchOneUserChapter] OUTDATED\n", origPos.deck, "\n")
 
-  //   // if (newChapter !== undefined) origPos.deck = newChapter
+  // if (newChapter !== undefined) origPos.deck = newChapter
   // }),
 
   // fetchOneNext_internal: action((state, payload) => {
@@ -172,6 +202,11 @@ export const selectors = {
   root: state => state.data.root,
   isLoaded: state => state.data.isLoaded,
 
+  currentFetchId: state => state.data.currentFetchId,
+  currentCategory: state => state.data.currentCategory,
+  currentCategoryTitle: state => state.data.currentCategoryTitle,
+  chapters: state => state.data.chapters,
+
   // categories: state => state.data.categories,
   // chapters: state => state.data.chapters,
 
@@ -183,6 +218,11 @@ export const selectors = {
 
 export const actions = {
   loadRootAsync: actions => actions.data.loadRootAsync,
+
+  setFetchId: actions => actions.data.setFetchId,
+
+  loadChapterAsync: actions => actions.data.loadChapterAsync,
+
   // startLoading: actions => actions.data.startLoading,
   // finishLoading: actions => actions.data.finishLoading,
 

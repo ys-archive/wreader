@@ -1,4 +1,4 @@
-import { action, actionOn, computed, thunk } from "easy-peasy";
+import { action, actionOn, computed, thunk, thunkOn } from "easy-peasy";
 
 export default {
   // swipe status
@@ -24,6 +24,7 @@ export default {
   decreaseDepth: action(state => {
     state.depth = state.depth - 1;
   }),
+  isEvenDepth: computed(state => state.depth % 2 == 0),
 
   // max depth
   maxDepth: 10,
@@ -65,115 +66,20 @@ export default {
     state.maxPos = payload;
   }),
 
-  // depth: {
-  //   val: DEPTH_NAME.CATEGORY,
+  // swipe
+  swipeLeft: thunk((actions, payload, helpers) => {}),
+  onSwipeLeft: thunkOn((actions => actions.swiftLeft, (actions, target) => {})),
 
-  //   set: action((state, payload) => {
-  //     state.val = payload;
-  //   }),
+  swipeRight: thunk((actions, payload, helpers) => {}),
+  onSwipeRight: thunkOn(
+    (actions => actions.swiftRight, (actions, target) => {}),
+  ),
 
-  //   increment: action(state => {
-  //     ++state.val;
-  //   }),
+  swipeUp: thunk((actions, payload, helpers) => {}),
+  onSwipeUp: thunkOn((actions => actions.swiftUp, (actions, target) => {})),
 
-  //   decrement: action(state => {
-  //     --state.val;
-  //   }),
-  // },
-
-  // coords: {
-  //   val: new Coordinates({
-  //     d0: 0,
-  //     d1: 0,
-  //     d2: 0,
-  //     d3: 0,
-  //   }),
-
-  //   max: new Coordinates({
-  //     d0: 0,
-  //     d1: 0,
-  //     d2: 0,
-  //     d3: 0,
-  //   }),
-
-  //   increment: action((state, payload) => {
-  //     if ("d0" === payload) {
-  //       state.val = new Coordinates({ ...state.val, d0: state.val.d0 + 1 });
-  //       return;
-  //     }
-
-  //     if ("d1" === payload) {
-  //       state.val = new Coordinates({ ...state.val, d1: state.val.d1 + 1 });
-  //       return;
-  //     }
-
-  //     if ("d2" === payload) {
-  //       state.val = new Coordinates({ ...state.val, d2: state.val.d2 + 1 });
-  //       return;
-  //     }
-
-  //     if ("d3" === payload) {
-  //       state.val = new Coordinates({ ...state.val, d3: state.val.d3 + 1 });
-  //       return;
-  //     }
-
-  //     console.log("cur coords: ", state.val);
-  //   }),
-
-  //   decrement: action((state, payload) => {
-  //     if ("d0" === payload) {
-  //       state.val = new Coordinates({ ...state.val, d0: state.val.d0 - 1 });
-  //       return;
-  //     }
-
-  //     if ("d1" === payload) {
-  //       state.val = new Coordinates({ ...state.val, d1: state.val.d1 - 1 });
-  //       return;
-  //     }
-
-  //     if ("d2" === payload) {
-  //       state.val = new Coordinates({ ...state.val, d2: state.val.d2 - 1 });
-  //       return;
-  //     }
-
-  //     if ("d3" === payload) {
-  //       state.val = new Coordinates({ ...state.val, d3: state.val.d3 - 1 });
-  //       return;
-  //     }
-
-  //     console.log("cur coords: ", state.val);
-  //   }),
-
-  //   set: action((state, payload) => {
-  //     state.val = new Coordinates({ ...state.val, ...payload });
-  //   }),
-
-  //   setMax: action((state, payload) => {
-  //     const { d0, d1, d2, d3 } = state.val;
-
-  //     if ("d0" in payload) {
-  //       const categories = payload.d0;
-  //       state.max.setD0(categories.length);
-  //     }
-
-  //     if ("d1" in payload) {
-  //       const maxLength = payload.d1;
-  //       state.max.setD1(maxLength);
-  //       // state.max.setD1(chapters[d0] ? chapters[d0].length : 0);
-  //     }
-
-  //     if ("d2" in payload) {
-  //       const chapters = payload.d2;
-  //       // console.log(chapters);
-  //       state.max.setD2(chapters[d0][d1].child.length);
-  //     }
-
-  //     if ("d3" in payload) {
-  //       const chapters = payload.d3;
-  //       state.max.setD3(chapters[d0][d1].child[d2].child.length);
-  //     }
-  //   }),
-  // },
+  swipeDown: thunk((actions, payload, helpers) => {}),
+  onSwipeDown: thunkOn((actions => actions.swiftDown, (actions, target) => {})),
 
   resetToStartScreen: thunk((actions, payload, { getState, getStoreState }) => {
     actions.setDepth(0);
@@ -210,6 +116,7 @@ export const selectors = {
 
   depth: state => state.swiper.depth,
   maxDepth: state => state.swiper.maxDepth,
+  isEvenDepth: state => state.swiper.isEvenDepth,
 
   prvPos: state => state.swiper.prvPos,
   hasPrv: state => state.swiper.hasPrv,
@@ -248,6 +155,11 @@ export const actions = {
   // setMaxCoords: actions => actions.swiper.coords.setMax,
 
   setMaxPos: actions => actions.swiper.setMaxPos,
+
+  swipeLeft: actions => actions.swiper.swipeLeft,
+  swipeRight: actions => actions.swiper.swipeRight,
+  swipeUp: actions => actions.swiper.swipeUp,
+  swipeDown: actions => actions.swiper.swipeDown,
 
   resetToStartScreen: actions => actions.swiper.resetToStartScreen,
   moveToFirstInCurrentContext: actions =>

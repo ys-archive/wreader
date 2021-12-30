@@ -2,15 +2,16 @@ import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import { Text } from "../../components/RN-components/Text";
 
+import { useGetSWR } from "../../hooks";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import { selAuth, selData, selSwiper } from "../../store/selectors";
 
-import ChapterService from "../../services/ChapterService";
+// import ChapterService from "../../services/ChapterService";
 
 import CategoryCard from "./category/CategoryCard";
 import ChapterCard from "./chapter-card/ChapterCard";
 
-import FetchBeforeRender from "./CardsRenderer.fetch";
+// import FetchBeforeRender from "./CardsRenderer.fetch";
 import CardIndicator from "./CardIndicator";
 
 import LoadingModal from "../../components/modals/LoadingModal";
@@ -18,9 +19,9 @@ import { actData } from "../../store/actions";
 
 const initStates = () => {
   // selectors
-  const userId = useStoreState(selAuth.userId);
-
-  const root = useStoreState(selData.root);
+  const currentCategory = useStoreState(selData.currentCategory);
+  const chapters = useStoreState(selData.chapters);
+  const currentCategoryTitle = useStoreState(selData.currentCategoryTitle);
   const isLoaded = useStoreState(selData.isLoaded);
 
   const depth = useStoreState(selSwiper.depth);
@@ -28,55 +29,70 @@ const initStates = () => {
 
   // actions
   const loadRootAsync = useStoreActions(actData.loadRootAsync);
+  const setFetchId = useStoreActions(actData.setFetchId);
+  const loadChapterAsync = useStoreActions(actData.loadChapterAsync);
 
   return {
-    userId,
-
-    root,
+    currentCategory,
+    chapters,
+    currentCategoryTitle,
     isLoaded,
 
     depth,
     curPos,
 
     loadRootAsync,
+    setFetchId,
+    loadChapterAsync,
   };
 };
 
 const CardsRenderer = () => {
-  const { userId, root, isLoaded, depth, curPos, loadRootAsync } = initStates();
-  const [chapters, setChapters] = useState(null);
+  const {
+    currentCategory,
+    chapters,
+    currentCategoryTitle,
+    isLoaded,
+    depth,
+    curPos,
+    loadRootAsync,
+    setFetchId,
+    loadChapterAsync,
+  } = initStates();
 
   useEffect(() => {
     loadRootAsync();
   }, []);
 
-  const category = root[curPos];
-
   useEffect(() => {
-    async function fetchChapter() {
-      const { data } = await ChapterService.GET_getChapter(0, userId);
+    // if (depth === 0) {
+    //   return;
+    // }
 
-      const currentChapters = data.item.filter(
-        item => +item.categoryId - 5 === curPos,
-      );
-      setChapters(currentChapters);
-    }
+    setFetchId(0);
+    loadChapterAsync();
 
-    fetchChapter();
-  }, [depth, userId]);
-
-  if (!isLoaded) {
-    return <LoadingModal />;
-  }
-
-  const categoryTitle = category.title;
+  }, [depth]);
+  
   let CardJSX = null;
+  console.log(chapters);
 
   if (depth === 0) {
-    CardJSX = <CategoryCard data={category} />;
+    if (!isLoaded) {
+      return <LoadingModal />;
+    }
+
+    CardJSX = <CategoryCard data={currentCategory} />;
   } else {
+    if (isChaterLoading) {
+      return <LoadingModal />;
+    }
+
     CardJSX = (
-      <ChapterCard data={chapters[curPos]} categoryTitle={categoryTitle} />
+      <ChapterCard
+        data={chapterData[curPos]}
+        categoryTitle={currentCategoryTitle}
+      />
     );
   }
 

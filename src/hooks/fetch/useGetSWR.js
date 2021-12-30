@@ -9,7 +9,7 @@ export const useGetSWR = (path, param = undefined) => {
 
   const fetcher = () =>
     axios
-      .get(`${BASE_URL}${path}`, { ...param })
+      .get(`${path}`, { ...param })
       .then(res => res.data)
       .catch(console.error);
 
