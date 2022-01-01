@@ -10,16 +10,8 @@ export const useSwipeLeft = swipe => {
     isLoaded,
 
     depth,
-    coords,
-    maxCoords,
-
-    updateHasNew,
     increaseDepth,
 
-    increaseCoords,
-    decreaseCoords,
-
-    setMaxCoords,
     resetTempBlob,
     resetCard,
   } = useSwipeStates();

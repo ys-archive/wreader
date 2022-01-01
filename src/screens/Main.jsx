@@ -52,11 +52,11 @@ const Main = () => {
       {/* <Reader>
         <CardsRenderer />
       </Reader> */}
-      {/* <ArrowReader>
+      <ArrowReader>
         <CardsRenderer />
-      </ArrowReader> */}
+      </ArrowReader>
 
-      <CardsRenderer />
+      {/* <CardsRenderer /> */}
     </View>
   );
 };

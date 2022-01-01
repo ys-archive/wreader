@@ -127,33 +127,20 @@ export const selectors = {
   hasNext: state => state.swiper.hasNext,
 
   maxPos: state => state.swiper.maxPos,
-
-  // depth: state => state.swiper.depth.val,
-  // coords: state => state.swiper.coords.val,
-  // maxCoords: state => state.swiper.coords.max,
 };
 
 export const actions = {
-  // setSwiping: actions => actions.swiper.setSwiping,
   startSwiping: actions => actions.swiper.startSwiping,
   finishSwiping: actions => actions.swiper.finishSwiping,
 
-  setDepth: actions => actions.swiper.depth.set,
-  increaseDepth: actions => actions.swiper.depth.increment,
-  decreaseDepth: actions => actions.swiper.depth.decrement,
+  setDepth: actions => actions.swiper.setDepth,
+  increaseDepth: actions => actions.swiper.increaseDepth,
+  decreaseDepth: actions => actions.swiper.decreaseDepth,
   setMaxDepth: actions => actions.swiper.setMaxDepth,
 
   setCurPos: actions => actions.swiper.setCurPos,
   increasePos: actions => actions.swiper.increasePos,
   decreasePos: actions => actions.swiper.decreasePos,
-
-  // setCoords: actions => actions.swiper.coords.set,
-  // increaseCoords: actions => actions.swiper.coords.increment,
-  // decreaseCoords: actions => actions.swiper.coords.decrement,
-
-  // initCoords: actions => actions.swiper.coords.init,
-  // setMaxCoords: actions => actions.swiper.coords.setMax,
-
   setMaxPos: actions => actions.swiper.setMaxPos,
 
   swipeLeft: actions => actions.swiper.swipeLeft,

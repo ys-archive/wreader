@@ -3,17 +3,18 @@ import ChapterService from "../../services/ChapterService";
 import * as _ from "lodash";
 
 export default {
-  // root
-  root: [],
-  setRoot: action((state, payload) => {
-    state.root = payload;
+  // categories
+  categories: [],
+
+  setCategories: action((state, payload) => {
+    state.categories = payload;
   }),
   reset: action(state => {
-    state.root = [];
+    state.categories = [];
   }),
-  loadRootAsync: thunk(
+  loadCategoriesAsync: thunk(
     async (actions, payload, { getState, getStoreState, getStoreActions }) => {
-      const { startLoading, finishLoading, reset, setRoot } = actions;
+      const { startLoading, finishLoading, reset, setCategories } = actions;
 
       reset();
       startLoading();
@@ -22,20 +23,26 @@ export default {
       const { data } = await ChapterService.GET_getCategory(userId);
       if (!data || !data.item || data.item.length === 0) return;
 
-      setRoot(Object.values(data.item));
+      setCategories(Object.values(data.item));
     },
   ),
-  onFinishLoadRoot: thunkOn(
-    actions => actions.loadRootAsync,
+  onFinishLoadCategories: thunkOn(
+    actions => actions.loadCategoriesAsync,
     (actions, target) => {
       actions.finishLoading();
     },
   ),
 
   // data accessor
+
+  maxCategoriesLength: computed(state => state.categories.length),
+
   currentCategory: computed(
-    [state => state.root, (state, storeState) => storeState.swiper.curPos],
-    (root, curPos) => root[curPos],
+    [
+      state => state.categories,
+      (state, storeState) => storeState.swiper.curPos,
+    ],
+    (categories, curPos) => categories[curPos],
   ),
   currentCategoryTitle: computed(
     state => state.currentCategory && state.currentCategory.title,
@@ -55,15 +62,27 @@ export default {
   setChapters: action((state, payload) => {
     state.chapters = payload;
   }),
-  loadChapterAsync: thunk(
+  loadChaptersAsync: thunk(
     async (actions, payload, { getState, getStoreState, getStoreActions }) => {
       const { fetchId } = getState();
       const {
         auth: { userId },
       } = getStoreState();
 
-      const { data } = await ChapterService.GET_getChapter(fetchId, userId);
-      actions.setChapters(Object.values(data)[2]);
+      const {
+        data: { item },
+        status,
+      } = await ChapterService.GET_getChapter(fetchId, userId);
+      // console.log(status);
+      if (status === 200) {
+        actions.setChapters(Object.values(item));
+      }
+    },
+  ),
+  onFinishLoadChapters: thunkOn(
+    actions => actions.loadChaptersAsync,
+    (actions, target) => {
+      actions.finishLoading();
     },
   ),
 
@@ -79,163 +98,140 @@ export default {
     ],
     (actions, target) => {},
   ),
-
-  // categories: [],
-  // resetCategory: action(state => {
-  //   state.categories = [];
-  // }),
-
-  // chapters: [],
-  // resetChapters: action((state, payload) => {
-  //   state.chapters = [];
-  // }),
-
-  // addCategory: action((state, payload) => {
-  //   const hasFound = state.categories.findIndex(cat => _.isEqual(cat, payload));
-  //   if (hasFound === -1) {
-  //     state.categories.push(payload);
-  //   }
-  // }),
-
-  // addChapter: action((state, payload) => {
-  //   const hasFound = state.chapters.findIndex(ch =>
-  //     _.isEqual(ch.deck, payload.deck),
-  //   );
-
-  //   if (hasFound === -1) {
-  //     state.chapters.push(
-  //       payload.deck.map(d => ({
-  //         deck: d,
-  //         child: [],
-  //       })),
-  //     );
-  //   }
-  // }),
-
-  // addChapterChild: action((state, payload) => {
-  // 아무 부모 챕터 하나라도 있어야함
-  //   if (state.chapters.length === 0) return;
-
-  // 비교용 index 찾아오기
-  //   const comparer = +payload.deck.group_index;
-
-  // undefined
-  //   if (!comparer) return;
-
-  //   const findRecursively = arr => {
-  //     arr.forEach(item => {
-  //       if (+item.deck.id === comparer) {
-  //         if (
-  //           item.child.findIndex(f => _.isEqual(f.deck, payload.deck)) === -1
-  //         ) {
-  //           item.child.push({ deck: payload.deck, child: [] });
-  //         }
-  //         return;
-  //       }
-
-  //       if (item.child.length > 0) {
-  //         findRecursively(item.child);
-  //       }
-  //     });
-  //   };
-
-  //   state.chapters.forEach(chapter => {
-  //     if (chapter.length === 0) return;
-  //     findRecursively(chapter);
-  //   });
-  // }),
-
-  // fetchOneChapter_internal: action((state, payload) => {
-  //   const {
-  //     coords: { d0, d1 },
-  //     newChapter,
-  //   } = payload;
-  //   const origPos = state.chapters[d0][d1];
-
-  //   console.log("[data.fetchOneChapter] OUTDATED\n", origPos.deck, "\n");
-
-  //   if (newChapter !== undefined) origPos.deck = newChapter;
-  // }),
-
-  // fetchOneUserChapter_internal: action((state, payload) => {
-  //   const {
-  //     coords: { d0, d1, d2 },
-  //     newChapter,
-  //   } = payload;
-
-  //   const origPos = state.chapters[d0][d1].child[d2];
-  //   console.log("found outdated user chapter : ", origPos.deck);
-
-  //   if (newChapter !== undefined) origPos.deck = newChapter;
-
-  // let origPos = undefined
-
-  // const origPosIdx = state.chapters[d0][d1].child.findIndex(
-  //   i => +i.id === +retryId,
-  // )
-
-  // origPos = state.chapters[d0][d1].child[origPosIdx]
-  // if (origPosIdx === -1) {
-  //   origPos = state.chapters[d0][d1]
-  // } else {
-  // }
-
-  // console.log("[data.fetchOneUserChapter] OUTDATED\n", origPos.deck, "\n")
-
-  // if (newChapter !== undefined) origPos.deck = newChapter
-  // }),
-
-  // fetchOneNext_internal: action((state, payload) => {
-  //   const {
-  //     coords: { d0, d1, d2, d3 },
-  //     newChapter,
-  //   } = payload;
-  //   const origPos = state.chapters[d0][d1].child[d2].child[d3];
-
-  //   console.log("[data.fetchOneNext] OUTDATED\n", origPos.deck, "\n");
-
-  //   if (newChapter !== undefined) origPos.deck = newChapter;
-  // }),
 };
 
 export const selectors = {
-  root: state => state.data.root,
+  categories: state => state.data.categories,
   isLoaded: state => state.data.isLoaded,
+  maxCategoriesLength: state => state.data.maxCategoriesLength,
 
   currentFetchId: state => state.data.currentFetchId,
   currentCategory: state => state.data.currentCategory,
   currentCategoryTitle: state => state.data.currentCategoryTitle,
   chapters: state => state.data.chapters,
-
-  // categories: state => state.data.categories,
-  // chapters: state => state.data.chapters,
-
-  // isLoaded: state => state.data.isLoaded.val,
-  // hasNew: state => state.data.hasNew.val,
-
-  // isUpdatingAll: state => state.data.isUpdatingAll,
 };
 
 export const actions = {
-  loadRootAsync: actions => actions.data.loadRootAsync,
+  loadCategoriesAsync: actions => actions.data.loadCategoriesAsync,
 
   setFetchId: actions => actions.data.setFetchId,
 
-  loadChapterAsync: actions => actions.data.loadChapterAsync,
-
-  // startLoading: actions => actions.data.startLoading,
-  // finishLoading: actions => actions.data.finishLoading,
-
-  // reset: actions => actions.data.reset,
-
-  // resetCategory: actions => actions.data.resetCategory,
-  // addCategory: actions => actions.data.addCategory,
-
-  // resetChapters: actions => actions.data.resetChapters,
-  // addChapter: actions => actions.data.addChapter,
-  // addChapterChild: actions => actions.data.addChapterChild,
-
-  // updateHasNew: actions => actions.data.hasNew.update,
-
-  // updateAll: actions => actions.data.setUpdateAll,
+  loadChaptersAsync: actions => actions.data.loadChaptersAsync,
 };
+
+// categories: [],
+// resetCategory: action(state => {
+//   state.categories = [];
+// }),
+
+// chapters: [],
+// resetChapters: action((state, payload) => {
+//   state.chapters = [];
+// }),
+
+// addCategory: action((state, payload) => {
+//   const hasFound = state.categories.findIndex(cat => _.isEqual(cat, payload));
+//   if (hasFound === -1) {
+//     state.categories.push(payload);
+//   }
+// }),
+
+// addChapter: action((state, payload) => {
+//   const hasFound = state.chapters.findIndex(ch =>
+//     _.isEqual(ch.deck, payload.deck),
+//   );
+
+//   if (hasFound === -1) {
+//     state.chapters.push(
+//       payload.deck.map(d => ({
+//         deck: d,
+//         child: [],
+//       })),
+//     );
+//   }
+// }),
+
+// addChapterChild: action((state, payload) => {
+// 아무 부모 챕터 하나라도 있어야함
+//   if (state.chapters.length === 0) return;
+
+// 비교용 index 찾아오기
+//   const comparer = +payload.deck.group_index;
+
+// undefined
+//   if (!comparer) return;
+
+//   const findRecursively = arr => {
+//     arr.forEach(item => {
+//       if (+item.deck.id === comparer) {
+//         if (
+//           item.child.findIndex(f => _.isEqual(f.deck, payload.deck)) === -1
+//         ) {
+//           item.child.push({ deck: payload.deck, child: [] });
+//         }
+//         return;
+//       }
+
+//       if (item.child.length > 0) {
+//         findRecursively(item.child);
+//       }
+//     });
+//   };
+
+//   state.chapters.forEach(chapter => {
+//     if (chapter.length === 0) return;
+//     findRecursively(chapter);
+//   });
+// }),
+
+// fetchOneChapter_internal: action((state, payload) => {
+//   const {
+//     coords: { d0, d1 },
+//     newChapter,
+//   } = payload;
+//   const origPos = state.chapters[d0][d1];
+
+//   console.log("[data.fetchOneChapter] OUTDATED\n", origPos.deck, "\n");
+
+//   if (newChapter !== undefined) origPos.deck = newChapter;
+// }),
+
+// fetchOneUserChapter_internal: action((state, payload) => {
+//   const {
+//     coords: { d0, d1, d2 },
+//     newChapter,
+//   } = payload;
+
+//   const origPos = state.chapters[d0][d1].child[d2];
+//   console.log("found outdated user chapter : ", origPos.deck);
+
+//   if (newChapter !== undefined) origPos.deck = newChapter;
+
+// let origPos = undefined
+
+// const origPosIdx = state.chapters[d0][d1].child.findIndex(
+//   i => +i.id === +retryId,
+// )
+
+// origPos = state.chapters[d0][d1].child[origPosIdx]
+// if (origPosIdx === -1) {
+//   origPos = state.chapters[d0][d1]
+// } else {
+// }
+
+// console.log("[data.fetchOneUserChapter] OUTDATED\n", origPos.deck, "\n")
+
+// if (newChapter !== undefined) origPos.deck = newChapter
+// }),
+
+// fetchOneNext_internal: action((state, payload) => {
+//   const {
+//     coords: { d0, d1, d2, d3 },
+//     newChapter,
+//   } = payload;
+//   const origPos = state.chapters[d0][d1].child[d2].child[d3];
+
+//   console.log("[data.fetchOneNext] OUTDATED\n", origPos.deck, "\n");
+
+//   if (newChapter !== undefined) origPos.deck = newChapter;
+// }),

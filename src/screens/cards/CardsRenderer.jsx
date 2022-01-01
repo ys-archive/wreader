@@ -28,9 +28,9 @@ const initStates = () => {
   const curPos = useStoreState(selSwiper.curPos);
 
   // actions
-  const loadRootAsync = useStoreActions(actData.loadRootAsync);
+  const loadRootAsync = useStoreActions(actData.loadCategoriesAsync);
   const setFetchId = useStoreActions(actData.setFetchId);
-  const loadChapterAsync = useStoreActions(actData.loadChapterAsync);
+  const loadChapterAsync = useStoreActions(actData.loadChaptersAsync);
 
   return {
     currentCategory,
@@ -65,17 +65,24 @@ const CardsRenderer = () => {
   }, []);
 
   useEffect(() => {
-    // if (depth === 0) {
-    //   return;
-    // }
+    if (depth === 0) {
+      return;
+    }
 
     setFetchId(0);
     loadChapterAsync();
-
   }, [depth]);
-  
+
   let CardJSX = null;
-  console.log(chapters);
+  // console.log(chapters);
+
+  // console.log(currentCategory && currentCategory.id);
+  const currentChapters =
+    depth !== 0 &&
+    chapters &&
+    currentCategory &&
+    chapters.filter(ch => +ch.categoryId === +currentCategory.id);
+  // console.log(currentChapters);
 
   if (depth === 0) {
     if (!isLoaded) {
@@ -90,7 +97,7 @@ const CardsRenderer = () => {
 
     CardJSX = (
       <ChapterCard
-        data={chapterData[curPos]}
+        data={currentChapters[curPos]}
         categoryTitle={currentCategoryTitle}
       />
     );
