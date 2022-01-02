@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { View } from "react-native";
-import { Text } from "../../components/RN-components/Text";
-
-import { useGetSWR } from "../../hooks";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import { selAuth, selData, selSwiper } from "../../store/selectors";
 
-// import ChapterService from "../../services/ChapterService";
 
 import CategoryCard from "./category/CategoryCard";
 import ChapterCard from "./chapter-card/ChapterCard";
 
-// import FetchBeforeRender from "./CardsRenderer.fetch";
+
 import CardIndicator from "./CardIndicator";
 
 import LoadingModal from "../../components/modals/LoadingModal";
@@ -28,7 +24,7 @@ const initStates = () => {
   const curPos = useStoreState(selSwiper.curPos);
 
   // actions
-  const loadRootAsync = useStoreActions(actData.loadCategoriesAsync);
+  const loadCategoriesAsync = useStoreActions(actData.loadCategoriesAsync);
   const setFetchId = useStoreActions(actData.setFetchId);
   const loadChapterAsync = useStoreActions(actData.loadChaptersAsync);
 
@@ -41,7 +37,7 @@ const initStates = () => {
     depth,
     curPos,
 
-    loadRootAsync,
+    loadCategoriesAsync,
     setFetchId,
     loadChapterAsync,
   };
@@ -55,13 +51,13 @@ const CardsRenderer = () => {
     isLoaded,
     depth,
     curPos,
-    loadRootAsync,
+    loadCategoriesAsync,
     setFetchId,
     loadChapterAsync,
   } = initStates();
 
   useEffect(() => {
-    loadRootAsync();
+    loadCategoriesAsync();
   }, []);
 
   useEffect(() => {

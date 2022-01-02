@@ -209,7 +209,7 @@ const MakeArrows = (dir, callbacks, clicker) => {
           <TouchableOpacity
             onPress={e => {
               console.log(`${direction} arrow is pressed!`);
-              callbacks[direction]()(direction);
+              callbacks[direction]();
               clicker(true);
             }}
           >

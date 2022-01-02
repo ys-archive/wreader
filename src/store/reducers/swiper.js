@@ -68,18 +68,103 @@ export default {
 
   // swipe
   swipeLeft: thunk((actions, payload, helpers) => {}),
-  onSwipeLeft: thunkOn((actions => actions.swiftLeft, (actions, target) => {})),
+  onSwipeLeft_category: thunkOn(
+    actions => actions.swiftLeft,
+    (actions, target) => {
+      increaseDepth();
+      loadChaptersAsync();
+    },
+  ),
+  onSwipeLeft_oddChapter: thunkOn(
+    actions => actions.swiftLeft,
+    (actions, target) => {},
+  ),
+  onSwipeLeft_evenChapter: thunkOn(
+    actions => actions.swiftLeft,
+    (actions, target) => {},
+  ),
 
   swipeRight: thunk((actions, payload, helpers) => {}),
-  onSwipeRight: thunkOn(
-    (actions => actions.swiftRight, (actions, target) => {}),
+  // onSwipeRight_category: thunkOn(
+  //   (actions => actions.swiftRight, (actions, target) => {}),
+  // ),
+  onSwipeRight_oddChapter: thunkOn(
+    actions => actions.swiftRight,
+    (actions, target) => {
+      if (depth === 1) {
+        after = () => {
+          decreaseDepth();
+        };
+      } else {
+      }
+    },
+  ),
+  onSwipeRight_evenChapter: thunkOn(
+    actions => actions.swiftRight,
+    (actions, target) => {},
   ),
 
   swipeUp: thunk((actions, payload, helpers) => {}),
-  onSwipeUp: thunkOn((actions => actions.swiftUp, (actions, target) => {})),
+  onSwipeUp_category: thunkOn(
+    actions => actions.swiftUp,
+    (actions, target) => {
+      const { hasNext, increasePos } = swipeState;
+      if (!hasNext) {
+        Alert("마지막 카테고리!", "이전 카테고리로 돌아가기", () =>
+          swipe("down", () => {
+            console.log("마지막 카테고리!, 이전 카드로 돌아감!");
+            decreaseCoords();
+          }),
+        );
+        return;
+      }
+
+      swipe("up", () => {
+        increasePos();
+      });
+    },
+  ),
+  onSwipeUp_oddChapter: thunkOn(
+    actions => actions.swiftUp,
+    (actions, target) => {
+      swipe("up", () => {});
+    },
+  ),
+  onSwipeUp_evenChapter: thunkOn(
+    actions => actions.swiftUp,
+    (actions, target) => {
+      swipe("up", () => {});
+    },
+  ),
 
   swipeDown: thunk((actions, payload, helpers) => {}),
-  onSwipeDown: thunkOn((actions => actions.swiftDown, (actions, target) => {})),
+  onSwipeDown_category: thunkOn(
+    actions => actions.swiftDown,
+    (actions, target) => {
+      const { hasPrv, decreasePos } = swipeState;
+      if (!hasPrv) {
+        Alert("You are at the first category", "continue");
+        console.log("첫 카테고리에서 윗 카드가 없음");
+        return;
+      }
+
+      swipe("down", () => {
+        decreasePos();
+      });
+    },
+  ),
+  onSwipeDown_oddChapter: thunkOn(
+    actions => actions.swiftDown,
+    (actions, target) => {
+      swipe("down", () => {});
+    },
+  ),
+  onSwipeDown_evenChapter: thunkOn(
+    actions => actions.swiftDown,
+    (actions, target) => {
+      swipe("down", () => {});
+    },
+  ),
 
   resetToStartScreen: thunk((actions, payload, { getState, getStoreState }) => {
     actions.setDepth(0);
