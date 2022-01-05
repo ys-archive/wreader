@@ -29,15 +29,6 @@ const FetchBeforeRender = () => {
 
   useEffect(() => {
     updateHasNew({ d0: true });
-    // const timer1 = setTimeout(() => {
-      
-      
-    //   updateHasNew({ d3: true });
-    // }, 2000);
-
-    return () => {
-      if (timer1) clearTimeout(timer1);
-    };
   }, []);
 
   useFetchD0();

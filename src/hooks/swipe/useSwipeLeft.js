@@ -143,7 +143,7 @@ export const useSwipeLeft = swipe => {
         };
 
       default:
-        throw new Error("depth 는 0~3 사이만 가능 depth: ", depth);
+        throw new Error("depth 는 0~9 사이만 가능 depth: ", depth);
     }
   };
 };
