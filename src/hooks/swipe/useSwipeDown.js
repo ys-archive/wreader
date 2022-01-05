@@ -1,6 +1,5 @@
 import { Alert } from "../../components/alert";
 import { actSwiper } from "../../store/actions";
-import { useSwipeStates } from "./useSwipeStates";
 
 export const useSwipeDown = swipe => {
   const swipeDown = useStoreActions(actSwiper.swipeDown);

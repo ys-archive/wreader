@@ -1,5 +1,4 @@
 import { Alert } from "../../components/alert";
-import { useSwipeStates } from "./useSwipeStates";
 import { useNavigation } from "@react-navigation/native";
 import { useStoreActions } from "easy-peasy";
 import { actSwiper } from "../../store/actions";
@@ -15,6 +14,7 @@ export const useSwipeUp = swipe => {
         pos: "category",
         nav,
         swipe,
+        Alert,
       });
     };
   }
@@ -24,6 +24,7 @@ export const useSwipeUp = swipe => {
       pos: depth % 2 === 0 ? "even" : "odd",
       nav,
       swipe,
+      Alert,
     });
   };
 };

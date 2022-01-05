@@ -12,20 +12,29 @@ export default {
   reset: action(state => {
     state.categories = [];
   }),
-  loadCategoriesAsync: thunk(
-    async (actions, payload, { getState, getStoreState, getStoreActions }) => {
-      const { startLoading, finishLoading, reset, setCategories } = actions;
+  loadCategoriesAsync: thunk(async (actions, payload, helpers) => {
+    const { startLoading, reset, setCategories } = actions;
+    const {
+      getStoreState: {
+        auth: { userId },
+      },
+    } = getStoreState();
 
-      reset();
-      startLoading();
+    reset();
+    startLoading();
 
-      const userId = payload;
-      const { data } = await ChapterService.GET_getCategory(userId);
-      if (!data || !data.item || data.item.length === 0) return;
+    const { data } = await ChapterService.GET_getCategory(userId);
+    // if (!data || !data.item || data.item.length === 0) return;
 
+    if (data.status === 200) {
       setCategories(Object.values(data.item));
-    },
-  ),
+    }
+
+    const after = payload;
+    if (after) {
+      after();
+    }
+  }),
   onFinishLoadCategories: thunkOn(
     actions => actions.loadCategoriesAsync,
     (actions, target) => {
@@ -62,6 +71,7 @@ export default {
   setChapters: action((state, payload) => {
     state.chapters = payload;
   }),
+  hasChapters: computed(state => state.chapters.length),
   loadChaptersAsync: thunk(
     async (actions, payload, { getState, getStoreState, getStoreActions }) => {
       const { fetchId } = getState();
@@ -73,9 +83,13 @@ export default {
         data: { item },
         status,
       } = await ChapterService.GET_getChapter(fetchId, userId);
-      // console.log(status);
       if (status === 200) {
         actions.setChapters(Object.values(item));
+      }
+
+      const after = payload;
+      if (after) {
+        after();
       }
     },
   ),
@@ -109,6 +123,7 @@ export const selectors = {
   currentCategory: state => state.data.currentCategory,
   currentCategoryTitle: state => state.data.currentCategoryTitle,
   chapters: state => state.data.chapters,
+  hasChapters: state => state.data.hasChapters,
 };
 
 export const actions = {

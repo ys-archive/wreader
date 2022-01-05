@@ -17,7 +17,7 @@ export const useSwipeLeft = swipe => {
   }
 
   return () => {
-    swipeRight({
+    swipeLeft({
       pos: depth % 2 === 0 ? "even" : "odd",
       nav,
       swipe,

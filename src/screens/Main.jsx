@@ -52,6 +52,7 @@ const Main = () => {
       {/* <Reader>
         <CardsRenderer />
       </Reader> */}
+      
       <ArrowReader>
         <CardsRenderer />
       </ArrowReader>
