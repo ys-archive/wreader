@@ -1,14 +1,20 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
-import { useStoreActions } from 'easy-peasy';
-import { actData } from '../../store/actions';
+import { useStoreActions } from "easy-peasy";
+import { actData } from "../../store/actions";
 
 import {
-  useCategoriesFetch,
-  useChaptersFetch,
-  useUserChaptersFetch,
-  useNextFetch,
-} from '../../hooks';
+  useFetchD0,
+  useFetchD1,
+  useFetchD2,
+  useFetchD3,
+  useFetchD4,
+  useFetchD5,
+  useFetchD6,
+  useFetchD7,
+  useFetchD8,
+  useFetchD9,
+} from "../../hooks";
 
 const initStates = () => {
   const updateHasNew = useStoreActions(actData.updateHasNew);
@@ -23,21 +29,27 @@ const FetchBeforeRender = () => {
 
   useEffect(() => {
     updateHasNew({ d0: true });
-    const timer1 = setTimeout(() => {
-      updateHasNew({ d1: true });
-      updateHasNew({ d2: true });
-      updateHasNew({ d3: true });
-    }, 2000);
+    // const timer1 = setTimeout(() => {
+      
+      
+    //   updateHasNew({ d3: true });
+    // }, 2000);
 
     return () => {
       if (timer1) clearTimeout(timer1);
     };
   }, []);
 
-  useCategoriesFetch();
-  useChaptersFetch();
-  useUserChaptersFetch();
-  useNextFetch();
+  useFetchD0();
+  useFetchD1();
+  useFetchD2();
+  useFetchD3();
+  useFetchD4();
+  useFetchD5();
+  useFetchD6();
+  useFetchD7();
+  useFetchD8();
+  useFetchD9();
 };
 
 export default FetchBeforeRender;

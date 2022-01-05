@@ -30,7 +30,7 @@ export const useSwipeLeft = swipe => {
 
   return () => {
     switch (depth) {
-      case DEPTH_NAME.CATEGORY:
+      case 0:
         return state => {
           // 현재 카테고리의 챕터
           if (!chapters[coords.d0]) {
@@ -45,7 +45,7 @@ export const useSwipeLeft = swipe => {
                 categoryId: coords.d0,
                 chapterId: 0,
                 order: coords.d1 + 1,
-                depth: DEPTH_NAME.CHAPTER,
+                depth: 1,
               });
             });
             return;
@@ -60,7 +60,7 @@ export const useSwipeLeft = swipe => {
           });
         };
 
-      case DEPTH_NAME.CHAPTER:
+      case 1:
         return state => {
           // 현재 카테고리의 현재 챕터의 유저 챕터
           if (chapters[coords.d0][coords.d1].child.length === 0) {
@@ -70,7 +70,7 @@ export const useSwipeLeft = swipe => {
               categoryId: coords.d0,
               chapterId: +chapters[coords.d0][coords.d1].deck.id,
               order: coords.d2 + 2,
-              depth: DEPTH_NAME.USER_CHAPTER,
+              depth: 2,
             });
             return;
           }
@@ -82,7 +82,7 @@ export const useSwipeLeft = swipe => {
           });
         };
 
-      case DEPTH_NAME.USER_CHAPTER:
+      case 2:
         return state => {
           if (maxCoords.d2 !== 0 && coords.d2 === maxCoords.d2 - 1) {
             console.log(
@@ -95,7 +95,7 @@ export const useSwipeLeft = swipe => {
               categoryId: coords.d0,
               chapterId: +chapters[coords.d0][coords.d1].deck.id,
               order: coords.d2 + 2 + 1,
-              depth: DEPTH_NAME.USER_CHAPTER,
+              depth: 2,
             });
             return;
           }
@@ -107,7 +107,7 @@ export const useSwipeLeft = swipe => {
           });
         };
 
-      case DEPTH_NAME.NEXT:
+      case 3:
         return state => {
           if (coords.d3 === maxCoords.d1) {
             console.log("해당 카드가 마지막 챕터입니다!");
@@ -132,7 +132,7 @@ export const useSwipeLeft = swipe => {
               chapterId:
                 +chapters[coords.d0][coords.d1].child[coords.d2].deck.id,
               order: coords.d3 + 2 + coords.d1,
-              depth: DEPTH_NAME.NEXT,
+              depth: 3,
             });
             return;
           }

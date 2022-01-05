@@ -72,13 +72,13 @@ const ArrowReader = ({ children }) => {
   }
 
   switch (depth) {
-    case DEPTH_NAME.CATEGORY:
+    case 0:
       IndicatorJSX =
         isLoaded.d1 &&
         renderWithDepth0Arrow(coords, maxCoords, onPresseds, clickArrow)
       break
 
-    case DEPTH_NAME.CHAPTER:
+    case 1:
       IndicatorJSX =
         isLoaded.d2 &&
         renderWithDepth1Arrow(
@@ -90,7 +90,7 @@ const ArrowReader = ({ children }) => {
         )
       break
 
-    case DEPTH_NAME.USER_CHAPTER:
+    case 2:
       IndicatorJSX =
         isLoaded.d3 &&
         renderWithDepth2Arrow(
@@ -102,7 +102,7 @@ const ArrowReader = ({ children }) => {
         )
       break
 
-    case DEPTH_NAME.NEXT:
+    case 3:
       IndicatorJSX = renderWithDepth3Arrow(
         coords,
         maxCoords,

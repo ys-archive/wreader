@@ -31,7 +31,7 @@ export const useSwipeUp = swipe => {
 
   return () => {
     switch (depth) {
-      case DEPTH_NAME.CATEGORY:
+      case 0:
         return state => {
           if (coords.d0 === maxCoords.d0 - 1) {
             if (maxCoords.d0 !== 0) {
@@ -59,7 +59,7 @@ export const useSwipeUp = swipe => {
           });
         };
 
-      case DEPTH_NAME.CHAPTER:
+      case 1:
         return state => {
           if (coords.d1 === maxCoords.d1 - 1 && coords.d1 > 0) {
             swipe("down", () => {
@@ -85,7 +85,7 @@ export const useSwipeUp = swipe => {
                 chapterId: 0,
                 // order: coords.d1 + 2,
                 order: 1,
-                depth: DEPTH_NAME.CHAPTER,
+                depth: 1,
               });
             });
             return;
@@ -98,7 +98,7 @@ export const useSwipeUp = swipe => {
           });
         };
 
-      case DEPTH_NAME.USER_CHAPTER:
+      case 2:
         return state => {
           if (
             chapters[coords.d0][coords.d1].child[coords.d2].child.length === 0
@@ -114,7 +114,7 @@ export const useSwipeUp = swipe => {
               chapterId:
                 +chapters[coords.d0][coords.d1].child[coords.d2].deck.id,
               order: coords.d2 + 2,
-              depth: DEPTH_NAME.NEXT,
+              depth: 3,
             });
             return;
           }
@@ -125,7 +125,7 @@ export const useSwipeUp = swipe => {
           });
         };
 
-      case DEPTH_NAME.NEXT:
+      case 3:
         return state => {
           if (coords.d3 === maxCoords.d1) {
             console.log("해당 카드가 마지막 챕터입니다!");
@@ -150,7 +150,7 @@ export const useSwipeUp = swipe => {
               chapterId:
                 +chapters[coords.d0][coords.d1].child[coords.d2].deck.id,
               order: coords.d2 + 2,
-              depth: DEPTH_NAME.NEXT,
+              depth: 3,
             });
             return;
           }

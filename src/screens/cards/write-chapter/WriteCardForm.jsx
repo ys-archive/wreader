@@ -50,17 +50,17 @@ const WriteCardForm = ({
 
   const afterFormSubmitted = async () => {
     switch (depth) {
-      case DEPTH_NAME.CHAPTER:
+      case 1:
         updateHasNew({ d0: true });
         await delay(2);
         updateHasNew({ d1: true });
         break;
 
-      case DEPTH_NAME.USER_CHAPTER:
+      case 2:
         updateHasNew({ d2: true });
         break;
 
-      case DEPTH_NAME.NEXT:
+      case 3:
         updateHasNew({ d3: true });
         break;
     }

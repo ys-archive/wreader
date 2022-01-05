@@ -11,7 +11,7 @@ export default {
   }),
 
   depth: {
-    val: DEPTH_NAME.CATEGORY,
+    val: 0,
 
     set: action((state, payload) => {
       state.val = payload;
@@ -32,6 +32,12 @@ export default {
       d1: 0,
       d2: 0,
       d3: 0,
+      d4: 0,
+      d5: 0,
+      d6: 0,
+      d7: 0,
+      d8: 0,
+      d9: 0,
     }),
 
     max: new Coordinates({
@@ -39,6 +45,12 @@ export default {
       d1: 0,
       d2: 0,
       d3: 0,
+      d4: 0,
+      d5: 0,
+      d6: 0,
+      d7: 0,
+      d8: 0,
+      d9: 0,
     }),
 
     increment: action((state, payload) => {
@@ -62,7 +74,37 @@ export default {
         return;
       }
 
-      console.log("cur coords: ", state.val);
+      if ("d4" === payload) {
+        state.val = new Coordinates({ ...state.val, d4: state.val.d4 + 1 });
+        return;
+      }
+
+      if ("d5" === payload) {
+        state.val = new Coordinates({ ...state.val, d5: state.val.d5 + 1 });
+        return;
+      }
+
+      if ("d6" === payload) {
+        state.val = new Coordinates({ ...state.val, d6: state.val.d6 + 1 });
+        return;
+      }
+
+      if ("d7" === payload) {
+        state.val = new Coordinates({ ...state.val, d7: state.val.d7 + 1 });
+        return;
+      }
+
+      if ("d8" === payload) {
+        state.val = new Coordinates({ ...state.val, d8: state.val.d8 + 1 });
+        return;
+      }
+
+      if ("d9" === payload) {
+        state.val = new Coordinates({ ...state.val, d9: state.val.d9 + 1 });
+        return;
+      }
+
+      // console.log("cur coords: ", state.val);
     }),
 
     decrement: action((state, payload) => {
@@ -86,7 +128,37 @@ export default {
         return;
       }
 
-      console.log("cur coords: ", state.val);
+      if ("d4" === payload) {
+        state.val = new Coordinates({ ...state.val, d4: state.val.d4 - 1 });
+        return;
+      }
+
+      if ("d5" === payload) {
+        state.val = new Coordinates({ ...state.val, d5: state.val.d5 - 1 });
+        return;
+      }
+
+      if ("d6" === payload) {
+        state.val = new Coordinates({ ...state.val, d6: state.val.d6 - 1 });
+        return;
+      }
+
+      if ("d7" === payload) {
+        state.val = new Coordinates({ ...state.val, d7: state.val.d7 - 1 });
+        return;
+      }
+
+      if ("d8" === payload) {
+        state.val = new Coordinates({ ...state.val, d8: state.val.d8 - 1 });
+        return;
+      }
+
+      if ("d9" === payload) {
+        state.val = new Coordinates({ ...state.val, d9: state.val.d9 - 1 });
+        return;
+      }
+
+      // console.log("cur coords: ", state.val);
     }),
 
     set: action((state, payload) => {
@@ -94,28 +166,56 @@ export default {
     }),
 
     setMax: action((state, payload) => {
-      const { d0, d1, d2, d3 } = state.val;
+      // const { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 } = state.val;
 
       if ("d0" in payload) {
-        const categories = payload.d0;
-        state.max.setD0(categories.length);
+        const maxLength = payload.d0;
+        state.max.setD0(maxLength);
       }
 
       if ("d1" in payload) {
         const maxLength = payload.d1;
         state.max.setD1(maxLength);
-        // state.max.setD1(chapters[d0] ? chapters[d0].length : 0);
       }
 
       if ("d2" in payload) {
-        const chapters = payload.d2;
-        // console.log(chapters);
-        state.max.setD2(chapters[d0][d1].child.length);
+        const maxLength = payload.d2;
+        state.max.setD2(maxLength);
       }
 
       if ("d3" in payload) {
-        const chapters = payload.d3;
-        state.max.setD3(chapters[d0][d1].child[d2].child.length);
+        const maxLength = payload.d3;
+        state.max.setD3(maxLength);
+      }
+
+      if ("d4" in payload) {
+        const maxLength = payload.d4;
+        state.max.setD4(maxLength);
+      }
+
+      if ("d5" in payload) {
+        const maxLength = payload.d5;
+        state.max.setD5(maxLength);
+      }
+
+      if ("d6" in payload) {
+        const maxLength = payload.d6;
+        state.max.setD6(maxLength);
+      }
+
+      if ("d7" in payload) {
+        const maxLength = payload.d7;
+        state.max.setD7(maxLength);
+      }
+
+      if ("d8" in payload) {
+        const maxLength = payload.d8;
+        state.max.setD8(maxLength);
+      }
+
+      if ("d9" in payload) {
+        const maxLength = payload.d9;
+        state.max.setD9(maxLength);
       }
     }),
   },
@@ -125,28 +225,27 @@ export default {
     actions.coords.set({ d0: 0, d1: 0, d2: 0, d3: 0 });
   }),
 
-  moveToFirstInCurrentContext: thunk(
-    (actions, _, { getState }) => {
-      const {
-        depth: { val },
-      } = getState();
-      switch (val) {
-        case 1:
-          {
-            actions.coords.set({ d1: 0 });
-          }
-          break;
-        case 2:
-        case 3: {
+  moveToFirstInCurrentContext: thunk((actions, _, { getState }) => {
+    const {
+      depth: { val },
+    } = getState();
+    switch (val) {
+      case 1:
+        {
+          actions.coords.set({ d1: 0 });
+        }
+        break;
+      case 2:
+      case 3:
+        {
           actions.depth.set(2);
           actions.coords.set({ d3: 0 });
         }
         break;
-      }
-      // actions.depth.set(1);
-      // actions.coords.set({ d1: 0 });
-    },
-  ),
+    }
+    // actions.depth.set(1);
+    // actions.coords.set({ d1: 0 });
+  }),
 };
 
 export const selectors = {

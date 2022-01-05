@@ -21,7 +21,7 @@ export const useSwipeDown = swipe => {
 
   return () => {
     switch (depth) {
-      case DEPTH_NAME.CATEGORY:
+      case 0:
         return state => {
           if (coords.d0 === 0) {
             Alert("You are at the first category", "continue")
@@ -39,7 +39,7 @@ export const useSwipeDown = swipe => {
       //   console.log("카테고리에서 우측 스와이프는 허용되지 않음.")
       // }
 
-      case DEPTH_NAME.CHAPTER:
+      case 1:
         // return state => {
         //   console.log("챕터에서는 하방 스와이프는 허용되지 않음")
         // }
@@ -59,7 +59,7 @@ export const useSwipeDown = swipe => {
           }
         }
 
-      case DEPTH_NAME.USER_CHAPTER:
+      case 2:
         // return state => {
         //   if (coords.d2 === 0) {
         //     swipe("down", () => {
@@ -85,7 +85,7 @@ export const useSwipeDown = swipe => {
           }
         }
 
-      case DEPTH_NAME.NEXT:
+      case 3:
         // return state => {
         //   console.log("유저 다음 카드에서는 아래로 스와이프 금지")
         // }

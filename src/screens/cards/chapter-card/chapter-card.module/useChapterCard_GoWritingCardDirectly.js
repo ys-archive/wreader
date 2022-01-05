@@ -53,35 +53,35 @@ export const useChapterCard_GoWritingCardDirectly = () => {
     resetCard();
 
     switch (depth) {
-      case DEPTH_NAME.CHAPTER:
+      case 1:
         // 챕터 맨뒤에 직접 쓰기
         nav.navigate(ScreenNames.MainWriteCard, {
           categoryTitle: categories[coords.d0].title,
           categoryId: coords.d0,
           chapterId: 0,
           order: 1,
-          depth: DEPTH_NAME.CHAPTER,
+          depth: 1,
         });
         break;
 
-      case DEPTH_NAME.USER_CHAPTER:
+      case 2:
         // nav.navigate(ScreenNames.MainWriteCard, {
         //   categoryTitle: categories[coords.d0].title,
         //   categoryId: coords.d0,
         //   chapterId: +chapters[coords.d0][coords.d1].deck.id,
         //   order: coords.d2 + 2,
-        //   depth: DEPTH_NAME.USER_CHAPTER,
+        //   depth: 2,
         // });
         // break;
 
-      case DEPTH_NAME.NEXT:
+      case 3:
         // d3 는 0 부터 시작!
         nav.navigate(ScreenNames.MainWriteCard, {
           categoryTitle: categories[coords.d0].title,
           categoryId: +coords.d0,
           chapterId: +chapters[coords.d0][coords.d1].child[coords.d2].deck.id,
           order: coords.d2 + 2,
-          depth: DEPTH_NAME.NEXT,
+          depth: 3,
         });
         break;
     }

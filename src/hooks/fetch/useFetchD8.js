@@ -45,7 +45,7 @@ const initStates = () => {
   };
 };
 
-export const useNextFetch = () => {
+export const useFetchD8 = () => {
   const {
     userId,
 
@@ -66,14 +66,17 @@ export const useNextFetch = () => {
 
   React.useEffect(() => {
     (async function fetchNext() {
-      if (!isLoaded.d2) return;
-      if (!hasNew.d3) return;
+      if (!isLoaded.d7) return;
+      if (!hasNew.d8) return;
       if (!chapters || chapters.length === 0) return;
 
-      console.log("[useNextFetch] fetching NEXT CHAPTERS");
-      startLoading("d3");
+      console.log("[useFetchD3] fetching d8");
+      startLoading("d8");
 
-      const target = chapters[coords.d0][coords.d1].child[coords.d2];
+      const target =
+        chapters[coords.d0][coords.d1].child[coords.d2].child[coords.d3].child[
+          coords.d4
+        ].child[coords.d5].child[coords.d6].child[coords.d7];
 
       const { data } = await ChapterService.GET_getChapter(
         +target.deck.id,
@@ -89,15 +92,15 @@ export const useNextFetch = () => {
       }
 
       // 로딩 끝
-      updateHasNew({ d3: false });
-      finishLoading("d3");
+      updateHasNew({ d8: false });
+      finishLoading("d8");
     })();
-  }, [isLoaded.d2, hasNew.d3]);
+  }, [isLoaded.d7, hasNew.d8]);
 
   React.useEffect(() => {
-    if (!isLoaded.d3) return;
+    if (!isLoaded.d8) return;
 
     // console.log(chapters);
-    setMaxCoords({ d3: chapters });
-  }, [isLoaded.d3]);
+    setMaxCoords({ d8: 100 });
+  }, [isLoaded.d8]);
 };

@@ -45,7 +45,7 @@ const initStates = () => {
   };
 };
 
-export const useUserChaptersFetch = () => {
+export const useFetchD5 = () => {
   const {
     userId,
 
@@ -65,27 +65,23 @@ export const useUserChaptersFetch = () => {
   } = initStates();
 
   React.useEffect(() => {
-    (async function fetchUserChapters() {
-      if (!isLoaded.d1) return;
-      if (!hasNew.d2) return;
+    (async function fetchNext() {
+      if (!isLoaded.d4) return;
+      if (!hasNew.d5) return;
       if (!chapters || chapters.length === 0) return;
 
-      // await delay(1);
+      console.log("[useFetchD3] fetching d5");
+      startLoading("d5");
 
-      console.log("[useUserChapterFetch] fetching USER CHAPTERS");
+      const target =
+        chapters[coords.d0][coords.d1].child[coords.d2].child[coords.d3].child[
+          coords.d4
+        ];
 
-      startLoading("d2");
-
-      // console.log(coords);
-
-      // if (coords.d0 >= 2) return;
-
-      // if (chapters[coords.d0][coords.d1]) return;
-      if (!chapters[coords.d0]) return;
-
-      const target = chapters[coords.d0][coords.d1].deck;
-
-      const { data } = await ChapterService.GET_getChapter(+target.id, userId);
+      const { data } = await ChapterService.GET_getChapter(
+        +target.deck.id,
+        +userId,
+      );
 
       if (data.item.length === 1) {
         addChapterChild({ deck: data.item[0] });
@@ -96,32 +92,15 @@ export const useUserChaptersFetch = () => {
       }
 
       // 로딩 끝
-      updateHasNew({ d2: false });
-      finishLoading("d2");
+      updateHasNew({ d5: false });
+      finishLoading("d5");
     })();
-  }, [hasNew.d2, isLoaded.d1, userId]);
+  }, [isLoaded.d4, hasNew.d5]);
 
   React.useEffect(() => {
-    if (!isLoaded.d2) return;
+    if (!isLoaded.d5) return;
 
-    // console.log('UPDATE MAX WITH -->', chapters);
-    setMaxCoords({ d2: chapters });
-  }, [isLoaded.d2]);
+    // console.log(chapters);
+    setMaxCoords({ d5: 100 });
+  }, [isLoaded.d5]);
 };
-
-// const fetchUserChapter = async (arr, userId, addChapterChild) => {
-//   await asyncForEach(arr, async item => {
-//     const { data } = await ChapterService.GET_getChapter(
-//       +item.deck.id,
-//       +userId,
-//     );
-
-//     if (data.item.length === 1) {
-//       addChapterChild({ deck: data.item[0] });
-//     } else if (data.item.length >= 2) {
-//       data.item.forEach(data => {
-//         addChapterChild({ deck: data });
-//       });
-//     }
-//   });
-// };

@@ -1,63 +1,93 @@
-import { action, computed, thunk } from "easy-peasy"
-import ChapterService from "../../services/ChapterService"
-import { DEPTH_NAME } from "./swiper.depth"
+import { action, computed, thunk } from "easy-peasy";
+import ChapterService from "../../services/ChapterService";
+import { DEPTH_NAME } from "./swiper.depth";
 
 export default {
   fetchOne: thunk(
     async (actions, payload, { getState, getStoreState, getStoreActions }) => {
-      const { curId, parentId, depth, userId } = payload
+      const { curId, parentId, depth, userId } = payload;
 
       const {
         swiper: { coords },
-      } = getStoreState()
+      } = getStoreState();
 
       const {
         data: {
-          fetchOneChapter_internal,
-          fetchOneUserChapter_internal,
-          fetchOneNext_internal,
+          fetchOneD0_internal,
+          fetchOneD1_internal,
+          fetchOneD2_internal,
+          fetchOneD3_internal,
+          fetchOneD4_internal,
+          fetchOneD5_internal,
+          fetchOneD6_internal,
+          fetchOneD7_internal,
+          fetchOneD8_internal,
         },
-      } = getStoreActions()
+      } = getStoreActions();
 
       console.log(
         `\n[data.fetch.fetchOne] @GET getChapter (parentId : ${parentId}, current Id: ${curId}, userId: ${userId})`,
-      )
+      );
 
-      const { data } = await ChapterService.GET_getChapter(+parentId, userId)
-      if (data.item.length === 0) return
+      const { data } = await ChapterService.GET_getChapter(+parentId, userId);
+      if (data.item.length === 0) return;
 
-      const targetIdx = data.item.findIndex(i => +i.id === +curId)
+      const targetIdx = data.item.findIndex(i => +i.id === +curId);
 
-      const newChapter = data.item[targetIdx]
-      console.log(`[data.fetch.fetchOne] NEW\n`, newChapter, "\n")
+      const newChapter = data.item[targetIdx];
+      console.log(`[data.fetch.fetchOne] NEW\n`, newChapter, "\n");
 
-      const payload_internal = { coords: coords.val, newChapter }
+      const payload_internal = { coords: coords.val, newChapter };
 
       switch (depth) {
-        case DEPTH_NAME.CHAPTER:
-          fetchOneChapter_internal(payload_internal)
-          break
+        case 1:
+          fetchOneD0_internal(payload_internal);
+          break;
 
-        case DEPTH_NAME.USER_CHAPTER:
-          fetchOneUserChapter_internal(payload_internal)
-          break
+        case 2:
+          fetchOneD1_internal(payload_internal);
+          break;
 
-        case DEPTH_NAME.NEXT:
-          fetchOneNext_internal(payload_internal)
-          break
+        case 3:
+          fetchOneD2_internal(payload_internal);
+          break;
+
+        case 4:
+          fetchOneD3_internal(payload_internal);
+          break;
+
+        case 5:
+          fetchOneD4_internal(payload_internal);
+          break;
+
+        case 6:
+          fetchOneD5_internal(payload_internal);
+          break;
+
+        case 7:
+          fetchOneD6_internal(payload_internal);
+          break;
+
+        case 8:
+          fetchOneD7_internal(payload_internal);
+          break;
+
+        case 9:
+          fetchOneD8_internal(payload_internal);
+          break;
       }
     },
   ),
-}
+};
 
-export const selectors = {}
+export const selectors = {};
 
 export const actions = {
   fetchOne: actions => actions.dataFetch.fetchOne,
   // fetchOneChapter: actions => actions.dataFetch.fetchOneChapter,
   // fetchOneUserChapter: actions => actions.dataFetch.fetchOneUserChapter,
   // fetchOneNext: actions => actions.dataFetch.fetchOneNext,
-}
+};
 
 // fetchOneChapter: thunk(
 //   async (actions, payload, { getState, getStoreState, getStoreActions }) => {
@@ -93,7 +123,7 @@ export const actions = {
 //     const newChapter = data.item[targetIdx]
 //     console.log(`[data.fetch.fetchOneChapter] NEW\n`, newChapter, "\n")
 
-//     getStoreActions().data.fetchOneChapter_internal({
+//     getStoreActions().data.fetchOneD0_internal({
 //       d0,
 //       d1,
 //       newChapter,
@@ -129,7 +159,7 @@ export const actions = {
 //     const newChapter = data.item[targetIdx]
 //     console.log(`[data.fetch.fetchOneChapterRetry] NEW\n`, newChapter, "\n")
 
-//     getStoreActions().data.fetchOneUserChapter_internal({
+//     getStoreActions().data.fetchOneD1_internal({
 //       d0,
 //       d1,
 //       d2,
@@ -177,7 +207,7 @@ export const actions = {
 //       newChapter = retryData.item[targetIdx]
 
 //       console.log(`[data.fetch.fetchOneUserChapter] NEW\n`, newChapter, "\n")
-//       getStoreActions().data.fetchOneUserChapter_internal({
+//       getStoreActions().data.fetchOneD1_internal({
 //         d0,
 //         d1,
 //         d2,
@@ -189,7 +219,7 @@ export const actions = {
 //       newChapter = data.item[targetIdx]
 
 //       console.log(`[data.fetch.fetchOneUserChapter] NEW\n`, newChapter, "\n")
-//       getStoreActions().data.fetchOneUserChapter_internal({
+//       getStoreActions().data.fetchOneD1_internal({
 //         d0,
 //         d1,
 //         d2,
@@ -221,7 +251,7 @@ export const actions = {
 //     const newChapter = data.item[targetIdx]
 //     console.log(`[data.fetch.fetchOneChapter] NEW\n`, newChapter, "\n")
 
-//     getStoreActions().data.fetchOneNext_internal({
+//     getStoreActions().data.fetchOneD2_internal({
 //       d0,
 //       d1,
 //       d2,

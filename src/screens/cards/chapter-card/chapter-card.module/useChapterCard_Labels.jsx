@@ -12,14 +12,14 @@ export const useChapterCard_Labels = order => {
   const depth = useStoreState(selSwiper.depth);
   const maxCoords = useStoreState(selSwiper.maxCoords);
 
-  const TheEndLabelJSX = depth === DEPTH_NAME.CHAPTER &&
+  const TheEndLabelJSX = depth === 1 &&
     order + 1 === maxCoords.d1 && (
       <Text fontFamily="regular" style={s.theEnd}>
         THE END
       </Text>
     );
 
-  // const PreviousJSX = depth === DEPTH_NAME.CHAPTER &&
+  // const PreviousJSX = depth === 1 &&
   //   order !== 0 &&
   //   order + 1 <= maxCoords.d1 && (
   //     <Text isBold style={s.previous}>
@@ -28,14 +28,14 @@ export const useChapterCard_Labels = order => {
   //     </Text>
   //   );
 
-  // const NextJSX = depth === DEPTH_NAME.CHAPTER && order + 1 < maxCoords.d1 && (
+  // const NextJSX = depth === 1 && order + 1 < maxCoords.d1 && (
   //   <Text isBold style={s.next}>
   //     NEXT
   //     <Icon name="right" size={18} />
   //   </Text>
   // );
 
-  const FullStoryJSX = depth === DEPTH_NAME.CHAPTER &&
+  const FullStoryJSX = depth === 1 &&
     order + 1 === maxCoords.d1 && (
       <Text fontFamily="regular" style={s.fullStory}>
         FULL&nbsp;STORY

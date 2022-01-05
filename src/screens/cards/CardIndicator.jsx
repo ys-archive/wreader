@@ -42,21 +42,21 @@ const CardIndicator = ({ children }) => {
   let IndicatorJSX = null
 
   switch (depth) {
-    case DEPTH_NAME.CATEGORY:
+    case 0:
       IndicatorJSX = isLoaded.d1 && renderWithDepth0(coords, maxCoords)
       break
 
-    case DEPTH_NAME.CHAPTER:
+    case 1:
       IndicatorJSX =
         isLoaded.d2 && renderWithDepth1(coords, maxCoords, chapters)
       break
 
-    case DEPTH_NAME.USER_CHAPTER:
+    case 2:
       IndicatorJSX =
         isLoaded.d3 && renderWithDepth2(coords, maxCoords, chapters)
       break
 
-    case DEPTH_NAME.NEXT:
+    case 3:
       IndicatorJSX = renderWithDepth3(coords, maxCoords)
       break
   }

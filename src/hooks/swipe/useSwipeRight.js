@@ -19,7 +19,7 @@ export const useSwipeRight = swipe => {
 
   return () => {
     switch (depth) {
-      case DEPTH_NAME.CATEGORY:
+      case 0:
         return state => {
           console.log("카테고리에서 우측 스와이프는 허용되지 않음.")
         }
@@ -37,7 +37,7 @@ export const useSwipeRight = swipe => {
       //   })
       // }
 
-      case DEPTH_NAME.CHAPTER:
+      case 1:
         return state => {
           if (coords.d1 === 0) {
             swipe("right", () => {
@@ -57,7 +57,7 @@ export const useSwipeRight = swipe => {
       //   console.log("챕터에서는 우측 스와이프는 허용되지 않음")
       // }
 
-      case DEPTH_NAME.USER_CHAPTER:
+      case 2:
         // return state => {
         //   // console.log('유저 챕터에서 우측 스와이프는 허용되지 않음.');
         //   if (coords.d1 === 0) {
@@ -83,7 +83,7 @@ export const useSwipeRight = swipe => {
           })
         }
 
-      case DEPTH_NAME.NEXT:
+      case 3:
         return state => {
           // if (coords.d3 === 0) {
           //   swipe("right", () => {
