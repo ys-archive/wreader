@@ -136,9 +136,9 @@ export const useSwipeLeft = swipe => {
           }
 
           swipe("left", () => {
-            increaseCoords("d3");
-            // increaseDepth("d4");
-            console.log("Depth: 1 -> 4");
+            // increaseCoords("d3");
+            increaseDepth();
+            console.log("Depth: 3 -> 4");
           });
         };
 
@@ -147,7 +147,11 @@ export const useSwipeLeft = swipe => {
 
       case 5:
         return state => {
-          // console.log("Depth: 5 -> 6");
+          swipe("left", () => {
+            // increaseCoords("d3");
+            increaseDepth();
+            console.log("Depth: 5 -> 6");
+          });
         };
 
       case 6:
@@ -155,7 +159,11 @@ export const useSwipeLeft = swipe => {
 
       case 7:
         return state => {
-          // console.log("Depth: 7 -> 8");
+          swipe("left", () => {
+            // increaseCoords("d3");
+            increaseDepth();
+            console.log("Depth: 7 -> 8");
+          });
         };
 
       case 8:

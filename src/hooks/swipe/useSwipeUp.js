@@ -111,6 +111,7 @@ export const useSwipeUp = swipe => {
 
           swipe("up", () => {
             increaseDepth();
+            console.log("Depth: 2 -> 3");
             updateHasNew({ d4: true });
           });
         };
@@ -145,15 +146,19 @@ export const useSwipeUp = swipe => {
           }
 
           swipe("up", () => {
-            increaseCoords("d3");
-            console.log("Depth: 2 -> 3");
+            // increaseDepth();
+            // console.log("Depth: 2 -> 3");
             updateHasNew({ d4: true });
           });
         };
 
       case 4:
         return state => {
-          // console.log("Depth: 4 -> 5");
+          swipe("up", () => {
+            increaseDepth();
+            console.log("Depth: 4 -> 5");
+            updateHasNew({ d6: true });
+          });
         };
 
       case 5:
@@ -161,7 +166,11 @@ export const useSwipeUp = swipe => {
 
       case 6:
         return state => {
-          // console.log("Depth: 6 -> 7");
+          swipe("up", () => {
+            increaseDepth();
+            console.log("Depth: 6 -> 7");
+            updateHasNew({ d8: true });
+          });
         };
 
       case 7:
@@ -169,7 +178,12 @@ export const useSwipeUp = swipe => {
 
       case 8:
         return state => {
-          // console.log("Depth: 8 -> 9");
+          swipe("up", () => {
+            increaseDepth();
+            console.log("Depth: 8 -> 9");
+            console.log("Max Depth (9) Reached!");
+            // updateHasNew({ d4: true });
+          });
         };
 
       case 9:

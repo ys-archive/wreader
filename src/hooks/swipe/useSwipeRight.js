@@ -74,8 +74,10 @@ export const useSwipeRight = swipe => {
 
       case 4:
         return state => {
-          // if ()
-          // console.log("Depth: 4 -> 3");
+          swipe("right", () => {
+            console.log("Depth: 4 -> 3");
+            decreaseDepth();
+          });
         };
 
       case 5:
@@ -83,7 +85,10 @@ export const useSwipeRight = swipe => {
 
       case 6:
         return state => {
-          // console.log("Depth: 6 -> 5");
+          swipe("right", () => {
+            console.log("Depth: 6 -> 5");
+            decreaseDepth();
+          });
         };
 
       case 7:
@@ -91,13 +96,14 @@ export const useSwipeRight = swipe => {
 
       case 8:
         return state => {
-          // console.log("Depth: 8 -> 7");
+          swipe("right", () => {
+            console.log("Depth: 8 -> 7");
+            decreaseDepth();
+          });
         };
 
       case 9:
         return state => {};
-      default:
-        throw new Error("depth 는 0~3 사이만 가능 depth: ", depth);
     }
   };
 };
