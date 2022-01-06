@@ -33,28 +33,17 @@ const CardsRenderer = () => {
 
   FetchBeforeRender();
 
-  // if (!isLoaded.d0) return <LoadingModal />;
-  // if (!isLoaded.d1) return <LoadingModal />;
-  // if (!isLoaded.d2) return <LoadingModal />;
-  // if (!isLoaded.d3) return <LoadingModal />;
-  // if (!isLoaded.d4) return <LoadingModal />;
-  // if (!isLoaded.d5) return <LoadingModal />;
-  // if (!isLoaded.d6) return <LoadingModal />;
-  // if (!isLoaded.d7) return <LoadingModal />;
-  // if (!isLoaded.d8) return <LoadingModal />;
-  // if (!isLoaded.d9) return <LoadingModal />;
-
-  if (!chapters || chapters.length === 0) return <LoadingModal />;
-
-  // const { d0: md0, d1: md1, d2: md2, d3: md3 } = maxCoords;
-  // console.log(
-  //   `max coords---> md0:${md0} | md1:${md1} | md2:${md2} | md3:${md3}`,
-  // );
+  if (!isLoaded) {
+    return <LoadingModal />;
+  }
+  if (!chapters || chapters.length === 0) {
+    return <LoadingModal />;
+  }
 
   const { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 } = coords;
 
-  // console.log(`    coords---> d0:${d0} | d1:${d1} | d2:${d2} | d3:${d3}`);
   const currentCategoryTitle = categories[d0].title;
+  
   let CardJSX = null;
 
   switch (depth) {

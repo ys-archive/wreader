@@ -79,17 +79,17 @@ export const renderWithDepth0Arrow = (
   clicker,
 ) => {
   const { d0 } = coords;
-  const { d0: md0, d1: md1 } = maxCoords;
+  const { category, chapter } = maxCoords;
 
-  const hasPrvCategory = d0 !== 0 && d0 < md0;
-  const hasNxtCategory = d0 < md0 - 1;
-  const hasChapter = md1 > 0;
+  const hasPrv = d0 !== 0 && d0 < category;
+  const hasNxt = d0 < category - 1;
+  const hasNxtDepth = chapter > 0;
 
   return MakeArrows(
     {
-      top: hasPrvCategory,
-      bottom: hasNxtCategory,
-      right: hasChapter,
+      top: hasPrv,
+      bottom: hasNxt,
+      right: hasNxtDepth,
     },
     callbacks,
     clicker,
@@ -103,13 +103,13 @@ export const renderWithDepth1Arrow = (
   clicker,
 ) => {
   const { d1 } = coords;
-  const { d1: md1 } = maxCoords;
+  const { chapter } = maxCoords;
 
   const hasPrvDepth = d1 === 0;
   const hasPrv = d1 !== 0;
   // const hasNxtChapter = chapters[d0][d1 + 1] !== undefined;
-  const hasNxt = d1 < md1;
-  const hasNxtDepth = d1 < md1;
+  const hasNxt = d1 < chapter;
+  const hasNxtDepth = d1 < chapter;
 
   return MakeArrows(
     {
@@ -130,13 +130,13 @@ export const renderWithDepth2Arrow = (
   clicker,
 ) => {
   const { d2 } = coords;
-  const { d2: md2 } = maxCoords;
+  const { chapter } = maxCoords;
 
   const hasPrvDepth = d2 === 0;
   const hasPrv = d2 !== 0;
-  const hasNxt = d2 < md2;
+  const hasNxt = d2 < chapter;
   // const hasUserNext = chapters[d0][d1].child[d2].child.length > 0;
-  const hasNxtDepth = d2 < md2;
+  const hasNxtDepth = d2 < chapter;
 
   return MakeArrows(
     {
@@ -156,12 +156,12 @@ export const renderWithDepth3Arrow = (
   clicker,
 ) => {
   const { d3 } = coords;
-  const { d3: md3 } = maxCoords;
+  const { chapter } = maxCoords;
 
   const hasPrvDepth = d3 === 0;
   const hasPrv = d3 !== 0;
-  const hasNxt = d3 < md3;
-  const hasNxtDepth = d3 < md3;
+  const hasNxt = d3 < chapter;
+  const hasNxtDepth = d3 < chapter;
 
   return MakeArrows(
     {
@@ -181,12 +181,12 @@ export const renderWithDepth4Arrow = (
   clicker,
 ) => {
   const { d4 } = coords;
-  const { d4: md4 } = maxCoords;
+  const { chapter } = maxCoords;
 
   const hasPrvDepth = d4 === 0;
   const hasPrv = d4 !== 0;
-  const hasNxt = d4 < md4;
-  const hasNxtDepth = d4 < md4;
+  const hasNxt = d4 < chapter;
+  const hasNxtDepth = d4 < chapter;
 
   return MakeArrows(
     {

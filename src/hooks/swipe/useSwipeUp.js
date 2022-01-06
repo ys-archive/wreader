@@ -27,14 +27,15 @@ export const useSwipeUp = swipe => {
 
   const nav = useNavigation();
 
-  if (!isLoaded) return null;
+  const { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 } = coords;
+  const { category, chapter } = maxCoords;
 
   return () => {
     switch (depth) {
       case 0:
         return state => {
-          if (coords.d0 === maxCoords.d0 - 1) {
-            if (maxCoords.d0 !== 0) {
+          if (d0 === category - 1) {
+            if (category !== 0) {
               Alert("마지막 카테고리입니다!", "이전 카테고리로 돌아가기F", () =>
                 swipe("down", () => {
                   console.log("마지막 카테고리!, 이전 카드로 돌아감!");
@@ -51,14 +52,14 @@ export const useSwipeUp = swipe => {
 
           swipe("up", () => {
             increaseCoords("d0");
-            setMaxCoords({ d1: categories[coords.d0].maxLength });
+            setMaxCoords({ d1: categories[d0].maxLength });
             updateHasNew({ d2: chapters });
           });
         };
 
       case 1:
         return state => {
-          if (coords.d1 === maxCoords.d1 - 1 && coords.d1 > 0) {
+          if (d1 === chapter - 1 && d1 > 0) {
             swipe("down", () => {
               console.log("마지막 챕터!, 이전 챕터로 돌아감");
               decreaseCoords("d1");
@@ -66,10 +67,7 @@ export const useSwipeUp = swipe => {
             return;
           }
 
-          if (
-            coords.d1 < maxCoords.d1 - 2 &&
-            coords.d1 + 1 === chapters[coords.d0].length
-          ) {
+          if (d1 < chapter - 2 && d1 + 1 === chapters[d0].length) {
             swipe("up", () => {
               console.log(
                 "마지막 챕터!, 더이상 다음 챕터가 없어서 새 챕터 작성!",
@@ -77,8 +75,8 @@ export const useSwipeUp = swipe => {
               resetTempBlob();
               resetCard();
               nav.navigate(ScreenNames.MainWriteCard, {
-                categoryTitle: categories[coords.d0].title,
-                categoryId: coords.d0,
+                categoryTitle: categories[d0].title,
+                categoryId: d0,
                 chapterId: 0,
                 order: 1,
                 depth: 1,
@@ -90,26 +88,22 @@ export const useSwipeUp = swipe => {
           swipe("up", () => {
             increaseCoords("d1");
             updateHasNew({ d2: true });
-            // setMaxCoords({ d2: chapters });
           });
         };
 
       case 2:
         return state => {
-          if (
-            chapters[coords.d0][coords.d1].child[coords.d2].child.length === 0
-          ) {
+          if (chapters[d0][d1].child[d2].child.length === 0) {
             console.log(
               "해당 유저챕터의 유저 다음 챕터가 존재 하지 않음. 새로운 카드 작성",
             );
             resetTempBlob();
             resetCard();
             nav.navigate(ScreenNames.MainWriteCard, {
-              categoryTitle: categories[coords.d0].title,
-              categoryId: coords.d0,
-              chapterId:
-                +chapters[coords.d0][coords.d1].child[coords.d2].deck.id,
-              order: coords.d2 + 2,
+              categoryTitle: categories[d0].title,
+              categoryId: d0,
+              chapterId: +chapters[d0][d1].child[d2].deck.id,
+              order: d2 + 2,
               depth: 3,
             });
             return;
@@ -118,19 +112,18 @@ export const useSwipeUp = swipe => {
           swipe("up", () => {
             increaseDepth();
             updateHasNew({ d4: true });
-            // setMaxCoords({ d3: chapters });
           });
         };
 
       case 3:
         return state => {
-          if (coords.d3 === maxCoords.d1) {
+          if (d3 === chapter) {
             console.log("해당 카드가 마지막 챕터입니다!");
             return;
           }
 
-          if (coords.d3 === maxCoords.d3 - 1) {
-            if (maxCoords.d3 === 10) {
+          if (d3 === chapter - 1) {
+            if (chapter === 10) {
               swipe("down", () => {
                 console.log("마지막인 유저 다음 챕터!, 이전 챕터로 돌아감");
                 decreaseCoords("d3");
@@ -142,11 +135,10 @@ export const useSwipeUp = swipe => {
             resetTempBlob();
             resetCard();
             nav.navigate(ScreenNames.MainWriteCard, {
-              categoryTitle: categories[coords.d0].title,
-              categoryId: +coords.d0,
-              chapterId:
-                +chapters[coords.d0][coords.d1].child[coords.d2].deck.id,
-              order: coords.d2 + 2,
+              categoryTitle: categories[d0].title,
+              categoryId: +d0,
+              chapterId: +chapters[d0][d1].child[d2].deck.id,
+              order: d2 + 2,
               depth: 3,
             });
             return;

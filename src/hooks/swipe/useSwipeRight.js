@@ -48,7 +48,6 @@ export const useSwipeRight = swipe => {
           if (coords.d1 > 0) {
             swipe("right", () => {
               decreaseCoords("d1");
-              // setMaxCoords({ d2: chapters })
             });
           }
         };
@@ -79,7 +78,6 @@ export const useSwipeRight = swipe => {
           swipe("right", () => {
             decreaseCoords("d2");
             updateHasNew({ d3: true });
-            // setMaxCoords({ d3: chapters });
           });
         };
 

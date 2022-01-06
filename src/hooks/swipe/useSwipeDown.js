@@ -19,11 +19,13 @@ export const useSwipeDown = swipe => {
   } = useSwipeStates();
   if (!isLoaded) return null;
 
+  const { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 } = coords;
+
   return () => {
     switch (depth) {
       case 0:
         return state => {
-          if (coords.d0 === 0) {
+          if (d0 === 0) {
             Alert("You are at the first category", "continue");
             console.log("첫 카테고리에서 윗 카드가 없음");
             return;
@@ -31,19 +33,19 @@ export const useSwipeDown = swipe => {
 
           swipe("down", () => {
             decreaseCoords("d0");
-            setMaxCoords({ chapter: categories[coords.d0].maxLength });
+            setMaxCoords({ chapter: categories[d0].maxLength });
           });
         };
 
       case 1:
         return state => {
-          if (coords.d1 === 0) {
+          if (d1 === 0) {
             swipe("down", () => {
               decreaseDepth();
             });
           }
 
-          if (coords.d1 > 0) {
+          if (d1 > 0) {
             swipe("down", () => {
               decreaseCoords("d1");
             });
@@ -52,7 +54,7 @@ export const useSwipeDown = swipe => {
 
       case 2:
         return state => {
-          if (coords.d1 === 0) {
+          if (d1 === 0) {
             swipe("down", () => {
               decreaseDepth();
               // decreaseDepth();
@@ -62,13 +64,13 @@ export const useSwipeDown = swipe => {
 
       case 3:
         return state => {
-          if (coords.d3 === 0) {
+          if (d3 === 0) {
             swipe("down", () => {
               decreaseDepth();
             });
           }
 
-          if (coords.d3 > 0) {
+          if (d3 > 0) {
             swipe("down", () => {
               decreaseCoords("d3");
             });
@@ -77,7 +79,7 @@ export const useSwipeDown = swipe => {
 
       case 4:
         return state => {
-          if (coords.d4 === 0) {
+          if (d3 === 0) {
             swipe("down", () => {
               decreaseDepth();
             });
@@ -86,13 +88,13 @@ export const useSwipeDown = swipe => {
 
       case 5:
         return state => {
-          if (coords.d5 === 0) {
+          if (d5 === 0) {
             swipe("down", () => {
               decreaseDepth();
             });
           }
 
-          if (coords.d5 > 0) {
+          if (d5 > 0) {
             swipe("down", () => {
               decreaseCoords("d5");
             });
@@ -101,7 +103,7 @@ export const useSwipeDown = swipe => {
 
       case 6:
         return state => {
-          if (coords.d6 === 0) {
+          if (d5 === 0) {
             swipe("down", () => {
               decreaseDepth();
             });
@@ -110,13 +112,13 @@ export const useSwipeDown = swipe => {
 
       case 7:
         return state => {
-          if (coords.d7 === 0) {
+          if (d7 === 0) {
             swipe("down", () => {
               decreaseDepth();
             });
           }
 
-          if (coords.d7 > 0) {
+          if (d7 > 0) {
             swipe("down", () => {
               decreaseCoords("d7");
             });
@@ -125,7 +127,7 @@ export const useSwipeDown = swipe => {
 
       case 8:
         return state => {
-          if (coords.d8 === 0) {
+          if (d7 === 0) {
             swipe("down", () => {
               decreaseDepth();
             });
@@ -134,13 +136,13 @@ export const useSwipeDown = swipe => {
 
       case 9:
         return state => {
-          if (coords.d9 === 0) {
+          if (d9 === 0) {
             swipe("down", () => {
               decreaseDepth();
             });
           }
 
-          if (coords.d9 > 0) {
+          if (d9 > 0) {
             swipe("down", () => {
               decreaseCoords("d9");
             });
