@@ -35,14 +35,11 @@ export const useSwipeUp = swipe => {
         return state => {
           if (coords.d0 === maxCoords.d0 - 1) {
             if (maxCoords.d0 !== 0) {
-              Alert(
-                "You are at the last category!",
-                "Go Previous Category",
-                () =>
-                  swipe("down", () => {
-                    console.log("마지막 카테고리!, 이전 카드로 돌아감!");
-                    decreaseCoords("d0");
-                  }),
+              Alert("마지막 카테고리입니다!", "이전 카테고리로 돌아가기F", () =>
+                swipe("down", () => {
+                  console.log("마지막 카테고리!, 이전 카드로 돌아감!");
+                  decreaseCoords("d0");
+                }),
               );
             } else {
               console.log(
@@ -83,7 +80,6 @@ export const useSwipeUp = swipe => {
                 categoryTitle: categories[coords.d0].title,
                 categoryId: coords.d0,
                 chapterId: 0,
-                // order: coords.d1 + 2,
                 order: 1,
                 depth: 1,
               });
@@ -94,7 +90,7 @@ export const useSwipeUp = swipe => {
           swipe("up", () => {
             increaseCoords("d1");
             updateHasNew({ d2: true });
-            setMaxCoords({ d2: chapters });
+            // setMaxCoords({ d2: chapters });
           });
         };
 
@@ -121,7 +117,8 @@ export const useSwipeUp = swipe => {
 
           swipe("up", () => {
             increaseDepth();
-            setMaxCoords({ d3: chapters });
+            updateHasNew({ d4: true });
+            // setMaxCoords({ d3: chapters });
           });
         };
 
@@ -157,11 +154,27 @@ export const useSwipeUp = swipe => {
 
           swipe("up", () => {
             increaseCoords("d3");
+            updateHasNew({ d4: true });
           });
         };
 
-      default:
-        throw new Error("depth 는 0~3 사이만 가능 depth: ", depth);
+      case 4:
+        return state => {};
+
+      case 5:
+        return state => {};
+
+      case 6:
+        return state => {};
+
+      case 7:
+        return state => {};
+
+      case 8:
+        return state => {};
+
+      case 9:
+        return state => {};
     }
   };
 };

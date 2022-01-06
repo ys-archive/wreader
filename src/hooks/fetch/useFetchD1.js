@@ -53,7 +53,7 @@ export const useFetchD1 = () => {
   React.useEffect(() => {
     (async function fetchChapters() {
       // 카테고리가 먼저 로드 되었어야 함
-      if (!isLoaded.d0) return;
+      if (!isLoaded) return;
       if (!hasNew.d1) return;
       if (!categories || categories.length === 0) return;
 
@@ -61,7 +61,7 @@ export const useFetchD1 = () => {
       resetChapters();
       await delay(0.5);
 
-      startLoading("d1");
+      startLoading();
 
       // resetChapter();
       updateHasNew({ d1: false });
@@ -81,14 +81,8 @@ export const useFetchD1 = () => {
         addChapter({ deck });
       });
 
-      finishLoading("d1");
+      finishLoading();
       updateHasNew({ d2: true });
     })();
-  }, [hasNew.d1, isLoaded.d0]);
-
-  // React.useEffect(() => {
-  //   if (!isLoaded.d1) return;
-
-  //   updateHasNew({ d1: false });
-  // }, [isLoaded.d1, chapters]);
+  }, [hasNew.d1, isLoaded]);
 };

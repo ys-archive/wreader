@@ -66,12 +66,12 @@ export const useFetchD8 = () => {
 
   React.useEffect(() => {
     (async function fetchNext() {
-      if (!isLoaded.d7) return;
+      if (!isLoaded) return;
       if (!hasNew.d8) return;
       if (!chapters || chapters.length === 0) return;
 
-      console.log("[useFetchD3] fetching d8");
-      startLoading("d8");
+      console.log("[useFetchD8] fetching d8");
+      startLoading();
 
       const target =
         chapters[coords.d0][coords.d1].child[coords.d2].child[coords.d3].child[
@@ -93,14 +93,7 @@ export const useFetchD8 = () => {
 
       // 로딩 끝
       updateHasNew({ d8: false });
-      finishLoading("d8");
+      finishLoading();
     })();
-  }, [isLoaded.d7, hasNew.d8]);
-
-  React.useEffect(() => {
-    if (!isLoaded.d8) return;
-
-    // console.log(chapters);
-    setMaxCoords({ d8: 100 });
-  }, [isLoaded.d8]);
+  }, [isLoaded, hasNew.d8]);
 };

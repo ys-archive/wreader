@@ -55,7 +55,7 @@ export const useSwipeLeft = swipe => {
             // 카테고리 -> 챕터 선택 (d0 -> d1)
             increaseDepth();
             // 각 챕터에 맞게 최대 챕터 설정 (d1)
-            console.log("ENTER INTO CHAPTERS");
+            console.log("ENTER INTO D1");
             // updateHasNew({ d2: true });
           });
         };
@@ -77,7 +77,7 @@ export const useSwipeLeft = swipe => {
 
           swipe("left", () => {
             increaseDepth();
-            // console.log("ENTER INTO USER CHAPTERS")
+            console.log("ENTER INTO D2");
             updateHasNew({ d3: true });
           });
         };
@@ -103,7 +103,7 @@ export const useSwipeLeft = swipe => {
           swipe("left", () => {
             increaseCoords("d2");
             updateHasNew({ d3: true });
-            setMaxCoords({ d3: chapters });
+            // setMaxCoords({ d3: chapters });
           });
         };
 

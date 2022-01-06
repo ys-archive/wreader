@@ -13,134 +13,14 @@ export default {
   }),
 
   isLoaded: {
-    default: {
-      d0: false,
-      d1: false,
-      d2: false,
-      d3: false,
-      d4: false,
-      d5: false,
-      d6: false,
-      d7: false,
-      d8: false,
-      d9: false,
-    },
-
-    val: {
-      d0: false,
-      d1: false,
-      d2: false,
-      d3: false,
-      d4: false,
-      d5: false,
-      d6: false,
-      d7: false,
-      d8: false,
-      d9: false,
-    },
+    val: false,
 
     startLoading: action((state, payload) => {
-      if ("d0" === payload) {
-        state.val.d0 = false;
-        return;
-      }
-
-      if ("d1" === payload) {
-        state.val.d1 = false;
-        return;
-      }
-
-      if ("d2" === payload) {
-        state.val.d2 = false;
-        return;
-      }
-
-      if ("d3" === payload) {
-        state.val.d3 = false;
-        return;
-      }
-
-      if ("d4" === payload) {
-        state.val.d4 = false;
-        return;
-      }
-
-      if ("d5" === payload) {
-        state.val.d5 = false;
-        return;
-      }
-
-      if ("d6" === payload) {
-        state.val.d6 = false;
-        return;
-      }
-
-      if ("d7" === payload) {
-        state.val.d7 = false;
-        return;
-      }
-
-      if ("d8" === payload) {
-        state.val.d8 = false;
-        return;
-      }
-
-      if ("d9" === payload) {
-        state.val.d9 = false;
-        return;
-      }
+      state.val = false;
     }),
 
     finishLoading: action((state, payload) => {
-      if ("d0" === payload) {
-        state.val.d0 = true;
-        return;
-      }
-
-      if ("d1" === payload) {
-        state.val.d1 = true;
-        return;
-      }
-
-      if ("d2" === payload) {
-        state.val.d2 = true;
-        return;
-      }
-
-      if ("d3" === payload) {
-        state.val.d3 = true;
-        return;
-      }
-
-      if ("d4" === payload) {
-        state.val.d4 = true;
-        return;
-      }
-
-      if ("d5" === payload) {
-        state.val.d5 = true;
-        return;
-      }
-
-      if ("d6" === payload) {
-        state.val.d6 = true;
-        return;
-      }
-
-      if ("d7" === payload) {
-        state.val.d7 = true;
-        return;
-      }
-
-      if ("d8" === payload) {
-        state.val.d8 = true;
-        return;
-      }
-
-      if ("d9" === payload) {
-        state.val.d9 = true;
-        return;
-      }
+      state.val = true;
     }),
   },
 
@@ -224,18 +104,11 @@ export default {
     }),
   },
 
-  isUpdatingAll: false,
-
-  setUpdateAll: action((state, payload) => {
-    state.isUpdatingAll = payload;
-  }),
-
   reset: action(state => {
     state.categories = [];
     state.chapters = [];
-    state.isLoaded.val = state.isLoaded.default;
+    state.isLoaded.val = false;
     state.hasNew.val = state.hasNew.default;
-    state.isUpdatingAll = false;
   }),
 
   resetCategory: action(state => {
@@ -426,8 +299,6 @@ export const selectors = {
 
   isLoaded: state => state.data.isLoaded.val,
   hasNew: state => state.data.hasNew.val,
-
-  isUpdatingAll: state => state.data.isUpdatingAll,
 };
 
 export const actions = {
@@ -445,6 +316,4 @@ export const actions = {
   startLoading: actions => actions.data.isLoaded.startLoading,
   finishLoading: actions => actions.data.isLoaded.finishLoading,
   updateHasNew: actions => actions.data.hasNew.update,
-
-  updateAll: actions => actions.data.setUpdateAll,
 };

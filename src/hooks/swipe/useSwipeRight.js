@@ -1,5 +1,5 @@
-import { DEPTH_NAME } from "../../store/reducers/swiper.depth"
-import { useSwipeStates } from "./useSwipeStates"
+import { DEPTH_NAME } from "../../store/reducers/swiper.depth";
+import { useSwipeStates } from "./useSwipeStates";
 
 export const useSwipeRight = swipe => {
   const {
@@ -14,15 +14,15 @@ export const useSwipeRight = swipe => {
     updateHasNew,
     setMaxCoords,
     decreaseCoords,
-  } = useSwipeStates()
-  if (!isLoaded) return null
+  } = useSwipeStates();
+  if (!isLoaded) return null;
 
   return () => {
     switch (depth) {
       case 0:
         return state => {
-          console.log("카테고리에서 우측 스와이프는 허용되지 않음.")
-        }
+          console.log("카테고리에서 우측 스와이프는 허용되지 않음.");
+        };
 
       // return state => {
       //   if (coords.d0 === 0) {
@@ -41,17 +41,17 @@ export const useSwipeRight = swipe => {
         return state => {
           if (coords.d1 === 0) {
             swipe("right", () => {
-              decreaseDepth()
-            })
+              decreaseDepth();
+            });
           }
 
           if (coords.d1 > 0) {
             swipe("right", () => {
-              decreaseCoords("d1")
-              setMaxCoords({ d2: chapters })
-            })
+              decreaseCoords("d1");
+              // setMaxCoords({ d2: chapters })
+            });
           }
-        }
+        };
 
       // return state => {
       //   console.log("챕터에서는 우측 스와이프는 허용되지 않음")
@@ -71,17 +71,17 @@ export const useSwipeRight = swipe => {
         return state => {
           if (coords.d2 === 0) {
             swipe("right", () => {
-              decreaseDepth()
-            })
-            return
+              decreaseDepth();
+            });
+            return;
           }
 
           swipe("right", () => {
-            decreaseCoords("d2")
-            updateHasNew({ d3: true })
-            setMaxCoords({ d3: chapters })
-          })
-        }
+            decreaseCoords("d2");
+            updateHasNew({ d3: true });
+            // setMaxCoords({ d3: chapters });
+          });
+        };
 
       case 3:
         return state => {
@@ -93,17 +93,17 @@ export const useSwipeRight = swipe => {
 
           if (coords.d3 > 0) {
             swipe("right", () => {
-              decreaseCoords("d3")
-            })
+              decreaseCoords("d3");
+            });
           }
-        }
+        };
 
       // return state => {
       //   console.log("유저 다음 카드에서는 아래로 스와이프 금지")
       // }
 
       default:
-        throw new Error("depth 는 0~3 사이만 가능 depth: ", depth)
+        throw new Error("depth 는 0~3 사이만 가능 depth: ", depth);
     }
-  }
-}
+  };
+};

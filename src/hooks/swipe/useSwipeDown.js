@@ -31,19 +31,11 @@ export const useSwipeDown = swipe => {
 
           swipe("down", () => {
             decreaseCoords("d0");
-            setMaxCoords({ d1: categories[coords.d0].maxLength });
+            setMaxCoords({ chapter: categories[coords.d0].maxLength });
           });
         };
 
-      // return state => {
-      //   console.log("카테고리에서 우측 스와이프는 허용되지 않음.")
-      // }
-
       case 1:
-        // return state => {
-        //   console.log("챕터에서는 하방 스와이프는 허용되지 않음")
-        // }
-
         return state => {
           if (coords.d1 === 0) {
             swipe("down", () => {
@@ -54,42 +46,21 @@ export const useSwipeDown = swipe => {
           if (coords.d1 > 0) {
             swipe("down", () => {
               decreaseCoords("d1");
-              setMaxCoords({ d2: chapters });
             });
           }
         };
 
       case 2:
-        // return state => {
-        //   if (coords.d2 === 0) {
-        //     swipe("down", () => {
-        //       decreaseDepth()
-        //     })
-        //     return
-        //   }
-
-        //   swipe("down", () => {
-        //     decreaseCoords("d2")
-        //     updateHasNew({ d3: true })
-        //     setMaxCoords({ d3: chapters })
-        //   })
-        // }
-
         return state => {
-          // console.log('유저 챕터에서 우측 스와이프는 허용되지 않음.');
           if (coords.d1 === 0) {
             swipe("down", () => {
               decreaseDepth();
-              decreaseDepth();
+              // decreaseDepth();
             });
           }
         };
 
       case 3:
-        // return state => {
-        //   console.log("유저 다음 카드에서는 아래로 스와이프 금지")
-        // }
-
         return state => {
           if (coords.d3 === 0) {
             swipe("down", () => {
@@ -105,25 +76,76 @@ export const useSwipeDown = swipe => {
         };
 
       case 4:
-        break;
+        return state => {
+          if (coords.d4 === 0) {
+            swipe("down", () => {
+              decreaseDepth();
+            });
+          }
+        };
 
       case 5:
-        break;
+        return state => {
+          if (coords.d5 === 0) {
+            swipe("down", () => {
+              decreaseDepth();
+            });
+          }
+
+          if (coords.d5 > 0) {
+            swipe("down", () => {
+              decreaseCoords("d5");
+            });
+          }
+        };
 
       case 6:
-        break;
+        return state => {
+          if (coords.d6 === 0) {
+            swipe("down", () => {
+              decreaseDepth();
+            });
+          }
+        };
 
       case 7:
-        break;
+        return state => {
+          if (coords.d7 === 0) {
+            swipe("down", () => {
+              decreaseDepth();
+            });
+          }
+
+          if (coords.d7 > 0) {
+            swipe("down", () => {
+              decreaseCoords("d7");
+            });
+          }
+        };
 
       case 8:
-        break;
+        return state => {
+          if (coords.d8 === 0) {
+            swipe("down", () => {
+              decreaseDepth();
+            });
+          }
+        };
 
       case 9:
-        break;
+        return state => {
+          if (coords.d9 === 0) {
+            swipe("down", () => {
+              decreaseDepth();
+            });
+          }
 
-      default:
-        throw new Error("depth 는 0~3 사이만 가능 depth: ", depth);
+          if (coords.d9 > 0) {
+            swipe("down", () => {
+              decreaseCoords("d9");
+            });
+          }
+        };
     }
   };
 };

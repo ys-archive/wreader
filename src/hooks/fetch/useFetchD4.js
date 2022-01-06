@@ -66,12 +66,12 @@ export const useFetchD4 = () => {
 
   React.useEffect(() => {
     (async function fetchNext() {
-      if (!isLoaded.d3) return;
+      if (!isLoaded) return;
       if (!hasNew.d4) return;
       if (!chapters || chapters.length === 0) return;
 
-      console.log("[useFetchD3] fetching D4");
-      startLoading("d4");
+      console.log("[useFetchD4] fetching D4");
+      startLoading();
 
       const target =
         chapters[coords.d0][coords.d1].child[coords.d2].child[coords.d3];
@@ -91,14 +91,7 @@ export const useFetchD4 = () => {
 
       // 로딩 끝
       updateHasNew({ d4: false });
-      finishLoading("d4");
+      finishLoading();
     })();
-  }, [isLoaded.d3, hasNew.d4]);
-
-  React.useEffect(() => {
-    if (!isLoaded.d4) return;
-
-    // console.log(chapters);
-    setMaxCoords({ d4: 100 });
-  }, [isLoaded.d4]);
+  }, [isLoaded, hasNew.d4]);
 };

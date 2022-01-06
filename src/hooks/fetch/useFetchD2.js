@@ -66,7 +66,7 @@ export const useFetchD2 = () => {
 
   React.useEffect(() => {
     (async function fetchUserChapters() {
-      if (!isLoaded.d1) return;
+      if (!isLoaded) return;
       if (!hasNew.d2) return;
       if (!chapters || chapters.length === 0) return;
 
@@ -74,7 +74,7 @@ export const useFetchD2 = () => {
 
       console.log("[useUserChapterFetch] fetching D2");
 
-      startLoading("d2");
+      startLoading();
 
       // console.log(coords);
 
@@ -97,15 +97,7 @@ export const useFetchD2 = () => {
 
       // 로딩 끝
       updateHasNew({ d2: false });
-      finishLoading("d2");
-      updateHasNew({ d3: true });
+      finishLoading();
     })();
-  }, [hasNew.d2, isLoaded.d1, userId]);
-
-  React.useEffect(() => {
-    if (!isLoaded.d2) return;
-
-    // console.log('UPDATE MAX WITH -->', chapters);
-    setMaxCoords({ d2: 100 });
-  }, [isLoaded.d2]);
+  }, [hasNew.d2, isLoaded, userId]);
 };

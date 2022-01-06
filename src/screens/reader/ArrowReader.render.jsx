@@ -82,13 +82,13 @@ export const renderWithDepth0Arrow = (
   const { d0: md0, d1: md1 } = maxCoords;
 
   const hasPrvCategory = d0 !== 0 && d0 < md0;
-  const hasNextCategory = d0 < md0 - 1;
+  const hasNxtCategory = d0 < md0 - 1;
   const hasChapter = md1 > 0;
 
   return MakeArrows(
     {
       top: hasPrvCategory,
-      bottom: hasNextCategory,
+      bottom: hasNxtCategory,
       right: hasChapter,
     },
     callbacks,
@@ -99,25 +99,24 @@ export const renderWithDepth0Arrow = (
 export const renderWithDepth1Arrow = (
   coords,
   maxCoords,
-  chapters,
   callbacks,
   clicker,
 ) => {
-  const { d0, d1 } = coords;
+  const { d1 } = coords;
   const { d1: md1 } = maxCoords;
 
-  const hasCategory = d1 === 0;
-  const hasPrvChapter = d1 !== 0;
-  // const hasNextChapter = chapters[d0][d1 + 1] !== undefined;
-  const isNotYetMaxD1 = d1 < md1;
-  const hasUserChapter = d1 < md1;
+  const hasPrvDepth = d1 === 0;
+  const hasPrv = d1 !== 0;
+  // const hasNxtChapter = chapters[d0][d1 + 1] !== undefined;
+  const hasNxt = d1 < md1;
+  const hasNxtDepth = d1 < md1;
 
   return MakeArrows(
     {
-      left: hasCategory,
-      top: hasPrvChapter,
-      bottom: isNotYetMaxD1,
-      right: hasUserChapter,
+      left: hasPrvDepth,
+      top: hasPrv,
+      bottom: hasNxt,
+      right: hasNxtDepth,
     },
     callbacks,
     clicker,
@@ -127,24 +126,23 @@ export const renderWithDepth1Arrow = (
 export const renderWithDepth2Arrow = (
   coords,
   maxCoords,
-  chapters,
   callbacks,
   clicker,
 ) => {
-  const { d0, d1, d2 } = coords;
+  const { d2 } = coords;
   const { d2: md2 } = maxCoords;
 
-  const hasChapter = d2 === 0;
-  const hasPrvUserChapter = d2 !== 0;
-  const hasNextUserChapter = d2 < md2;
+  const hasPrvDepth = d2 === 0;
+  const hasPrv = d2 !== 0;
+  const hasNxt = d2 < md2;
   // const hasUserNext = chapters[d0][d1].child[d2].child.length > 0;
-  const hasUserNext = d2 < md2;
+  const hasNxtDepth = d2 < md2;
 
   return MakeArrows(
     {
-      left: hasChapter ? hasChapter : hasPrvUserChapter,
-      right: hasNextUserChapter,
-      bottom: hasUserNext,
+      left: hasPrvDepth ? hasPrvDepth : hasPrv,
+      right: hasNxt,
+      bottom: hasNxtDepth,
     },
     callbacks,
     clicker,
@@ -157,17 +155,44 @@ export const renderWithDepth3Arrow = (
   callbacks,
   clicker,
 ) => {
-  const { d0, d1, d2, d3 } = coords;
+  const { d3 } = coords;
   const { d3: md3 } = maxCoords;
 
-  const hasUserChapter = d3 === 0;
-  const hasPrvUserNext = d3 !== 0;
-  const hasNextUserNext = d3 < md3;
+  const hasPrvDepth = d3 === 0;
+  const hasPrv = d3 !== 0;
+  const hasNxt = d3 < md3;
+  const hasNxtDepth = d3 < md3;
 
   return MakeArrows(
     {
-      top: hasUserChapter ? hasUserChapter : hasPrvUserNext,
-      bottom: hasNextUserNext,
+      top: hasPrvDepth ? hasPrvDepth : hasPrv,
+      right: hasNxtDepth,
+      bottom: hasNxt,
+    },
+    callbacks,
+    clicker,
+  );
+};
+
+export const renderWithDepth4Arrow = (
+  coords,
+  maxCoords,
+  callbacks,
+  clicker,
+) => {
+  const { d4 } = coords;
+  const { d4: md4 } = maxCoords;
+
+  const hasPrvDepth = d4 === 0;
+  const hasPrv = d4 !== 0;
+  const hasNxt = d4 < md4;
+  const hasNxtDepth = d4 < md4;
+
+  return MakeArrows(
+    {
+      top: hasPrvDepth ? hasPrvDepth : hasPrv,
+      bottom: hasNxt,
+      right: hasNxtDepth,
     },
     callbacks,
     clicker,

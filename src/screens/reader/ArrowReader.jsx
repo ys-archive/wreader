@@ -17,6 +17,7 @@ import {
   renderWithDepth1Arrow,
   renderWithDepth2Arrow,
   renderWithDepth3Arrow,
+  renderWithDepth4Arrow,
 } from "./ArrowReader.render";
 import { useEffect } from "react";
 
@@ -81,50 +82,26 @@ const ArrowReader = ({ children }) => {
     case 1:
       IndicatorJSX =
         isLoaded.d2 &&
-        renderWithDepth1Arrow(
-          coords,
-          maxCoords,
-          chapters,
-          onPresseds,
-          clickArrow,
-        );
+        renderWithDepth1Arrow(coords, maxCoords, onPresseds, clickArrow);
       break;
 
     case 2:
       IndicatorJSX =
         isLoaded.d3 &&
-        renderWithDepth2Arrow(
-          coords,
-          maxCoords,
-          chapters,
-          onPresseds,
-          clickArrow,
-        );
+        renderWithDepth2Arrow(coords, maxCoords, onPresseds, clickArrow);
       break;
 
     case 3:
       IndicatorJSX =
         isLoaded.d4 &&
-        renderWithDepth3Arrow(
-          coords,
-          maxCoords,
-          chapters,
-          onPresseds,
-          clickArrow,
-        );
+        renderWithDepth3Arrow(coords, maxCoords, onPresseds, clickArrow);
       break;
 
-    // case 4:
-    //   IndicatorJSX =
-    //     isLoaded.d3 &&
-    //     renderWithDepth4Arrow(
-    //       coords,
-    //       maxCoords,
-    //       chapters,
-    //       onPresseds,
-    //       clickArrow,
-    //     );
-    //   break;
+    case 4:
+      IndicatorJSX =
+        // isLoaded.d5 &&
+        renderWithDepth4Arrow(coords, maxCoords, onPresseds, clickArrow);
+      break;
 
     // case 5:
     //   IndicatorJSX =

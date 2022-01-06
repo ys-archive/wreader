@@ -66,12 +66,12 @@ export const useFetchD5 = () => {
 
   React.useEffect(() => {
     (async function fetchNext() {
-      if (!isLoaded.d4) return;
+      if (!isLoaded) return;
       if (!hasNew.d5) return;
       if (!chapters || chapters.length === 0) return;
 
-      console.log("[useFetchD3] fetching d5");
-      startLoading("d5");
+      console.log("[useFetchD5] fetching d5");
+      startLoading();
 
       const target =
         chapters[coords.d0][coords.d1].child[coords.d2].child[coords.d3].child[
@@ -93,14 +93,7 @@ export const useFetchD5 = () => {
 
       // 로딩 끝
       updateHasNew({ d5: false });
-      finishLoading("d5");
+      finishLoading();
     })();
-  }, [isLoaded.d4, hasNew.d5]);
-
-  React.useEffect(() => {
-    if (!isLoaded.d5) return;
-
-    // console.log(chapters);
-    setMaxCoords({ d5: 100 });
-  }, [isLoaded.d5]);
+  }, [isLoaded, hasNew.d5]);
 };

@@ -1,6 +1,5 @@
 import { action, thunk } from "easy-peasy";
 import { Coordinates } from "./swiper.coords";
-import { DEPTH_NAME } from "./swiper.depth";
 
 export default {
   // model
@@ -40,18 +39,10 @@ export default {
       d9: 0,
     }),
 
-    max: new Coordinates({
-      d0: 0,
-      d1: 0,
-      d2: 0,
-      d3: 0,
-      d4: 0,
-      d5: 0,
-      d6: 0,
-      d7: 0,
-      d8: 0,
-      d9: 0,
-    }),
+    max: {
+      category: 0,
+      chapter: 0,
+    },
 
     increment: action((state, payload) => {
       if ("d0" === payload) {
@@ -166,56 +157,12 @@ export default {
     }),
 
     setMax: action((state, payload) => {
-      // const { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 } = state.val;
-
-      if ("d0" in payload) {
-        const maxLength = payload.d0;
-        state.max.setD0(maxLength);
+      if ("category" in payload) {
+        state.max.category = payload.category;
       }
 
-      if ("d1" in payload) {
-        const maxLength = payload.d1;
-        state.max.setD1(maxLength);
-      }
-
-      if ("d2" in payload) {
-        const maxLength = payload.d2;
-        state.max.setD2(maxLength);
-      }
-
-      if ("d3" in payload) {
-        const maxLength = payload.d3;
-        state.max.setD3(maxLength);
-      }
-
-      if ("d4" in payload) {
-        const maxLength = payload.d4;
-        state.max.setD4(maxLength);
-      }
-
-      if ("d5" in payload) {
-        const maxLength = payload.d5;
-        state.max.setD5(maxLength);
-      }
-
-      if ("d6" in payload) {
-        const maxLength = payload.d6;
-        state.max.setD6(maxLength);
-      }
-
-      if ("d7" in payload) {
-        const maxLength = payload.d7;
-        state.max.setD7(maxLength);
-      }
-
-      if ("d8" in payload) {
-        const maxLength = payload.d8;
-        state.max.setD8(maxLength);
-      }
-
-      if ("d9" in payload) {
-        const maxLength = payload.d9;
-        state.max.setD9(maxLength);
+      if ("chapter" in payload) {
+        state.max.chapter = payload.chapter;
       }
     }),
   },

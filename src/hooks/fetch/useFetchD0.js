@@ -67,7 +67,7 @@ export const useFetchD0 = () => {
       await delay(1);
 
       console.log("[useFetchD0] fetching D0");
-      startLoading("d0");
+      startLoading();
 
       resetCategory();
 
@@ -82,21 +82,12 @@ export const useFetchD0 = () => {
       categories.forEach(category => addCategory(category));
 
       updateHasNew({ d0: false });
-      finishLoading("d0");
+      finishLoading();
+      setMaxCoords({
+        category: categories.length,
+        chapter: categories[0].maxLength,
+      });
       updateHasNew({ d1: true });
     })();
   }, [userId, hasNew.d0]);
-
-  React.useEffect(() => {
-    if (!isLoaded.d0) return;
-    if (!categories) return;
-
-    setMaxCoords({ d0: categories.length });
-
-    if (coords.d0 === 0) {
-      setMaxCoords({ d1: categories[0].maxLength });
-    }
-
-    // updateHasNew({ d1: true });
-  }, [isLoaded.d0, categories]);
 };
