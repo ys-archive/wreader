@@ -146,24 +146,31 @@ export const useSwipeUp = swipe => {
 
           swipe("up", () => {
             increaseCoords("d3");
+            console.log("Depth: 2 -> 3");
             updateHasNew({ d4: true });
           });
         };
 
       case 4:
-        return state => {};
+        return state => {
+          // console.log("Depth: 4 -> 5");
+        };
 
       case 5:
         return state => {};
 
       case 6:
-        return state => {};
+        return state => {
+          // console.log("Depth: 6 -> 7");
+        };
 
       case 7:
         return state => {};
 
       case 8:
-        return state => {};
+        return state => {
+          // console.log("Depth: 8 -> 9");
+        };
 
       case 9:
         return state => {};

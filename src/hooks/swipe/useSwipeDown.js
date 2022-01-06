@@ -17,7 +17,6 @@ export const useSwipeDown = swipe => {
     setMaxCoords,
     decreaseCoords,
   } = useSwipeStates();
-  if (!isLoaded) return null;
 
   const { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 } = coords;
 
@@ -39,11 +38,12 @@ export const useSwipeDown = swipe => {
 
       case 1:
         return state => {
-          if (d1 === 0) {
-            swipe("down", () => {
-              decreaseDepth();
-            });
-          }
+          // if (d1 === 0) {
+          //   swipe("down", () => {
+          //     console.log("Depth: 1 -> 0");
+          //     decreaseDepth();
+          //   });
+          // }
 
           if (d1 > 0) {
             swipe("down", () => {
@@ -57,7 +57,6 @@ export const useSwipeDown = swipe => {
           if (d1 === 0) {
             swipe("down", () => {
               decreaseDepth();
-              // decreaseDepth();
             });
           }
         };
@@ -66,6 +65,7 @@ export const useSwipeDown = swipe => {
         return state => {
           if (d3 === 0) {
             swipe("down", () => {
+              console.log("Depth: 3 -> 2");
               decreaseDepth();
             });
           }
@@ -90,6 +90,7 @@ export const useSwipeDown = swipe => {
         return state => {
           if (d5 === 0) {
             swipe("down", () => {
+              console.log("Depth: 5 -> 4");
               decreaseDepth();
             });
           }
@@ -114,6 +115,7 @@ export const useSwipeDown = swipe => {
         return state => {
           if (d7 === 0) {
             swipe("down", () => {
+              console.log("Depth: 7 -> 6");
               decreaseDepth();
             });
           }
@@ -138,6 +140,7 @@ export const useSwipeDown = swipe => {
         return state => {
           if (d9 === 0) {
             swipe("down", () => {
+              console.log("Depth: 9 -> 8");
               decreaseDepth();
             });
           }

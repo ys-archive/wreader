@@ -6,7 +6,6 @@ export const useSwipeLeft = swipe => {
   const {
     categories,
     chapters,
-    isLoaded,
 
     depth,
     coords,
@@ -18,7 +17,6 @@ export const useSwipeLeft = swipe => {
     increaseCoords,
     decreaseCoords,
 
-    setMaxCoords,
     resetTempBlob,
     resetCard,
   } = useSwipeStates();
@@ -55,8 +53,8 @@ export const useSwipeLeft = swipe => {
             // 카테고리 -> 챕터 선택 (d0 -> d1)
             increaseDepth();
             // 각 챕터에 맞게 최대 챕터 설정 (d1)
-            console.log("ENTER INTO D1");
-            // updateHasNew({ d2: true });
+            console.log("Depth 0 -> 1");
+            updateHasNew({ d2: true });
           });
         };
 
@@ -64,6 +62,7 @@ export const useSwipeLeft = swipe => {
         return state => {
           // 현재 카테고리의 현재 챕터의 유저 챕터
           if (chapters[d0][d1].child.length === 0) {
+            resetTempBlob();
             resetCard();
             nav.navigate(ScreenNames.MainWriteCard, {
               categoryTitle: categories[d0].title,
@@ -77,7 +76,7 @@ export const useSwipeLeft = swipe => {
 
           swipe("left", () => {
             increaseDepth();
-            console.log("ENTER INTO D2");
+            console.log("Depth: 1 -> 2");
             updateHasNew({ d3: true });
           });
         };
@@ -89,12 +88,13 @@ export const useSwipeLeft = swipe => {
               "해당 챕터의 유저 챕터가 존재 하지 않음. 새로운 카드 작성",
             );
 
+            resetTempBlob();
             resetCard();
             nav.navigate(ScreenNames.MainWriteCard, {
               categoryTitle: categories[d0].title,
               categoryId: d0,
               chapterId: +chapters[d0][d1].deck.id,
-              order: d2 + 2 + 1,
+              order: d2 + 3,
               depth: 2,
             });
             return;
@@ -129,7 +129,7 @@ export const useSwipeLeft = swipe => {
               categoryTitle: categories[d0].title,
               categoryId: +d0,
               chapterId: +chapters[d0][d1].child[d2].deck.id,
-              order: d3 + 2 + d1,
+              order: d1 + d3 + 2,
               depth: 3,
             });
             return;
@@ -137,11 +137,34 @@ export const useSwipeLeft = swipe => {
 
           swipe("left", () => {
             increaseCoords("d3");
+            // increaseDepth("d4");
+            console.log("Depth: 1 -> 4");
           });
         };
 
-      default:
-        throw new Error("depth 는 0~9 사이만 가능 depth: ", depth);
+      case 4:
+        return state => {};
+
+      case 5:
+        return state => {
+          // console.log("Depth: 5 -> 6");
+        };
+
+      case 6:
+        return state => {};
+
+      case 7:
+        return state => {
+          // console.log("Depth: 7 -> 8");
+        };
+
+      case 8:
+        return state => {};
+
+      case 9:
+        return state => {
+          // console.log("Last");
+        };
     }
   };
 };

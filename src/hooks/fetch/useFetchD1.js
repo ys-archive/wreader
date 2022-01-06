@@ -59,12 +59,11 @@ export const useFetchD1 = () => {
 
       console.log("[useFetchD1] fetching D1");
       resetChapters();
-      await delay(0.5);
+      // await delay(0.5);
 
       startLoading();
 
       // resetChapter();
-      updateHasNew({ d1: false });
 
       // 챕터 데이터 정제 및 저장
       chapters = Object.values(categories)
@@ -81,8 +80,9 @@ export const useFetchD1 = () => {
         addChapter({ deck });
       });
 
+      updateHasNew({ d1: false });
       finishLoading();
-      updateHasNew({ d2: true });
+      // updateHasNew({ d2: true });
     })();
   }, [hasNew.d1, isLoaded]);
 };

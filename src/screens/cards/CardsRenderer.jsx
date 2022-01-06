@@ -6,7 +6,6 @@ import { selData, selSwiper } from "../../store/selectors";
 import CategoryCard from "./category/CategoryCard";
 import ChapterCard from "./chapter-card/ChapterCard";
 
-import FetchBeforeRender from "./CardsRenderer.fetch";
 import CardIndicator from "./CardIndicator";
 
 import LoadingModal from "../../components/modals/LoadingModal";
@@ -31,11 +30,10 @@ const initStates = () => {
 const CardsRenderer = () => {
   const { categories, chapters, isLoaded, depth, coords } = initStates();
 
-  FetchBeforeRender();
-
   if (!isLoaded) {
     return <LoadingModal />;
   }
+
   if (!chapters || chapters.length === 0) {
     return <LoadingModal />;
   }
@@ -43,7 +41,7 @@ const CardsRenderer = () => {
   const { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 } = coords;
 
   const currentCategoryTitle = categories[d0].title;
-  
+
   let CardJSX = null;
 
   switch (depth) {

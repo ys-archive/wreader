@@ -24,10 +24,11 @@ const initStates = () => {
   };
 };
 
-const FetchBeforeRender = () => {
+const useFetchBeforeRender = () => {
   const { updateHasNew } = initStates();
 
   useEffect(() => {
+    console.log("start fetching!");
     updateHasNew({ d0: true });
   }, []);
 
@@ -43,4 +44,4 @@ const FetchBeforeRender = () => {
   useFetchD9();
 };
 
-export default FetchBeforeRender;
+export default useFetchBeforeRender;

@@ -15,7 +15,8 @@ export const useSwipeRight = swipe => {
     setMaxCoords,
     decreaseCoords,
   } = useSwipeStates();
-  if (!isLoaded) return null;
+
+  const { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 } = coords;
 
   return () => {
     switch (depth) {
@@ -24,52 +25,27 @@ export const useSwipeRight = swipe => {
           console.log("카테고리에서 우측 스와이프는 허용되지 않음.");
         };
 
-      // return state => {
-      //   if (coords.d0 === 0) {
-      //     Alert("You are at the first category", "continue")
-      //     console.log("첫 카테고리에서 윗 카드가 없음")
-      //     return
-      //   }
-
-      //   swipe("right", () => {
-      //     decreaseCoords("d0")
-      //     setMaxCoords({ d1: categories[coords.d0].maxLength })
-      //   })
-      // }
-
       case 1:
         return state => {
-          if (coords.d1 === 0) {
+          if (d1 === 0) {
             swipe("right", () => {
+              console.log("Depth: 1 -> 0");
               decreaseDepth();
             });
           }
 
-          if (coords.d1 > 0) {
-            swipe("right", () => {
-              decreaseCoords("d1");
-            });
-          }
+          // if (d1 > 0) {
+          //   swipe("right", () => {
+          //     decreaseCoords("d1");
+          //   });
+          // }
         };
 
-      // return state => {
-      //   console.log("챕터에서는 우측 스와이프는 허용되지 않음")
-      // }
-
       case 2:
-        // return state => {
-        //   // console.log('유저 챕터에서 우측 스와이프는 허용되지 않음.');
-        //   if (coords.d1 === 0) {
-        //     swipe("right", () => {
-        //       decreaseDepth()
-        //       decreaseDepth()
-        //     })
-        //   }
-        // }
-
         return state => {
-          if (coords.d2 === 0) {
+          if (d2 === 0) {
             swipe("right", () => {
+              console.log("Depth: 2 -> 1");
               decreaseDepth();
             });
             return;
@@ -83,23 +59,43 @@ export const useSwipeRight = swipe => {
 
       case 3:
         return state => {
-          // if (coords.d3 === 0) {
+          // if (d3 === 0) {
           //   swipe("right", () => {
           //     decreaseDepth()
           //   })
           // }
 
-          if (coords.d3 > 0) {
+          if (d3 > 0) {
             swipe("right", () => {
               decreaseCoords("d3");
             });
           }
         };
 
-      // return state => {
-      //   console.log("유저 다음 카드에서는 아래로 스와이프 금지")
-      // }
+      case 4:
+        return state => {
+          // if ()
+          // console.log("Depth: 4 -> 3");
+        };
 
+      case 5:
+        return state => {};
+
+      case 6:
+        return state => {
+          // console.log("Depth: 6 -> 5");
+        };
+
+      case 7:
+        return state => {};
+
+      case 8:
+        return state => {
+          // console.log("Depth: 8 -> 7");
+        };
+
+      case 9:
+        return state => {};
       default:
         throw new Error("depth 는 0~3 사이만 가능 depth: ", depth);
     }
