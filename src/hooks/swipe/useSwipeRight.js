@@ -22,14 +22,14 @@ export const useSwipeRight = swipe => {
     switch (depth) {
       case 0:
         return state => {
-          console.log("카테고리에서 우측 스와이프는 허용되지 않음.");
+          console.log("depth 0: 우측 스와이프(좌로 이동)는 허용되지 않음.");
         };
 
       case 1:
         return state => {
           if (d1 === 0) {
             swipe("right", () => {
-              console.log("Depth: 1 -> 0");
+              console.log("[-] Depth: 1 -> 0");
               decreaseDepth();
             });
           }
@@ -45,7 +45,7 @@ export const useSwipeRight = swipe => {
         return state => {
           if (d2 === 0) {
             swipe("right", () => {
-              console.log("Depth: 2 -> 1");
+              console.log("[-] Depth: 2 -> 1");
               decreaseDepth();
             });
             return;
@@ -59,51 +59,69 @@ export const useSwipeRight = swipe => {
 
       case 3:
         return state => {
-          // if (d3 === 0) {
-          //   swipe("right", () => {
-          //     decreaseDepth()
-          //   })
-          // }
-
-          if (d3 > 0) {
-            swipe("right", () => {
-              decreaseCoords("d3");
-            });
-          }
+          console.log("depth 3: 우측 스와이프(좌로 이동)는 허용되지 않음.");
         };
 
       case 4:
         return state => {
+          if (d4 === 0) {
+            swipe("right", () => {
+              console.log("[-] Depth: 4 -> 3");
+              decreaseDepth();
+            });
+            return;
+          }
+
           swipe("right", () => {
-            console.log("Depth: 4 -> 3");
-            decreaseDepth();
+            decreaseCoords("d4");
+            updateHasNew({ d5: true });
           });
         };
 
       case 5:
-        return state => {};
+        return state => {
+          console.log("depth 5: 우측 스와이프(좌로 이동)는 허용되지 않음.");
+        };
 
       case 6:
         return state => {
+          if (d6 === 0) {
+            swipe("right", () => {
+              console.log("[-] Depth: 6 -> 5");
+              decreaseDepth();
+            });
+          }
+
           swipe("right", () => {
-            console.log("Depth: 6 -> 5");
-            decreaseDepth();
+            decreaseCoords("d6");
+            updateHasNew({ d7: true });
           });
         };
 
       case 7:
-        return state => {};
+        return state => {
+          console.log("depth 7: 우측 스와이프(좌로 이동)는 허용되지 않음.");
+        };
 
       case 8:
         return state => {
+          if (d8 === 0) {
+            swipe("right", () => {
+              console.log("[-] Depth: 8 -> 7");
+              decreaseDepth();
+            });
+          }
+
           swipe("right", () => {
-            console.log("Depth: 8 -> 7");
-            decreaseDepth();
+            decreaseCoords("d8");
+            updateHasNew({ d9: true });
           });
         };
 
       case 9:
-        return state => {};
+        return state => {
+          console.log("depth 9: 우측 스와이프(좌로 이동)는 허용되지 않음.");
+        };
     }
   };
 };

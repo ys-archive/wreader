@@ -38,13 +38,6 @@ export const useSwipeDown = swipe => {
 
       case 1:
         return state => {
-          // if (d1 === 0) {
-          //   swipe("down", () => {
-          //     console.log("Depth: 1 -> 0");
-          //     decreaseDepth();
-          //   });
-          // }
-
           if (d1 > 0) {
             swipe("down", () => {
               decreaseCoords("d1");
@@ -54,18 +47,14 @@ export const useSwipeDown = swipe => {
 
       case 2:
         return state => {
-          if (d1 === 0) {
-            swipe("down", () => {
-              decreaseDepth();
-            });
-          }
+          console.log("depth 2: 아래측 스와이프(위로 이동)는 허용되지 않음.");
         };
 
       case 3:
         return state => {
           if (d3 === 0) {
             swipe("down", () => {
-              console.log("Depth: 3 -> 2");
+              console.log("[-] Depth: 3 -> 2");
               decreaseDepth();
             });
           }
@@ -79,18 +68,14 @@ export const useSwipeDown = swipe => {
 
       case 4:
         return state => {
-          if (d3 === 0) {
-            swipe("down", () => {
-              decreaseDepth();
-            });
-          }
+          console.log("depth 4: 아래측 스와이프(위로 이동)는 허용되지 않음.");
         };
 
       case 5:
         return state => {
           if (d5 === 0) {
             swipe("down", () => {
-              console.log("Depth: 5 -> 4");
+              console.log("[-] Depth: 5 -> 4");
               decreaseDepth();
             });
           }
@@ -104,18 +89,14 @@ export const useSwipeDown = swipe => {
 
       case 6:
         return state => {
-          if (d5 === 0) {
-            swipe("down", () => {
-              decreaseDepth();
-            });
-          }
+          console.log("depth 6: 아래측 스와이프(위로 이동)는 허용되지 않음.");
         };
 
       case 7:
         return state => {
           if (d7 === 0) {
             swipe("down", () => {
-              console.log("Depth: 7 -> 6");
+              console.log("[-] Depth: 7 -> 6");
               decreaseDepth();
             });
           }
@@ -129,18 +110,14 @@ export const useSwipeDown = swipe => {
 
       case 8:
         return state => {
-          if (d7 === 0) {
-            swipe("down", () => {
-              decreaseDepth();
-            });
-          }
+          console.log("depth 8: 아래측 스와이프(위로 이동)는 허용되지 않음.");
         };
 
       case 9:
         return state => {
           if (d9 === 0) {
             swipe("down", () => {
-              console.log("Depth: 9 -> 8");
+              console.log("[-] Depth: 9 -> 8");
               decreaseDepth();
             });
           }
