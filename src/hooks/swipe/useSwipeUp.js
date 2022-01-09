@@ -3,12 +3,13 @@ import { Alert } from "../../components/alert";
 import { useSwipeStates } from "./useSwipeStates";
 import { useNavigation } from "@react-navigation/native";
 import * as ScreenNames from "../../navigators/ScreenNames";
+import { useNavToWriteCard } from "../../screens/cards/write-chapter/useNavToWriteCard";
+import { useReachMaxAlert } from "./useReachMaxAlert";
 
 export const useSwipeUp = swipe => {
   const {
     categories,
     chapters,
-    isLoaded,
 
     depth,
     coords,
@@ -21,11 +22,10 @@ export const useSwipeUp = swipe => {
     decreaseCoords,
 
     setMaxCoords,
-    resetTempBlob,
-    resetCard,
   } = useSwipeStates();
 
-  const nav = useNavigation();
+  const navToWriteCard = useNavToWriteCard();
+  const AlertMaxReach = useReachMaxAlert(swipe, "down");
 
   const { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 } = coords;
   const { category, chapter } = maxCoords;
@@ -35,26 +35,12 @@ export const useSwipeUp = swipe => {
       case 0:
         return state => {
           if (d0 === category - 1) {
-            if (category !== 0) {
-              Alert("마지막 카테고리입니다!", "이전 카테고리로 돌아가기F", () =>
-                swipe("down", () => {
-                  console.log("마지막 카테고리!, 이전 카드로 돌아감!");
-                  decreaseCoords("d0");
-                }),
-              );
-            }
-
-            // else {
-            //   console.log(
-            //     "마지막 카테고리!, 첫 카테고리라 이전으로 돌아가진 않음",
-            //   );
-            // }
-
+            AlertMaxReach();
             return;
           }
 
           swipe("up", () => {
-            increaseCoords("d0");
+            increaseCoords(depth);
             setMaxCoords({ d1: categories[d0].maxLength });
             updateHasNew({ d2: chapters });
           });
@@ -62,10 +48,15 @@ export const useSwipeUp = swipe => {
 
       case 1:
         return state => {
-          if (d1 === chapter - 1 && d1 > 0) {
+          if (d1 === chapter) {
+            AlertMaxReach();
+            return;
+          }
+
+          if (chapters[d0] && d1 > 0) {
             swipe("down", () => {
               console.log("마지막 챕터!, 이전 챕터로 돌아감");
-              decreaseCoords("d1");
+              decreaseCoords(depth);
             });
             return;
           }
@@ -76,21 +67,13 @@ export const useSwipeUp = swipe => {
               console.log(
                 "마지막 챕터!, 더이상 다음 챕터가 없어서 새 챕터 작성!",
               );
-              resetTempBlob();
-              resetCard();
-              nav.navigate(ScreenNames.MainWriteCard, {
-                categoryTitle: categories[d0].title,
-                categoryId: d0,
-                chapterId: 0,
-                order: 1,
-                depth: 1,
-              });
+              navToWriteCard("up");
             });
             return;
           }
 
           swipe("up", () => {
-            increaseCoords("d1");
+            increaseCoords(depth);
             updateHasNew({ d2: true });
           });
         };
@@ -101,15 +84,7 @@ export const useSwipeUp = swipe => {
             console.log(
               "해당 유저챕터의 유저 다음 챕터가 존재 하지 않음. 새로운 카드 작성",
             );
-            resetTempBlob();
-            resetCard();
-            nav.navigate(ScreenNames.MainWriteCard, {
-              categoryTitle: categories[d0].title,
-              categoryId: d0,
-              chapterId: +chapters[d0][d1].child[d2].deck.id,
-              order: d2 + 2,
-              depth: 3,
-            });
+            navToWriteCard("up");
             return;
           }
 
@@ -124,40 +99,28 @@ export const useSwipeUp = swipe => {
         return state => {
           if (d3 === chapter) {
             console.log("해당 카드가 마지막 챕터입니다!");
+            swipe("down", () => {});
             return;
           }
 
           if (d3 === chapter - 1) {
-            if (chapter === 10) {
-              swipe("down", () => {
-                console.log("마지막인 유저 다음 챕터!, 이전 챕터로 돌아감");
-                decreaseCoords("d3");
-              });
-              return;
-            }
-
             console.log("마지막인 유저 다음 챕터! 새로운 카드 작성");
-            resetTempBlob();
-            resetCard();
-            nav.navigate(ScreenNames.MainWriteCard, {
-              categoryTitle: categories[d0].title,
-              categoryId: +d0,
-              chapterId: +chapters[d0][d1].child[d2].deck.id,
-              order: d2 + 2,
-              depth: 3,
-            });
+            navToWriteCard("up");
             return;
           }
 
           swipe("up", () => {
-            // increaseDepth();
-            // console.log("[+] Depth: 2 -> 3");
             updateHasNew({ d4: true });
           });
         };
 
       case 4:
         return state => {
+          if (d4 === chapter) {
+            console.log("해당 카드가 마지막 챕터입니다!");
+            return;
+          }
+
           swipe("up", () => {
             increaseDepth();
             console.log("[+] Depth: 4 -> 5");

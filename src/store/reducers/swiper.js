@@ -39,115 +39,120 @@ export default {
       d9: 0,
     }),
 
-    max: {
-      category: 0,
-      chapter: 0,
-    },
-
     increment: action((state, payload) => {
-      if ("d0" === payload) {
-        state.val = new Coordinates({ ...state.val, d0: state.val.d0 + 1 });
-        return;
-      }
+      state.val = new Coordinates({
+        ...state.val,
+        [`d${payload}`]: state.val[`d${payload}`] + 1,
+      });
 
-      if ("d1" === payload) {
-        state.val = new Coordinates({ ...state.val, d1: state.val.d1 + 1 });
-        return;
-      }
+      // if ("d0" === payload) {
+      //   state.val = new Coordinates({ ...state.val, d0: state.val.d0 + 1 });
+      //   return;
+      // }
 
-      if ("d2" === payload) {
-        state.val = new Coordinates({ ...state.val, d2: state.val.d2 + 1 });
-        return;
-      }
+      // if ("d1" === payload) {
+      //   state.val = new Coordinates({ ...state.val, d1: state.val.d1 + 1 });
+      //   return;
+      // }
 
-      if ("d3" === payload) {
-        state.val = new Coordinates({ ...state.val, d3: state.val.d3 + 1 });
-        return;
-      }
+      // if ("d2" === payload) {
+      //   state.val = new Coordinates({ ...state.val, d2: state.val.d2 + 1 });
+      //   return;
+      // }
 
-      if ("d4" === payload) {
-        state.val = new Coordinates({ ...state.val, d4: state.val.d4 + 1 });
-        return;
-      }
+      // if ("d3" === payload) {
+      //   state.val = new Coordinates({ ...state.val, d3: state.val.d3 + 1 });
+      //   return;
+      // }
 
-      if ("d5" === payload) {
-        state.val = new Coordinates({ ...state.val, d5: state.val.d5 + 1 });
-        return;
-      }
+      // if ("d4" === payload) {
+      //   state.val = new Coordinates({ ...state.val, d4: state.val.d4 + 1 });
+      //   return;
+      // }
 
-      if ("d6" === payload) {
-        state.val = new Coordinates({ ...state.val, d6: state.val.d6 + 1 });
-        return;
-      }
+      // if ("d5" === payload) {
+      //   state.val = new Coordinates({ ...state.val, d5: state.val.d5 + 1 });
+      //   return;
+      // }
 
-      if ("d7" === payload) {
-        state.val = new Coordinates({ ...state.val, d7: state.val.d7 + 1 });
-        return;
-      }
+      // if ("d6" === payload) {
+      //   state.val = new Coordinates({ ...state.val, d6: state.val.d6 + 1 });
+      //   return;
+      // }
 
-      if ("d8" === payload) {
-        state.val = new Coordinates({ ...state.val, d8: state.val.d8 + 1 });
-        return;
-      }
+      // if ("d7" === payload) {
+      //   state.val = new Coordinates({ ...state.val, d7: state.val.d7 + 1 });
+      //   return;
+      // }
 
-      if ("d9" === payload) {
-        state.val = new Coordinates({ ...state.val, d9: state.val.d9 + 1 });
-        return;
-      }
+      // if ("d8" === payload) {
+      //   state.val = new Coordinates({ ...state.val, d8: state.val.d8 + 1 });
+      //   return;
+      // }
+
+      // if ("d9" === payload) {
+      //   state.val = new Coordinates({ ...state.val, d9: state.val.d9 + 1 });
+      //   return;
+      // }
 
       // console.log("cur coords: ", state.val);
     }),
 
     decrement: action((state, payload) => {
-      if ("d0" === payload) {
-        state.val = new Coordinates({ ...state.val, d0: state.val.d0 - 1 });
-        return;
-      }
+      state.val = new Coordinates({
+        ...state.val,
+        [`d${payload}`]: state.val[`d${payload}`] + 1,
+      });
 
-      if ("d1" === payload) {
-        state.val = new Coordinates({ ...state.val, d1: state.val.d1 - 1 });
-        return;
-      }
+      // if ("d0" === payload) {
+      //   state.val = new Coordinates({ ...state.val, d0: state.val.d0 - 1 });
+      //   return;
+      // }
 
-      if ("d2" === payload) {
-        state.val = new Coordinates({ ...state.val, d2: state.val.d2 - 1 });
-        return;
-      }
+      // if ("d1" === payload) {
+      //   state.val = new Coordinates({ ...state.val, d1: state.val.d1 - 1 });
+      //   return;
+      // }
 
-      if ("d3" === payload) {
-        state.val = new Coordinates({ ...state.val, d3: state.val.d3 - 1 });
-        return;
-      }
+      // if ("d2" === payload) {
+      //   state.val = new Coordinates({ ...state.val, d2: state.val.d2 - 1 });
+      //   return;
+      // }
 
-      if ("d4" === payload) {
-        state.val = new Coordinates({ ...state.val, d4: state.val.d4 - 1 });
-        return;
-      }
+      // if ("d3" === payload) {
+      //   state.val = new Coordinates({ ...state.val, d3: state.val.d3 - 1 });
+      //   return;
+      // }
 
-      if ("d5" === payload) {
-        state.val = new Coordinates({ ...state.val, d5: state.val.d5 - 1 });
-        return;
-      }
+      // if ("d4" === payload) {
+      //   state.val = new Coordinates({ ...state.val, d4: state.val.d4 - 1 });
+      //   return;
+      // }
 
-      if ("d6" === payload) {
-        state.val = new Coordinates({ ...state.val, d6: state.val.d6 - 1 });
-        return;
-      }
+      // if ("d5" === payload) {
+      //   state.val = new Coordinates({ ...state.val, d5: state.val.d5 - 1 });
+      //   return;
+      // }
 
-      if ("d7" === payload) {
-        state.val = new Coordinates({ ...state.val, d7: state.val.d7 - 1 });
-        return;
-      }
+      // if ("d6" === payload) {
+      //   state.val = new Coordinates({ ...state.val, d6: state.val.d6 - 1 });
+      //   return;
+      // }
 
-      if ("d8" === payload) {
-        state.val = new Coordinates({ ...state.val, d8: state.val.d8 - 1 });
-        return;
-      }
+      // if ("d7" === payload) {
+      //   state.val = new Coordinates({ ...state.val, d7: state.val.d7 - 1 });
+      //   return;
+      // }
 
-      if ("d9" === payload) {
-        state.val = new Coordinates({ ...state.val, d9: state.val.d9 - 1 });
-        return;
-      }
+      // if ("d8" === payload) {
+      //   state.val = new Coordinates({ ...state.val, d8: state.val.d8 - 1 });
+      //   return;
+      // }
+
+      // if ("d9" === payload) {
+      //   state.val = new Coordinates({ ...state.val, d9: state.val.d9 - 1 });
+      //   return;
+      // }
 
       // console.log("cur coords: ", state.val);
     }),
@@ -155,6 +160,11 @@ export default {
     set: action((state, payload) => {
       state.val = new Coordinates({ ...state.val, ...payload });
     }),
+
+    max: {
+      category: 0,
+      chapter: 0,
+    },
 
     setMax: action((state, payload) => {
       if ("category" in payload) {

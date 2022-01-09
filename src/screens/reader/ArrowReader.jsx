@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Animated, View, Platform } from "react-native";
 import { useStoreState } from "easy-peasy";
 import { selSwiper, selData } from "../../store/selectors";
-import { DEPTH_NAME } from "../../store/reducers/swiper.depth";
 
 import {
   useSwipeGesture,
@@ -18,6 +17,11 @@ import {
   renderWithDepth2Arrow,
   renderWithDepth3Arrow,
   renderWithDepth4Arrow,
+  renderWithDepth5Arrow,
+  renderWithDepth6Arrow,
+  renderWithDepth7Arrow,
+  renderWithDepth8Arrow,
+  renderWithDepth9Arrow,
 } from "./ArrowReader.render";
 import { useEffect } from "react";
 

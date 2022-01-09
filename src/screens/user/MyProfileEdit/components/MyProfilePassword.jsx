@@ -1,35 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Alert } from '#components/alert';
-import { TextInput, Text, Button, RenderError } from '#components';
-import * as ScreenNames from '#navigators/ScreenNames';
-import { colors } from '#constants';
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View } from "react-native";
+import { Alert } from "#components/alert";
+import { TextInput, Text, Button, RenderError } from "#components";
+import * as ScreenNames from "#navigators/ScreenNames";
+import { colors } from "#constants";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+} from "react-native-responsive-screen";
 
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { useNavigation } from '@react-navigation/native';
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { useNavigation } from "@react-navigation/native";
 
-import { UserService } from '#services';
+import { UserService } from "#services";
 
-import { useStoreState, useStoreActions } from 'easy-peasy';
+import { useStoreState, useStoreActions } from "easy-peasy";
 
-import { selAuth } from '../../../../store/selectors';
-import { actAuth } from '../../../../store/actions';
+import { selAuth } from "../../../../store/selectors";
+import { actAuth } from "../../../../store/actions";
 
-import * as SecureStore from 'expo-secure-store';
+import * as SecureStore from "expo-secure-store";
 
 const initialValues = {
-  password: '',
+  password: "",
 };
 
 const validationSchema = Yup.object({
   password: Yup.string()
     .max(28, "user name can't be over than 28 letters")
-    .required('no empty password'),
+    .required("no empty password"),
 });
 
 const MyProfilePassword = ({ isEditingPassword }) => {
@@ -42,7 +42,7 @@ const MyProfilePassword = ({ isEditingPassword }) => {
   useEffect(() => {
     (async () => {
       setCurrentPasswordLength(
-        (await SecureStore.getItemAsync('password')).length,
+        (await SecureStore.getItemAsync("password")).length,
       );
     })();
   }, []);
@@ -61,16 +61,16 @@ const MyProfilePassword = ({ isEditingPassword }) => {
       );
 
       if (code === 1) {
-        Alert('Changing password succeeds, please log in again');
+        Alert("Changing password succeeds, please log in again");
         logoutAfterChangingPassword();
       } else {
-        Alert('Changing password fails');
+        Alert("Changing password fails");
       }
     } else {
-      Alert('Changing password fails');
+      Alert("Changing password fails");
     }
 
-    setFieldValue('password', '');
+    setFieldValue("password", "");
     nav.navigate(ScreenNames.MainStack);
   };
 
@@ -92,16 +92,18 @@ const MyProfilePassword = ({ isEditingPassword }) => {
 
   return (
     <View style={s.root}>
-      <Text fontFamily="regular" style={s.infoPlaceholder}>PW</Text>
+      <Text fontFamily='regular' style={s.infoPlaceholder}>
+        PW
+      </Text>
       <View style={s.inputSection}>
         {isEditingPassword ? (
           <>
             <TextInput
               style={s.textInput}
               value={password}
-              onChangeText={handleChange('password')}
-              onBlur={handleBlur('password')}
-              placeholder="WRITE NEW PASSWORD"
+              onChangeText={handleChange("password")}
+              onBlur={handleBlur("password")}
+              placeholder='WRITE NEW PASSWORD'
             />
             <RenderError touched={touched.password} errors={errors.password} />
             <Button
@@ -114,8 +116,8 @@ const MyProfilePassword = ({ isEditingPassword }) => {
             </Button>
           </>
         ) : (
-          <Text fontFamily="regular" style={s.passwordText}>
-            {new Array(currentPasswordLength).fill('*').map(letter => letter)}
+          <Text fontFamily='regular' style={s.passwordText}>
+            {new Array(currentPasswordLength).fill("*").map(letter => letter)}
           </Text>
         )}
       </View>
@@ -127,39 +129,39 @@ export default MyProfilePassword;
 
 const s = StyleSheet.create({
   root: {
-    flexDirection: 'row',
-    paddingTop: hp('3%'),
-    alignItems: 'center',
-    maxHeight: 17 + hp('3%'),
+    flexDirection: "row",
+    paddingTop: hp("3%"),
+    alignItems: "center",
+    maxHeight: 17 + hp("3%"),
   },
   infoPlaceholder: {
     color: colors.light.white,
     fontSize: 15,
   },
   passwordText: {
-    marginLeft: wp('14.3%'),
+    marginLeft: wp("14.3%"),
     color: colors.light.white,
     fontSize: 15,
-    position: 'relative',
-    top: '1%',
+    position: "relative",
+    top: "1%",
   },
   inputSection: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
     marginLeft: 28,
   },
   textInput: {
     marginTop: -5,
     marginLeft: 50,
     paddingLeft: 5,
-    maxWidth: '43%',
-    minWidth: '43%',
+    maxWidth: "43%",
+    minWidth: "43%",
     padding: 0,
     margin: 0,
   },
   button: {
-    position: 'absolute',
+    position: "absolute",
     right: 80,
     top: -3,
   },

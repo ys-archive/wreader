@@ -1,21 +1,21 @@
-import { Alert } from "#components/alert"
-import { useFormik } from "formik"
-import * as Yup from "yup"
-import uuid from "react-native-uuid"
+import { Alert } from "#components/alert";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import uuid from "react-native-uuid";
 
-import { useNavigation } from "@react-navigation/native"
-import * as ScreenNames from "../../../navigators/ScreenNames"
+import { useNavigation } from "@react-navigation/native";
+import * as ScreenNames from "../../../navigators/ScreenNames";
 
-import { useStoreState, useStoreActions } from "easy-peasy"
-import { selAuth, selImage } from "../../../store/selectors"
-import { actImage } from "../../../store/actions"
+import { useStoreState, useStoreActions } from "easy-peasy";
+import { selAuth, selImage } from "../../../store/selectors";
+import { actImage } from "../../../store/actions";
 
-import { ChapterService } from "../../../services"
-import { ImageService } from "../../../services"
+import { ChapterService } from "../../../services";
+import { ImageService } from "../../../services";
 
 const initialValues = {
   sentence: "",
-}
+};
 
 const validationSchema = Yup.object({
   sentence: Yup.string()
@@ -23,24 +23,24 @@ const validationSchema = Yup.object({
     .required("Min is 4")
     .max(120)
     .required("Max is 165"),
-})
+});
 
-const uploadDirName = `writeCardImage-${uuid.v4()}`
+const uploadDirName = `writeCardImage-${uuid.v4()}`;
 
 const initStates = () => {
   // selectors
-  const cardImageUrl = useStoreState(selImage.card)
-  const isCardStartUploading = useStoreState(selImage.isCardStartUploading)
-  const tempBlob = useStoreState(selImage.tempBlob)
-  const isLoggedIn = useStoreState(selAuth.isLoggedIn)
+  const cardImageUrl = useStoreState(selImage.card);
+  const isCardStartUploading = useStoreState(selImage.isCardStartUploading);
+  const tempBlob = useStoreState(selImage.tempBlob);
+  const isLoggedIn = useStoreState(selAuth.isLoggedIn);
 
   // actions
-  const setCardImageUrl = useStoreActions(actImage.setCard)
-  const startUploadingCardImage = useStoreActions(actImage.startUploadingCard)
+  const setCardImageUrl = useStoreActions(actImage.setCard);
+  const startUploadingCardImage = useStoreActions(actImage.startUploadingCard);
   const completeUploadCardImage = useStoreActions(
     actImage.completeUploadingCard,
-  )
-  const resetTempBlob = useStoreActions(actImage.resetTempBlob)
+  );
+  const resetTempBlob = useStoreActions(actImage.resetTempBlob);
 
   return {
     setCardImageUrl,
@@ -51,8 +51,8 @@ const initStates = () => {
     cardImageUrl,
     isCardStartUploading,
     resetTempBlob,
-  }
-}
+  };
+};
 
 export const useWriteChapterCardForm = (
   userId,
@@ -68,27 +68,27 @@ export const useWriteChapterCardForm = (
     completeUploadCardImage,
     cardImageUrl,
     resetTempBlob,
-  } = initStates()
-  const nav = useNavigation()
+  } = initStates();
+  const nav = useNavigation();
 
   const onSubmit = async values => {
     if (!isLoggedIn) {
       Alert("Need to login to write a new card!", "close", () =>
         nav.navigate(ScreenNames.SigninStack),
-      )
-      return
+      );
+      return;
     }
 
-    let downloadUrl = ""
+    let downloadUrl = "";
 
     if (tempBlob !== null) {
-      console.log("card image selected")
-      startUploadingCardImage()
+      console.log("card image selected");
+      startUploadingCardImage();
 
-      downloadUrl = await ImageService.uploadImageFile(uploadDirName, tempBlob)
+      downloadUrl = await ImageService.uploadImageFile(uploadDirName, tempBlob);
     }
 
-    const { sentence } = values
+    const { sentence } = values;
 
     const status = await ChapterService.POST_createChapter(
       userId,
@@ -96,26 +96,26 @@ export const useWriteChapterCardForm = (
       sentence,
       currentCategoryIdx,
       cardImageUrl === "" ? null : cardImageUrl,
-    )
+    );
 
-    console.log(`Card written at ${currentCategoryIdx}:${currentChapterIdx}`)
+    console.log(`Card written at ${currentCategoryIdx}:${currentChapterIdx}`);
 
     if (tempBlob !== null) {
-      setCardImageUrl(downloadUrl)
-      completeUploadCardImage()
-      resetTempBlob()
+      setCardImageUrl(downloadUrl);
+      completeUploadCardImage();
+      resetTempBlob();
     }
 
     if (status === 200) {
-      await afterFormSubmitted()
+      await afterFormSubmitted();
     } else {
-      Alert("Writing chapter fails")
+      Alert("Writing chapter fails");
     }
-  }
+  };
 
   return useFormik({
     initialValues,
     validationSchema,
     onSubmit,
-  })
-}
+  });
+};

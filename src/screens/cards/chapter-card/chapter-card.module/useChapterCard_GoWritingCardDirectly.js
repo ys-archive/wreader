@@ -7,7 +7,6 @@ import * as ScreenNames from "#navigators/ScreenNames";
 import { useStoreActions, useStoreState } from "easy-peasy";
 import { selSwiper, selAuth, selData } from "../../../../store/selectors";
 import { actImage } from "../../../../store/actions";
-import { DEPTH_NAME } from "#store/reducers/swiper.depth";
 
 const initStates = () => {
   const categories = useStoreState(selData.categories);
@@ -65,14 +64,14 @@ export const useChapterCard_GoWritingCardDirectly = () => {
         break;
 
       case 2:
-        // nav.navigate(ScreenNames.MainWriteCard, {
-        //   categoryTitle: categories[coords.d0].title,
-        //   categoryId: coords.d0,
-        //   chapterId: +chapters[coords.d0][coords.d1].deck.id,
-        //   order: coords.d2 + 2,
-        //   depth: 2,
-        // });
-        // break;
+      // nav.navigate(ScreenNames.MainWriteCard, {
+      //   categoryTitle: categories[coords.d0].title,
+      //   categoryId: coords.d0,
+      //   chapterId: +chapters[coords.d0][coords.d1].deck.id,
+      //   order: coords.d2 + 2,
+      //   depth: 2,
+      // });
+      // break;
 
       case 3:
         // d3 는 0 부터 시작!

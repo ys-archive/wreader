@@ -4,7 +4,102 @@ import * as _ from "lodash";
 
 export default {
   categories: [],
+  currentCategory: computed(
+    [
+      state => state.categories,
+      (state, storeState) => storeState.swiper.coords,
+    ],
+    (categories, { d0 }) => categories[d0],
+  ),
+  currentCategoryTitle: computed(state => {
+    if (!state.currentCategory) {
+      return null;
+    }
+
+    console.log(state.currentCategory);
+
+    if (!("title" in state.currentCategory)) {
+      return null;
+    }
+    return state.currentCategory.title;
+  }),
+
   chapters: [],
+  chaptersAtDepth: computed(
+    [
+      state => state.categories,
+      state => state.chapters,
+      (state, storeState) => storeState.swiper.coords,
+      (state, storeState) => storeState.swiper.depth,
+    ],
+    (categories, chapters, coords, depth) => {
+      const { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 } = coords;
+
+      if (!categories) {
+        return null;
+      }
+
+      if (!chapters) {
+        return null;
+      }
+
+      switch (depth) {
+        case 0:
+          return categories[d0];
+
+        case 1:
+          return chapters[d0][d1];
+
+        case 2:
+          return chapters[d0][d1].child[d2];
+
+        case 3:
+          return chapters[d0][d1].child[d2].child[d3];
+
+        case 4:
+          return chapters[d0][d1].child[d2].child[d3].child[d4];
+
+        case 5:
+          return chapters[d0][d1].child[d2].child[d3].child[d4].child[d5];
+
+        case 6:
+          return chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
+            d6
+          ];
+
+        case 7:
+          return chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
+            d6
+          ].child[d7];
+
+        case 8:
+          return chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
+            d6
+          ].child[d7].child[d8];
+
+        case 9:
+          return chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
+            d6
+          ].child[d7].child[d8].child[d9];
+      }
+    },
+  ),
+
+  nextChaptersAtDepth: computed(
+    [
+      state => state.chaptersAtDepth,
+      (state, storeState) => storeState.swiper.depth,
+    ],
+    (chaptersAtDepth, depth) => (depth !== 0 ? chaptersAtDepth.child : null),
+  ),
+
+  chapterAtDepth: computed(
+    [
+      state => state.chaptersAtDepth,
+      (state, storeState) => storeState.swiper.depth,
+    ],
+    (chaptersAtDepth, depth) => (depth !== 0 ? chaptersAtDepth.deck : null),
+  ),
 
   commentsUpdated: false,
 
@@ -293,7 +388,13 @@ export default {
 
 export const selectors = {
   categories: state => state.data.categories,
+  currentCategory: state => state.data.currentCategory,
+  currentCategoryTitle: state => state.data.currentCategoryTitle,
+
   chapters: state => state.data.chapters,
+  chaptersAtDepth: state => state.data.chaptersAtDepth,
+  nextChaptersAtDepth: state => state.data.nextChaptersAtDepth,
+  chapterAtDepth: state => state.data.chapterAtDepth,
 
   commentsUpdated: state => state.data.commentsUpdated,
 

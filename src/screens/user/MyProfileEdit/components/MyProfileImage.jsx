@@ -1,34 +1,34 @@
-import React, { useState, useCallback } from "react"
-import { View, Image, Platform } from "react-native"
-import { StyleSheet, Button } from "#components"
-import { colors } from "../../../../constants/colors"
+import React, { useState, useCallback } from "react";
+import { View, Image, Platform } from "react-native";
+import { StyleSheet, Button } from "#components";
+import { colors } from "../../../../constants/colors";
 
-import { Photo, Cancel } from "#components/icon"
+import { Photo, Cancel } from "#components/icon";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
-} from "react-native-responsive-screen"
+} from "react-native-responsive-screen";
 
-import { useImagePicker, useProfileImageLoader } from "../../../../hooks"
+import { useImagePicker, useProfileImageLoader } from "../../../../hooks";
 
-import { useStoreState, useStoreActions } from "easy-peasy"
-import { actImage } from "../../../../store/actions"
-import { selAuth, selImage } from "../../../../store/selectors"
+import { useStoreState, useStoreActions } from "easy-peasy";
+import { actImage } from "../../../../store/actions";
+import { selAuth, selImage } from "../../../../store/selectors";
 
-import { UserService } from "../../../../services"
-import { ImageService } from "../../../../services"
+import { UserService } from "../../../../services";
+import { ImageService } from "../../../../services";
 
 const initStates = () => {
-  const userId = useStoreState(selAuth.userId)
-  const tempBlob = useStoreState(selImage.tempBlob)
+  const userId = useStoreState(selAuth.userId);
+  const tempBlob = useStoreState(selImage.tempBlob);
 
-  const setProfileImageUrl = useStoreActions(actImage.setProfile)
-  const startUploadingProfile = useStoreActions(actImage.startUploadingProfile)
+  const setProfileImageUrl = useStoreActions(actImage.setProfile);
+  const startUploadingProfile = useStoreActions(actImage.startUploadingProfile);
   const completeUploadProfileImage = useStoreActions(
     actImage.completeUploadingProfile,
-  )
-  const profileImageUrl = useStoreState(selImage.profile)
-  const resetTempBlob = useStoreActions(actImage.resetTempBlob)
+  );
+  const profileImageUrl = useStoreState(selImage.profile);
+  const resetTempBlob = useStoreActions(actImage.resetTempBlob);
 
   return {
     userId,
@@ -38,8 +38,8 @@ const initStates = () => {
     completeUploadProfileImage,
     profileImageUrl,
     resetTempBlob,
-  }
-}
+  };
+};
 
 const MyProfileImage = () => {
   const {
@@ -50,41 +50,41 @@ const MyProfileImage = () => {
     completeUploadProfileImage,
     profileImageUrl,
     resetTempBlob,
-  } = initStates()
-  const uploadDirName = `profileImage-${userId}`
-  const [isEditingProfileImage, setIsEditingProfileImage] = useState(false)
+  } = initStates();
+  const uploadDirName = `profileImage-${userId}`;
+  const [isEditingProfileImage, setIsEditingProfileImage] = useState(false);
 
   // 프로필 이미지 로드
-  useProfileImageLoader(true)
+  useProfileImageLoader(true);
 
-  const pickImage = useImagePicker(4, 3, false)
+  const pickImage = useImagePicker(4, 3, false);
 
   const onSave = useCallback(async () => {
     if (!tempBlob) {
-      console.log("No profile image selected")
-      return
+      console.log("No profile image selected");
+      return;
     }
 
-    startUploadingProfile()
+    startUploadingProfile();
 
     const downloadUrl = await ImageService.uploadImageFile(
       uploadDirName,
       tempBlob,
-    )
+    );
 
     // 이미지 원본을 스토리지 저장 후 post 로 유저 정보로 전송
-    await UserService.POST_registerUserProfilePhoto(userId, downloadUrl)
+    await UserService.POST_registerUserProfilePhoto(userId, downloadUrl);
 
-    setProfileImageUrl(downloadUrl)
-    completeUploadProfileImage()
-    setIsEditingProfileImage(false)
-    resetTempBlob()
-  }, [tempBlob, userId, uploadDirName])
+    setProfileImageUrl(downloadUrl);
+    completeUploadProfileImage();
+    setIsEditingProfileImage(false);
+    resetTempBlob();
+  }, [tempBlob, userId, uploadDirName]);
 
   const pickNewProfileImage = async () => {
-    setIsEditingProfileImage(true)
-    await pickImage()
-  }
+    setIsEditingProfileImage(true);
+    await pickImage();
+  };
 
   return (
     <View style={s.root}>
@@ -131,10 +131,10 @@ const MyProfileImage = () => {
         </>
       )}
     </View>
-  )
-}
+  );
+};
 
-export default MyProfileImage
+export default MyProfileImage;
 
 const s = StyleSheet.create({
   root: {
@@ -188,4 +188,4 @@ const s = StyleSheet.create({
     color: colors.light.white,
     fontSize: 13,
   },
-})
+});

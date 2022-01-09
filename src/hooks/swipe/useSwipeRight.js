@@ -3,20 +3,17 @@ import { useSwipeStates } from "./useSwipeStates";
 
 export const useSwipeRight = swipe => {
   const {
-    chapters,
-    isLoaded,
-
     depth,
     coords,
 
     decreaseDepth,
 
     updateHasNew,
-    setMaxCoords,
     decreaseCoords,
   } = useSwipeStates();
 
   const { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 } = coords;
+  const { category, chapter } = maxCoords;
 
   return () => {
     switch (depth) {
@@ -27,23 +24,17 @@ export const useSwipeRight = swipe => {
 
       case 1:
         return state => {
-          if (d1 === 0) {
+          if (d1 === 0 || d1 === chapter) {
             swipe("right", () => {
               console.log("[-] Depth: 1 -> 0");
               decreaseDepth();
             });
           }
-
-          // if (d1 > 0) {
-          //   swipe("right", () => {
-          //     decreaseCoords("d1");
-          //   });
-          // }
         };
 
       case 2:
         return state => {
-          if (d2 === 0) {
+          if (d2 === 0 || d2 === chapter) {
             swipe("right", () => {
               console.log("[-] Depth: 2 -> 1");
               decreaseDepth();
@@ -52,7 +43,7 @@ export const useSwipeRight = swipe => {
           }
 
           swipe("right", () => {
-            decreaseCoords("d2");
+            decreaseCoords(depth);
             updateHasNew({ d3: true });
           });
         };
@@ -73,7 +64,7 @@ export const useSwipeRight = swipe => {
           }
 
           swipe("right", () => {
-            decreaseCoords("d4");
+            decreaseCoords(depth);
             updateHasNew({ d5: true });
           });
         };
@@ -93,7 +84,7 @@ export const useSwipeRight = swipe => {
           }
 
           swipe("right", () => {
-            decreaseCoords("d6");
+            decreaseCoords(depth);
             updateHasNew({ d7: true });
           });
         };
@@ -113,7 +104,7 @@ export const useSwipeRight = swipe => {
           }
 
           swipe("right", () => {
-            decreaseCoords("d8");
+            decreaseCoords(depth);
             updateHasNew({ d9: true });
           });
         };

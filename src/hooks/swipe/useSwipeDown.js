@@ -25,13 +25,13 @@ export const useSwipeDown = swipe => {
       case 0:
         return state => {
           if (d0 === 0) {
-            Alert("You are at the first category", "continue");
+            Alert("첫 카테고리 입니다. 더 이상 카드가 없습니다.", "게속하기");
             console.log("첫 카테고리에서 윗 카드가 없음");
             return;
           }
 
           swipe("down", () => {
-            decreaseCoords("d0");
+            decreaseCoords(depth);
             setMaxCoords({ chapter: categories[d0].maxLength });
           });
         };
@@ -40,7 +40,7 @@ export const useSwipeDown = swipe => {
         return state => {
           if (d1 > 0) {
             swipe("down", () => {
-              decreaseCoords("d1");
+              decreaseCoords(depth);
             });
           }
         };
@@ -61,7 +61,7 @@ export const useSwipeDown = swipe => {
 
           if (d3 > 0) {
             swipe("down", () => {
-              decreaseCoords("d3");
+              decreaseCoords(depth);
             });
           }
         };
@@ -82,7 +82,7 @@ export const useSwipeDown = swipe => {
 
           if (d5 > 0) {
             swipe("down", () => {
-              decreaseCoords("d5");
+              decreaseCoords(depth);
             });
           }
         };
@@ -103,7 +103,7 @@ export const useSwipeDown = swipe => {
 
           if (d7 > 0) {
             swipe("down", () => {
-              decreaseCoords("d7");
+              decreaseCoords(depth);
             });
           }
         };
@@ -124,7 +124,7 @@ export const useSwipeDown = swipe => {
 
           if (d9 > 0) {
             swipe("down", () => {
-              decreaseCoords("d9");
+              decreaseCoords(depth);
             });
           }
         };
