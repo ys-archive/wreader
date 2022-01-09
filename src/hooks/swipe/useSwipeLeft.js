@@ -139,6 +139,7 @@ export const useSwipeLeft = swipe => {
             // increaseCoords("d3");
             increaseDepth();
             console.log("[+] Depth: 3 -> 4");
+            updateHasNew({ d5: true });
           });
         };
 
@@ -151,6 +152,7 @@ export const useSwipeLeft = swipe => {
             // increaseCoords("d3");
             increaseDepth();
             console.log("[+] Depth: 5 -> 6");
+            updateHasNew({ d7: true });
           });
         };
 
@@ -163,6 +165,7 @@ export const useSwipeLeft = swipe => {
             // increaseCoords("d3");
             increaseDepth();
             console.log("[+] Depth: 7 -> 8");
+            updateHasNew({ d9: true });
           });
         };
 

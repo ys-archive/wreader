@@ -2,7 +2,6 @@ import React, { useMemo } from "react";
 import { View, TouchableOpacity } from "react-native";
 
 import { MaterialIcons } from "@expo/vector-icons";
-import { colors } from "../../constants";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -187,6 +186,116 @@ export const renderWithDepth4Arrow = (
   const hasPrv = d4 !== 0;
   const hasNxt = d4 < chapter;
   const hasNxtDepth = d4 < chapter;
+
+  return MakeArrows(
+    {
+      top: hasPrvDepth ? hasPrvDepth : hasPrv,
+      bottom: hasNxt,
+      right: hasNxtDepth,
+    },
+    callbacks,
+    clicker,
+  );
+};
+
+export const renderWithDepth5Arrow = (
+  { d5 },
+  { chapter },
+  callbacks,
+  clicker,
+) => {
+  const hasPrvDepth = d5 === 0;
+  const hasPrv = d5 !== 0;
+  const hasNxt = d5 < chapter;
+  const hasNxtDepth = d5 < chapter;
+
+  return MakeArrows(
+    {
+      top: hasPrvDepth ? hasPrvDepth : hasPrv,
+      bottom: hasNxt,
+      right: hasNxtDepth,
+    },
+    callbacks,
+    clicker,
+  );
+};
+
+export const renderWithDepth6Arrow = (
+  { d6 },
+  { chapter },
+  callbacks,
+  clicker,
+) => {
+  const hasPrvDepth = d6 === 0;
+  const hasPrv = d6 !== 0;
+  const hasNxt = d6 < chapter;
+  const hasNxtDepth = d6 < chapter;
+
+  return MakeArrows(
+    {
+      top: hasPrvDepth ? hasPrvDepth : hasPrv,
+      bottom: hasNxt,
+      right: hasNxtDepth,
+    },
+    callbacks,
+    clicker,
+  );
+};
+
+export const renderWithDepth7Arrow = (
+  { d7 },
+  { chapter },
+  callbacks,
+  clicker,
+) => {
+  const hasPrvDepth = d7 === 0;
+  const hasPrv = d7 !== 0;
+  const hasNxt = d7 < chapter;
+  const hasNxtDepth = d7 < chapter;
+
+  return MakeArrows(
+    {
+      top: hasPrvDepth ? hasPrvDepth : hasPrv,
+      bottom: hasNxt,
+      right: hasNxtDepth,
+    },
+    callbacks,
+    clicker,
+  );
+};
+
+export const renderWithDepth8Arrow = (
+  { d8 },
+  { chapter },
+  callbacks,
+  clicker,
+) => {
+  const hasPrvDepth = d8 === 0;
+  const hasPrv = d8 !== 0;
+  const hasNxt = d8 < chapter;
+  const hasNxtDepth = d8 < chapter;
+
+  return MakeArrows(
+    {
+      top: hasPrvDepth ? hasPrvDepth : hasPrv,
+      bottom: hasNxt,
+      right: hasNxtDepth,
+    },
+    callbacks,
+    clicker,
+  );
+};
+
+export const renderWithDepth9Arrow = (
+  { d9 },
+  { chapter },
+  callbacks,
+  clicker,
+) => {
+  const hasPrvDepth = d9 === 0;
+  const hasPrv = d9 !== 0;
+  const hasNxt = d9 < chapter;
+  const hasNxtDepth = d9 < chapter;
 
   return MakeArrows(
     {

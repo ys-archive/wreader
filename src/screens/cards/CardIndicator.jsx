@@ -1,26 +1,27 @@
-import React, { useEffect } from "react"
+import React, { useEffect } from "react";
 
-import { useStoreState } from "easy-peasy"
-import { selSwiper, selData } from "../../store/selectors"
-import { DEPTH_NAME } from "../../store/reducers/swiper.depth"
-
+import { useStoreState } from "easy-peasy";
+import { selSwiper, selData } from "../../store/selectors";
 import {
   renderWithDepth0,
   renderWithDepth1,
   renderWithDepth2,
   renderWithDepth3,
-} from "./CardIndicator.render"
+  renderWithDepth4,
+  renderWithDepth5,
+  renderWithDepth6,
+  renderWithDepth7,
+  renderWithDepth8,
+  renderWithDepth9,
+} from "./CardIndicator.render";
 
 const initStates = () => {
-  const coords = useStoreState(selSwiper.coords)
-  const maxCoords = useStoreState(selSwiper.maxCoords)
-  const depth = useStoreState(selSwiper.depth)
-  const isSwiping = useStoreState(selSwiper.isSwiping)
+  const coords = useStoreState(selSwiper.coords);
+  const maxCoords = useStoreState(selSwiper.maxCoords);
+  const depth = useStoreState(selSwiper.depth);
+  const isSwiping = useStoreState(selSwiper.isSwiping);
 
-  const chapters = useStoreState(selData.chapters)
-
-  const isLoaded = useStoreState(selData.isLoaded)
-  const hasNew = useStoreState(selData.hasNew)
+  const chapters = useStoreState(selData.chapters);
 
   return {
     coords,
@@ -29,36 +30,54 @@ const initStates = () => {
     isSwiping,
 
     chapters,
-
-    isLoaded,
-    hasNew,
-  }
-}
+  };
+};
 
 const CardIndicator = ({ children }) => {
-  const { coords, maxCoords, depth, isSwiping, chapters, isLoaded, hasNew } =
-    initStates()
+  const { coords, maxCoords, depth, isSwiping, chapters } = initStates();
 
-  let IndicatorJSX = null
+  let IndicatorJSX = null;
 
   switch (depth) {
     case 0:
-      IndicatorJSX = isLoaded.d1 && renderWithDepth0(coords, maxCoords)
-      break
+      IndicatorJSX = renderWithDepth0(coords, maxCoords);
+      break;
 
     case 1:
-      IndicatorJSX =
-        isLoaded.d2 && renderWithDepth1(coords, maxCoords, chapters)
-      break
+      IndicatorJSX = renderWithDepth1(coords, chapters);
+      break;
 
     case 2:
-      IndicatorJSX =
-        isLoaded.d3 && renderWithDepth2(coords, maxCoords, chapters)
-      break
+      IndicatorJSX = renderWithDepth2(coords, chapters);
+      break;
 
     case 3:
-      IndicatorJSX = renderWithDepth3(coords, maxCoords)
-      break
+      IndicatorJSX = renderWithDepth3(coords, chapters);
+      break;
+
+    case 4:
+      IndicatorJSX = renderWithDepth4(coords, chapters);
+      break;
+
+    case 5:
+      IndicatorJSX = renderWithDepth5(coords, chapters);
+      break;
+
+    case 6:
+      IndicatorJSX = renderWithDepth6(coords, chapters);
+      break;
+
+    case 7:
+      IndicatorJSX = renderWithDepth7(coords, chapters);
+      break;
+
+    case 8:
+      IndicatorJSX = renderWithDepth8(coords, chapters);
+      break;
+
+    case 9:
+      IndicatorJSX = renderWithDepth9(coords, chapters);
+      break;
   }
 
   return (
@@ -66,7 +85,7 @@ const CardIndicator = ({ children }) => {
       {!isSwiping && IndicatorJSX}
       {children}
     </>
-  )
-}
+  );
+};
 
-export default CardIndicator
+export default CardIndicator;

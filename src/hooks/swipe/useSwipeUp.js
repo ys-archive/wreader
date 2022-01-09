@@ -42,11 +42,14 @@ export const useSwipeUp = swipe => {
                   decreaseCoords("d0");
                 }),
               );
-            } else {
-              console.log(
-                "마지막 카테고리!, 첫 카테고리라 이전으로 돌아가진 않음",
-              );
             }
+
+            // else {
+            //   console.log(
+            //     "마지막 카테고리!, 첫 카테고리라 이전으로 돌아가진 않음",
+            //   );
+            // }
+
             return;
           }
 
@@ -67,7 +70,8 @@ export const useSwipeUp = swipe => {
             return;
           }
 
-          if (d1 < chapter - 2 && d1 + 1 === chapters[d0].length) {
+          // d1 < chapter - 2 &&
+          if (d1 + 1 === chapters[d0].length) {
             swipe("up", () => {
               console.log(
                 "마지막 챕터!, 더이상 다음 챕터가 없어서 새 챕터 작성!",

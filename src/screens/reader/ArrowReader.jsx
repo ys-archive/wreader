@@ -119,60 +119,50 @@ const ArrowReader = ({ children }) => {
       );
       break;
 
-    // case 5:
-    //   IndicatorJSX =
-    //     renderWithDepth5Arrow(
-    //       coords,
-    //       maxCoords,
-    //       chapters,
-    //       onPresseds,
-    //       clickArrow,
-    //     );
-    //   break;
+    case 5:
+      IndicatorJSX = renderWithDepth5Arrow(
+        coords,
+        maxCoords,
+        onPresseds,
+        clickArrow,
+      );
+      break;
 
-    // case 6:
-    //   IndicatorJSX =
-    //     renderWithDepth6Arrow(
-    //       coords,
-    //       maxCoords,
-    //       chapters,
-    //       onPresseds,
-    //       clickArrow,
-    //     );
-    //   break;
+    case 6:
+      IndicatorJSX = renderWithDepth6Arrow(
+        coords,
+        maxCoords,
+        onPresseds,
+        clickArrow,
+      );
+      break;
 
-    // case 7:
-    //   IndicatorJSX =
-    //     renderWithDepth7Arrow(
-    //       coords,
-    //       maxCoords,
-    //       chapters,
-    //       onPresseds,
-    //       clickArrow,
-    //     );
-    //   break;
+    case 7:
+      IndicatorJSX = renderWithDepth7Arrow(
+        coords,
+        maxCoords,
+        onPresseds,
+        clickArrow,
+      );
+      break;
 
-    // case 8:
-    //   IndicatorJSX =
-    //     renderWithDepth8Arrow(
-    //       coords,
-    //       maxCoords,
-    //       chapters,
-    //       onPresseds,
-    //       clickArrow,
-    //     );
-    //   break;
+    case 8:
+      IndicatorJSX = renderWithDepth8Arrow(
+        coords,
+        maxCoords,
+        onPresseds,
+        clickArrow,
+      );
+      break;
 
-    // case 9:
-    //   IndicatorJSX =
-    //     renderWithDepth9Arrow(
-    //       coords,
-    //       maxCoords,
-    //       chapters,
-    //       onPresseds,
-    //       clickArrow,
-    //     );
-    //   break;
+    case 9:
+      IndicatorJSX = renderWithDepth9Arrow(
+        coords,
+        maxCoords,
+        onPresseds,
+        clickArrow,
+      );
+      break;
   }
 
   return (
