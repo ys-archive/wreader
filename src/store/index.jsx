@@ -6,14 +6,14 @@ import auth from "./reducers/auth";
 import swiper from "./reducers/swiper";
 import image from "./reducers/image";
 import data from "./reducers/data";
-// import dataFetch from "./reducers/data.fetch"
+import dataFetch from "./reducers/data.fetch";
 import sort from "./reducers/sort";
 
 const store = createStore(
   {
     auth,
     data,
-    // dataFetch,
+    dataFetch,
     swiper,
     image,
     sort,

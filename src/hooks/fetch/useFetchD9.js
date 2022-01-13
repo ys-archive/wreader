@@ -17,8 +17,6 @@ export const useFetchD9 = () => {
     startLoading,
     finishLoading,
     updateHasNew,
-
-    setMaxCoords,
   } = initStates();
 
   React.useEffect(() => {

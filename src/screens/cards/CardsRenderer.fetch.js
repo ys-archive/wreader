@@ -6,29 +6,22 @@ import ChapterService from "../../services/ChapterService";
 import { initStates } from "../../hooks/fetch/useFetch.state";
 import { asyncForEach } from "../../utils";
 
-// import {
-//   useFetchD0,
-//   useFetchD1,
-//   useFetchD2,
-//   useFetchD3,
-//   useFetchD4,
-//   useFetchD5,
-//   useFetchD6,
-//   useFetchD7,
-//   useFetchD8,
-//   useFetchD9,
-// } from "../../hooks";
+import {
+  // useFetchD0,
+  useFetchD1,
+  useFetchD2,
+  useFetchD3,
+  useFetchD4,
+  useFetchD5,
+  useFetchD6,
+  useFetchD7,
+  useFetchD8,
+  useFetchD9,
+} from "../../hooks";
 
 const useFetchBeforeRender = () => {
   const {
-    isLoaded,
-
     userId,
-    hasNew,
-    coords,
-
-    resetCategory,
-
     addChapter,
     addCategory,
     startLoading,
@@ -110,15 +103,15 @@ const useFetchBeforeRender = () => {
   }, []);
 
   // const f0 = useFetchD0();
-  // useFetchD1();
-  // useFetchD2();
-  // useFetchD3();
-  // useFetchD4();
-  // useFetchD5();
-  // useFetchD6();
-  // useFetchD7();
-  // useFetchD8();
-  // useFetchD9();
+  useFetchD1();
+  useFetchD2();
+  useFetchD3();
+  useFetchD4();
+  useFetchD5();
+  useFetchD6();
+  useFetchD7();
+  useFetchD8();
+  useFetchD9();
 };
 
 export default useFetchBeforeRender;

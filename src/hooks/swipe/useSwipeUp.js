@@ -49,13 +49,13 @@ export const useSwipeUp = swipe => {
             return;
           }
 
-          if (chapters[d0] && d1 > 0) {
-            swipe("down", () => {
-              console.log("마지막 챕터!, 이전 챕터로 돌아감");
-              decreaseCoords(depth);
-            });
-            return;
-          }
+          // if (chapters[d0] && d1 > 0) {
+          //   swipe("down", () => {
+          //     console.log("마지막 챕터!, 이전 챕터로 돌아감");
+          //     decreaseCoords(depth);
+          //   });
+          //   return;
+          // }
 
           // d1 < chapter - 2 &&
           if (d1 + 1 === chapters[d0].length) {
