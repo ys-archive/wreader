@@ -8,7 +8,6 @@ export const useSwipeStates = () => {
   const categories = useStoreState(selData.categories);
   const chapters = useStoreState(selData.chapters);
   const isLoaded = useStoreState(selData.isLoaded);
-  const hasNew = useStoreState(selData.hasNew);
 
   // - swiper
   const depth = useStoreState(selSwiper.depth);
@@ -20,15 +19,11 @@ export const useSwipeStates = () => {
   const updateHasNew = useStoreActions(actData.updateHasNew);
 
   // - swiper
-  const setDepth = useStoreActions(actSwiper.setDepth);
   const increaseDepth = useStoreActions(actSwiper.increaseDepth);
   const decreaseDepth = useStoreActions(actSwiper.decreaseDepth);
 
-  const setCoords = useStoreActions(actSwiper.setCoords);
   const increaseCoords = useStoreActions(actSwiper.increaseCoords);
   const decreaseCoords = useStoreActions(actSwiper.decreaseCoords);
-
-  const setMaxCoords = useStoreActions(actSwiper.setMaxCoords);
 
   return {
     categories,
@@ -42,12 +37,9 @@ export const useSwipeStates = () => {
 
     updateHasNew,
 
-    setDepth,
     increaseDepth,
     decreaseDepth,
 
-    setCoords,
-    setMaxCoords,
     increaseCoords,
     decreaseCoords,
   };

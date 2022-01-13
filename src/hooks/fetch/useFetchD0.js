@@ -1,57 +1,14 @@
 import React from "react";
 import { delay } from "../../utils";
-
-import { useStoreState, useStoreActions } from "easy-peasy";
-import { selAuth, selData, selSwiper } from "../../store/selectors";
-import { actData, actSwiper } from "../../store/actions";
-
 import ChapterService from "../../services/ChapterService";
-
-const initStates = () => {
-  // actions
-  const userId = useStoreState(selAuth.userId);
-  const hasNew = useStoreState(selData.hasNew);
-
-  const isLoaded = useStoreState(selData.isLoaded);
-
-  const coords = useStoreState(selSwiper.coords);
-
-  // - data
-  const resetCategory = useStoreActions(actData.resetCategory);
-  const addCategory = useStoreActions(actData.addCategory);
-  const startLoading = useStoreActions(actData.startLoading);
-  const finishLoading = useStoreActions(actData.finishLoading);
-  const updateHasNew = useStoreActions(actData.updateHasNew);
-
-  // - swiper
-  const setMaxCoords = useStoreActions(actSwiper.setMaxCoords);
-
-  return {
-    isLoaded,
-
-    userId,
-    hasNew,
-    coords,
-
-    resetCategory,
-
-    addCategory,
-    startLoading,
-    finishLoading,
-    updateHasNew,
-
-    setMaxCoords,
-  };
-};
+import { initStates } from "./useFetch.state";
 
 let categories = undefined;
 
 export const useFetchD0 = () => {
   const {
-    isLoaded,
     userId,
     hasNew,
-    coords,
     setMaxCoords,
     resetCategory,
     addCategory,

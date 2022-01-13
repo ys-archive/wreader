@@ -1,40 +1,6 @@
 import React from "react";
 import { asyncForEach, delay } from "../../utils";
-
-import { useStoreState, useStoreActions } from "easy-peasy";
-import { selData } from "../../store/selectors";
-import { actData } from "../../store/actions";
-
-const initStates = () => {
-  // selectors
-  const categories = useStoreState(selData.categories);
-  const isLoaded = useStoreState(selData.isLoaded);
-  const hasNew = useStoreState(selData.hasNew);
-
-  // actions
-  // - data
-  const resetChapters = useStoreActions(actData.resetChapter);
-  const addChapter = useStoreActions(actData.addChapter);
-
-  const startLoading = useStoreActions(actData.startLoading);
-  const finishLoading = useStoreActions(actData.finishLoading);
-
-  const updateHasNew = useStoreActions(actData.updateHasNew);
-
-  return {
-    categories,
-    isLoaded,
-    hasNew,
-
-    resetChapters,
-    addChapter,
-
-    startLoading,
-    finishLoading,
-
-    updateHasNew,
-  };
-};
+import { initStates } from "./useFetch.state";
 
 let chapters = undefined;
 

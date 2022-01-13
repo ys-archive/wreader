@@ -1,49 +1,6 @@
 import React from "react";
-
-import { useStoreState, useStoreActions } from "easy-peasy";
-import { selData, selAuth, selSwiper } from "../../store/selectors";
-import { actData, actSwiper } from "../../store/actions";
-
 import ChapterService from "../../services/ChapterService";
-
-const initStates = () => {
-  // selectors
-  const userId = useStoreState(selAuth.userId);
-
-  const chapters = useStoreState(selData.chapters);
-  const isLoaded = useStoreState(selData.isLoaded);
-  const hasNew = useStoreState(selData.hasNew);
-
-  const coords = useStoreState(selSwiper.coords);
-
-  // actions
-  // - data
-  const addChapterChild = useStoreActions(actData.addChapterChild);
-  const startLoading = useStoreActions(actData.startLoading);
-  const finishLoading = useStoreActions(actData.finishLoading);
-  const updateHasNew = useStoreActions(actData.updateHasNew);
-
-  // - swiper
-  const setMaxCoords = useStoreActions(actSwiper.setMaxCoords);
-
-  return {
-    userId,
-
-    chapters,
-    isLoaded,
-    hasNew,
-
-    coords,
-
-    addChapterChild,
-
-    startLoading,
-    finishLoading,
-    updateHasNew,
-
-    setMaxCoords,
-  };
-};
+import { initStates } from "./useFetch.state";
 
 export const useFetchD5 = () => {
   const {
