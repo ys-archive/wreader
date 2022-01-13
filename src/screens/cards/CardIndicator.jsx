@@ -82,7 +82,8 @@ const CardIndicator = ({ children }) => {
 
   return (
     <>
-      {!isSwiping && IndicatorJSX}
+      {/* {!isSwiping && IndicatorJSX} */}
+      {IndicatorJSX}
       {children}
     </>
   );

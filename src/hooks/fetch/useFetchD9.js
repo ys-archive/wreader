@@ -23,9 +23,17 @@ export const useFetchD9 = () => {
 
   React.useEffect(() => {
     (async function fetchNext() {
-      if (!isLoaded) return;
-      if (!hasNew.d9) return;
-      if (!chapters || chapters.length === 0) return;
+      if (!isLoaded) {
+        return;
+      }
+
+      if (!hasNew.d9) {
+        return;
+      }
+
+      if (!chapters || chapters.length === 0) {
+        return;
+      }
 
       console.log("[useFetchD9] fetching d9");
       startLoading();

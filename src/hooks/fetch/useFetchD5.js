@@ -17,15 +17,21 @@ export const useFetchD5 = () => {
     startLoading,
     finishLoading,
     updateHasNew,
-
-    setMaxCoords,
   } = initStates();
 
   React.useEffect(() => {
     (async function fetchNext() {
-      if (!isLoaded) return;
-      if (!hasNew.d5) return;
-      if (!chapters || chapters.length === 0) return;
+      if (!isLoaded) {
+        return;
+      }
+
+      if (!hasNew.d5) {
+        return;
+      }
+
+      if (!chapters || chapters.length === 0) {
+        return;
+      }
 
       console.log("[useFetchD5] fetching d5");
       startLoading();

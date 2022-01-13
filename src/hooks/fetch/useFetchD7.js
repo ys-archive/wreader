@@ -17,15 +17,21 @@ export const useFetchD7 = () => {
     startLoading,
     finishLoading,
     updateHasNew,
-
-    setMaxCoords,
   } = initStates();
 
   React.useEffect(() => {
     (async function fetchNext() {
-      if (!isLoaded) return;
-      if (!hasNew.d7) return;
-      if (!chapters || chapters.length === 0) return;
+      if (!isLoaded) {
+        return;
+      }
+
+      if (!hasNew.d7) {
+        return;
+      }
+
+      if (!chapters || chapters.length === 0) {
+        return;
+      }
 
       console.log("[useFetchD7] fetching d7");
       startLoading();

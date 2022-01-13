@@ -1,5 +1,6 @@
 import { useSwipeStates } from "./useSwipeStates";
 import { useNavToWriteCard } from "../../screens/cards/write-chapter/useNavToWriteCard";
+import { useReachMaxAlert } from "./useReachMaxAlert";
 
 export const useSwipeLeft = swipe => {
   const {
@@ -16,7 +17,7 @@ export const useSwipeLeft = swipe => {
   } = useSwipeStates();
 
   const navToWriteCard = useNavToWriteCard();
-  const AlertMaxReach = useReachMaxAlert(swipe, "right");
+  // const AlertMaxReach = useReachMaxAlert(swipe, "right");
 
   const { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 } = coords;
   const { category, chapter } = maxCoords;

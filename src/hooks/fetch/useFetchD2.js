@@ -21,22 +21,25 @@ export const useFetchD2 = () => {
 
   React.useEffect(() => {
     (async function fetchUserChapters() {
-      if (!isLoaded) return;
-      if (!hasNew.d2) return;
-      if (!chapters || chapters.length === 0) return;
+      if (!isLoaded) {
+        return;
+      }
+
+      // if (!hasNew.d2) {
+      //   return;
+      // }
+      if (!chapters || chapters.length === 0) {
+        return;
+      }
 
       // await delay(1);
 
       console.log("[useUserChapterFetch] fetching D2");
 
       startLoading();
-
-      // console.log(coords);
-
-      // if (coords.d0 >= 2) return;
-
-      // if (chapters[coords.d0][coords.d1]) return;
-      if (!chapters[coords.d0]) return;
+      if (!chapters[coords.d0]) {
+        return;
+      }
 
       const target = chapters[coords.d0][coords.d1].deck;
 
@@ -45,9 +48,7 @@ export const useFetchD2 = () => {
       if (data.item.length === 1) {
         addChapterChild({ deck: data.item[0] });
       } else if (data.item.length >= 2) {
-        data.item.forEach(data => {
-          addChapterChild({ deck: data });
-        });
+        data.item.forEach(data => addChapterChild({ deck: data }));
       }
 
       // 로딩 끝

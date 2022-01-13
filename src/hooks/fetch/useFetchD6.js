@@ -21,9 +21,17 @@ export const useFetchD6 = () => {
 
   React.useEffect(() => {
     (async function fetchNext() {
-      if (!isLoaded) return;
-      if (!hasNew.d6) return;
-      if (!chapters || chapters.length === 0) return;
+      if (!isLoaded) {
+        return;
+      }
+
+      if (!hasNew.d6) {
+        return;
+      }
+
+      if (!chapters || chapters.length === 0) {
+        return;
+      }
 
       console.log("[useFetchD6] fetching d6");
       startLoading();

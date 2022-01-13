@@ -1,5 +1,4 @@
 import { Alert } from "../../components/alert";
-import { DEPTH_NAME } from "../../store/reducers/swiper.depth";
 import { useSwipeStates } from "./useSwipeStates";
 
 export const useSwipeDown = swipe => {

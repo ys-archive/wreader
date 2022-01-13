@@ -1,105 +1,96 @@
 import { action, computed, thunk, thunkOn } from "easy-peasy";
-import ChapterService from "../../services/ChapterService";
+// import ChapterService from "../../services/ChapterService";
 import * as _ from "lodash";
 
 export default {
   categories: [],
-  currentCategory: computed(
-    [
-      state => state.categories,
-      (state, storeState) => storeState.swiper.coords,
-    ],
-    (categories, { d0 }) => categories[d0],
-  ),
-  currentCategoryTitle: computed(state => {
-    if (!state.currentCategory) {
-      return null;
-    }
+  // currentCategory: computed(
+  //   [
+  //     state => state.categories,
+  //     (state, storeState) => storeState.swiper.coords,
+  //   ],
+  //   (categories, coords) => categories[coords.d0],
+  // ),
+  // currentCategoryTitle: computed(state => {
+  //   if (!state.currentCategory) {
+  //     return null;
+  //   }
 
-    console.log(state.currentCategory);
+  //   console.log(state.currentCategory);
 
-    if (!("title" in state.currentCategory)) {
-      return null;
-    }
-    return state.currentCategory.title;
-  }),
+  //   // if (!("title" in state.currentCategory)) {
+  //   //   return null;
+  //   // }
+  //   return state.currentCategory.title;
+  // }),
 
   chapters: [],
-  chaptersAtDepth: computed(
-    [
-      state => state.categories,
-      state => state.chapters,
-      (state, storeState) => storeState.swiper.coords,
-      (state, storeState) => storeState.swiper.depth,
-    ],
-    (categories, chapters, coords, depth) => {
-      const { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 } = coords;
+  // chaptersAtDepth: computed(
+  //   [
+  //     state => state.isLoaded,
+  //     state => state.categories,
+  //     state => state.chapters,
+  //     (state, storeState) => storeState.swiper.coords,
+  //     (state, storeState) => storeState.swiper.depth,
+  //   ],
+  //   (isLoaded, categories, chapters, coords, depth) => {
+  //     // console.log("chapters at depth!");
+  //     if (!isLoaded) {
+  //       return null;
+  //     }
 
-      if (!categories) {
-        return null;
-      }
+  //     const { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 } = coords;
 
-      if (!chapters) {
-        return null;
-      }
+  //     if (!categories) {
+  //       return null;
+  //     }
 
-      switch (depth) {
-        case 0:
-          return categories[d0];
+  //     if (!chapters) {
+  //       return null;
+  //     }
 
-        case 1:
-          return chapters[d0][d1];
+  //     // console.log("current depth " + depth.val);
+  //     switch (depth.val) {
+  //       case 0:
+  //         return categories[d0];
 
-        case 2:
-          return chapters[d0][d1].child[d2];
+  //       case 1:
+  //         return chapters[d0][d1];
 
-        case 3:
-          return chapters[d0][d1].child[d2].child[d3];
+  //       case 2:
+  //         return chapters[d0][d1].child[d2];
 
-        case 4:
-          return chapters[d0][d1].child[d2].child[d3].child[d4];
+  //       case 3:
+  //         return chapters[d0][d1].child[d2].child[d3];
 
-        case 5:
-          return chapters[d0][d1].child[d2].child[d3].child[d4].child[d5];
+  //       case 4:
+  //         return chapters[d0][d1].child[d2].child[d3].child[d4];
 
-        case 6:
-          return chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
-            d6
-          ];
+  //       case 5:
+  //         return chapters[d0][d1].child[d2].child[d3].child[d4].child[d5];
 
-        case 7:
-          return chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
-            d6
-          ].child[d7];
+  //       case 6:
+  //         return chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
+  //           d6
+  //         ];
 
-        case 8:
-          return chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
-            d6
-          ].child[d7].child[d8];
+  //       case 7:
+  //         return chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
+  //           d6
+  //         ].child[d7];
 
-        case 9:
-          return chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
-            d6
-          ].child[d7].child[d8].child[d9];
-      }
-    },
-  ),
+  //       case 8:
+  //         return chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
+  //           d6
+  //         ].child[d7].child[d8];
 
-  nextChaptersAtDepth: computed(
-    [
-      state => state.chaptersAtDepth,
-      (state, storeState) => storeState.swiper.depth,
-    ],
-    (chaptersAtDepth, depth) => (depth !== 0 ? chaptersAtDepth.child : null),
-  ),
-
-  chapterAtDepth: computed(
-    [
-      state => state.chaptersAtDepth,
-      (state, storeState) => storeState.swiper.depth,
-    ],
-    (chaptersAtDepth, depth) => (depth !== 0 ? chaptersAtDepth.deck : null),
-  ),
+  //       case 9:
+  //         return chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
+  //           d6
+  //         ].child[d7].child[d8].child[d9];
+  //     }
+  //   },
+  // ),
 
   commentsUpdated: false,
 
@@ -388,13 +379,11 @@ export default {
 
 export const selectors = {
   categories: state => state.data.categories,
-  currentCategory: state => state.data.currentCategory,
-  currentCategoryTitle: state => state.data.currentCategoryTitle,
+  // currentCategory: state => state.data.currentCategory,
+  // currentCategoryTitle: state => state.data.currentCategoryTitle,
 
   chapters: state => state.data.chapters,
-  chaptersAtDepth: state => state.data.chaptersAtDepth,
-  nextChaptersAtDepth: state => state.data.nextChaptersAtDepth,
-  chapterAtDepth: state => state.data.chapterAtDepth,
+  // chaptersAtDepth: state => state.data.chaptersAtDepth,
 
   commentsUpdated: state => state.data.commentsUpdated,
 

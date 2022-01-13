@@ -1,10 +1,10 @@
-import { DEPTH_NAME } from "../../store/reducers/swiper.depth";
 import { useSwipeStates } from "./useSwipeStates";
 
 export const useSwipeRight = swipe => {
   const {
     depth,
     coords,
+    maxCoords,
 
     decreaseDepth,
 

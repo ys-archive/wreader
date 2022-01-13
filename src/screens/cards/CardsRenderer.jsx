@@ -11,47 +11,102 @@ import CardIndicator from "./CardIndicator";
 import LoadingModal from "../../components/modals/LoadingModal";
 
 const initStates = () => {
-  const currentCategoryTitle = useStoreState(selData.currentCategoryTitle);
-  const chapterAtDepth = useStoreState(selData.chapterAtDepth);
+  // const currentCategoryTitle = useStoreState(selData.currentCategoryTitle);
+  const categories = useStoreState(selData.categories);
+  // const chaptersAtDepth = useStoreState(selData.chaptersAtDepth);
+  const chapters = useStoreState(selData.chapters);
   const isLoaded = useStoreState(selData.isLoaded);
+  const hasNew = useStoreState(selData.hasNew);
 
   const depth = useStoreState(selSwiper.depth);
   const coords = useStoreState(selSwiper.coords);
 
   return {
-    currentCategoryTitle,
-    chapterAtDepth,
+    // currentCategoryTitle,
+    categories,
+    chapters,
     isLoaded,
+    hasNew,
+
     depth,
     coords,
   };
 };
 
 const CardsRenderer = () => {
-  const { currentCategoryTitle, chapterAtDepth, isLoaded, depth, coords } =
+  const { categories, chapters, isLoaded, hasNew, depth, coords } =
     initStates();
 
   if (!isLoaded) {
     return <LoadingModal />;
   }
 
-  // if (!chapters || chapters.length === 0) {
-  //   return <LoadingModal />;
-  // }
-
+  if (!categories || !categories.length) {
+    return <LoadingModal />;
+  }
+  let curData = null;
   const { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 } = coords;
 
-  // const currentCategoryTitle = categories[d0].title;
+  switch (depth) {
+    case 0:
+      curData = categories[d0];
+      break;
+
+    case 1:
+      curData = chapters[d0][d1].deck;
+      break;
+
+    case 2:
+      curData = chapters[d0][d1].child[d2].deck;
+      break;
+
+    case 3:
+      curData = chapters[d0][d1].child[d2].child[d3].deck;
+      break;
+
+    case 4:
+      curData = chapters[d0][d1].child[d2].child[d3].child[d4].deck;
+      break;
+
+    case 5:
+      curData = chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].deck;
+      break;
+
+    case 6:
+      curData =
+        chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6].deck;
+      break;
+
+    case 7:
+      curData =
+        chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6]
+          .child[d7].deck;
+      break;
+
+    case 8:
+      curData =
+        chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6]
+          .child[d7].child[d8].deck;
+      break;
+
+    case 9:
+      curData =
+        chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6]
+          .child[d7].child[d8].child[d9].deck;
+      break;
+  }
+
+  // console.log(curData);
 
   let CardJSX = null;
 
   if (depth === 0) {
-    CardJSX = <CategoryCard data={chapterAtDepth} />;
+    CardJSX = <CategoryCard data={curData} />;
   } else {
     CardJSX = (
       <ChapterCard
-        data={chapterAtDepth}
-        category={currentCategoryTitle}
+        data={curData}
+        categoryTitle={categories[d0].title}
         order={depth !== 1 ? d2 + 2 : null}
       />
     );

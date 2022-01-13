@@ -9,6 +9,7 @@ const initStates = () => {
   // selectors
   // - data
   const categories = useStoreState(selData.categories);
+  // const currentCategoryTitle = useStoreState(selData.currentCategoryTitle);
 
   // - swiper
   const depth = useStoreState(selSwiper.depth);
@@ -21,6 +22,7 @@ const initStates = () => {
 
   return {
     categories,
+    // currentCategoryTitle,
     depth,
     coords,
     resetTempBlob,
@@ -33,25 +35,24 @@ export const useNavToWriteCard = direction => {
 
   const {
     categories,
+    // currentCategoryTitle,
     depth,
     coords: { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 },
     resetTempBlob,
     resetCard,
   } = initStates();
 
-  const categoryTitle = categories[d0].title;
-
-  resetTempBlob();
-  resetCard();
-
   const impl = params =>
     nav.navigate(ScreenNames.MainWriteCard, {
-      categoryTitle,
+      categoryTitle: categories[d0].title,
       categoryId: d0,
       ...params,
     });
 
   return () => {
+    resetTempBlob();
+    resetCard();
+
     switch (depth) {
       case 0:
         if (direction === "left") {

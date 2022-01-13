@@ -1,5 +1,6 @@
 import { useStoreActions, useStoreState } from "easy-peasy";
 import { Alert } from "../../components";
+import { selSwiper } from "../../store/selectors";
 import { actSwiper } from "../../store/actions";
 
 export const useReachMaxAlert = (swipe, direction) => {

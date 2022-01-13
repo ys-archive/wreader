@@ -10,7 +10,6 @@ export const useFetchD0 = () => {
     userId,
     hasNew,
     setMaxCoords,
-    resetCategory,
     addCategory,
     startLoading,
     updateHasNew,
@@ -19,18 +18,22 @@ export const useFetchD0 = () => {
 
   React.useEffect(() => {
     (async function fetchCategories() {
-      if (!hasNew.d0) return;
+      if (!hasNew.d0) {
+        return;
+      }
 
-      await delay(1);
+      // await delay(1);
 
       console.log("[useFetchD0] fetching D0");
       startLoading();
 
-      resetCategory();
+      // resetCategory();
 
       const { data } = await ChapterService.GET_getCategory(userId);
 
-      if (!data || !data.item || data.item.length === 0) return;
+      if (!data.item || data.item.length === 0) {
+        return;
+      }
 
       // 카테고리 데이터 정제 및 저장
       categories = Object.values(data.item);

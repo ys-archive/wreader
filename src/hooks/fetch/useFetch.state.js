@@ -13,6 +13,8 @@ export const initStates = () => {
 
   // - data
   const resetCategory = useStoreActions(actData.resetCategory);
+  const addChapter = useStoreActions(actData.addChapter);
+  const addChapterChild = useStoreActions(actData.addChapterChild);
   const addCategory = useStoreActions(actData.addCategory);
   const startLoading = useStoreActions(actData.startLoading);
   const finishLoading = useStoreActions(actData.finishLoading);
@@ -31,6 +33,9 @@ export const initStates = () => {
     resetCategory,
 
     addCategory,
+    addChapter,
+    addChapterChild,
+
     startLoading,
     finishLoading,
     updateHasNew,

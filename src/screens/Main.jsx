@@ -12,7 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useAutoLogin } from "../hooks";
 
 import EventModal from "#components/modals/EventModal";
-import Reader from "./reader/Reader";
+// import Reader from "./reader/Reader";
 import CardsRenderer from "./cards/CardsRenderer";
 
 import { useCardSorter } from "./cards/useCardSorter";

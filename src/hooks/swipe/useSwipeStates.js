@@ -29,7 +29,6 @@ export const useSwipeStates = () => {
     categories,
     chapters,
     isLoaded,
-    hasNew,
 
     depth,
     coords,

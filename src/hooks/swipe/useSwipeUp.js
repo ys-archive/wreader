@@ -1,8 +1,4 @@
-import { DEPTH_NAME } from "../../store/reducers/swiper.depth";
-import { Alert } from "../../components/alert";
 import { useSwipeStates } from "./useSwipeStates";
-import { useNavigation } from "@react-navigation/native";
-import * as ScreenNames from "../../navigators/ScreenNames";
 import { useNavToWriteCard } from "../../screens/cards/write-chapter/useNavToWriteCard";
 import { useReachMaxAlert } from "./useReachMaxAlert";
 

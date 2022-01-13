@@ -17,15 +17,21 @@ export const useFetchD3 = () => {
     startLoading,
     finishLoading,
     updateHasNew,
-
-    setMaxCoords,
   } = initStates();
 
   React.useEffect(() => {
     (async function fetchNext() {
-      if (!isLoaded) return;
-      if (!hasNew.d3) return;
-      if (!chapters || chapters.length === 0) return;
+      if (!isLoaded) {
+        return;
+      }
+
+      if (!hasNew.d3) {
+        return;
+      }
+
+      if (!chapters || chapters.length === 0) {
+        return;
+      }
 
       console.log("[useFetchD3] fetching D3");
       startLoading();
