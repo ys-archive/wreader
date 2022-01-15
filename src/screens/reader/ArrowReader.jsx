@@ -68,16 +68,13 @@ const ArrowReader = ({ children }) => {
       clicker: clickArrow,
     });
   } else {
-    IndicatorJSX = renderArrowChapter(
-      {
-        coords,
-        maxCoords,
-        depth,
-        callbacks: onPresseds,
-        clicker: clickArrow,
-      },
-      depth % 2 === 0,
-    );
+    IndicatorJSX = renderArrowChapter({
+      coords,
+      maxCoords,
+      depth,
+      callbacks: onPresseds,
+      clicker: clickArrow,
+    });
   }
 
   return (

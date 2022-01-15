@@ -46,13 +46,15 @@ const MakeIndicators = (dir, coords) => {
   });
 };
 
-export const renderWithDepth0 = (coords, maxCoords) => {
-  const { d0 } = coords;
-  const { category, chapter } = maxCoords;
+export const renderIndicatorCategory = props => {
+  const {
+    coords: { d0 },
+    maxCoords: { category: maxCategoryCoord, chapter: maxChapterCoord },
+  } = props;
 
-  const hasPrv = d0 !== 0 && d0 < category;
-  const hasNxt = d0 < category - 1;
-  const hasNxtDepth = chapter > 0;
+  const hasPrv = d0 !== 0 && d0 < maxCategoryCoord;
+  const hasNxt = d0 < maxCategoryCoord - 1;
+  const hasNxtDepth = maxChapterCoord > 0;
 
   return MakeIndicators(
     {
@@ -64,184 +66,274 @@ export const renderWithDepth0 = (coords, maxCoords) => {
   );
 };
 
-export const renderWithDepth1 = (coords, chapters) => {
-  const { d0, d1 } = coords;
+export const renderIndicatorChapter = props => {
+  const { coords, chapters, depth } = props;
+  const isEvenDepth = depth % 2 === 0;
+  const compareDepth = coords[`d${depth}`];
 
-  const hasPrvDepth = d1 === 0;
-  const hasPrv = d1 !== 0;
-  const hasNxt = chapters[d0][d1 + 1] !== undefined;
-  const hasNextDepth = chapters[d0][d1].child.length > 0;
-  // const hasNextDepth = chapters[d0][d1 + 1] !== null;
+  const hasPrvDepth = compareDepth === 0;
+  const hasPrv = compareDepth !== 0;
+  let hasNxt = undefined;
+  let hasNxtDepth = undefined;
+  const head = chapters[d0][d1];
 
-  return MakeIndicators(
-    {
-      left: [hasPrvDepth, 0],
-      top: [hasPrv, 1],
-      bottom: [hasNxt, 1],
-      right: [hasNextDepth, 1],
-    },
-    coords,
-  );
+  if (depth === 1) {
+    hasNxt = chapters[d0][d1 + 1] !== undefined;
+    hasNxtDepth = chapters[d0][d1].child.length > 0;
+
+    return MakeIndicators(
+      {
+        left: [hasPrvDepth, 0],
+        top: [hasPrv, 1],
+        bottom: [hasNxt, 1],
+        right: [hasNxtDepth, 1],
+      },
+      coords,
+    );
+  }
+
+  if (depth === 9) {
+    hasNxt = hasNext(head, 9);
+
+    return MakeIndicators(
+      {
+        top: hasPrvDepth ? [hasPrvDepth, 1] : hasPrv && [hasPrv, 1],
+        bottom: [hasNxt, 1],
+      },
+      coords,
+    );
+  }
+
+  hasNxt = hasNext(head, depth);
+  hasNxtDepth = hasNextDepth(nextHead, depth);
+
+  const dir = isEvenDepth
+    ? {
+        left: hasPrvDepth ? [hasPrvDepth, 1] : hasPrv && [hasPrv, 1],
+        right: [hasNxt, 1],
+        bottom: [hasNxtDepth, 1],
+      }
+    : {
+        top: hasPrvDepth ? [hasPrvDepth, 1] : hasPrv && [hasPrv, 1],
+        right: [hasNxtDepth, 1],
+        bottom: [hasNxt, 1],
+      };
+
+  return MakeIndicators(dir, coords);
 };
 
-export const renderWithDepth2 = (coords, chapters) => {
-  const { d0, d1, d2 } = coords;
-
-  const hasPrvDepth = d2 === 0;
-  const hasPrv = d2 !== 0;
-  const hasNxt = chapters[d0][d1].child[d2 + 1] !== undefined;
-  const hasNxtDepth = chapters[d0][d1].child[d2].child.length > 0;
-
-  return MakeIndicators(
-    {
-      left: hasPrvDepth ? [hasPrvDepth, 1] : hasPrv && [hasPrv, 1],
-      right: [hasNxt, 1],
-      bottom: [hasNxtDepth, 1],
-    },
-    coords,
-  );
+const hasNext = (head, targetDepth) => {
+  let res = head;
+  for (let i = 2; i < targetDepth; ++i) {
+    res = res.child[i];
+  }
+  return res.child[targetDepth + 1] != undefined;
 };
 
-export const renderWithDepth3 = (coords, chapters) => {
-  const { d0, d1, d2, d3 } = coords;
-
-  const hasPrvDepth = d3 === 0;
-  const hasPrv = d3 !== 0;
-  const hasNxt = chapters[d0][d1].child[d2].child[d3 + 1] !== undefined;
-  const hasNxtDepth = chapters[d0][d1].child[d2].child[d3].child.length > 0;
-
-  return MakeIndicators(
-    {
-      top: hasPrvDepth ? [hasPrvDepth, 1] : hasPrv && [hasPrv, 1],
-      right: [hasNxtDepth, 1],
-      bottom: [hasNxt, 1],
-    },
-    coords,
-  );
+const hasNextDepth = (head, targetDepth) => {
+  let res = head;
+  for (let i = 1; i < targetDepth; ++i) {
+    res = res.child[i];
+  }
+  return res.child.length > 0;
 };
 
-export const renderWithDepth4 = (coords, chapters) => {
-  const { d0, d1, d2, d3, d4 } = coords;
+// export const renderWithDepth0 = (coords, maxCoords) => {
+//   const { d0 } = coords;
+//   const { category, chapter } = maxCoords;
 
-  const hasPrvDepth = d4 === 0;
-  const hasPrv = d4 !== 0;
-  const hasNxt =
-    chapters[d0][d1].child[d2].child[d3].child[d4 + 1] !== undefined;
-  const hasNxtDepth =
-    chapters[d0][d1].child[d2].child[d3].child[d4].child.length > 0;
+//   const hasPrv = d0 !== 0 && d0 < category;
+//   const hasNxt = d0 < category - 1;
+//   const hasNxtDepth = chapter > 0;
 
-  return MakeIndicators(
-    {
-      left: hasPrvDepth ? [hasPrvDepth, 1] : hasPrv && [hasPrv, 1],
-      right: [hasNxt, 1],
-      bottom: [hasNxtDepth, 1],
-    },
-    coords,
-  );
-};
+//   return MakeIndicators(
+//     {
+//       top: [hasPrv, 0],
+//       bottom: [hasNxt, 0],
+//       right: [hasNxtDepth, 1],
+//     },
+//     coords,
+//   );
+// };
 
-export const renderWithDepth5 = (coords, chapters) => {
-  const { d0, d1, d2, d3, d4, d5 } = coords;
+// export const renderWithDepth1 = (coords, chapters) => {
+//   const { d0, d1 } = coords;
 
-  const hasPrvDepth = d5 === 0;
-  const hasPrv = d5 !== 0;
-  const hasNxt =
-    chapters[d0][d1].child[d2].child[d3].child[d4].child[d5 + 1] !== undefined;
-  const hasNxtDepth =
-    chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child.length > 0;
+//   const hasPrvDepth = d1 === 0;
+//   const hasPrv = d1 !== 0;
+//   const hasNxt = chapters[d0][d1 + 1] !== undefined;
+//   const hasNextDepth = chapters[d0][d1].child.length > 0;
+//   // const hasNextDepth = chapters[d0][d1 + 1] !== null;
 
-  return MakeIndicators(
-    {
-      top: hasPrvDepth ? [hasPrvDepth, 1] : hasPrv && [hasPrv, 1],
-      right: [hasNxtDepth, 1],
-      bottom: [hasNxt, 1],
-    },
-    coords,
-  );
-};
+//   return MakeIndicators(
+//     {
+//       left: [hasPrvDepth, 0],
+//       top: [hasPrv, 1],
+//       bottom: [hasNxt, 1],
+//       right: [hasNextDepth, 1],
+//     },
+//     coords,
+//   );
+// };
 
-export const renderWithDepth6 = (coords, chapters) => {
-  const { d0, d1, d2, d3, d4, d5, d6 } = coords;
+// export const renderWithDepth2 = (coords, chapters) => {
+//   const { d0, d1, d2 } = coords;
 
-  const hasPrvDepth = d6 === 0;
-  const hasPrv = d6 !== 0;
-  const hasNxt =
-    chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6 + 1] !==
-    undefined;
-  const hasNxtDepth =
-    chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6].child
-      .length > 0;
+//   const hasPrvDepth = d2 === 0;
+//   const hasPrv = d2 !== 0;
+//   const hasNxt = chapters[d0][d1].child[d2 + 1] !== undefined;
+//   const hasNxtDepth = chapters[d0][d1].child[d2].child.length > 0;
 
-  return MakeIndicators(
-    {
-      left: hasPrvDepth ? [hasPrvDepth, 1] : hasPrv && [hasPrv, 1],
-      right: [hasNxt, 1],
-      bottom: [hasNxtDepth, 1],
-    },
-    coords,
-  );
-};
+//   return MakeIndicators(
+//     {
+//       left: hasPrvDepth ? [hasPrvDepth, 1] : hasPrv && [hasPrv, 1],
+//       right: [hasNxt, 1],
+//       bottom: [hasNxtDepth, 1],
+//     },
+//     coords,
+//   );
+// };
 
-export const renderWithDepth7 = (coords, chapters) => {
-  const { d0, d1, d2, d3, d4, d5, d6, d7 } = coords;
+// export const renderWithDepth3 = (coords, chapters) => {
+//   const { d0, d1, d2, d3 } = coords;
 
-  const hasPrvDepth = d7 === 0;
-  const hasPrv = d7 !== 0;
-  const hasNxt =
-    chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6].child[
-      d7 + 1
-    ] !== undefined;
-  const hasNxtDepth =
-    chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6].child[d7]
-      .length > 0;
+//   const hasPrvDepth = d3 === 0;
+//   const hasPrv = d3 !== 0;
+//   const hasNxt = chapters[d0][d1].child[d2].child[d3 + 1] !== undefined;
+//   const hasNxtDepth = chapters[d0][d1].child[d2].child[d3].child.length > 0;
 
-  return MakeIndicators(
-    {
-      top: hasPrvDepth ? [hasPrvDepth, 1] : hasPrv && [hasPrv, 1],
-      right: [hasNxtDepth, 1],
-      bottom: [hasNxt, 1],
-    },
-    coords,
-  );
-};
+//   return MakeIndicators(
+//     {
+//       top: hasPrvDepth ? [hasPrvDepth, 1] : hasPrv && [hasPrv, 1],
+//       right: [hasNxtDepth, 1],
+//       bottom: [hasNxt, 1],
+//     },
+//     coords,
+//   );
+// };
 
-export const renderWithDepth8 = (coords, chapters) => {
-  const { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 } = coords;
+// export const renderWithDepth4 = (coords, chapters) => {
+//   const { d0, d1, d2, d3, d4 } = coords;
 
-  const hasPrvDepth = d8 === 0;
-  const hasPrv = d8 !== 0;
-  const hasNxt =
-    chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6].child[d7]
-      .child[d8].child[d9 + 1] !== undefined;
-  const hasNxtDepth =
-    chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6].child[d7]
-      .child[d8].child[d9].length > 0;
+//   const hasPrvDepth = d4 === 0;
+//   const hasPrv = d4 !== 0;
+//   const hasNxt =
+//     chapters[d0][d1].child[d2].child[d3].child[d4 + 1] !== undefined;
+//   const hasNxtDepth =
+//     chapters[d0][d1].child[d2].child[d3].child[d4].child.length > 0;
 
-  return MakeIndicators(
-    {
-      left: hasPrvDepth ? [hasPrvDepth, 1] : hasPrv && [hasPrv, 1],
-      right: [hasNxtDepth, 1],
-      bottom: [hasNxt, 1],
-    },
-    coords,
-  );
-};
+//   return MakeIndicators(
+//     {
+//       left: hasPrvDepth ? [hasPrvDepth, 1] : hasPrv && [hasPrv, 1],
+//       right: [hasNxt, 1],
+//       bottom: [hasNxtDepth, 1],
+//     },
+//     coords,
+//   );
+// };
 
-export const renderWithDepth9 = (coords, chapters) => {
-  const { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 } = coords;
+// export const renderWithDepth5 = (coords, chapters) => {
+//   const { d0, d1, d2, d3, d4, d5 } = coords;
 
-  const hasPrvDepth = d9 === 0;
-  const hasPrv = d9 !== 0;
-  const hasNxt =
-    chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6].child[d7]
-      .child[d8].child[d9 + 1] !== undefined;
+//   const hasPrvDepth = d5 === 0;
+//   const hasPrv = d5 !== 0;
+//   const hasNxt =
+//     chapters[d0][d1].child[d2].child[d3].child[d4].child[d5 + 1] !== undefined;
+//   const hasNxtDepth =
+//     chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child.length > 0;
 
-  return MakeIndicators(
-    {
-      top: hasPrvDepth ? [hasPrvDepth, 1] : hasPrv && [hasPrv, 1],
-      right: [hasNxtDepth, 1],
-      bottom: [hasNxt, 1],
-    },
-    coords,
-  );
-};
+//   return MakeIndicators(
+//     {
+//       top: hasPrvDepth ? [hasPrvDepth, 1] : hasPrv && [hasPrv, 1],
+//       right: [hasNxtDepth, 1],
+//       bottom: [hasNxt, 1],
+//     },
+//     coords,
+//   );
+// };
+
+// export const renderWithDepth6 = (coords, chapters) => {
+//   const { d0, d1, d2, d3, d4, d5, d6 } = coords;
+
+//   const hasPrvDepth = d6 === 0;
+//   const hasPrv = d6 !== 0;
+//   const hasNxt =
+//     chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6 + 1] !==
+//     undefined;
+//   const hasNxtDepth =
+//     chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6].child
+//       .length > 0;
+
+//   return MakeIndicators(
+//     {
+//       left: hasPrvDepth ? [hasPrvDepth, 1] : hasPrv && [hasPrv, 1],
+//       right: [hasNxt, 1],
+//       bottom: [hasNxtDepth, 1],
+//     },
+//     coords,
+//   );
+// };
+
+// export const renderWithDepth7 = (coords, chapters) => {
+//   const { d0, d1, d2, d3, d4, d5, d6, d7 } = coords;
+
+//   const hasPrvDepth = d7 === 0;
+//   const hasPrv = d7 !== 0;
+//   const hasNxt =
+//     chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6].child[
+//       d7 + 1
+//     ] !== undefined;
+//   const hasNxtDepth =
+//     chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6].child[d7]
+//       .length > 0;
+
+//   return MakeIndicators(
+//     {
+//       top: hasPrvDepth ? [hasPrvDepth, 1] : hasPrv && [hasPrv, 1],
+//       right: [hasNxtDepth, 1],
+//       bottom: [hasNxt, 1],
+//     },
+//     coords,
+//   );
+// };
+
+// export const renderWithDepth8 = (coords, chapters) => {
+//   const { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 } = coords;
+
+//   const hasPrvDepth = d8 === 0;
+//   const hasPrv = d8 !== 0;
+//   const hasNxt =
+//     chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6].child[d7]
+//       .child[d8].child[d9 + 1] !== undefined;
+//   const hasNxtDepth =
+//     chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6].child[d7]
+//       .child[d8].child[d9].length > 0;
+
+//   return MakeIndicators(
+//     {
+//       left: hasPrvDepth ? [hasPrvDepth, 1] : hasPrv && [hasPrv, 1],
+//       right: [hasNxtDepth, 1],
+//       bottom: [hasNxt, 1],
+//     },
+//     coords,
+//   );
+// };
+
+// export const renderWithDepth9 = (coords, chapters) => {
+//   const { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 } = coords;
+
+//   const hasPrvDepth = d9 === 0;
+//   const hasPrv = d9 !== 0;
+//   const hasNxt =
+//     chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6].child[d7]
+//       .child[d8].child[d9 + 1] !== undefined;
+
+//   return MakeIndicators(
+//     {
+//       top: hasPrvDepth ? [hasPrvDepth, 1] : hasPrv && [hasPrv, 1],
+//       // right: [hasNxtDepth, 1],
+//       bottom: [hasNxt, 1],
+//     },
+//     coords,
+//   );
+// };
