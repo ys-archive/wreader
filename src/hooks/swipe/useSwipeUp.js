@@ -39,7 +39,6 @@ export const useSwipeUp = swipe => {
           swipe("up", () => {
             increaseCoords(depth);
             setMaxChapterFromCategory();
-            // setMaxCoords({ chapter: categories[d0].maxLength });
             updateHasNew({ d2: chapters });
           });
         };

@@ -49,7 +49,7 @@ export default {
     decrement: action((state, payload) => {
       state.val = new Coordinates({
         ...state.val,
-        [`d${payload}`]: state.val[`d${payload}`] + 1,
+        [`d${payload}`]: state.val[`d${payload}`] - 1,
       });
     }),
 

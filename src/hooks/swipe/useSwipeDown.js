@@ -12,8 +12,8 @@ export const useSwipeDown = swipe => {
 
     decreaseDepth,
 
-    updateHasNew,
     setMaxCoords,
+    setMaxChapterFromCategory,
     decreaseCoords,
   } = useSwipeStates();
 
@@ -31,7 +31,7 @@ export const useSwipeDown = swipe => {
 
           swipe("down", () => {
             decreaseCoords(depth);
-            setMaxCoords({ chapter: categories[d0].maxLength });
+            setMaxChapterFromCategory();
           });
         };
 
