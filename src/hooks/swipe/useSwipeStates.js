@@ -20,6 +20,9 @@ export const useSwipeStates = () => {
 
   // - swiper
   const setMaxCoords = useStoreActions(actSwiper.setMaxCoords);
+  const setMaxChapterFromCategory = useStoreActions(
+    actSwiper.setMaxChapterFromCategory,
+  );
   const increaseDepth = useStoreActions(actSwiper.increaseDepth);
   const decreaseDepth = useStoreActions(actSwiper.decreaseDepth);
 
@@ -38,6 +41,7 @@ export const useSwipeStates = () => {
     updateHasNew,
 
     setMaxCoords,
+    setMaxChapterFromCategory,
 
     increaseDepth,
     decreaseDepth,

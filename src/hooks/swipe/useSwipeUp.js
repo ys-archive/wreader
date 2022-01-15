@@ -18,6 +18,7 @@ export const useSwipeUp = swipe => {
     decreaseCoords,
 
     setMaxCoords,
+    setMaxChapterFromCategory,
   } = useSwipeStates();
 
   const navToWriteCard = useNavToWriteCard();
@@ -37,7 +38,8 @@ export const useSwipeUp = swipe => {
 
           swipe("up", () => {
             increaseCoords(depth);
-            setMaxCoords({ d1: categories[d0].maxLength });
+            setMaxChapterFromCategory();
+            // setMaxCoords({ chapter: categories[d0].maxLength });
             updateHasNew({ d2: chapters });
           });
         };

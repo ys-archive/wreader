@@ -138,55 +138,14 @@ export default {
     },
 
     update: action((state, payload) => {
-      if ("d0" in payload) {
-        state.val.d0 = payload.d0;
-        return;
+      let depth = 0;
+      for (let i = 0; i < 9; ++i) {
+        if (`d${i}` in payload) {
+          depth = i;
+        }
       }
 
-      if ("d1" in payload) {
-        state.val.d1 = payload.d1;
-        return;
-      }
-
-      if ("d2" in payload) {
-        state.val.d2 = payload.d2;
-        return;
-      }
-
-      if ("d3" in payload) {
-        state.val.d3 = payload.d3;
-        return;
-      }
-
-      if ("d4" in payload) {
-        state.val.d4 = payload.d4;
-        return;
-      }
-
-      if ("d5" in payload) {
-        state.val.d5 = payload.d5;
-        return;
-      }
-
-      if ("d6" in payload) {
-        state.val.d6 = payload.d6;
-        return;
-      }
-
-      if ("d7" in payload) {
-        state.val.d7 = payload.d7;
-        return;
-      }
-
-      if ("d8" in payload) {
-        state.val.d8 = payload.d8;
-        return;
-      }
-
-      if ("d9" in payload) {
-        state.val.d9 = payload.d9;
-        return;
-      }
+      state.val[`d${depth}`] = payload[`d${depth}`];
     }),
   },
 

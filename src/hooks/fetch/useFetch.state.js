@@ -12,7 +12,6 @@ export const initStates = () => {
   const coords = useStoreState(selSwiper.coords);
 
   // - data
-  const resetCategory = useStoreActions(actData.resetCategory);
   const addChapter = useStoreActions(actData.addChapter);
   const addChapterChild = useStoreActions(actData.addChapterChild);
   const addCategory = useStoreActions(actData.addCategory);
@@ -29,8 +28,6 @@ export const initStates = () => {
     userId,
     hasNew,
     coords,
-
-    resetCategory,
 
     addCategory,
     addChapter,
