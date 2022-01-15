@@ -68,7 +68,6 @@ export const renderIndicatorCategory = props => {
 };
 
 export const renderIndicatorChapter = props => {
-  console.log(props);
   const { coords, chapters, depth } = props;
   const isEvenDepth = depth % 2 === 0;
   const compareDepth = coords[`d${depth}`];
@@ -107,8 +106,8 @@ export const renderIndicatorChapter = props => {
     );
   }
 
-  hasNxt = hasNext(head, depth);
-  hasNxtDepth = hasNextDepth(nextHead, depth);
+  hasNxt = hasNext(head, depth, coords);
+  hasNxtDepth = hasNextDepth(head, depth, coords);
 
   const dir = isEvenDepth
     ? {
@@ -125,18 +124,30 @@ export const renderIndicatorChapter = props => {
   return MakeIndicators(dir, coords);
 };
 
-const hasNext = (head, targetDepth) => {
+const hasNext = (head, targetDepth, coords) => {
   let res = head;
   for (let i = 2; i < targetDepth; ++i) {
-    res = res.child[i];
+    res = res.child[coords[`d${i}`]];
   }
-  return res.child[targetDepth + 1] != undefined;
+
+  if (!res | !res.child.length) {
+    return false;
+  }
+
+  return res.child[targetDepth + 1] !== undefined;
 };
 
-const hasNextDepth = (head, targetDepth) => {
+const hasNextDepth = (head, targetDepth, coords) => {
   let res = head;
-  for (let i = 1; i < targetDepth; ++i) {
-    res = res.child[i];
+  for (let i = 0; i < targetDepth - 1; ++i) {
+    if (!res.child.length) {
+      return false;
+    }
+    res = res.child[coords[`d${i}`]];
+  }
+
+  if (!res | !res.child) {
+    return false;
   }
   return res.child.length > 0;
 };

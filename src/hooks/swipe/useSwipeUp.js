@@ -25,13 +25,13 @@ export const useSwipeUp = swipe => {
   const AlertMaxReach = useReachMaxAlert(swipe, "down");
 
   const { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 } = coords;
-  const { category, chapter } = maxCoords;
+  const { category: maxCategoryCoord, chapter: maxChapterCoord } = maxCoords;
 
   return () => {
     switch (depth) {
       case 0:
         return state => {
-          if (d0 === category - 1) {
+          if (d0 === maxCategoryCoord - 1) {
             AlertMaxReach();
             return;
           }
@@ -45,20 +45,11 @@ export const useSwipeUp = swipe => {
 
       case 1:
         return state => {
-          if (d1 === chapter) {
+          if (d1 === maxChapterCoord) {
             AlertMaxReach();
             return;
           }
 
-          // if (chapters[d0] && d1 > 0) {
-          //   swipe("down", () => {
-          //     console.log("마지막 챕터!, 이전 챕터로 돌아감");
-          //     decreaseCoords(depth);
-          //   });
-          //   return;
-          // }
-
-          // d1 < chapter - 2 &&
           if (d1 + 1 === chapters[d0].length) {
             swipe("up", () => {
               console.log(
@@ -94,26 +85,27 @@ export const useSwipeUp = swipe => {
 
       case 3:
         return state => {
-          if (d3 === chapter) {
+          if (d3 === maxChapterCoord) {
             console.log("해당 카드가 마지막 챕터입니다!");
             swipe("down", () => {});
             return;
           }
 
-          if (d3 === chapter - 1) {
+          if (d3 === maxChapterCoord - 1) {
             console.log("마지막인 유저 다음 챕터! 새로운 카드 작성");
             navToWriteCard("up");
             return;
           }
 
           swipe("up", () => {
+            increaseCoords(depth);
             updateHasNew({ d4: true });
           });
         };
 
       case 4:
         return state => {
-          if (d4 === chapter) {
+          if (d4 === maxChapterCoord) {
             console.log("해당 카드가 마지막 챕터입니다!");
             return;
           }
@@ -126,7 +118,12 @@ export const useSwipeUp = swipe => {
         };
 
       case 5:
-        return state => {};
+        return state => {
+          swipe("up", () => {
+            increaseCoords(depth);
+            updateHasNew({ d4: true });
+          });
+        };
 
       case 6:
         return state => {
