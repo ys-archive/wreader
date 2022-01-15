@@ -29,6 +29,7 @@ export const useFetchD3 = () => {
         return;
       }
 
+      updateHasNew({ d3: false });
       if (!chapters || chapters.length === 0) {
         return;
       }
@@ -52,7 +53,6 @@ export const useFetchD3 = () => {
       }
 
       // 로딩 끝
-      updateHasNew({ d3: false });
       finishLoading();
     })();
   }, [isLoaded, hasNew.d3]);

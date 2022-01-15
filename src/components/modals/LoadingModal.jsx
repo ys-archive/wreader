@@ -1,21 +1,21 @@
-import React from "react"
-import { View, Modal, ActivityIndicator, Platform } from "react-native"
-import { StyleSheet } from "../"
+import React from "react";
+import { View, Modal, ActivityIndicator, Platform } from "react-native";
+import { StyleSheet } from "../";
 
 const LoadingModal = () => {
   return (
-    <Modal animationType="fade" transparent>
+    <Modal animationType='fade' transparent>
       <View style={s.root}>
         {Platform.select({
-          android: <ActivityIndicator size={50} color="#999" />,
-          ios: <ActivityIndicator size="large" />,
+          android: <ActivityIndicator size={50} color='#999' />,
+          ios: <ActivityIndicator size='large' />,
         })}
       </View>
     </Modal>
-  )
-}
+  );
+};
 
-export default LoadingModal
+export default LoadingModal;
 
 const s = StyleSheet.create({
   root: {
@@ -28,4 +28,4 @@ const s = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "rgba(0.2, 0.2, 0.2, 0.7)",
   },
-})
+});

@@ -9,6 +9,7 @@ export const useFetchD0 = () => {
   const {
     userId,
     hasNew,
+    isLoaded,
     setMaxCoords,
     addCategory,
     startLoading,
@@ -18,11 +19,14 @@ export const useFetchD0 = () => {
 
   React.useEffect(() => {
     (async function fetchCategories() {
-      if (!hasNew.d0) {
+      if (!isLoaded) {
         return;
       }
 
-      // await delay(1);
+      if (!hasNew.d0) {
+        return;
+      }
+      updateHasNew({ d0: false });
 
       console.log("[useFetchD0] fetching D0");
       startLoading();
@@ -41,7 +45,6 @@ export const useFetchD0 = () => {
       // 카테고리 값 업데이트 - d0
       categories.forEach(category => addCategory(category));
 
-      updateHasNew({ d0: false });
       finishLoading();
       setMaxCoords({
         category: categories.length,

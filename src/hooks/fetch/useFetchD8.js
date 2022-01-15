@@ -29,6 +29,7 @@ export const useFetchD8 = () => {
         return;
       }
 
+      updateHasNew({ d8: false });
       if (!chapters || chapters.length === 0) {
         return;
       }
@@ -55,7 +56,6 @@ export const useFetchD8 = () => {
       }
 
       // 로딩 끝
-      updateHasNew({ d8: false });
       finishLoading();
     })();
   }, [isLoaded, hasNew.d8]);

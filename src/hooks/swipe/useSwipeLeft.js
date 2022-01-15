@@ -48,7 +48,10 @@ export const useSwipeLeft = swipe => {
         return state => {
           // 현재 카테고리의 현재 챕터의 유저 챕터
           if (chapters[d0][d1].child.length === 0) {
-            navToWriteCard("left");
+            swipe("left", () => {
+              console.log("d2 에 챕터가 없습니다! 새 챕터 작성");
+              navToWriteCard("left");
+            });
             return;
           }
 

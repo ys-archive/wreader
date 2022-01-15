@@ -29,6 +29,7 @@ export const useFetchD4 = () => {
         return;
       }
 
+      updateHasNew({ d4: false });
       if (!chapters || chapters.length === 0) {
         return;
       }
@@ -53,7 +54,6 @@ export const useFetchD4 = () => {
       }
 
       // 로딩 끝
-      updateHasNew({ d4: false });
       finishLoading();
     })();
   }, [isLoaded, hasNew.d4]);

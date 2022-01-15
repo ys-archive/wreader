@@ -3,7 +3,9 @@ import { selAuth, selData, selSwiper } from "../../store/selectors";
 import { actData, actSwiper } from "../../store/actions";
 
 export const initStates = () => {
-  // actions
+  // selectors
+  const categories = useStoreState(selData.categories);
+  const chapters = useStoreState(selData.chapters);
   const userId = useStoreState(selAuth.userId);
   const hasNew = useStoreState(selData.hasNew);
 
@@ -11,6 +13,7 @@ export const initStates = () => {
 
   const coords = useStoreState(selSwiper.coords);
 
+  // actions
   // - data
   const addChapter = useStoreActions(actData.addChapter);
   const addChapterChild = useStoreActions(actData.addChapterChild);
@@ -23,6 +26,9 @@ export const initStates = () => {
   const setMaxCoords = useStoreActions(actSwiper.setMaxCoords);
 
   return {
+    categories,
+    chapters,
+
     isLoaded,
 
     userId,

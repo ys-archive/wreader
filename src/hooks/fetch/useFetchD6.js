@@ -29,6 +29,7 @@ export const useFetchD6 = () => {
         return;
       }
 
+      updateHasNew({ d6: false });
       if (!chapters || chapters.length === 0) {
         return;
       }
@@ -55,7 +56,6 @@ export const useFetchD6 = () => {
       }
 
       // 로딩 끝
-      updateHasNew({ d6: false });
       finishLoading();
     })();
   }, [isLoaded, hasNew.d6]);
