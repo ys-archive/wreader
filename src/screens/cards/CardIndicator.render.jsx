@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import ChapterIndicatorCard from "./chapter-card/ChapterIndicatorCard";
 import CategoryIndicatorCard from "./category/CategoryIndicatorCard";
 
@@ -48,9 +48,10 @@ const MakeIndicators = (dir, coords) => {
 
 export const renderIndicatorCategory = props => {
   const {
-    coords: { d0 },
+    coords,
     maxCoords: { category: maxCategoryCoord, chapter: maxChapterCoord },
   } = props;
+  const { d0 } = coords;
 
   const hasPrv = d0 !== 0 && d0 < maxCategoryCoord;
   const hasNxt = d0 < maxCategoryCoord - 1;
@@ -67,19 +68,21 @@ export const renderIndicatorCategory = props => {
 };
 
 export const renderIndicatorChapter = props => {
+  console.log(props);
   const { coords, chapters, depth } = props;
   const isEvenDepth = depth % 2 === 0;
   const compareDepth = coords[`d${depth}`];
+  // console.log(compareDepth);
 
   const hasPrvDepth = compareDepth === 0;
   const hasPrv = compareDepth !== 0;
   let hasNxt = undefined;
   let hasNxtDepth = undefined;
-  const head = chapters[d0][d1];
+  const head = chapters[coords.d0][coords.d1];
 
   if (depth === 1) {
-    hasNxt = chapters[d0][d1 + 1] !== undefined;
-    hasNxtDepth = chapters[d0][d1].child.length > 0;
+    hasNxt = chapters[coords.d0][coords.d1 + 1] !== undefined;
+    hasNxtDepth = chapters[coords.d0][coords.d1].child.length > 0;
 
     return MakeIndicators(
       {
