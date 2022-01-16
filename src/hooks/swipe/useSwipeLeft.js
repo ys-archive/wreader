@@ -10,9 +10,10 @@ export const useSwipeLeft = swipe => {
     coords,
     maxCoords,
 
-    updateHasNew,
-    increaseDepth,
+    fetchChapterD1,
+    fetchChapterAfter,
 
+    increaseDepth,
     increaseCoords,
   } = useSwipeStates();
 
@@ -40,7 +41,7 @@ export const useSwipeLeft = swipe => {
           swipe("left", () => {
             increaseDepth();
             console.log("Depth 0 -> 1");
-            updateHasNew({ d2: true });
+            fetchChapterAfter(2);
           });
         };
 
@@ -58,7 +59,7 @@ export const useSwipeLeft = swipe => {
           swipe("left", () => {
             increaseDepth();
             console.log("[+] Depth: 1 -> 2");
-            updateHasNew({ d3: true });
+            fetchChapterAfter(3);
           });
         };
 
@@ -74,7 +75,7 @@ export const useSwipeLeft = swipe => {
 
           swipe("left", () => {
             increaseCoords(depth);
-            updateHasNew({ d3: true });
+            fetchChapterAfter(3);
           });
         };
 
@@ -94,7 +95,7 @@ export const useSwipeLeft = swipe => {
           swipe("left", () => {
             increaseDepth();
             console.log("[+] Depth: 3 -> 4");
-            updateHasNew({ d5: true });
+            fetchChapterAfter(5);
           });
         };
 
@@ -106,7 +107,7 @@ export const useSwipeLeft = swipe => {
           swipe("left", () => {
             increaseDepth();
             console.log("[+] Depth: 5 -> 6");
-            updateHasNew({ d7: true });
+            fetchChapterAfter(7);
           });
         };
 
@@ -118,7 +119,7 @@ export const useSwipeLeft = swipe => {
           swipe("left", () => {
             increaseDepth();
             console.log("[+] Depth: 7 -> 8");
-            updateHasNew({ d9: true });
+            fetchChapterAfter(9);
           });
         };
 

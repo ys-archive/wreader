@@ -14,7 +14,6 @@ const initStates = () => {
   const categories = useStoreState(selData.categories);
   const chapters = useStoreState(selData.chapters);
   const isLoaded = useStoreState(selData.isLoaded);
-  const hasNew = useStoreState(selData.hasNew);
 
   const depth = useStoreState(selSwiper.depth);
   const coords = useStoreState(selSwiper.coords);
@@ -24,7 +23,6 @@ const initStates = () => {
     categories,
     chapters,
     isLoaded,
-    hasNew,
 
     depth,
     coords,
@@ -69,44 +67,44 @@ const CardsRenderer = () => {
 
     case 3:
       curData = chapters[d0][d1].child[d2].child[d3].deck;
-      order = d3 + (d2 + 2);
+      order = d2 + 2;
       break;
 
     case 4:
       curData = chapters[d0][d1].child[d2].child[d3].child[d4].deck;
-      order = d4 + (d2 + d3 + 2);
+      order = d2 + 2;
       break;
 
     case 5:
       curData = chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].deck;
-      order = d5 + (d2 + d3 + d4 + 2);
+      order = d2 + 2;
       break;
 
     case 6:
       curData =
         chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6].deck;
-      order = d6 + 1;
+      order = d2 + 2;
       break;
 
     case 7:
       curData =
         chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6]
           .child[d7].deck;
-      order = d7 + 1;
+      order = d2 + 2;
       break;
 
     case 8:
       curData =
         chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6]
           .child[d7].child[d8].deck;
-      order = d8 + 1;
+      order = d2 + 2;
       break;
 
     case 9:
       curData =
         chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6]
           .child[d7].child[d8].child[d9].deck;
-      order = d9 + 1;
+      order = d2 + 2;
       break;
   }
 

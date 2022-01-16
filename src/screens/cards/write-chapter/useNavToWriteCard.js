@@ -74,7 +74,7 @@ export const useNavToWriteCard = direction => {
           });
         } else {
           return impl({
-            chapterId: 0,
+            chapterId: +categories[d0].id,
             order: 1,
             depth: 1,
           });
@@ -98,7 +98,7 @@ export const useNavToWriteCard = direction => {
       case 3:
         if (direction === "left") {
           return impl({
-            chapterId: +chapters[d0][d1].child[d2].deck.id,
+            chapterId: +chapters[d0][d1].child[d2].child[d3].deck.id,
             order: d1 + d3 + 2,
             depth: 3,
           });

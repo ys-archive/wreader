@@ -1,5 +1,4 @@
-import { instance } from './AxiosInstance';
-import { useGetSWR } from '#hooks';
+import { instance } from "./AxiosInstance";
 
 // https://app.gitbook.com/@wreader/s/wreader/undefined-2
 

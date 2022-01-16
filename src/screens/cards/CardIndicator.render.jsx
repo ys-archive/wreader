@@ -129,25 +129,13 @@ const hasNext = (head, targetDepth, coords) => {
   for (let i = 2; i < targetDepth; ++i) {
     res = res.child[coords[`d${i}`]];
   }
-
-  if (!res | !res.child.length) {
-    return false;
-  }
-
-  return res.child[targetDepth + 1] !== undefined;
+  return res.child[coords[`d${targetDepth}`] + 1] !== undefined;
 };
 
 const hasNextDepth = (head, targetDepth, coords) => {
   let res = head;
-  for (let i = 0; i < targetDepth - 1; ++i) {
-    if (!res.child.length) {
-      return false;
-    }
+  for (let i = 2; i < targetDepth + 1; ++i) {
     res = res.child[coords[`d${i}`]];
-  }
-
-  if (!res | !res.child) {
-    return false;
   }
   return res.child.length > 0;
 };

@@ -8,7 +8,9 @@ export const useSwipeRight = swipe => {
 
     decreaseDepth,
 
-    updateHasNew,
+    fetchChapterD1,
+    fetchChapterAfter,
+
     decreaseCoords,
   } = useSwipeStates();
 
@@ -44,7 +46,7 @@ export const useSwipeRight = swipe => {
 
           swipe("right", () => {
             decreaseCoords(depth);
-            updateHasNew({ d3: true });
+            fetchChapterAfter(3);
           });
         };
 
@@ -65,7 +67,7 @@ export const useSwipeRight = swipe => {
 
           swipe("right", () => {
             decreaseCoords(depth);
-            updateHasNew({ d5: true });
+            fetchChapterAfter(5);
           });
         };
 
@@ -85,7 +87,7 @@ export const useSwipeRight = swipe => {
 
           swipe("right", () => {
             decreaseCoords(depth);
-            updateHasNew({ d7: true });
+            fetchChapterAfter(7);
           });
         };
 
@@ -105,7 +107,7 @@ export const useSwipeRight = swipe => {
 
           swipe("right", () => {
             decreaseCoords(depth);
-            updateHasNew({ d9: true });
+            fetchChapterAfter(9);
           });
         };
 

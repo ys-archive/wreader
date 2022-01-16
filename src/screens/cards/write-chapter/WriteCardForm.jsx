@@ -27,13 +27,17 @@ import { delay } from "../../../utils/time";
 
 const initStates = () => {
   const userId = useStoreState(selAuth.userId);
-  const updateHasNew = useStoreActions(actData.updateHasNew);
   const fetchOne = useStoreActions(actDataFetch.fetchOne);
+  const fetchCategories = useStoreActions(actDataFetch.fetchCategory);
+  const fetchChapterD1 = useStoreActions(actDataFetch.fetchChapterD1);
+  const fetchChapterAfter = useStoreActions(actDataFetch.fetchChapterAfter);
 
   return {
     userId,
-    updateHasNew,
     fetchOne,
+    fetchCategories,
+    fetchChapterD1,
+    fetchChapterAfter,
   };
 };
 
@@ -46,22 +50,22 @@ const WriteCardForm = ({
 }) => {
   const nav = useNavigation();
 
-  const { userId, updateHasNew, fetchOne } = initStates();
+  const {
+    userId,
+    fetchOne,
+    fetchCategories,
+    fetchChapterD1,
+    fetchChapterAfter,
+  } = initStates();
 
   const afterFormSubmitted = async () => {
     switch (depth) {
       case 1:
-        updateHasNew({ d0: true });
-        await delay(2);
-        updateHasNew({ d1: true });
+        fetchCategories();
         break;
 
-      case 2:
-        updateHasNew({ d2: true });
-        break;
-
-      case 3:
-        updateHasNew({ d3: true });
+      default:
+        fetchChapterAfter(depth);
         break;
     }
 

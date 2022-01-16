@@ -11,7 +11,9 @@ export const useSwipeUp = swipe => {
     coords,
     maxCoords,
 
-    updateHasNew,
+    fetchChapterD1,
+    fetchChapterAfter,
+
     increaseDepth,
 
     increaseCoords,
@@ -39,7 +41,7 @@ export const useSwipeUp = swipe => {
           swipe("up", () => {
             increaseCoords(depth);
             setMaxChapterFromCategory();
-            updateHasNew({ d2: chapters });
+            fetchChapterAfter(2);
           });
         };
 
@@ -62,7 +64,7 @@ export const useSwipeUp = swipe => {
 
           swipe("up", () => {
             increaseCoords(depth);
-            updateHasNew({ d2: true });
+            fetchChapterAfter(2);
           });
         };
 
@@ -79,7 +81,7 @@ export const useSwipeUp = swipe => {
           swipe("up", () => {
             increaseDepth();
             console.log("[+] Depth: 2 -> 3");
-            updateHasNew({ d4: true });
+            fetchChapterAfter(4);
           });
         };
 
@@ -91,7 +93,7 @@ export const useSwipeUp = swipe => {
             return;
           }
 
-          if (d3 === maxChapterCoord - 1) {
+          if (d3 + 1 === chapters[d0][d1].child[d2].child.length) {
             console.log("마지막인 유저 다음 챕터! 새로운 카드 작성");
             navToWriteCard("up");
             return;
@@ -99,7 +101,7 @@ export const useSwipeUp = swipe => {
 
           swipe("up", () => {
             increaseCoords(depth);
-            updateHasNew({ d4: true });
+            fetchChapterAfter(4);
           });
         };
 
@@ -113,7 +115,7 @@ export const useSwipeUp = swipe => {
           swipe("up", () => {
             increaseDepth();
             console.log("[+] Depth: 4 -> 5");
-            updateHasNew({ d6: true });
+            fetchChapterAfter(6);
           });
         };
 
@@ -121,7 +123,7 @@ export const useSwipeUp = swipe => {
         return state => {
           swipe("up", () => {
             increaseCoords(depth);
-            updateHasNew({ d4: true });
+            fetchChapterAfter(4);
           });
         };
 
@@ -130,7 +132,7 @@ export const useSwipeUp = swipe => {
           swipe("up", () => {
             increaseDepth();
             console.log("[+] Depth: 6 -> 7");
-            updateHasNew({ d8: true });
+            fetchChapterAfter(8);
           });
         };
 

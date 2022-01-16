@@ -4,93 +4,7 @@ import * as _ from "lodash";
 
 export default {
   categories: [],
-  // currentCategory: computed(
-  //   [
-  //     state => state.categories,
-  //     (state, storeState) => storeState.swiper.coords,
-  //   ],
-  //   (categories, coords) => categories[coords.d0],
-  // ),
-  // currentCategoryTitle: computed(state => {
-  //   if (!state.currentCategory) {
-  //     return null;
-  //   }
-
-  //   console.log(state.currentCategory);
-
-  //   // if (!("title" in state.currentCategory)) {
-  //   //   return null;
-  //   // }
-  //   return state.currentCategory.title;
-  // }),
-
   chapters: [],
-  // chaptersAtDepth: computed(
-  //   [
-  //     state => state.isLoaded,
-  //     state => state.categories,
-  //     state => state.chapters,
-  //     (state, storeState) => storeState.swiper.coords,
-  //     (state, storeState) => storeState.swiper.depth,
-  //   ],
-  //   (isLoaded, categories, chapters, coords, depth) => {
-  //     // console.log("chapters at depth!");
-  //     if (!isLoaded) {
-  //       return null;
-  //     }
-
-  //     const { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 } = coords;
-
-  //     if (!categories) {
-  //       return null;
-  //     }
-
-  //     if (!chapters) {
-  //       return null;
-  //     }
-
-  //     // console.log("current depth " + depth.val);
-  //     switch (depth.val) {
-  //       case 0:
-  //         return categories[d0];
-
-  //       case 1:
-  //         return chapters[d0][d1];
-
-  //       case 2:
-  //         return chapters[d0][d1].child[d2];
-
-  //       case 3:
-  //         return chapters[d0][d1].child[d2].child[d3];
-
-  //       case 4:
-  //         return chapters[d0][d1].child[d2].child[d3].child[d4];
-
-  //       case 5:
-  //         return chapters[d0][d1].child[d2].child[d3].child[d4].child[d5];
-
-  //       case 6:
-  //         return chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
-  //           d6
-  //         ];
-
-  //       case 7:
-  //         return chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
-  //           d6
-  //         ].child[d7];
-
-  //       case 8:
-  //         return chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
-  //           d6
-  //         ].child[d7].child[d8];
-
-  //       case 9:
-  //         return chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
-  //           d6
-  //         ].child[d7].child[d8].child[d9];
-  //     }
-  //   },
-  // ),
 
   commentsUpdated: false,
 
@@ -110,50 +24,10 @@ export default {
     }),
   },
 
-  hasNew: {
-    default: {
-      d0: false,
-      d1: false,
-      d2: false,
-      d3: false,
-      d4: false,
-      d5: false,
-      d6: false,
-      d7: false,
-      d8: false,
-      d9: false,
-    },
-
-    val: {
-      d0: false,
-      d1: false,
-      d2: false,
-      d3: false,
-      d4: false,
-      d5: false,
-      d6: false,
-      d7: false,
-      d8: false,
-      d9: false,
-    },
-
-    update: action((state, payload) => {
-      let depth = 0;
-      for (let i = 0; i < 9; ++i) {
-        if (`d${i}` in payload) {
-          depth = i;
-        }
-      }
-
-      state.val[`d${depth}`] = payload[`d${depth}`];
-    }),
-  },
-
   reset: action(state => {
     state.categories = [];
     state.chapters = [];
     state.isLoaded.val = false;
-    state.hasNew.val = state.hasNew.default;
   }),
 
   resetCategory: action(state => {
@@ -347,7 +221,6 @@ export const selectors = {
   commentsUpdated: state => state.data.commentsUpdated,
 
   isLoaded: state => state.data.isLoaded.val,
-  hasNew: state => state.data.hasNew.val,
 };
 
 export const actions = {
@@ -364,5 +237,4 @@ export const actions = {
 
   startLoading: actions => actions.data.isLoaded.startLoading,
   finishLoading: actions => actions.data.isLoaded.finishLoading,
-  updateHasNew: actions => actions.data.hasNew.update,
 };

@@ -1,8 +1,156 @@
 import { action, computed, thunk } from "easy-peasy";
 import ChapterService from "../../services/ChapterService";
-import { DEPTH_NAME } from "./swiper.depth";
+import { asyncForEach } from "../../utils";
+
+const getTarget = (head, targetDepth, coords) => {
+  let res = head;
+  for (let i = 2; i < targetDepth; ++i) {
+    res = res.child[coords[`d${i}`]];
+  }
+  return res;
+};
 
 export default {
+  fetchCategory: thunk(
+    async (actions, payload, { getState, getStoreState, getStoreActions }) => {
+      const {
+        auth: { userId },
+      } = getStoreState();
+
+      // console.log(getStoreActions().swiper);
+
+      const {
+        data: {
+          resetCategory,
+          addCategory,
+
+          isLoaded: { startLoading, finishLoading },
+        },
+        swiper: {
+          coords: { setMax: setMaxCoords },
+        },
+      } = getStoreActions();
+
+      console.log("[useFetchD0] fetching D0");
+      resetCategory();
+      startLoading();
+
+      const { data } = await ChapterService.GET_getCategory(userId);
+
+      if (!data.item || data.item.length === 0) {
+        return;
+      }
+
+      // 카테고리 데이터 정제 및 저장
+      const categories = Object.values(data.item);
+
+      // 카테고리 값 업데이트 - d0
+      categories.forEach(category => addCategory(category));
+
+      finishLoading();
+      setMaxCoords({
+        category: categories.length,
+        chapter: categories[0].maxLength,
+      });
+
+      await actions.fetchChapterD1();
+    },
+  ),
+
+  fetchChapterD1: thunk(
+    async (actions, payload, { getState, getStoreState, getStoreActions }) => {
+      const {
+        data: { categories },
+      } = getStoreState();
+
+      const {
+        data: {
+          isLoaded: { startLoading, finishLoading },
+          resetChapter,
+          addChapter,
+        },
+      } = getStoreActions();
+
+      if (!categories.length) {
+        return;
+      }
+
+      console.log("[useFetchD1] fetching D1");
+      resetChapter();
+      startLoading();
+
+      // 챕터 데이터 정제 및 저장
+      const chapters = Object.values(categories)
+        .map(i => i.chapter)
+        .filter(i => i.length > 0);
+      // console.log('refined chapters --> ', chapters);
+
+      if (!chapters || chapters.length === 0) {
+        return;
+      }
+
+      // group_index 0 부터 저장
+      await asyncForEach(chapters, async deck => {
+        if (deck.length === 0) {
+          return;
+        }
+
+        addChapter({ deck });
+      });
+
+      finishLoading();
+    },
+  ),
+
+  fetchChapterAfter: thunk(
+    async (actions, payload, { getState, getStoreState, getStoreActions }) => {
+      const {
+        auth: { userId },
+        data: { chapters },
+        swiper: { coords },
+      } = getStoreState();
+
+      const {
+        data: {
+          addChapterChild,
+          isLoaded: { startLoading, finishLoading },
+        },
+      } = getStoreActions();
+
+      const depth = payload;
+      console.log(`[useFetchD${depth}] before  fetching D${depth}`);
+
+      // if (!chapters || chapters.length === 0) {
+      //   return;
+      // }
+
+      const { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 } = coords.val;
+      // if (!chapters[d0]) {
+      //   return;
+      // }
+
+      console.log(`[useFetchD${depth}] fetching D${depth}`);
+
+      const target = getTarget(chapters[d0][d1], depth, coords.val);
+
+      startLoading();
+
+      const { data } = await ChapterService.GET_getChapter(
+        +target.deck.id,
+        userId,
+      );
+
+      if (data.item.length === 1) {
+        addChapterChild({ deck: data.item[0] });
+      } else if (data.item.length >= 2) {
+        data.item.forEach(data => addChapterChild({ deck: data }));
+      }
+
+      // 로딩 끝
+      finishLoading();
+    },
+  ),
+
   fetchOne: thunk(
     async (actions, payload, { getState, getStoreState, getStoreActions }) => {
       const { curId, parentId, depth, userId } = payload;
@@ -83,10 +231,10 @@ export default {
 export const selectors = {};
 
 export const actions = {
+  fetchCategory: actions => actions.dataFetch.fetchCategory,
+  fetchChapterD1: actions => actions.dataFetch.fetchChapterD1,
+  fetchChapterAfter: actions => actions.dataFetch.fetchChapterAfter,
   fetchOne: actions => actions.dataFetch.fetchOne,
-  // fetchOneChapter: actions => actions.dataFetch.fetchOneChapter,
-  // fetchOneUserChapter: actions => actions.dataFetch.fetchOneUserChapter,
-  // fetchOneNext: actions => actions.dataFetch.fetchOneNext,
 };
 
 // fetchOneChapter: thunk(

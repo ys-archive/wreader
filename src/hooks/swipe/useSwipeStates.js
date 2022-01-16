@@ -1,6 +1,6 @@
 import { useStoreState, useStoreActions } from "easy-peasy";
 import { selData, selSwiper } from "../../store/selectors";
-import { actData, actSwiper } from "../../store/actions";
+import { actData, actDataFetch, actSwiper } from "../../store/actions";
 
 export const useSwipeStates = () => {
   // selectors
@@ -16,7 +16,8 @@ export const useSwipeStates = () => {
 
   // actions
   // - data
-  const updateHasNew = useStoreActions(actData.updateHasNew);
+  const fetchChapterD1 = useStoreActions(actDataFetch.fetchChapterD1);
+  const fetchChapterAfter = useStoreActions(actDataFetch.fetchChapterAfter);
 
   // - swiper
   const setMaxCoords = useStoreActions(actSwiper.setMaxCoords);
@@ -38,7 +39,8 @@ export const useSwipeStates = () => {
     coords,
     maxCoords,
 
-    updateHasNew,
+    fetchChapterD1,
+    fetchChapterAfter,
 
     setMaxCoords,
     setMaxChapterFromCategory,
