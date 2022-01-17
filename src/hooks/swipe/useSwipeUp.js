@@ -147,7 +147,7 @@ export const useSwipeUp = swipe => {
 
           swipe("up", () => {
             increaseCoords(depth);
-            fetchChapterAfter(4);
+            fetchChapterAfter(6);
           });
         };
 
@@ -192,6 +192,11 @@ export const useSwipeUp = swipe => {
             navToWriteCard("up");
             return;
           }
+
+          swipe("up", () => {
+            increaseCoords(depth);
+            fetchChapterAfter(8);
+          });
         };
 
       case 8:
@@ -216,6 +221,7 @@ export const useSwipeUp = swipe => {
             increaseDepth();
             console.log("[+] Depth: 8 -> 9");
             console.log("Max Depth (9) Reached!");
+            fetchChapterAfter(10);
           });
         };
 
@@ -235,6 +241,11 @@ export const useSwipeUp = swipe => {
             navToWriteCard("up");
             return;
           }
+
+          swipe("up", () => {
+            increaseCoords(depth);
+            fetchChapterAfter(8);
+          });
         };
     }
   };

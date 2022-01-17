@@ -95,7 +95,7 @@ export const renderIndicatorChapter = props => {
   }
 
   if (depth === 9) {
-    hasNxt = hasNext(head, 9);
+    hasNxt = hasNext(head, 9, coords);
 
     return MakeIndicators(
       {

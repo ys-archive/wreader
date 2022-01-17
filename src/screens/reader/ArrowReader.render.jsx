@@ -123,6 +123,18 @@ export const renderArrowChapter = props => {
     );
   }
 
+  if (depth === 9) {
+    return MakeArrows(
+      {
+        top: hasPrvDepth ? hasPrvDepth : hasPrv,
+        // right: hasNxtDepth,
+        bottom: hasNxt,
+      },
+      callbacks,
+      clicker,
+    );
+  }
+
   const dir = isEvenDepth
     ? {
         left: hasPrvDepth ? hasPrvDepth : hasPrv,

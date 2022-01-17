@@ -191,7 +191,7 @@ export const useSwipeLeft = swipe => {
           swipe("left", () => {
             increaseDepth();
             console.log("[+] Depth: 7 -> 8");
-            fetchChapterAfter(8);
+            fetchChapterAfter(9);
           });
         };
 
