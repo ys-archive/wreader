@@ -49,16 +49,19 @@ export const useNavToWriteCard = () => {
       ...params,
     });
 
+  let orderBase = undefined;
+
   return direction => {
     resetTempBlob();
     resetCard();
 
     switch (depth) {
       case 0:
+        orderBase = d1 + 1;
         if (direction === "left") {
           return impl({
             chapterId: 0,
-            order: d1 + 1,
+            order: orderBase,
             depth: 1,
           });
         } else {
@@ -66,87 +69,93 @@ export const useNavToWriteCard = () => {
         }
 
       case 1:
+        orderBase = d2 + 1;
         if (direction === "left") {
           return impl({
             chapterId: +chapters[d0][d1].deck.id,
-            order: d2 + 2,
+            order: orderBase + 1,
             depth: 2,
           });
         } else {
           return impl({
             chapterId: 0,
-            order: 1,
+            order: orderBase,
             depth: 1,
           });
         }
 
       case 2:
+        orderBase = d2 + 2;
         if (direction === "left") {
           return impl({
             chapterId: +chapters[d0][d1].deck.id,
-            order: d2 + 2 + 1,
+            order: orderBase + 1,
             depth: 2,
           });
         } else {
           return impl({
             chapterId: +chapters[d0][d1].child[d2].deck.id,
-            order: d2 + 2,
+            order: orderBase,
             depth: 3,
           });
         }
 
       case 3:
+        orderBase = d2 + 2;
         if (direction === "left") {
           return impl({
             chapterId: +chapters[d0][d1].child[d2].child[d3].deck.id,
-            order: d2 + 2 + 1,
+            order: orderBase + 1,
             depth: 4,
           });
         } else {
           return impl({
             chapterId: +chapters[d0][d1].child[d2].deck.id,
-            order: d2 + 2,
+            order: orderBase,
             depth: 3,
           });
         }
 
       case 4:
+        orderBase = d2 + 2 + d4 + 1;
         if (direction === "left") {
           return impl({
             chapterId: +chapters[d0][d1].child[d2].child[d3].deck.id,
-            order: d2 + 2 + d4 + 2,
+            order: orderBase + 1,
             depth: 4,
           });
         } else {
           return impl({
             chapterId: +chapters[d0][d1].child[d2].child[d3].child[d4].deck.id,
-            order: d2 + 2 + d4 + 1,
+            order: orderBase,
             depth: 5,
           });
         }
 
       case 5:
+        orderBase = d2 + 2 + d4 + 1;
         if (direction === "left") {
           return impl({
             chapterId:
               +chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].deck.id,
-            order: d2 + 2 + d4 + 2,
+            order: orderBase + 1,
             depth: 6,
           });
         } else {
           return impl({
             chapterId: +chapters[d0][d1].child[d2].child[d3].child[d4].deck.id,
-            order: d2 + 2 + d4 + 1,
+            order: orderBase,
             depth: 5,
           });
         }
 
       case 6:
+        orderBase = d2 + 2 + d4 + 2 + d6;
         if (direction === "left") {
           return impl({
             chapterId:
               +chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].deck.id,
-            order: d2 + 2 + d4 + 2 + d6 + 1,
+            order: orderBase + 1,
             depth: 6,
           });
         } else {
@@ -155,19 +164,20 @@ export const useNavToWriteCard = () => {
               +chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
                 d6
               ].deck.id,
-            order: d2 + 2 + d4 + 2 + d6,
+            order: orderBase,
             depth: 7,
           });
         }
 
       case 7:
+        orderBase = d2 + 2 + d4 + 2 + d6;
         if (direction === "left") {
           return impl({
             chapterId:
               +chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
                 d6
               ].child[d7].deck.id,
-            order: d2 + 2 + d4 + 2 + d6 + 1,
+            order: orderBase + 1,
             depth: 8,
           });
         } else {
@@ -176,19 +186,20 @@ export const useNavToWriteCard = () => {
               +chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
                 d6
               ].deck.id,
-            order: d2 + 2 + d4 + 2 + d6,
+            order: orderBase,
             depth: 7,
           });
         }
 
       case 8:
+        orderBase = d2 + 2 + d4 + 2 + d6 + 1 + d8;
         if (direction === "left") {
           return impl({
             chapterId:
               +chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
                 d6
               ].child[d7].deck.id,
-            order: d2 + 2 + d4 + 2 + d6 + 2 + d8,
+            order: orderBase + 1,
             depth: 8,
           });
         } else {
@@ -197,12 +208,13 @@ export const useNavToWriteCard = () => {
               +chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
                 d6
               ].child[d7].child[d8].deck.id,
-            order: d2 + 2 + d4 + 2 + d6 + 1 + d8,
+            order: orderBase,
             depth: 9,
           });
         }
 
       case 9:
+        orderBase = d2 + 2 + d4 + 2 + d6 + 1 + d8;
         if (direction === "left") {
           return null;
         } else {
@@ -211,7 +223,7 @@ export const useNavToWriteCard = () => {
               +chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
                 d6
               ].child[d7].child[d8].deck.id,
-            order: d2 + 2 + d4 + 2 + d6 + 1 + d8,
+            order: orderBase,
             depth: 9,
           });
         }

@@ -68,6 +68,11 @@ export const useChapterCard_GoWritingCardDirectly = () => {
         break;
 
       case 2:
+        impl({
+          chapterId: +chapters[d0][d1].child[d2].deck.id,
+          order: d2 + 2,
+          depth: 3,
+        });
         break;
 
       case 3:
@@ -76,6 +81,62 @@ export const useChapterCard_GoWritingCardDirectly = () => {
           chapterId: +chapters[d0][d1].child[d2].deck.id,
           order: d2 + 2,
           depth: 3,
+        });
+        break;
+
+      case 4:
+        impl({
+          chapterId: +chapters[d0][d1].child[d2].child[d3].child[d4].deck.id,
+          order: d2 + 2 + d4 + 1,
+          depth: 5,
+        });
+        break;
+
+      case 5:
+        impl({
+          chapterId: +chapters[d0][d1].child[d2].child[d3].child[d4].deck.id,
+          order: d2 + 2 + d4 + 1,
+          depth: 5,
+        });
+        break;
+
+      case 6:
+        impl({
+          chapterId:
+            +chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6]
+              .deck.id,
+          order: d2 + 2 + d4 + 2 + d6,
+          depth: 7,
+        });
+        break;
+
+      case 7:
+        impl({
+          chapterId:
+            +chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6]
+              .deck.id,
+          order: d2 + 2 + d4 + 2 + d6,
+          depth: 7,
+        });
+        break;
+
+      case 8:
+        impl({
+          chapterId:
+            +chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6]
+              .child[d7].child[d8].deck.id,
+          order: d2 + 2 + d4 + 2 + d6 + 1 + d8,
+          depth: 9,
+        });
+        break;
+
+      case 9:
+        impl({
+          chapterId:
+            +chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6]
+              .child[d7].child[d8].deck.id,
+          order: d2 + 2 + d4 + 2 + d6 + 1 + d8,
+          depth: 9,
         });
         break;
     }
