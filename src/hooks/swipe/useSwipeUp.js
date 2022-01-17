@@ -112,7 +112,9 @@ export const useSwipeUp = swipe => {
             return;
           }
 
-          if (chapters[d0][d1].child[d2].child[d3].child.length === 0) {
+          if (
+            chapters[d0][d1].child[d2].child[d3].child[d4].child.length === 0
+          ) {
             console.log(
               "해당 유저챕터의 유저 다음 챕터가 존재 하지 않음. 새로운 카드 작성",
             );
@@ -157,8 +159,8 @@ export const useSwipeUp = swipe => {
           }
 
           if (
-            chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child
-              .length === 0
+            chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6]
+              .child.length === 0
           ) {
             console.log(
               "해당 유저챕터의 유저 다음 챕터가 존재 하지 않음. 새로운 카드 작성",
@@ -201,7 +203,7 @@ export const useSwipeUp = swipe => {
 
           if (
             chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6]
-              .child[d7].child.length === 0
+              .child[d7].child[d8].child.length === 0
           ) {
             console.log(
               "해당 유저챕터의 유저 다음 챕터가 존재 하지 않음. 새로운 카드 작성",

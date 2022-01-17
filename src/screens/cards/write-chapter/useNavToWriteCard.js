@@ -128,12 +128,15 @@ export const useNavToWriteCard = () => {
       case 5:
         if (direction === "left") {
           return impl({
-            order: d2 + 2 + d4 + 2 + 1,
+            chapterId:
+              +chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].deck.id,
+            order: d2 + 2 + d4 + 2,
             depth: 6,
           });
         } else {
           return impl({
-            order: d2 + 2 + d4 + 2,
+            chapterId: +chapters[d0][d1].child[d2].child[d3].child[d4].deck.id,
+            order: d2 + 2 + d4 + 1,
             depth: 5,
           });
         }
@@ -141,12 +144,18 @@ export const useNavToWriteCard = () => {
       case 6:
         if (direction === "left") {
           return impl({
-            order: d2 + 2 + d4 + 2 + d6 + 2,
+            chapterId:
+              +chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].deck.id,
+            order: d2 + 2 + d4 + 2 + d6 + 1,
             depth: 6,
           });
         } else {
           return impl({
-            order: d2 + 2 + d4 + 2 + d6 + 2,
+            chapterId:
+              +chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
+                d6
+              ].deck.id,
+            order: d2 + 2 + d4 + 2 + d6 + 1,
             depth: 7,
           });
         }
@@ -154,11 +163,19 @@ export const useNavToWriteCard = () => {
       case 7:
         if (direction === "left") {
           return impl({
+            chapterId:
+              +chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
+                d6
+              ].child[d7].deck.id,
             order: d2 + 2 + d4 + 2 + d6 + 2 + 1,
             depth: 8,
           });
         } else {
           return impl({
+            chapterId:
+              +chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
+                d6
+              ].deck.id,
             order: d2 + 2 + d4 + 2 + d6 + 2,
             depth: 7,
           });
@@ -167,11 +184,19 @@ export const useNavToWriteCard = () => {
       case 8:
         if (direction === "left") {
           return impl({
+            chapterId:
+              +chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
+                d6
+              ].child[d7].deck.id,
             order: d2 + 2 + d4 + 2 + d6 + 2 + d8 + 2,
             depth: 8,
           });
         } else {
           return impl({
+            chapterId:
+              +chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
+                d6
+              ].child[d7].child[d8].deck.id,
             order: d2 + 2 + d4 + 2 + d6 + 2 + d8 + 2,
             depth: 9,
           });
@@ -182,6 +207,10 @@ export const useNavToWriteCard = () => {
           return null;
         } else {
           return impl({
+            chapterId:
+              +chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
+                d6
+              ].child[d7].child[d8].deck.id,
             order: d2 + 2 + d4 + 2 + d6 + 2 + d8 + 2,
             depth: 9,
           });

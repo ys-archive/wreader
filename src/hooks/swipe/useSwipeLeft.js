@@ -134,7 +134,8 @@ export const useSwipeLeft = swipe => {
           }
 
           if (
-            chapters[d0][d1].child[d2].child[d3].child[d4].child.length === 0
+            chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child
+              .length === 0
           ) {
             console.log("d6(다음 depth) 에 챕터가 없습니다. 새 챕터 작성");
             navToWriteCard("left");
@@ -180,7 +181,7 @@ export const useSwipeLeft = swipe => {
 
           if (
             chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6]
-              .child.length === 0
+              .child[d7].child.length === 0
           ) {
             console.log("d8(다음 depth) 에 챕터가 없습니다. 새 챕터 작성");
             navToWriteCard("left");
