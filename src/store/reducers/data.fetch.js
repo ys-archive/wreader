@@ -47,13 +47,17 @@ export default {
       // 카테고리 값 업데이트 - d0
       categories.forEach(category => addCategory(category));
 
-      finishLoading();
       setMaxCoords({
         category: categories.length,
         chapter: categories[0].maxLength,
       });
 
       await actions.fetchChapterD1();
+
+      if (payload) {
+        await payload();
+      }
+      finishLoading();
     },
   ),
 
@@ -118,7 +122,7 @@ export default {
       } = getStoreActions();
 
       const depth = payload;
-      console.log(`[useFetchD${depth}] before  fetching D${depth}`);
+      // console.log(`[useFetchD${depth}] before  fetching D${depth}`);
 
       // if (!chapters || chapters.length === 0) {
       //   return;

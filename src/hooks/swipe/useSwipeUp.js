@@ -4,22 +4,18 @@ import { useReachMaxAlert } from "./useReachMaxAlert";
 
 export const useSwipeUp = swipe => {
   const {
-    categories,
     chapters,
 
     depth,
     coords,
     maxCoords,
 
-    fetchChapterD1,
     fetchChapterAfter,
 
     increaseDepth,
 
     increaseCoords,
-    decreaseCoords,
 
-    setMaxCoords,
     setMaxChapterFromCategory,
   } = useSwipeStates();
 
@@ -47,7 +43,7 @@ export const useSwipeUp = swipe => {
 
       case 1:
         return state => {
-          if (d1 === maxChapterCoord) {
+          if (d1 === maxChapterCoord - 1) {
             AlertMaxReach();
             return;
           }
@@ -70,6 +66,11 @@ export const useSwipeUp = swipe => {
 
       case 2:
         return state => {
+          if (d2 === maxCategoryCoord) {
+            AlertMaxReach();
+            return;
+          }
+
           if (chapters[d0][d1].child[d2].child.length === 0) {
             console.log(
               "해당 유저챕터의 유저 다음 챕터가 존재 하지 않음. 새로운 카드 작성",
@@ -87,9 +88,8 @@ export const useSwipeUp = swipe => {
 
       case 3:
         return state => {
-          if (d3 === maxChapterCoord) {
-            console.log("해당 카드가 마지막 챕터입니다!");
-            swipe("down", () => {});
+          if (d3 === maxChapterCoord - 1) {
+            AlertMaxReach();
             return;
           }
 
@@ -107,8 +107,16 @@ export const useSwipeUp = swipe => {
 
       case 4:
         return state => {
-          if (d4 === maxChapterCoord) {
-            console.log("해당 카드가 마지막 챕터입니다!");
+          if (d4 === maxChapterCoord - 1) {
+            AlertMaxReach();
+            return;
+          }
+
+          if (chapters[d0][d1].child[d2].child[d3].child.length === 0) {
+            console.log(
+              "해당 유저챕터의 유저 다음 챕터가 존재 하지 않음. 새로운 카드 작성",
+            );
+            navToWriteCard("up");
             return;
           }
 
@@ -121,6 +129,20 @@ export const useSwipeUp = swipe => {
 
       case 5:
         return state => {
+          if (d5 === maxChapterCoord - 1) {
+            AlertMaxReach();
+            return;
+          }
+
+          if (
+            d5 + 1 ===
+            chapters[d0][d1].child[d2].child[d3].child[d4].child.length
+          ) {
+            console.log("마지막인 유저 다음 챕터! 새로운 카드 작성");
+            navToWriteCard("up");
+            return;
+          }
+
           swipe("up", () => {
             increaseCoords(depth);
             fetchChapterAfter(4);
@@ -129,6 +151,22 @@ export const useSwipeUp = swipe => {
 
       case 6:
         return state => {
+          if (d6 === maxChapterCoord - 1) {
+            AlertMaxReach();
+            return;
+          }
+
+          if (
+            chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child
+              .length === 0
+          ) {
+            console.log(
+              "해당 유저챕터의 유저 다음 챕터가 존재 하지 않음. 새로운 카드 작성",
+            );
+            navToWriteCard("up");
+            return;
+          }
+
           swipe("up", () => {
             increaseDepth();
             console.log("[+] Depth: 6 -> 7");
@@ -137,10 +175,41 @@ export const useSwipeUp = swipe => {
         };
 
       case 7:
-        return state => {};
+        return state => {
+          if (d7 === maxChapterCoord - 1) {
+            AlertMaxReach();
+            return;
+          }
+
+          if (
+            d7 + 1 ===
+            chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6]
+              .child.length
+          ) {
+            console.log("마지막인 유저 다음 챕터! 새로운 카드 작성");
+            navToWriteCard("up");
+            return;
+          }
+        };
 
       case 8:
         return state => {
+          if (d8 === maxChapterCoord - 1) {
+            AlertMaxReach();
+            return;
+          }
+
+          if (
+            chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6]
+              .child[d7].child.length === 0
+          ) {
+            console.log(
+              "해당 유저챕터의 유저 다음 챕터가 존재 하지 않음. 새로운 카드 작성",
+            );
+            navToWriteCard("up");
+            return;
+          }
+
           swipe("up", () => {
             increaseDepth();
             console.log("[+] Depth: 8 -> 9");
@@ -149,7 +218,22 @@ export const useSwipeUp = swipe => {
         };
 
       case 9:
-        return state => {};
+        return state => {
+          if (d9 === maxChapterCoord - 1) {
+            AlertMaxReach();
+            return;
+          }
+
+          if (
+            d9 + 1 ===
+            chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6]
+              .child[d7].child[d8].child.length
+          ) {
+            console.log("마지막인 유저 다음 챕터! 새로운 카드 작성");
+            navToWriteCard("up");
+            return;
+          }
+        };
     }
   };
 };

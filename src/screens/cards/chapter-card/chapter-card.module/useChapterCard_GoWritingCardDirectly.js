@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import { Alert } from "#components/alert";
 
 import { useNavigation } from "@react-navigation/native";
@@ -33,14 +32,21 @@ export const useChapterCard_GoWritingCardDirectly = () => {
   const {
     categories,
     chapters,
-    coords,
+    coords: { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 },
     depth,
     isLoggedIn,
     resetTempBlob,
     resetCard,
   } = initStates();
 
-  return useCallback(() => {
+  const impl = params =>
+    nav.navigate(ScreenNames.MainWriteCard, {
+      categoryTitle: categories[d0].title,
+      categoryId: d0,
+      ...params,
+    });
+
+  return () => {
     if (!isLoggedIn) {
       Alert("Need Login to write a new card", "close", () =>
         nav.navigate(ScreenNames.SigninStack),
@@ -54,9 +60,7 @@ export const useChapterCard_GoWritingCardDirectly = () => {
     switch (depth) {
       case 1:
         // 챕터 맨뒤에 직접 쓰기
-        nav.navigate(ScreenNames.MainWriteCard, {
-          categoryTitle: categories[coords.d0].title,
-          categoryId: coords.d0,
+        impl({
           chapterId: 0,
           order: 1,
           depth: 1,
@@ -64,25 +68,16 @@ export const useChapterCard_GoWritingCardDirectly = () => {
         break;
 
       case 2:
-      // nav.navigate(ScreenNames.MainWriteCard, {
-      //   categoryTitle: categories[coords.d0].title,
-      //   categoryId: coords.d0,
-      //   chapterId: +chapters[coords.d0][coords.d1].deck.id,
-      //   order: coords.d2 + 2,
-      //   depth: 2,
-      // });
-      // break;
+        break;
 
       case 3:
         // d3 는 0 부터 시작!
-        nav.navigate(ScreenNames.MainWriteCard, {
-          categoryTitle: categories[coords.d0].title,
-          categoryId: +coords.d0,
-          chapterId: +chapters[coords.d0][coords.d1].child[coords.d2].deck.id,
-          order: coords.d2 + 2,
+        impl({
+          chapterId: +chapters[d0][d1].child[d2].deck.id,
+          order: d2 + 2,
           depth: 3,
         });
         break;
     }
-  }, [categories, chapters, coords, depth, isLoggedIn]);
+  };
 };

@@ -38,7 +38,7 @@ const CardsRenderer = () => {
     return <LoadingModal />;
   }
 
-  if ((depth === 0) & (!categories | !categories.length)) {
+  if (!categories | !categories.length) {
     return <LoadingModal />;
   }
 
@@ -72,39 +72,39 @@ const CardsRenderer = () => {
 
     case 4:
       curData = chapters[d0][d1].child[d2].child[d3].child[d4].deck;
-      order = d2 + 2;
+      order = d2 + 2 + d4 + 1;
       break;
 
     case 5:
       curData = chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].deck;
-      order = d2 + 2;
+      order = d2 + 2 + d4 + 1;
       break;
 
     case 6:
       curData =
         chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6].deck;
-      order = d2 + 2;
+      order = d2 + 2 + d4 + 2 + d6 + 1;
       break;
 
     case 7:
       curData =
         chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6]
           .child[d7].deck;
-      order = d2 + 2;
+      order = d2 + 2 + d4 + 2 + d6 + 1;
       break;
 
     case 8:
       curData =
         chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6]
           .child[d7].child[d8].deck;
-      order = d2 + 2;
+      order = d2 + 2 + d4 + 2 + d6 + 2 + d8 + 1;
       break;
 
     case 9:
       curData =
         chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6]
           .child[d7].child[d8].child[d9].deck;
-      order = d2 + 2;
+      order = d2 + 2 + d4 + 2 + d6 + 2 + d8 + 1;
       break;
   }
 

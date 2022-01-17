@@ -61,7 +61,7 @@ const WriteCardForm = ({
   const afterFormSubmitted = async () => {
     switch (depth) {
       case 1:
-        fetchCategories();
+        fetchCategories(() => fetchChapterAfter(2));
         break;
 
       default:
@@ -71,6 +71,7 @@ const WriteCardForm = ({
 
     // fetchOne({ curId: chapterId, parentId, depth, userId })
 
+    await delay(1);
     nav.goBack();
   };
 

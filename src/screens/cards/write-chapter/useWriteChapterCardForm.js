@@ -12,6 +12,7 @@ import { actImage } from "../../../store/actions";
 
 import { ChapterService } from "../../../services";
 import { ImageService } from "../../../services";
+import { delay } from "../../../utils";
 
 const initialValues = {
   sentence: "",
@@ -102,15 +103,16 @@ export const useWriteChapterCardForm = (
 
     if (tempBlob !== null) {
       setCardImageUrl(downloadUrl);
-      completeUploadCardImage();
       resetTempBlob();
     }
 
     if (status === 200) {
+      // await delay(2);
       await afterFormSubmitted();
     } else {
       Alert("Writing chapter fails");
     }
+    completeUploadCardImage();
   };
 
   return useFormik({
