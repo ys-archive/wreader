@@ -56,6 +56,7 @@ export const useSwipeDown = swipe => {
               console.log("[-] Depth: 3 -> 2");
               decreaseDepth();
             });
+            return;
           }
 
           if (d3 > 0) {
@@ -77,6 +78,7 @@ export const useSwipeDown = swipe => {
               console.log("[-] Depth: 5 -> 4");
               decreaseDepth();
             });
+            return;
           }
 
           if (d5 > 0) {
@@ -98,6 +100,7 @@ export const useSwipeDown = swipe => {
               console.log("[-] Depth: 7 -> 6");
               decreaseDepth();
             });
+            return;
           }
 
           if (d7 > 0) {
@@ -119,6 +122,7 @@ export const useSwipeDown = swipe => {
               console.log("[-] Depth: 9 -> 8");
               decreaseDepth();
             });
+            return;
           }
 
           if (d9 > 0) {

@@ -83,6 +83,7 @@ export const useSwipeRight = swipe => {
               console.log("[-] Depth: 6 -> 5");
               decreaseDepth();
             });
+            return;
           }
 
           swipe("right", () => {
@@ -103,6 +104,7 @@ export const useSwipeRight = swipe => {
               console.log("[-] Depth: 8 -> 7");
               decreaseDepth();
             });
+            return;
           }
 
           swipe("right", () => {
