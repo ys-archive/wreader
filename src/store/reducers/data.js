@@ -53,7 +53,10 @@ export default {
     if (hasFound === -1) {
       state.chapters.push(
         payload.deck.map(d => ({
-          deck: d,
+          deck: {
+            ...d,
+            isHide: false,
+          },
           child: [],
         })),
       );
@@ -76,7 +79,13 @@ export default {
           if (
             item.child.findIndex(f => _.isEqual(f.deck, payload.deck)) === -1
           ) {
-            item.child.push({ deck: payload.deck, child: [] });
+            item.child.push({
+              deck: {
+                ...payload.deck,
+                isHide: false,
+              },
+              child: [],
+            });
           }
           return;
         }

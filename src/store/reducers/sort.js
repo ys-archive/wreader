@@ -1,4 +1,4 @@
-import { thunkOn, thunk, computed, action } from "easy-peasy";
+import { thunkOn, thunk, computed, action, actionOn } from "easy-peasy";
 import { SORT_TYPES, sorterByDate, sorterByLikeCount } from "./sort.type";
 
 export default {
@@ -27,14 +27,45 @@ export default {
     },
   ),
 
+  tempId: undefined,
+  setTempId: action((state, payload) => {
+    state.tempId = payload;
+  }),
+
+  onIncreaseDepth: actionOn(
+    (actions, storeActions) => [
+      storeActions.swiper.depth.increment,
+      storeActions.swiper.depth.decrement,
+    ],
+    (state, target) => {
+      state.tempId = undefined;
+    },
+  ),
+
+  onChangeDepth: actionOn(
+    (actions, storeActions) => [
+      storeActions.data.chapters,
+      storeActions.swiper.depth.val,
+    ],
+    (state, target) => {
+      const [chapters, depth] = target.resolvedTargets;
+
+      const children = chapters[d0][d1].child;
+      for (let i = 1; i < children.length; ++i) {
+        children[i].deck.isHide = true;
+      }
+    },
+  ),
+
   sort: thunk((actions, payload, { getState, getStoreState }) => {
     const {
-      coords,
+      coords: { val: d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 },
       depth: { val: depthVal },
     } = getStoreState().swiper;
     const { chapters } = getStoreState().data;
-    const { isSortedByLikes } = getState();
-    const { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 } = coords.val;
+    const { isSortedByLikes, tempChildren, tempId } = getState();
+
+    const { setTempId } = actions;
 
     switch (depthVal) {
       case 0:
@@ -53,6 +84,11 @@ export default {
       case 3:
         {
           const head = chapters[d0][d1].child[d2].deck;
+
+          if (!tempId) {
+            setTempId(head.id);
+          }
+
           const rests = chapters[d0][d1].child[d2].child.map(ch => ch.deck);
           const slice = [head, ...rests];
           console.log(
@@ -83,10 +119,24 @@ export default {
               updateDt: ch.updateDt,
             })),
           );
-          chapters[d0][d1].child[d2].deck = sorted.shift();
-          chapters[d0][d1].child[d2].child.forEach(
-            ch => (ch.deck = sorted.shift()),
-          );
+
+          const newHead = sorted.shift();
+
+          for (let i = 1; i < chapters[d0][d1].child.length; i++) {
+            chapters[d0][d1].child[i].deck.isHide = tempId !== newHead.id;
+          }
+
+          chapters[d0][d1].child[d2].deck = newHead;
+
+          chapters[d0][d1].child[d2].child.forEach(ch => {
+            const card = sorted.shift();
+            if (!card) {
+              return null;
+            }
+
+            ch.deck = card;
+            return ch.deck;
+          });
         }
         break;
 

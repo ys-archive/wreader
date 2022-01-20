@@ -52,18 +52,8 @@ const ChapterCard = ({ data, categoryTitle, order = 1 }) => {
     userImg, // author profile image url
     userNick: authorNickName, // -> author
     isLike,
+    isHide,
   } = data;
-
-  // console.log('\n');
-  // console.log(
-  //   '----------------------------------------------------------------------',
-  // );
-  // // console.log('userId: ', userId);
-  // console.log(data);
-  // console.log(
-  //   '----------------------------------------------------------------------',
-  // );
-  // console.log('\n');
 
   const onPressLike = useChapterCardLike(
     chapterId,
@@ -75,6 +65,10 @@ const ChapterCard = ({ data, categoryTitle, order = 1 }) => {
   const AddStoryJSX = useChapterCard_AddStory();
   const { TheEndLabelJSX, FullStoryJSX } = useChapterCard_Labels(order);
   const onPressOtherProfile = useChapterCard_OtherProfile(otherUserId);
+
+  if (isHide) {
+    return null;
+  }
 
   return (
     <View style={s.root}>
