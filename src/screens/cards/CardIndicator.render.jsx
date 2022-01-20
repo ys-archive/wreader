@@ -71,54 +71,72 @@ export const renderIndicatorChapter = props => {
   const { coords, chapters, depth } = props;
   const isEvenDepth = depth % 2 === 0;
   const compareDepth = coords[`d${depth}`];
+  const { d0, d1, d2 } = coords;
   // console.log(compareDepth);
 
   const hasPrvDepth = compareDepth === 0;
   const hasPrv = compareDepth !== 0;
+
   let hasNxt = undefined;
+  let isNxtHide = false;
+
   let hasNxtDepth = undefined;
-  const head = chapters[coords.d0][coords.d1];
+  let isNxtDepthHide = false;
+
+  const head = chapters[d0][d1];
 
   if (depth === 1) {
-    hasNxt = chapters[coords.d0][coords.d1 + 1] !== undefined;
-    hasNxtDepth = chapters[coords.d0][coords.d1].child.length > 0;
+    const nxtCard = chapters[d0][d1 + 1];
+    hasNxt = nxtCard !== undefined;
+    isNxtHide = nxtCard?.deck.isHide;
+
+    const nxtDepthCards = chapters[d0][d1].child;
+    hasNxtDepth = nxtDepthCards.length > 0;
+    isNxtDepthHide = nxtDepthCards[d2].deck.isHide;
 
     return MakeIndicators(
       {
         left: [hasPrvDepth, 0],
         top: [hasPrv, 1],
-        bottom: [hasNxt, 1],
-        right: [hasNxtDepth, 1],
+        bottom: [hasNxt | isNxtHide, 1],
+        right: [hasNxtDepth | isNxtDepthHide, 1],
       },
       coords,
     );
   }
 
   if (depth === 9) {
-    hasNxt = hasNext(head, 9, coords);
+    const [r1, r2] = hasNext(head, 9, coords);
+    hasNxt = r1;
+    isNxtHide = r2;
 
     return MakeIndicators(
       {
         top: hasPrvDepth ? [hasPrvDepth, 1] : hasPrv && [hasPrv, 1],
-        bottom: [hasNxt, 1],
+        bottom: [hasNxt | isNxtHide, 1],
       },
       coords,
     );
   }
 
-  hasNxt = hasNext(head, depth, coords);
-  hasNxtDepth = hasNextDepth(head, depth, coords);
+  const [r1, r2] = hasNext(head, depth, coords);
+  hasNxt = r1;
+  isNxtHide = r2;
+
+  const [rd1, rd2] = hasNextDepth(head, depth, coords);
+  hasNxtDepth = rd1;
+  isNxtDepthHide = rd2;
 
   const dir = isEvenDepth
     ? {
         left: hasPrvDepth ? [hasPrvDepth, 1] : hasPrv && [hasPrv, 1],
-        right: [hasNxt, 1],
-        bottom: [hasNxtDepth, 1],
+        right: [hasNxt | isNxtHide, 1],
+        bottom: [hasNxtDepth | isNxtDepthHide, 1],
       }
     : {
         top: hasPrvDepth ? [hasPrvDepth, 1] : hasPrv && [hasPrv, 1],
-        right: [hasNxtDepth, 1],
-        bottom: [hasNxt, 1],
+        right: [hasNxtDepth | isNxtDepthHide, 1],
+        bottom: [hasNxt | isNxtHide, 1],
       };
 
   return MakeIndicators(dir, coords);
@@ -129,7 +147,10 @@ const hasNext = (head, targetDepth, coords) => {
   for (let i = 2; i < targetDepth; ++i) {
     res = res.child[coords[`d${i}`]];
   }
-  return res.child[coords[`d${targetDepth}`] + 1] !== undefined;
+
+  const nxtCard = res.child[coords[`d${targetDepth}`] + 1];
+  const hasNxt = nxtCard !== undefined;
+  return !nxtCard ? [hasNxt, false] : [hasNxt, nxtCard?.deck.isHide];
 };
 
 const hasNextDepth = (head, targetDepth, coords) => {
@@ -137,7 +158,12 @@ const hasNextDepth = (head, targetDepth, coords) => {
   for (let i = 2; i < targetDepth + 1; ++i) {
     res = res.child[coords[`d${i}`]];
   }
-  return res.child.length > 0;
+  const nxtDepthCards = res.child[`d${targetDepth}`].deck.isHide;
+  const isNxtDepthCards = nxtDepthCards.isHide;
+  const hasNxtDepth = nxtDepthCards.length > 0;
+  return !nxtDepthCards.length
+    ? [hasNxtDepth, false]
+    : [hasNxtDepth, isNxtDepthCards];
 };
 
 // export const renderWithDepth0 = (coords, maxCoords) => {
