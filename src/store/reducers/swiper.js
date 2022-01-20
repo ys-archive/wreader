@@ -108,11 +108,36 @@ export default {
           actions.coords.set({ d1: 0 });
         }
         break;
+
       case 2:
       case 3:
         {
           actions.depth.set(2);
           actions.coords.set({ d3: 0 });
+        }
+        break;
+
+      case 4:
+      case 5:
+        {
+          actions.depth.set(4);
+          actions.coords.set({ d5: 0 });
+        }
+        break;
+
+      case 6:
+      case 7:
+        {
+          actions.depth.set(6);
+          actions.coords.set({ d7: 0 });
+        }
+        break;
+
+      case 8:
+      case 9:
+        {
+          actions.depth.set(8);
+          actions.coords.set({ d8: 0 });
         }
         break;
     }

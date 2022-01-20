@@ -34,7 +34,7 @@ export default {
     } = getStoreState().swiper;
     const { chapters } = getStoreState().data;
     const { isSortedByLikes } = getState();
-    const { d0, d1, d2, d3 } = coords.val;
+    const { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 } = coords.val;
 
     switch (depthVal) {
       case 0:
@@ -87,6 +87,143 @@ export default {
           chapters[d0][d1].child[d2].child.forEach(
             ch => (ch.deck = sorted.shift()),
           );
+        }
+        break;
+
+      case 4:
+      case 5:
+        {
+          const head = chapters[d0][d1].child[d2].child[d3].child[d4].deck;
+          const rests = chapters[d0][d1].child[d2].child[d3].child[
+            d4
+          ].child.map(ch => ch.deck);
+          const slice = [head, ...rests];
+          console.log(
+            slice.map(ch => ({
+              content: ch.content,
+              likes: ch.like_count,
+              updateDt: ch.updateDt,
+            })),
+          );
+
+          console.log(
+            "--------------------------------------------------------",
+          );
+          console.log(
+            "--------------------------------------------------------",
+          );
+
+          const sorted = slice.sort((a, b) => {
+            return isSortedByLikes
+              ? sorterByDate(a, b, false)
+              : sorterByLikeCount(a, b, false);
+          });
+
+          console.log(
+            sorted.map(ch => ({
+              content: ch.content,
+              likes: ch.like_count,
+              updateDt: ch.updateDt,
+            })),
+          );
+          chapters[d0][d1].child[d2].child[d3].child[d4].deck = sorted.shift();
+          chapters[d0][d1].child[d2].child[d3].child[d4].child.forEach(
+            ch => (ch.deck = sorted.shift()),
+          );
+        }
+        break;
+
+      case 6:
+      case 7:
+        {
+          const head =
+            chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6]
+              .deck;
+          const rests = chapters[d0][d1].child[d2].child[d3].child[d4].child[
+            d5
+          ].child[d6].child.map(ch => ch.deck);
+          const slice = [head, ...rests];
+          console.log(
+            slice.map(ch => ({
+              content: ch.content,
+              likes: ch.like_count,
+              updateDt: ch.updateDt,
+            })),
+          );
+
+          console.log(
+            "--------------------------------------------------------",
+          );
+          console.log(
+            "--------------------------------------------------------",
+          );
+
+          const sorted = slice.sort((a, b) => {
+            return isSortedByLikes
+              ? sorterByDate(a, b, false)
+              : sorterByLikeCount(a, b, false);
+          });
+
+          console.log(
+            sorted.map(ch => ({
+              content: ch.content,
+              likes: ch.like_count,
+              updateDt: ch.updateDt,
+            })),
+          );
+          chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
+            d6
+          ].deck = sorted.shift();
+          chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
+            d6
+          ].child.forEach(ch => (ch.deck = sorted.shift()));
+        }
+        break;
+
+      case 8:
+      case 9:
+        {
+          const head =
+            chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6]
+              .child[d7].child[d8].deck;
+          const rests = chapters[d0][d1].child[d2].child[d3].child[d4].child[
+            d5
+          ].child[d6].child[d7].child[d8].child.map(ch => ch.deck);
+          const slice = [head, ...rests];
+          console.log(
+            slice.map(ch => ({
+              content: ch.content,
+              likes: ch.like_count,
+              updateDt: ch.updateDt,
+            })),
+          );
+
+          console.log(
+            "--------------------------------------------------------",
+          );
+          console.log(
+            "--------------------------------------------------------",
+          );
+
+          const sorted = slice.sort((a, b) => {
+            return isSortedByLikes
+              ? sorterByDate(a, b, false)
+              : sorterByLikeCount(a, b, false);
+          });
+
+          console.log(
+            sorted.map(ch => ({
+              content: ch.content,
+              likes: ch.like_count,
+              updateDt: ch.updateDt,
+            })),
+          );
+          chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
+            d6
+          ].child[d7].child[d8].deck = sorted.shift();
+          chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[
+            d6
+          ].child[d7].child[d8].child.forEach(ch => (ch.deck = sorted.shift()));
         }
         break;
     }
