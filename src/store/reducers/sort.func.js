@@ -100,6 +100,9 @@ export const sortByDepth = props => {
   const childLength = target.child.length;
   target.child = [];
   for (let i = 0; i < childLength; ++i) {
-    target.child[i].add(sorted.shift());
+    target.child.push({
+      deck: sorted.shift(),
+      child: [],
+    });
   }
 };
