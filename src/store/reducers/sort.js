@@ -29,36 +29,47 @@ export default {
     },
   ),
 
-  headChildrenId: undefined,
+  headChildrenId: "",
+  resetHeadChildrenId: action((state, payload) => {
+    state.headChildrenId = "";
+  }),
   setHeadChildrenId: action((state, payload) => {
-    state.tempId = payload;
+    state.headChildrenId = payload;
   }),
 
   // reset headChildrenId
-  onIncreaseDepth: actionOn(
-    (actions, storeActions) => [
-      storeActions.swiper.depth.increment,
-      storeActions.swiper.depth.decrement,
-    ],
-    (state, target) => {
-      state.headChildrenId = undefined;
-    },
-  ),
+  // onIncreaseDepth: actionOn(
+  //   (actions, storeActions) => [
+  //     storeActions.swiper.depth.increment,
+  //     storeActions.swiper.depth.decrement,
+  //   ],
+  //   (state, target) => {
+  //     state.headChildrenId = "";
+  //   },
+  // ),
 
-  onChangeDepth: actionOn(
-    (actions, storeActions) => [
-      storeActions.data.chapters,
-      storeActions.swiper.depth.val,
-    ],
-    (state, target) => {
-      const [chapters, depth] = target.resolvedTargets;
+  // onChangeDepth: actionOn(
+  //   (actions, storeActions) => [
+  //     storeActions.data.chapters,
+  //     storeActions.swiper.depth.val,
+  //   ],
+  //   (state, target) => {
+  //     const [chapters, depth] = target.resolvedTargets;
 
-      const children = chapters[d0][d1].child;
-      for (let i = 1; i < children.length; ++i) {
-        children[i].deck.isHide = true;
-      }
-    },
-  ),
+  //     const children = chapters[d0][d1].child;
+  //     for (let i = 1; i < children.length; ++i) {
+  //       children[i].deck.isHide = true;
+  //     }
+  //   },
+  // ),
+
+  headChildren: [],
+  resetHeadChildren: action((state, payload) => {
+    state.headChildren = [];
+  }),
+  addHeadChildren: action((state, payload) => {
+    state.headChildren.push(payload);
+  }),
 
   sort: thunk((actions, payload, { getState, getStoreState }) => {
     const {
@@ -69,9 +80,8 @@ export default {
     const {
       data: { chapters },
     } = getStoreState();
-    const { isSortedByLikes, headChildrenId } = getState();
-
-    const { setHeadChildrenId } = actions;
+    const { isSortedByLikes, headChildrenId, headChildren } = getState();
+    const { setHeadChildrenId, addHeadChildren, resetHeadChildren } = actions;
 
     switch (depthVal) {
       case 0:
@@ -94,6 +104,9 @@ export default {
           depth: depthVal,
           setHeadChildrenId,
           headChildrenId,
+          addHeadChildren,
+          resetHeadChildren,
+          headChildren,
           isSortedByLikes,
         });
         break;

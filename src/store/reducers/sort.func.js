@@ -1,3 +1,4 @@
+import { NativeViewGestureHandler } from "react-native-gesture-handler";
 import { sorterByDate, sorterByLikeCount } from "./sort.type";
 
 const iterateAndGetTarget = (head, targetDepth, coords) => {
@@ -39,6 +40,9 @@ export const sortByDepth = props => {
     depth,
     setHeadChildrenId,
     headChildrenId,
+    addHeadChildren,
+    resetHeadChildren,
+    headChildren,
     isSortedByLikes,
   } = props;
   const { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 } = coords;
@@ -47,10 +51,17 @@ export const sortByDepth = props => {
   const target = iterateAndGetTarget(chapters[d0][d1], depth, coords);
   const head = target.deck;
 
-  let tempHeadChildrenId = headChildrenId;
   if (!headChildrenId) {
     setHeadChildrenId(head.id);
-    tempHeadChildrenId = head.id;
+  }
+
+  const idChapter = getIdHead(chapters[d0][d1], depth, coords);
+  const idChapterLength = idChapter?.child?.length;
+
+  if (headChildren.length === 0) {
+    for (let i = 1; i < idChapterLength; i++) {
+      addHeadChildren(idChapter.child[i]);
+    }
   }
 
   // const rests = chapters[d0][d1].child[d2].child.map(ch => ch.deck);
@@ -87,22 +98,39 @@ export const sortByDepth = props => {
 
   const newHead = sorted.shift();
 
-  console.log(
-    `headChildrenID: ${tempHeadChildrenId}, newHeadId: ${newHead.id}`,
-  );
-  const idChapter = getIdHead(chapters[d0][d1], depth, coords);
-  const idChapterLength = idChapter?.child?.length;
+  console.log(`headChildrenID: ${headChildrenId}, newHeadId: ${newHead.id}`);
+
   for (let i = 1; i < idChapterLength; i++) {
-    idChapter.child[i].deck.isHide = tempHeadChildrenId !== newHead.id;
+    idChapter.child[i].deck.isHide = headChildrenId !== newHead.id;
+  }
+
+  if (headChildrenId === newHead.id) {
+    for (let i = 1; i < idChapterLength; ++i) {
+      idChapter.child[i].deck = headChildren[i];
+    }
+    // resetHeadChildren();
   }
 
   target.deck = newHead;
   const childLength = target.child.length;
   target.child = [];
+
   for (let i = 0; i < childLength; ++i) {
-    target.child.push({
-      deck: sorted.shift(),
-      child: [],
-    });
+    const newCard = sorted.shift();
+    if (headChildrenId !== newCard.id) {
+      target.child.push({
+        deck: newCard,
+        child: [],
+      });
+    } else {
+      target.child.push({
+        deck: newCard,
+        child: [...headChildren],
+      });
+    }
   }
+
+  // if (headChildrenId === newHead.id) {
+  //   resetHeadChildren();
+  // }
 };

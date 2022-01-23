@@ -102,10 +102,12 @@ export default {
 
   fetchChapterAfter: thunk(
     async (actions, payload, { getState, getStoreState, getStoreActions }) => {
+      console.log(getStoreState);
       const {
         auth: { userId },
         data: { chapters },
         swiper: { coords },
+        sort: { headChildrenId },
       } = getStoreState();
 
       const {
@@ -127,16 +129,19 @@ export default {
       //   return;
       // }
 
-      console.log(`[useFetchD${depth}] fetching D${depth}`);
-
       const target = iterateAndGetTarget(chapters[d0][d1], depth, coords.val);
+      const fetchId = +target.deck.id;
+      console.log(
+        `[useFetchD${depth}] headChildrenId: ${headChildrenId}, fetchId: ${fetchId}`,
+      );
+      if (headChildrenId === fetchId) {
+        return;
+      }
 
+      console.log(`[useFetchD${depth}] fetching D${depth}`);
       startLoading();
 
-      const { data } = await ChapterService.GET_getChapter(
-        +target.deck.id,
-        userId,
-      );
+      const { data } = await ChapterService.GET_getChapter(fetchId, userId);
 
       if (data.item.length === 1) {
         addChapterChild({ deck: data.item[0] });
