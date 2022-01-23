@@ -27,8 +27,8 @@ export default {
     },
   ),
 
-  tempId: undefined,
-  setTempId: action((state, payload) => {
+  headChildrenId: undefined,
+  setHeadChildrenId: action((state, payload) => {
     state.tempId = payload;
   }),
 
@@ -63,13 +63,14 @@ export default {
       depth: { val: depthVal },
     } = getStoreState().swiper;
     const { chapters } = getStoreState().data;
-    const { isSortedByLikes, tempChildren, tempId } = getState();
+    const { isSortedByLikes, headChildrenId } = getState();
 
-    const { setTempId } = actions;
+    const { setHeadChildrenId } = actions;
 
     switch (depthVal) {
       case 0:
         break;
+
       case 1:
         {
           // 해당 챕터만 정렬
@@ -85,8 +86,8 @@ export default {
         {
           const head = chapters[d0][d1].child[d2].deck;
 
-          if (!tempId) {
-            setTempId(head.id);
+          if (!headChildrenId) {
+            setHeadChildrenId(head.id);
           }
 
           const rests = chapters[d0][d1].child[d2].child.map(ch => ch.deck);
@@ -123,7 +124,8 @@ export default {
           const newHead = sorted.shift();
 
           for (let i = 1; i < chapters[d0][d1].child.length; i++) {
-            chapters[d0][d1].child[i].deck.isHide = tempId !== newHead.id;
+            chapters[d0][d1].child[i].deck.isHide =
+              headChildrenId !== newHead.id;
           }
 
           chapters[d0][d1].child[d2].deck = newHead;

@@ -2,13 +2,7 @@ import { action, computed, thunk } from "easy-peasy";
 import ChapterService from "../../services/ChapterService";
 import { asyncForEach } from "../../utils";
 
-const getTarget = (head, targetDepth, coords) => {
-  let res = head;
-  for (let i = 2; i < targetDepth; ++i) {
-    res = res.child[coords[`d${i}`]];
-  }
-  return res;
-};
+import { fetchOne_internal, iterateAndGetTarget } from "./data.fetch.func";
 
 export default {
   fetchCategory: thunk(
@@ -135,7 +129,7 @@ export default {
 
       console.log(`[useFetchD${depth}] fetching D${depth}`);
 
-      const target = getTarget(chapters[d0][d1], depth, coords.val);
+      const target = iterateAndGetTarget(chapters[d0][d1], depth, coords.val);
 
       startLoading();
 
@@ -160,22 +154,9 @@ export default {
       const { curId, parentId, depth, userId } = payload;
 
       const {
+        data: { chapters },
         swiper: { coords },
       } = getStoreState();
-
-      const {
-        data: {
-          fetchOneD0_internal,
-          fetchOneD1_internal,
-          fetchOneD2_internal,
-          fetchOneD3_internal,
-          fetchOneD4_internal,
-          fetchOneD5_internal,
-          fetchOneD6_internal,
-          fetchOneD7_internal,
-          fetchOneD8_internal,
-        },
-      } = getStoreActions();
 
       console.log(
         `\n[data.fetch.fetchOne] @GET getChapter (parentId : ${parentId}, current Id: ${curId}, userId: ${userId})`,
@@ -189,45 +170,13 @@ export default {
       const newChapter = data.item[targetIdx];
       console.log(`[data.fetch.fetchOne] NEW\n`, newChapter, "\n");
 
-      const payload_internal = { coords: coords.val, newChapter };
-
-      switch (depth) {
-        case 1:
-          fetchOneD0_internal(payload_internal);
-          break;
-
-        case 2:
-          fetchOneD1_internal(payload_internal);
-          break;
-
-        case 3:
-          fetchOneD2_internal(payload_internal);
-          break;
-
-        case 4:
-          fetchOneD3_internal(payload_internal);
-          break;
-
-        case 5:
-          fetchOneD4_internal(payload_internal);
-          break;
-
-        case 6:
-          fetchOneD5_internal(payload_internal);
-          break;
-
-        case 7:
-          fetchOneD6_internal(payload_internal);
-          break;
-
-        case 8:
-          fetchOneD7_internal(payload_internal);
-          break;
-
-        case 9:
-          fetchOneD8_internal(payload_internal);
-          break;
-      }
+      const payload_internal = {
+        coords: coords.val,
+        depth,
+        newChapter,
+        chapters,
+      };
+      fetchOne_internal(payload_internal);
     },
   ),
 };
@@ -412,3 +361,179 @@ export const actions = {
 //     })
 //   },
 // ),
+
+// fetchOneD0_internal: thunk(
+//     async (actions, payload, { getState, getStoreState, getStoreActions }) => {
+//       const {
+//         coords: { d0, d1 },
+//         newChapter,
+//       } = payload;
+//       const {
+//         data: { chapters },
+//         swiper: { depth },
+//       } = getStoreState();
+
+//       const props = {
+//         payload: { ...payload, depth },
+//         getStoreState: getStoreState(),
+//       };
+
+//       const origPos = chapters[d0][d1];
+
+//       fetchOne_internal(props);
+
+//       console.log("[data.fetchOneChapter] OUTDATED\n", origPos.deck, "\n");
+
+//       if (newChapter !== undefined) origPos.deck = newChapter;
+//     },
+//   ),
+
+//   fetchOneD1_internal: thunk(
+//     async (actions, payload, { getState, getStoreState, getStoreActions }) => {
+//       const {
+//         coords: { d0, d1, d2 },
+//         newChapter,
+//       } = payload;
+//       const {
+//         data: { chapters },
+//       } = getStoreState();
+
+//       const origPos = chapters[d0][d1].child[d2];
+//       console.log("found outdated user chapter : ", origPos.deck);
+
+//       if (newChapter !== undefined) origPos.deck = newChapter;
+//     },
+//   ),
+
+//   fetchOneD2_internal: thunk(
+//     async (actions, payload, { getState, getStoreState, getStoreActions }) => {
+//       const {
+//         coords: { d0, d1, d2, d3 },
+//         newChapter,
+//       } = payload;
+//       const {
+//         data: { chapters },
+//       } = getStoreState();
+
+//       const origPos = chapters[d0][d1].child[d2].child[d3];
+
+//       console.log("[data.fetchOneNext] OUTDATED\n", origPos.deck, "\n");
+
+//       if (newChapter !== undefined) origPos.deck = newChapter;
+//     },
+//   ),
+
+//   fetchOneD3_internal: thunk(
+//     async (actions, payload, { getState, getStoreState, getStoreActions }) => {
+//       const {
+//         coords: { d0, d1, d2, d3, d4 },
+//         newChapter,
+//       } = payload;
+//       const {
+//         data: { chapters },
+//       } = getStoreState();
+
+//       const origPos = chapters[d0][d1].child[d2].child[d3].child[d4];
+
+//       console.log("[data.fetchOneNext] OUTDATED\n", origPos.deck, "\n");
+
+//       if (newChapter !== undefined) origPos.deck = newChapter;
+//     },
+//   ),
+
+//   fetchOneD4_internal: thunk(
+//     async (actions, payload, { getState, getStoreState, getStoreActions }) => {
+//       const {
+//         coords: { d0, d1, d2, d3, d4, d5 },
+//         newChapter,
+//       } = payload;
+//       const {
+//         data: { chapters },
+//       } = getStoreState();
+
+//       const origPos = chapters[d0][d1].child[d2].child[d3].child[d4].child[d5];
+
+//       console.log("[data.fetchOneNext] OUTDATED\n", origPos.deck, "\n");
+
+//       if (newChapter !== undefined) origPos.deck = newChapter;
+//     },
+//   ),
+
+//   fetchOneD5_internal: thunk(
+//     async (actions, payload, { getState, getStoreState, getStoreActions }) => {
+//       const {
+//         coords: { d0, d1, d2, d3, d4, d5, d6 },
+//         newChapter,
+//       } = payload;
+//       const {
+//         data: { chapters },
+//       } = getStoreState();
+
+//       const origPos =
+//         chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6];
+
+//       console.log("[data.fetchOneNext] OUTDATED\n", origPos.deck, "\n");
+
+//       if (newChapter !== undefined) origPos.deck = newChapter;
+//     },
+//   ),
+
+//   fetchOneD6_internal: thunk(
+//     async (actions, payload, { getState, getStoreState, getStoreActions }) => {
+//       const {
+//         coords: { d0, d1, d2, d3, d4, d5, d6, d7 },
+//         newChapter,
+//       } = payload;
+//       const {
+//         data: { chapters },
+//       } = getStoreState();
+
+//       const origPos =
+//         chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6]
+//           .child[d7];
+
+//       console.log("[data.fetchOneNext] OUTDATED\n", origPos.deck, "\n");
+
+//       if (newChapter !== undefined) origPos.deck = newChapter;
+//     },
+//   ),
+
+//   fetchOneD7_internal: thunk(
+//     async (actions, payload, { getState, getStoreState, getStoreActions }) => {
+//       const {
+//         coords: { d0, d1, d2, d3, d4, d5, d6, d7, d8 },
+//         newChapter,
+//       } = payload;
+//       const {
+//         data: { chapters },
+//       } = getStoreState();
+
+//       const origPos =
+//         chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6]
+//           .child[d7].child[d8];
+
+//       console.log("[data.fetchOneNext] OUTDATED\n", origPos.deck, "\n");
+
+//       if (newChapter !== undefined) origPos.deck = newChapter;
+//     },
+//   ),
+
+//   fetchOneD8_internal: thunk(
+//     async (actions, payload, { getState, getStoreState, getStoreActions }) => {
+//       const {
+//         coords: { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 },
+//         newChapter,
+//       } = payload;
+//       const {
+//         data: { chapters },
+//       } = getStoreState();
+
+//       const origPos =
+//         chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6]
+//           .child[d7].child[d8].child[d9];
+
+//       console.log("[data.fetchOneNext] OUTDATED\n", origPos.deck, "\n");
+
+//       if (newChapter !== undefined) origPos.deck = newChapter;
+//     },
+//   ),

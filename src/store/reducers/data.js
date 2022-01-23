@@ -65,13 +65,15 @@ export default {
 
   addChapterChild: action((state, payload) => {
     // 아무 부모 챕터 하나라도 있어야함
-    if (state.chapters.length === 0) return;
+    if (state.chapters.length === 0) {
+      return;
+    }
 
     // 비교용 index 찾아오기
     const comparer = +payload.deck.group_index;
-
-    // undefined
-    if (!comparer) return;
+    if (!comparer) {
+      return;
+    }
 
     const findRecursively = arr => {
       arr.forEach(item => {
@@ -87,6 +89,7 @@ export default {
               child: [],
             });
           }
+
           return;
         }
 
@@ -97,125 +100,12 @@ export default {
     };
 
     state.chapters.forEach(chapter => {
-      if (chapter.length === 0) return;
+      if (chapter.length === 0) {
+        return;
+      }
+
       findRecursively(chapter);
     });
-  }),
-
-  fetchOneD0_internal: action((state, payload) => {
-    const {
-      coords: { d0, d1 },
-      newChapter,
-    } = payload;
-    const origPos = state.chapters[d0][d1];
-
-    console.log("[data.fetchOneChapter] OUTDATED\n", origPos.deck, "\n");
-
-    if (newChapter !== undefined) origPos.deck = newChapter;
-  }),
-
-  fetchOneD1_internal: action((state, payload) => {
-    const {
-      coords: { d0, d1, d2 },
-      newChapter,
-    } = payload;
-
-    const origPos = state.chapters[d0][d1].child[d2];
-    console.log("found outdated user chapter : ", origPos.deck);
-
-    if (newChapter !== undefined) origPos.deck = newChapter;
-  }),
-
-  fetchOneD2_internal: action((state, payload) => {
-    const {
-      coords: { d0, d1, d2, d3 },
-      newChapter,
-    } = payload;
-    const origPos = state.chapters[d0][d1].child[d2].child[d3];
-
-    console.log("[data.fetchOneNext] OUTDATED\n", origPos.deck, "\n");
-
-    if (newChapter !== undefined) origPos.deck = newChapter;
-  }),
-
-  fetchOneD3_internal: action((state, payload) => {
-    const {
-      coords: { d0, d1, d2, d3, d4 },
-      newChapter,
-    } = payload;
-    const origPos = state.chapters[d0][d1].child[d2].child[d3].child[d4];
-
-    console.log("[data.fetchOneNext] OUTDATED\n", origPos.deck, "\n");
-
-    if (newChapter !== undefined) origPos.deck = newChapter;
-  }),
-
-  fetchOneD4_internal: action((state, payload) => {
-    const {
-      coords: { d0, d1, d2, d3, d4, d5 },
-      newChapter,
-    } = payload;
-    const origPos =
-      state.chapters[d0][d1].child[d2].child[d3].child[d4].child[d5];
-
-    console.log("[data.fetchOneNext] OUTDATED\n", origPos.deck, "\n");
-
-    if (newChapter !== undefined) origPos.deck = newChapter;
-  }),
-
-  fetchOneD5_internal: action((state, payload) => {
-    const {
-      coords: { d0, d1, d2, d3, d4, d5, d6 },
-      newChapter,
-    } = payload;
-    const origPos =
-      state.chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6];
-
-    console.log("[data.fetchOneNext] OUTDATED\n", origPos.deck, "\n");
-
-    if (newChapter !== undefined) origPos.deck = newChapter;
-  }),
-
-  fetchOneD6_internal: action((state, payload) => {
-    const {
-      coords: { d0, d1, d2, d3, d4, d5, d6, d7 },
-      newChapter,
-    } = payload;
-    const origPos =
-      state.chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6]
-        .child[d7];
-
-    console.log("[data.fetchOneNext] OUTDATED\n", origPos.deck, "\n");
-
-    if (newChapter !== undefined) origPos.deck = newChapter;
-  }),
-
-  fetchOneD7_internal: action((state, payload) => {
-    const {
-      coords: { d0, d1, d2, d3, d4, d5, d6, d7, d8 },
-      newChapter,
-    } = payload;
-    const origPos =
-      state.chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6]
-        .child[d7].child[d8];
-
-    console.log("[data.fetchOneNext] OUTDATED\n", origPos.deck, "\n");
-
-    if (newChapter !== undefined) origPos.deck = newChapter;
-  }),
-
-  fetchOneD8_internal: action((state, payload) => {
-    const {
-      coords: { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 },
-      newChapter,
-    } = payload;
-    const origPos =
-      state.chapters[d0][d1].child[d2].child[d3].child[d4].child[d5].child[d6]
-        .child[d7].child[d8].child[d9];
-
-    console.log("[data.fetchOneNext] OUTDATED\n", origPos.deck, "\n");
-
-    if (newChapter !== undefined) origPos.deck = newChapter;
   }),
 };
 
