@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { Alert } from "../../../../components/alert";
 
 import { useStoreActions, useStoreState } from "easy-peasy";
@@ -35,7 +36,7 @@ export const useChapterCardLike = (chapterId, parentId, isLike, likeCount) => {
 
   const nav = useNavigation();
 
-  return async () => {
+  return useCallback(async () => {
     if (!isLoggedIn) {
       Alert("Need Login to like this card", "close", () =>
         nav.navigate(ScreenNames.SigninStack),
@@ -57,6 +58,7 @@ export const useChapterCardLike = (chapterId, parentId, isLike, likeCount) => {
     }
 
     await delay(1);
+
     fetchOne({ curId: chapterId, parentId, depth, userId });
-  };
+  }, [isLoggedIn, isLike, chapterId, parentId, depth, userId]);
 };
