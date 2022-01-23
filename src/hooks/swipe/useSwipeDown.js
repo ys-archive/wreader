@@ -3,16 +3,11 @@ import { useSwipeStates } from "./useSwipeStates";
 
 export const useSwipeDown = swipe => {
   const {
-    categories,
-    chapters,
-    isLoaded,
-
     depth,
     coords,
 
     decreaseDepth,
 
-    setMaxCoords,
     setMaxChapterFromCategory,
     decreaseCoords,
   } = useSwipeStates();

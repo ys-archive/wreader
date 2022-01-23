@@ -102,7 +102,6 @@ export default {
 
   fetchChapterAfter: thunk(
     async (actions, payload, { getState, getStoreState, getStoreActions }) => {
-      console.log(getStoreState);
       const {
         auth: { userId },
         data: { chapters },

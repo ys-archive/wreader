@@ -51,17 +51,16 @@ export const sortByDepth = props => {
   const target = iterateAndGetTarget(chapters[d0][d1], depth, coords);
   const head = target.deck;
 
-  if (!headChildrenId) {
+  if (headChildrenId === -9999) {
     setHeadChildrenId(head.id);
   }
 
   const idChapter = getIdHead(chapters[d0][d1], depth, coords);
   const idChapterLength = idChapter?.child?.length;
 
-  if (headChildren.length === 0) {
-    for (let i = 1; i < idChapterLength; i++) {
-      addHeadChildren(idChapter.child[i]);
-    }
+  resetHeadChildren();
+  for (let i = 1; i < idChapterLength; i++) {
+    addHeadChildren(idChapter.child[i]);
   }
 
   // const rests = chapters[d0][d1].child[d2].child.map(ch => ch.deck);

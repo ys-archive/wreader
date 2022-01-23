@@ -29,39 +29,21 @@ export default {
     },
   ),
 
-  headChildrenId: "",
+  headChildrenId: -9999,
   resetHeadChildrenId: action((state, payload) => {
-    state.headChildrenId = "";
+    state.headChildrenId = -9999;
   }),
   setHeadChildrenId: action((state, payload) => {
     state.headChildrenId = payload;
   }),
 
   // reset headChildrenId
-  // onIncreaseDepth: actionOn(
-  //   (actions, storeActions) => [
-  //     storeActions.swiper.depth.increment,
-  //     storeActions.swiper.depth.decrement,
-  //   ],
-  //   (state, target) => {
-  //     state.headChildrenId = "";
-  //   },
-  // ),
-
-  // onChangeDepth: actionOn(
-  //   (actions, storeActions) => [
-  //     storeActions.data.chapters,
-  //     storeActions.swiper.depth.val,
-  //   ],
-  //   (state, target) => {
-  //     const [chapters, depth] = target.resolvedTargets;
-
-  //     const children = chapters[d0][d1].child;
-  //     for (let i = 1; i < children.length; ++i) {
-  //       children[i].deck.isHide = true;
-  //     }
-  //   },
-  // ),
+  lastListenDepth: -9999,
+  updateSortState: action((state, payload) => {
+    // state.headChildrenId = -9999;
+    // state.headChildren = [];
+    // state.lastListenDepth = depth;
+  }),
 
   headChildren: [],
   resetHeadChildren: action((state, payload) => {
@@ -120,6 +102,7 @@ export const selectors = {
 
 export const actions = {
   sort: actions => actions.sort.sort,
+  updateSortState: actions => actions.sort.updateSortState,
 };
 
 // case 2:
