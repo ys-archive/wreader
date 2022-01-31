@@ -11,7 +11,7 @@ export const useSwipeRight = swipe => {
     fetchChapterAfter,
 
     decreaseCoords,
-    updateSortState,
+    // updateSortState,
   } = useSwipeStates();
 
   const { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 } = coords;
@@ -40,7 +40,7 @@ export const useSwipeRight = swipe => {
             swipe("right", () => {
               console.log("[-] Depth: 2 -> 1");
               decreaseDepth();
-              updateSortState();
+              // updateSortState();
             });
             return;
           }
@@ -62,7 +62,7 @@ export const useSwipeRight = swipe => {
             swipe("right", () => {
               console.log("[-] Depth: 4 -> 3");
               decreaseDepth();
-              updateSortState();
+              // updateSortState();
             });
             return;
           }
@@ -84,7 +84,7 @@ export const useSwipeRight = swipe => {
             swipe("right", () => {
               console.log("[-] Depth: 6 -> 5");
               decreaseDepth();
-              updateSortState();
+              // updateSortState();
             });
             return;
           }
@@ -106,7 +106,7 @@ export const useSwipeRight = swipe => {
             swipe("right", () => {
               console.log("[-] Depth: 8 -> 7");
               decreaseDepth();
-              updateSortState();
+              // updateSortState();
             });
             return;
           }

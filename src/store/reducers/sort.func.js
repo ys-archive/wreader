@@ -1,4 +1,3 @@
-import { NativeViewGestureHandler } from "react-native-gesture-handler";
 import { sorterByDate, sorterByLikeCount } from "./sort.type";
 
 const iterateAndGetTarget = (head, targetDepth, coords) => {
@@ -34,33 +33,29 @@ const getIdHead = (head, targetDepth, coords) => {
 };
 
 export const sortByDepth = props => {
-  const {
-    coords,
-    chapters,
-    depth,
-    setHeadChildrenId,
-    headChildrenId,
-    addHeadChildren,
-    resetHeadChildren,
-    headChildren,
-    isSortedByLikes,
-  } = props;
+  const { coords, chapters, depth, isSortedByLikes, sortInfo, setSortInfo } =
+    props;
   const { d0, d1, d2, d3, d4, d5, d6, d7, d8, d9 } = coords;
 
   // const head = chapters[d0][d1].child[d2].deck;
   const target = iterateAndGetTarget(chapters[d0][d1], depth, coords);
   const head = target.deck;
-
-  if (headChildrenId === -9999) {
-    setHeadChildrenId(head.id);
-  }
-
   const idChapter = getIdHead(chapters[d0][d1], depth, coords);
   const idChapterLength = idChapter?.child?.length;
 
-  resetHeadChildren();
-  for (let i = 1; i < idChapterLength; i++) {
-    addHeadChildren(idChapter.child[i]);
+  let tempNewSortInfo = undefined;
+  if (!sortInfo[depth]) {
+    const chd = [];
+    for (let i = 1; i < idChapterLength; i++) {
+      chd.push(idChapter.child[i]);
+    }
+    tempNewSortInfo = {
+      [depth]: {
+        id: head.id,
+        children: chd,
+      },
+    };
+    setSortInfo(tempNewSortInfo);
   }
 
   // const rests = chapters[d0][d1].child[d2].child.map(ch => ch.deck);
@@ -69,10 +64,10 @@ export const sortByDepth = props => {
   console.log(`[sort] depth: ${depth}\nbefore sort\n`);
   console.log(
     slice.map(ch => ({
+      id: +ch.id,
       content: ch.content,
       likes: ch.like_count,
       updateDt: ch.updateDt,
-      isHide: ch.isHide,
     })),
   );
 
@@ -88,35 +83,40 @@ export const sortByDepth = props => {
   console.log(`[sort] depth: ${depth}\nafter sort\n`);
   console.log(
     slice.map(ch => ({
+      id: +ch.id,
       content: ch.content,
       likes: ch.like_count,
       updateDt: ch.updateDt,
-      isHide: ch.isHide,
     })),
   );
 
-  const newHead = sorted.shift();
-
-  console.log(`headChildrenID: ${headChildrenId}, newHeadId: ${newHead.id}`);
+  const currentHead = sorted.shift();
+  console.log(tempNewSortInfo);
+  const sortInfoId = tempNewSortInfo[depth].id;
+  const sortInfoChildren = tempNewSortInfo[depth].children;
+  const currentId = currentHead.id;
+  console.log(
+    `sort Info Id: ${tempNewSortInfo}, current Head Id: ${currentId}`,
+  );
 
   for (let i = 1; i < idChapterLength; i++) {
-    idChapter.child[i].deck.isHide = headChildrenId !== newHead.id;
+    idChapter.child[i].deck.isHide = sortInfoId !== currentId;
   }
 
-  if (headChildrenId === newHead.id) {
+  if (sortInfoId === currentId) {
     for (let i = 1; i < idChapterLength; ++i) {
-      idChapter.child[i].deck = headChildren[i];
+      idChapter.child[i].deck = sortInfoChildren;
     }
     // resetHeadChildren();
   }
 
-  target.deck = newHead;
+  target.deck = currentHead;
   const childLength = target.child.length;
   target.child = [];
 
   for (let i = 0; i < childLength; ++i) {
     const newCard = sorted.shift();
-    if (headChildrenId !== newCard.id) {
+    if (+sortInfoId !== +newCard.id) {
       target.child.push({
         deck: newCard,
         child: [],
@@ -124,7 +124,7 @@ export const sortByDepth = props => {
     } else {
       target.child.push({
         deck: newCard,
-        child: [...headChildren],
+        child: [...sortInfoChildren],
       });
     }
   }

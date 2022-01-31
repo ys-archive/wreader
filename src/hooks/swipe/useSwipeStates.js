@@ -32,7 +32,7 @@ export const useSwipeStates = () => {
   const decreaseCoords = useStoreActions(actSwiper.decreaseCoords);
 
   // - sort
-  const updateSortState = useStoreActions(actSort.updateSortState);
+  // const updateSortState = useStoreActions(actSort.updateSortState);
 
   return {
     categories,
@@ -55,6 +55,6 @@ export const useSwipeStates = () => {
     increaseCoords,
     decreaseCoords,
 
-    updateSortState,
+    // updateSortState,
   };
 };

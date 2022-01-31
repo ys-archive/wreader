@@ -15,7 +15,6 @@ export const useSwipeLeft = swipe => {
 
     increaseDepth,
     increaseCoords,
-    updateSortState,
   } = useSwipeStates();
 
   const navToWriteCard = useNavToWriteCard();
@@ -64,7 +63,7 @@ export const useSwipeLeft = swipe => {
 
           swipe("left", () => {
             increaseDepth();
-            updateSortState();
+            // updateSortState();
             console.log("[+] Depth: 1 -> 2");
             fetchChapterAfter(3);
           });
@@ -104,7 +103,7 @@ export const useSwipeLeft = swipe => {
 
           swipe("left", () => {
             increaseDepth();
-            updateSortState();
+            // updateSortState();
             console.log("[+] Depth: 3 -> 4");
             fetchChapterAfter(5);
           });
@@ -147,7 +146,7 @@ export const useSwipeLeft = swipe => {
 
           swipe("left", () => {
             increaseDepth();
-            updateSortState();
+            // updateSortState();
             console.log("[+] Depth: 5 -> 6");
             fetchChapterAfter(7);
           });
@@ -194,7 +193,7 @@ export const useSwipeLeft = swipe => {
 
           swipe("left", () => {
             increaseDepth();
-            updateSortState();
+            // updateSortState();
             console.log("[+] Depth: 7 -> 8");
             fetchChapterAfter(9);
           });
